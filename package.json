@@ -9,7 +9,7 @@
     "clean": "node build/script.clean.js",
     "dev": "node build/script.dev.js",
     "build": "node build/script.build.js",
-    "deploy":"node build/script.build.js && git add -A && git commit -a -m 'deploy' && git push heroku master",
+    "deploy": "node build/script.build.js && git add -A && git commit -a -m 'deploy' && git push heroku master",
     "push": "git add -A && git commit -a -m 'autopush' && git push heroku master",
     "start": "node server.js",
     "lint": "eslint --ext .js,.vue src"
@@ -48,7 +48,7 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
     "eventsource-polyfill": "^0.9.6",
-    "express": "^4.16.1",
+    "express": "^4.16.2",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.1",
     "friendly-errors-webpack-plugin": "^1.1.3",
