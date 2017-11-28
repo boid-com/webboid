@@ -9,10 +9,8 @@
     "clean": "node build/script.clean.js",
     "dev": "node build/script.dev.js",
     "build": "node build/script.build.js",
-    "deploy":
-      "node build/script.build.js && git add -A && git commit -a -m 'deploy' && git push heroku master",
-    "push":
-      "git add -A && git commit -a -m 'autopush' && git push heroku master",
+    "deploy":"node build/script.build.js && git add -A && git commit -a -m 'deploy' && git push heroku master",
+    "push":"git add -A && git commit -a -m 'autopush' && git push heroku master",
     "start": "node server.js",
     "lint": "eslint --ext .js,.vue src"
   },

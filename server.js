@@ -8,5 +8,7 @@ app.use(history())
 app.use(express.static('./dist'))
 
 var port = process.env.PORT || 8080
-app.listen(port)
+app.listen(port, (event) => {
+  console.log(event)
+})
 console.log('server started ' + port)
