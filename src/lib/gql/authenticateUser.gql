@@ -1,0 +1,8 @@
+mutation($accessToken:String!) {
+    authenticateUser(
+      accessToken: $accessToken
+    ) {
+      id
+      token
+    }
+  }

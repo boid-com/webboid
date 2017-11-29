@@ -1,5 +1,4 @@
-var
-  path = require('path'),
+var path = require('path'),
   webpack = require('webpack'),
   config = require('../config'),
   cssUtils = require('./css-utils'),
@@ -26,11 +25,8 @@ module.exports = {
     chunkFilename: 'js/[id].[chunkhash].js'
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
-    modules: [
-      resolve('src'),
-      resolve('node_modules')
-    ],
+    extensions: ['.js', '.vue', '.json', '.gql', '.graphql'],
+    modules: [resolve('src'), resolve('node_modules')],
     alias: config.aliases
   },
   module: {
@@ -52,14 +48,22 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: ['graphql-tag/loader']
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
           postcss: cssUtils.postcss,
-          loaders: merge({js: 'babel-loader'}, cssUtils.styleLoaders({
-            sourceMap: useCssSourceMap,
-            extract: env.prod
-          }))
+          loaders: merge(
+            { js: 'babel-loader' },
+            cssUtils.styleLoaders({
+              sourceMap: useCssSourceMap,
+              extract: env.prod
+            })
+          )
         }
       },
       {
@@ -87,9 +91,9 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': config[env.prod ? 'build' : 'dev'].env,
-      'DEV': env.dev,
-      'PROD': env.prod,
-      '__THEME': '"' + env.platform.theme + '"'
+      DEV: env.dev,
+      PROD: env.prod,
+      __THEME: '"' + env.platform.theme + '"'
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: env.prod,

@@ -1,6 +1,7 @@
 <template lang="pug">
 .layout-padding
   h6.text-center Dashboard
+  pre {{mutation}}
   
 </template>
 
@@ -13,6 +14,21 @@ export default {
     }
   },
   computed: {
+    mutation(){
+      return `
+  # Run this mutation in the Graphcool Playground to authenticate a user
+
+  mutation {
+    authenticateUser(
+      accessToken: "${this.accessToken}"
+    ) {
+      id
+      token
+    }
+  }
+  `
+    }
+  
 
   },
   methods: {

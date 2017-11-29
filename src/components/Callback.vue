@@ -6,22 +6,40 @@
 </template>
 <script>
 
-import auth from 'lib/auth/auth';
+import auth from 'lib/auth/auth'
+import authUser from 'lib/gql/authenticateUser.gql'
 
 export default {
 
   data(){
     return{
-      accessToken:""
+      accessToken:undefined,
+      userToken:""
     }
   },
+  // apollo:{
+  //   userToken:{
+  //     mutation:"gql``",
+  //     variables(){
+  //       return {
+  //         accessToken:this.accessToken
+  //       }
+  //     },
+  //     skip(){
+  //       return this.accessToken
+  //     }
+  //   }
+  // },
   mounted() {
-    this.$nextTick(() => {
-      auth.setToken()
-      setTimeout(()=>{
-        this.accessToken = auth.getToken()
-        console.log(this.accessToken)
-      },2000)
+    this.$nextTick(async() => {
+      var accessToken = this.accessToken = await auth.setToken()
+      console.log(this.accessToken)
+      this.$apollo.mutate({
+        mutation:authUser,
+        variables:{
+          accessToken
+        }
+      })
       // setIdToken();
       // window.location.href = '/';
     });

@@ -89,7 +89,9 @@
   series: [
     [5, 2, 4, 2, 0]
   ]
-};
+}
+
+
 
 
 export default {
@@ -129,6 +131,7 @@ export default {
   },
   mounted(){
     // if (!this.isLoggedIn()) this.handleLogin()
+
     if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
     new Chartist.Line('.ct-chart', data,{
       width:200,
