@@ -1,7 +1,8 @@
 <template lang="pug">
 .layout-padding
   h3.text-center user Profile
-  h5 {{$route.params.username}}
+
+
   
 </template>
 

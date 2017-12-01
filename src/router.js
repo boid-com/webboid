@@ -14,8 +14,6 @@ export default new VueRouter({
   routes: [
     { path: '/', component: load('Index') },
     { path: '/u/:username?', component: load('User') },
-    { path: '/callback', component: load('Callback') },
-
     { path: '*', component: load('Error404') } // Not found
   ]
 })
