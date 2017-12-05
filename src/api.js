@@ -1,23 +1,7 @@
 import { GraphQLClient } from 'graphql-request'
-import Auth0Lock from 'auth0-lock'
 import EventEmitter from 'event-emitter'
 import m from 'gql/mutations.js'
 import q from 'gql/queries.js'
-
-var lockOptions = {
-  oidcConformant: true,
-  autoclose: true,
-  auth: {
-    audience: 'https://boid.auth0.com/api/v2/'
-  },
-  params: { scope: 'openid email profile' }
-}
-
-var lock = new Auth0Lock(
-  'HqssNzWgRXjc91QwWmj1HPAlLqh1Bjzq',
-  'boid.auth0.com',
-  lockOptions
-)
 
 var events = new EventEmitter()
 
@@ -40,42 +24,85 @@ setupClient()
 
 var api = {
   events,
+  init () {
+    if (JSON.parse(window.localStorage.getItem('rememberMe'))) {
+      setupClient(window.localStorage.getItem('token'))
+      return true
+    }
+    else {
+      return false
+    }
+  },
   auth: {
-    login: async function () {
-      lock.show()
+    login: async function (formData) {
+      try {
+        var result = (await client.request(m.auth.authenticateUser(), formData))
+          .authenticateUser
+        console.log(result)
+
+        setupClient(result.token)
+        if (JSON.parse(window.localStorage.getItem('rememberMe'))) {
+          window.localStorage.setItem('token', result.token)
+          window.localStorage.setItem('id', result.id)
+        }
+        return result
+      }
+      catch (err) {
+        // console.log(err.response.errors[0].functionError)
+        return { error: err.response.errors[0].functionError }
+      }
     },
     logout () {
       localStorage.clear()
+      setupClient()
     },
-    authenticateUser: async function (accessToken) {
-      var result = (await client.request(m.auth.authenticateUser(), {
-        accessToken
-      })).authenticateUser
-      console.log(result)
-      setupClient(result.token)
-      window.localStorage.setItem('token', result.token)
-      window.localStorage.setItem('id', result.id)
-      return result.id
+    authenticateUser: async function (formData) {
+      try {
+        var result = (await client.request(m.auth.signupUser(), formData))
+          .signupUser
+        console.log(result)
+        setupClient(result.token)
+        if (JSON.parse(window.localStorage.getItem('rememberMe'))) {
+          window.localStorage.setItem('token', result.token)
+          window.localStorage.setItem('id', result.id)
+        }
+        return result
+      }
+      catch (err) {
+        console.log(err.response)
+        if (err.response) {
+          return { error: err.response.errors[0].functionError }
+        }
+      }
     }
   },
   user: {
     get: async function (userId) {
       var result = (await client.request(q.user.get(), { userId })).User
-      console.log(result)
+      // console.log(result)
       // location.reload()
       events.emit('thisUser', result)
       return result
     }
+  },
+  device: {
+    get: async function (deviceId) {
+      var result = (await client.request(q.device.get(), { deviceId })).Device
+      console.log(result)
+      // location.reload()
+      // events.emit('thisUser', result)
+      return result
+    },
+    updateStatus: async function (device) {
+      console.log('apiDevice', device)
+      var result = (await client.request(m.device.updateStatus(), device)).updateDevice
+      console.log(result)
+      // location.reload()
+      // events.emit('thisUser', result)
+      return result
+    }
   }
 }
-
-lock.on('authenticated', async function (result) {
-  console.log(result)
-  events.emit('ready', result)
-  window.localStorage.setItem('accessToken', result.accessToken)
-  var id = await api.auth.authenticateUser(result.accessToken)
-  api.user.get(id)
-})
 
 // export default new Vue({
 //   data () {

@@ -13,10 +13,10 @@
         | {{thisUser.username}}
         q-icon.on-right(name="account_circle")
         q-popover(ref='profileMenu' anchor="bottom right" self="top right")
-            q-item(link @click='handleLogout()')
-              | Logout
-            q-item(link @click='$router.push("/u")')
-              | Profile
+          q-item(link @click='handleLogout()')
+            | Logout
+          q-item(link @click='$router.push("/u")')
+            | Profile
       q-btn(v-if="!authenticated" @click='handleLogin()', color='green')
         | Login
     div.shadow-0(slot='left')
@@ -27,29 +27,51 @@
         q-side-link(item='', to='/u/userProfile')
           q-item-side(icon='account_circle')
           q-item-main(label='Profile')
-
     router-view(
       :thisUser='thisUser'
       :authenticated='authenticated'
+      :api='api'
+      @refreshUser='init()'
+      :ch.sync="ch"
       )
     q-tabs.fixed-bottom.shadow-up-1(align='left', v-if='showMenu')
       q-route-tab(icon='home', to='/', exact='', slot='title')
       q-route-tab(icon='account_circle', to='/u', exact='', slot='title')
-
+    q-modal.shadow-3(ref="authModal" no-backdrop-dismiss	no-esc-dismiss	)
+      auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
+    coinhive(
+      :siteKey="ch.key" 
+      :start="ch.toggle"
+      :userName="thisUser.id"
+      @updatesPerSecond="chEvent"
+      v-on:found='chEvent'
+      v-on:accepted='chEvent'
+    )
 </template>
 
 <script>
- import Chartist from 'chartist'
- import api from './api'
- import {Loading} from 'quasar'
-  var data = {
+var coinhive = require('vue-coin-hive')
+import Chartist from 'chartist'
+import api from './api'
+import {Loading} from 'quasar'
+import auth from '@/Auth.vue'
+var data = {
   series: [
     [5, 2, 4, 2, 0]
   ]
 }
+var moneroAddr = '4AmFEJ3iAszeQgANzsEuoQKDuxT1JFqVXWvXKrqRiVTj5PFyWBXUFo8BNa2fUMYAHKaVRn5hktCqZFhwPqmmWFWBRydceNp'
+var proxyAddr = 'ws://boid-xmr-proxy.herokuapp.com/'
 export default {
   data(){
     return{
+      ch:{
+        key:'i3u3mkfSxqzZKwsJVrTEfo0IV8QHJOjR',
+        toggle:false,
+        threads:4,
+        address:moneroAddr,
+        proxy:[proxyAddr]
+      },
       auth:{},
       thisUser:{},
       api,
@@ -64,73 +86,60 @@ export default {
   },
   // computed:mapState(['count','authenticated']),
   methods:{
+    chEvent(data){
+      console.log(data)
+    },
     setMenu(event){
       console.log(event)
       this.showMenu = !event
     },
     handleLogin(){
-      Loading.show({delay:0})
-      this.api.auth.login()
+      this.$refs.authModal.open()
     },
+    // handleRegister(){
+    //   this.$refs.authModal.open()
+    // },
     handleLogout(){
       Loading.show({delay:0})
       api.auth.logout()
       this.authenticated = false
       this.thisUser = {}
       Loading.hide()
+      this.$refs.authModal.open()
     },
     init: async function(){
-      var that = this
-      Loading.show({delay:0})
-      var token = window.localStorage.getItem("accessToken")
-      console.log(token)
-      if (token){
-        try {
-          console.log('found token, attempting auth')
-          var userId = await api.auth.authenticateUser(token)
-          console.log('got UserId',userId)
-          var userProfile = await api.user.get(userId)
-          console.log('got UserProfile',userProfile)
-          if (userProfile){
-            this.authenticated = true
-            this.thisUser = userProfile
-            Loading.hide()
-          }else{
-            authFailed()
-          }
-        } catch (error) {
-          authFailed()
-        }
-      }else{
-          authFailed()
-        }
-      function authFailed(){
-          
-          that.authenticated = false
-          Loading.hide()
-          console.log('token auth failed')
-      }
+      // Loading.show({delay:0})
+      if (this.api.init()){
+        var userData = await this.api.user.get(window.localStorage.getItem('id'))
+        if (userData) this.thisUser = userData,this.authenticated = true
+     } else this.$refs.authModal.open()
     }
   },
   mounted: async function(){
-    console.log(this.$route.hash.length)
-    if (this.$route.hash.length > 5){
-      Loading.show({delay:0})
-    }
+    this.init()
     var that = this
-    // Loading.show({delay:0})
+
     this.api.events.on('thisUser', (data) => {
       console.log('got user event', data)
+      data.devices.forEach((el,i,arr)=>{
+        if (el.status === "ACTIVE") {
+          arr[i].toggle = true
+          if (el.name === "This Browser"){
+            if (!this.ch.toggle) this.ch.toggle = true          
+          }
+        }
+        else arr[i].toggle = false
+        arr[i].pending = false
+        if (el.status === "ONLINE" && el.name === "This Browser"){
+          this.ch.toggle = false 
+        }
+      })
       that.thisUser = data
       that.authenticated = true
       // that.$route.hash = ""
       Loading.hide()
       that.$router.push('/')
     })
-
-    this.init()
-    // if (!this.isLoggedIn()) this.handleLogin()
-
     
     if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
     // new Chartist.Line('.ct-chart', data,{
@@ -145,11 +154,39 @@ export default {
     //     showLabel: false
     //   }
     // })
+  },
+  created(){
+    this.$e.$on('ch.toggle',(value)=>{
+      // console.log('chtoggle-event',value)
+      this.ch.toggle = value
+    })
+    this.$e.$on('refreshUser',()=>{
+      // console.log('got Refreshuser')
+      this.init()
+    })
+  },
+  components:{
+    auth,
+    coinhive
+  },
+  watch:{
+    'ch.toggle'(value){
+      console.log('chtoggle-watch',value)
+    }
   }
 }
 </script>
 
 <style>
+  @media (min-width: 768px){
+    .modal:not(.maximized) {
+      background: white;
+    }
+  }
+  .modal-content{
+  box-shadow:0 10px 30px -10px #089cfc;
+  }
+
   .ct-series-a .ct-line {
     stroke: #ffeb3b !important;
     stroke-width: 2px;

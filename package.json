@@ -31,7 +31,9 @@
     "quasar-extras": "0.x",
     "quasar-framework": "^0.14.4",
     "vue": "^2.5.0",
+    "vue-coin-hive": "0.0.8",
     "vue-router": "^3.0.1",
+    "vuelidate": "^0.6.1",
     "vuex": "^3.0.1",
     "vuex-nested-mutations": "^1.0.2"
   },

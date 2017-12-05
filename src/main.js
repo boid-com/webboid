@@ -10,7 +10,11 @@ Vue.use(Quasar, {
   components: All,
   directives: All
 })
-// Vue.use(storePlugin)
+
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
+
+Vue.prototype.$e = new Vue()
 
 if (__THEME === 'mat') {
   require('quasar-extras/roboto-font')
