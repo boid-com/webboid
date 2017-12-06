@@ -19,23 +19,26 @@
           q-item.relative-position()
             //- | {{device.status}}
             q-item-side
-              q-icon(name="tab" v-if="device.status == 'ONLINE'" color="green")
-              q-icon(name="tab" v-if="device.status == 'OFFLINE'" color="grey")
+              q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)")         
             q-item-main
               q-item-tile(label style="user-select: none;") {{device.name}}
               q-item-tile(sublabel) {{device.status}} {{device.power[0]}}
-                //- q-icon.text-center(color="yellow" name='flash_on')
+                //- q -icon.text-center(color="yellow" name='flash_on')
+            h6.inline.float-right.text-green(v-if="device.toggle") {{ch.hps}}
             q-spinner-grid.inline.on-right(:size="20" color="green" v-if="device.toggle")
+
             q-item-side(right)
-              //- q-btn.on-left(  round flat  color="blue" @click="configDevice(device.id)")
+              q-btn.on-left(  round flat  color="blue" @click="configDevice(device.id)")
                 q-icon(name='settings' color="")
             q-toggle(v-model="device.toggle" color="green" @blur="device.pending = true,toggleDevice(device)")
             q-inner-loading(:visible="device.pending")
-              q-spinner-grid(size="30px" color="blue")
+              q-spinner(size="30px" color="blue")
               //- | {{device.toggle}}
         q-btn.full-width( small color="green")
           | add more Devices
           q-icon.on-right(name="add")
+      q-card.animate-scale
+        p.light-paragraph.text-center Global Leaderboard
   q-modal(ref="deviceModal" @close="currentDevice = null")
     device(
       :deviceId="currentDevice"
@@ -48,13 +51,15 @@
 
 <script>
 import device from "@/Device"
+import parseDevice from "src/lib/parseDevice"
 
 export default {
   name: "index",
   data() {
     return {
       currentDevice: null,
-      devices: []
+      devices: [],
+      parseDevice
     }
   },
   computed: {},

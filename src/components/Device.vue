@@ -5,15 +5,24 @@
   leave="fadeOut")
     .layout-padding.relative-position
         h5.text-center Configure Device
-        h6.text-center {{thisDevice.name}}
-        p {{ch}}
-        q-toggle(v-model="toggle")
-        div(style="max-width:200px;")
-            p.subtitle(v-if="toggle") This browser is currently generating account energy
-            p.subtitle(v-if="!toggle") This browser is not currently active
-        
-        q-btn(color='blue' @click="thisModal.close()") finished
+        p.text-center.inline {{thisDevice.name}}
+            q-icon.on-right(:name='thisDevice.icon' :color="parseDevice.color(thisDevice)")
+        q-alert(
+            color="green"
+            icon="info"
+            enter="fadeIn"
+            leave="fadeOut"
+            dismissible
+        )
+            p You can manaully configure the secure applications which Boid will run on this device.
+        p.light-paragraph.text-center
+            //- q-list(v-for="(app,index) in thisDevice.meta.applications")
+            //-     | {{app.name}}
 
+
+
+        div.text-center(style="margin-top:10px;")
+            q-btn(color='blue' @click="thisModal.close()") finished
         q-inner-loading(:visible="pending")
             q-spinner-ball(size="70px" color="blue")
     //- q-btn.float-left.on-left(@click="submit" outline color="blue") Register
@@ -21,15 +30,21 @@
 </template>
 
 <script>
+import parseDevice from "src/lib/parseDevice"
+import { Alert } from 'quasar'
+
 export default {
   data() {
     return {
+        parseDevice,
     thisDevice:{
         name:"",
         power:"",
         status:"",
         id:"",
-        meta:{}
+        meta:{},
+        icon:"",
+        type:""
         
     },
         pending: false,
@@ -44,9 +59,10 @@ export default {
   },
   props: ["thisUser", "authenticated", "api", "deviceId", "thisModal","ch"],
   mounted() {
-    //   console.log()
-    //   this.device = this.api.device.get(this.deviceId)
-    this.toggle = this.ch.toggle
+    // //   console.log()
+    // //   this.device = this.api.device.get(this.deviceId)
+    // console.log('mountedDeviceModal',this.ch.toggle)
+    // this.toggle = this.ch.toggle
   },
   watch:{
       deviceId: async function(value){
@@ -54,6 +70,7 @@ export default {
               this.pending = true
               this.thisDevice = await this.api.device.get(this.deviceId)
               if (this.thisDevice.status == "ACTIVE") this.toggle = true
+              this.thisDevice.icon = parseDevice.icon(this.thisDevice) 
               this.pending = false
           }
       },
@@ -65,6 +82,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-
+<style scoped lang="stylus">
+    .layout-padding
+        max-width:700px
 </style>

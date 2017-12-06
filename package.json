@@ -19,6 +19,7 @@
     "auth0-lock": "^10.24.1",
     "babel-runtime": "^6.25.0",
     "chartist": "^0.11.0",
+    "coin-hive": "^1.9.3",
     "connect-history-api-fallback": "^1.5.0",
     "event-emitter": "^0.3.5",
     "eventlistener": "0.0.1",

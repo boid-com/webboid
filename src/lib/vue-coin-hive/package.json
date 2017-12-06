@@ -1,0 +1,63 @@
+{
+  "_from": "vue-coin-hive@0.0.8",
+  "_id": "vue-coin-hive@0.0.8",
+  "_inBundle": false,
+  "_integrity": "sha1-+UFO6B0EyN/odC+3gd6HQuagFQM=",
+  "_location": "/vue-coin-hive",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "vue-coin-hive@0.0.8",
+    "name": "vue-coin-hive",
+    "escapedName": "vue-coin-hive",
+    "rawSpec": "0.0.8",
+    "saveSpec": null,
+    "fetchSpec": "0.0.8"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/vue-coin-hive/-/vue-coin-hive-0.0.8.tgz",
+  "_shasum": "f9414ee81d04c8dfe8742fb781de8742e6a01503",
+  "_spec": "vue-coin-hive@0.0.8",
+  "_where": "/Users/user/Dev/boid/webboid",
+  "author": {
+    "name": "Jason Shin",
+    "email": "visualbbasic@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/JasonShin/vue-coin-hive/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "load-script": "^1.0.0"
+  },
+  "deprecated": false,
+  "description": "Coin hive Vue component",
+  "files": [
+    "dist/"
+  ],
+  "homepage": "https://github.com/JasonShin/vue-coin-hive#readme",
+  "keywords": [
+    "vue",
+    "component"
+  ],
+  "license": "MIT",
+  "main": "dist/vue-coin-hive.js",
+  "name": "vue-coin-hive",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JasonShin/vue-coin-hive.git"
+  },
+  "scripts": {
+    "build": "npm run dist -- --disable-compress",
+    "demo:open": "open 'http://localhost:3000/'; serve ./demo/",
+    "dev": "vue build ./src/demo.vue --config ./build.config.js",
+    "dist": "vue build ./src/index.js --config ./build.config.js --dist ./dist/ --prod --lib",
+    "dist:demo": "vue build ./src/demo.vue --config ./build.config.js --dist ./demo/ --prod",
+    "start": "npm run dev"
+  },
+  "version": "0.0.8"
+}

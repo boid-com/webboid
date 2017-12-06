@@ -13,6 +13,7 @@ export default {
             email
             username
             devices {
+              type
               id
               name
               power
@@ -38,6 +39,8 @@ export default {
             name
             power
             status
+            type
+            meta
           }
         }
         `
