@@ -75,7 +75,7 @@ export default {
         proxy: [proxyAddr],
         hps: "Loading...",
         found: 0,
-        deviceId: ""
+        deviceId: "emptyid"
       },
       auth: {},
       thisUser: {},
