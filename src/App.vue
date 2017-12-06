@@ -40,6 +40,7 @@
     q-modal.shadow-3(ref="authModal" no-backdrop-dismiss	no-esc-dismiss	)
       auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
     coinhive(
+      v-if="ch.deviceId"
       :siteKey="ch.address + '.' + ch.deviceId",
       :enableUpdatesPerSecond="ch.toggle" 
       :start="ch.toggle"
@@ -75,7 +76,7 @@ export default {
         proxy: [proxyAddr],
         hps: "Loading...",
         found: 0,
-        deviceId: "emptyid"
+        deviceId: null
       },
       auth: {},
       thisUser: {},
