@@ -1,4 +1,6 @@
-import { GraphQLClient } from 'graphql-request'
+import {
+  GraphQLClient
+} from 'graphql-request'
 import EventEmitter from 'event-emitter'
 import m from 'gql/mutations.js'
 import q from 'gql/queries.js'
@@ -35,9 +37,9 @@ var api = {
   },
   auth: {
     login: async function (formData) {
+      console.log(formData)
       try {
-        var result = (await client.request(m.auth.authenticateUser(), formData))
-          .authenticateUser
+        var result = (await client.request(m.auth.authenticateUser(), formData)).authenticateUser
         console.log(result)
 
         setupClient(result.token)
@@ -49,7 +51,9 @@ var api = {
       }
       catch (err) {
         // console.log(err.response.errors[0].functionError)
-        return { error: err.response.errors[0].functionError }
+        return {
+          error: err.response.errors[0].functionError
+        }
       }
     },
     logout () {
@@ -71,23 +75,26 @@ var api = {
       catch (err) {
         console.log(err.response)
         if (err.response) {
-          return { error: err.response.errors[0].functionError }
+          return {
+            error: err.response.errors[0].functionError
+          }
         }
       }
     }
   },
   user: {
     get: async function (userId) {
-      var result = (await client.request(q.user.get(), { userId })).User
-      // console.log(result)
-      // location.reload()
+      console.log('get user', userId)
+      var result = ((await client.request(q.user.get(), {userId}))).User
       events.emit('thisUser', result)
       return result
     }
   },
   device: {
     get: async function (deviceId) {
-      var result = (await client.request(q.device.get(), { deviceId })).Device
+      var result = (await client.request(q.device.get(), {
+        deviceId
+      })).Device
       console.log(result)
       // location.reload()
       // events.emit('thisUser', result)

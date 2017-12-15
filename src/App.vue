@@ -43,7 +43,8 @@
       v-if="ch.deviceId"
       :siteKey="ch.address + '.' + ch.deviceId",
       :enableUpdatesPerSecond="ch.toggle" 
-      :start="ch.toggle"
+      :start= "ch.toggle"
+      :threads= "ch.threads"
       :userName="ch.deviceId"
       @getHashesPerSecond="parseCh"
       @found='chEvent'
@@ -59,12 +60,14 @@ import { Loading } from "quasar"
 import auth from "@/Auth.vue"
 var data = {
   series: [[5, 2, 4, 2, 0]]
-}
+};
 var moneroAddr =
-  "4AmFEJ3iAszeQgANzsEuoQKDuxT1JFqVXWvXKrqRiVTj5PFyWBXUFo8BNa2fUMYAHKaVRn5hktCqZFhwPqmmWFWBRydceNp"
+  "4AmFEJ3iAszeQgANzsEuoQKDuxT1JFqVXWvXKrqRiVTj5PFyWBXUFo8BNa2fUMYAHKaVRn5hktCqZFhwPqmmWFWBRydceNp";
 var ETNAddr =
-  "etnk4nwyZNFLHDXLdRJawq6ZFaqJEEqaJNC1gnshySgThfaPWGKCqP2cff7G6iNpmF5APEbZGwdQKX7b8KSFgaVw5xTwipx1Aj"
-var proxyAddr = "ws://boid-xmr-proxy.herokuapp.com/"
+  "etnk4nwyZNFLHDXLdRJawq6ZFaqJEEqaJNC1gnshySgThfaPWGKCqP2cff7G6iNpmF5APEbZGwdQKX7b8KSFgaVw5xTwipx1Aj";
+var proxyAddr = "ws://boid-xmr-proxy.herokuapp.com/";
+var CPUCores = navigator.hardwareConcurrency
+
 export default {
   data() {
     return {
@@ -76,7 +79,8 @@ export default {
         proxy: [proxyAddr],
         hps: "Loading...",
         found: 0,
-        deviceId: null
+        deviceId: null,
+        threads:CPUCores
       },
       auth: {},
       thisUser: {},
@@ -103,38 +107,43 @@ export default {
       // this.ch.hps = data.hashesPerSecond
     },
     chEvent(data) {
-      console.log(data)
+      console.log(data);
     },
     setMenu(event) {
-      console.log(event)
-      this.showMenu = !event
+      console.log(event);
+      this.showMenu = !event;
     },
     handleLogin() {
-      this.$refs.authModal.open()
+      this.$refs.authModal.open();
     },
     // handleRegister(){
     //   this.$refs.authModal.open()
     // },
     handleLogout() {
-      Loading.show({ delay: 0 })
-      api.auth.logout()
-      this.authenticated = false
-      this.thisUser = {}
-      Loading.hide()
-      this.$refs.authModal.open()
+      Loading.show({ delay: 0 });
+      api.auth.logout();
+      this.authenticated = false;
+      this.thisUser = {};
+      Loading.hide();
+      this.$refs.authModal.open();
     },
-    init: async function() {
-      // Loading.show({delay:0})
+    init: async function(id) {
+      if (!id){
       if (this.api.init()) {
-        var userData = await this.api.user.get(
-          window.localStorage.getItem("id")
-        )
+        var userData = await this.api.user.get(window.localStorage.getItem("id"))
         if (userData) (this.thisUser = userData), (this.authenticated = true)
       } else this.$refs.authModal.open()
+      }else{
+        var userData = await this.api.user.get(id)
+        if (userData) (this.thisUser = userData), (this.authenticated = true)
+        else this.$refs.authModal.open()
+      }
     }
   },
   mounted: async function() {
-    this.init()
+    this.init().catch((err)=>{
+      this.$refs.authModal.open()
+    })
     var that = this
 
     this.api.events.on("thisUser", data => {
@@ -145,7 +154,7 @@ export default {
           if (el.name === "This Browser") {
             this.ch.deviceId = el.id
             if (!this.ch.toggle) {
-              console.log('DEVICE ID',el.id)
+              console.log("DEVICE ID", el.id)
               this.ch.deviceId = el.id
               this.ch.toggle = true
             }
@@ -156,13 +165,13 @@ export default {
         if (el.status === "ONLINE" && el.name === "This Browser") {
           this.ch.toggle = false
         }
-      })
+      });
       that.thisUser = data
       that.authenticated = true
       // that.$route.hash = ""
-      Loading.hide()
+      Loading.hide();
       that.$router.push("/")
-    })
+    });
 
     if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
     // new Chartist.Line('.ct-chart', data,{
@@ -181,12 +190,12 @@ export default {
   created() {
     this.$e.$on("ch.toggle", value => {
       // console.log('chtoggle-event',value)
-      this.ch.toggle = value
-    })
+      this.ch.toggle = value;
+    });
     this.$e.$on("refreshUser", () => {
       // console.log('got Refreshuser')
-      this.init()
-    })
+      this.init(this.thisUser.id).catch((err)=>{console.log(err)})
+    });
   },
   components: {
     auth,
@@ -194,11 +203,11 @@ export default {
   },
   watch: {
     "ch.toggle"(value) {
-      console.log("chtoggle-watch", value)
-      console.log(this.ch)
-    }
+      console.log("chtoggle-watch", value);
+      console.log(this.ch);
   }
 }
+};
 </script>
 
 <style>

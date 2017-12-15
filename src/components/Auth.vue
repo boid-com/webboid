@@ -27,8 +27,8 @@
       br
       br
       div.text-center(style="margin-top:10px;")
-          q-btn.text-center(@click="join" style="margin-auto" :disabled="!loginRdy" invert outline color="blue") Join
-          q-btn.text-center.on-right(@click="submit" style="margin-auto" :disabled="!loginRdy" invert outline color="green") Login
+          q-btn.text-center(@click="join" style="margin-auto" :disabled="!loginRdy" invert color="blue") register
+          q-btn.text-center.on-right(@click="submit" style="margin-auto" :disabled="!loginRdy" invert  color="green") Login
       q-inner-loading(:visible="pending")
         q-spinner-ball(size="70px" color="blue")
     //- q-btn.float-left.on-left(@click="submit" outline color="blue") Register
@@ -84,6 +84,7 @@ export default {
       },1500)
     } else{
       this.$emit('update:authenticated',true)
+      console.log('loginResult',result)
       var userData = await this.api.user.get(result.id)
       this.$emit('update:thisUser',userData)
       this.pending = false
