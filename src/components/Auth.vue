@@ -44,7 +44,8 @@ export default {
     return {
       form: {
         email: "",
-        password: ""
+        password: "",
+        invitedBy: "cjaqc5m76adak0192uz3ad1o9"
       },
       pending:false,
       rememberMe:false
@@ -120,6 +121,7 @@ export default {
   props: ["thisUser", "authenticated", "api", "thisModal"],
   mounted() {
     if (JSON.parse(window.localStorage.getItem('rememberMe'))) this.rememberMe = true
+    console.log(this.$route.params.ref)
   },
   watch:{
     rememberMe:function(value){

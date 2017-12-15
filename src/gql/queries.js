@@ -1,7 +1,5 @@
 // import gql from 'graphql-tag'
-function gql (strings) {
-  return strings[0]
-}
+function gql (strings) { return strings[0] }
 
 export default {
   user: {
@@ -16,7 +14,6 @@ export default {
               type
               id
               name
-              power
               status
             }
             wallet {
@@ -37,7 +34,6 @@ export default {
           Device(id:$deviceId){
             id
             name
-            power
             status
             type
             meta

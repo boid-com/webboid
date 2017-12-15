@@ -22,7 +22,7 @@
               q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)")         
             q-item-main
               q-item-tile(label style="user-select: none;") {{device.name}}
-              q-item-tile(sublabel) {{device.status}} {{device.power[0]}}
+              q-item-tile(sublabel) {{device.status}}
                 //- q -icon.text-center(color="yellow" name='flash_on')
             h6.inline.float-right.text-green(v-if="device.toggle") {{ch.hps}}
             q-spinner-grid.inline.on-right(:size="20" color="green" v-if="device.toggle")
