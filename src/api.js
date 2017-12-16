@@ -62,8 +62,7 @@ var api = {
     },
     authenticateUser: async function (formData) {
       try {
-        var result = (await client.request(m.auth.signupUser(), formData))
-          .signupUser
+        var result = (await client.request(m.auth.signupUser(), formData)).signupUser
         console.log(result)
         setupClient(result.token)
         if (JSON.parse(window.localStorage.getItem('rememberMe'))) {
@@ -87,6 +86,12 @@ var api = {
       console.log('get user', userId)
       var result = ((await client.request(q.user.get(), {userId}))).User
       events.emit('thisUser', result)
+      return result
+    },
+    getByUsername: async function (username) {
+      // console.log('get user', userId)
+      var result = ((await client.request(q.user.getByUsername(), {username}))).User
+      // events.emit('thisUser', result)
       return result
     }
   },

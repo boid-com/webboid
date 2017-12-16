@@ -17,8 +17,8 @@ export default {
     },
     signupUser () {
       return gql`
-        mutation($email: String!, $password: String!) {
-          signupUser(email: $email, password: $password) {
+        mutation($email: String!, $password: String!, $invitedById: ID) {
+          signupUser(email: $email, password: $password, invitedById: $invitedById) {
             id
             token
           }

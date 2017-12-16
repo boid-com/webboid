@@ -25,6 +25,29 @@ export default {
           }
         }
       `
+    },
+    getByUsername () {
+      return gql`
+        query User($username: String!) {
+          User(username: $username) {
+            id
+            email
+            username
+            devices {
+              type
+              id
+              name
+              status
+            }
+            wallet {
+              tokens {
+                id
+                balance
+              }
+            }
+          }
+        }
+      `
     }
   },
   device: {

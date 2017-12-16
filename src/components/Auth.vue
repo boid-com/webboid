@@ -7,6 +7,8 @@
     div
       h4.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
       h6.light-paragraph.text-center(style="margin-bottom:30px;") The Social Supercomputer
+      h6.thin-paragraph.text-center(style="margin-bottom:30px;" v-if="invitedByUser") You were invited by: {{invitedByUser.username}}
+
       //- h6.light-paragraph Sign in 
       q-input(
         v-model="form.email"
@@ -45,10 +47,11 @@ export default {
       form: {
         email: "",
         password: "",
-        invitedBy: "cjaqc5m76adak0192uz3ad1o9"
+        invitedById: null
       },
       pending:false,
-      rememberMe:false
+      rememberMe:false,
+      invitedByUser:null
     }
   },
   validations: {
@@ -57,10 +60,6 @@ export default {
     }
   },
   computed: {
-    ref() {
-      console.log(this.$route.params.ref)
-      return this.$route.params.ref
-    },
     loginRdy() {
       if (!this.$v.form.$error) {
         return true
@@ -109,24 +108,47 @@ export default {
         this.pending=false
       },1500)
     }else{
+      console.log('we are here')
       this.$emit('update:authenticated',true)
       var userData = await this.api.user.get(result.id)
       this.$emit('update:thisUser',userData)
       this.pending = false
       this.form = {}
-      this.thisModal.close()
+      this.invitedByUser = null
+      console.log('we need to close the modal now')
+      setTimeout(()=>{
+        this.thisModal.close()
+      },2000)
+      
     }
+    },
+    checkInvitedBy: async function(){
+      var invitedBy = this.$route.params.username
+      this.form.invitedById = invitedBy
+      console.log(this.form.invitedById)
+
+      // if (invitedBy) var validUser = await this.api.user.getByUsername(invitedBy)
+      // if (validUser){
+      //   this.$router.push("/")
+      //   this.form.invitedBy = validUser.id
+      //   this.invitedByUser = validUser
+      // }
+      
     }
   },
   props: ["thisUser", "authenticated", "api", "thisModal"],
   mounted() {
     if (JSON.parse(window.localStorage.getItem('rememberMe'))) this.rememberMe = true
-    console.log(this.$route.params.ref)
+    console.log()
+    setTimeout(()=>{
+      this.checkInvitedBy()
+    },1000)
   },
   watch:{
     rememberMe:function(value){
       window.localStorage.setItem('rememberMe',value)
     }
+
   }
 
 }
