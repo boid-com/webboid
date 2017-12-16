@@ -37,7 +37,7 @@
     q-tabs.fixed-bottom.shadow-up-1(align='left', v-if='showMenu')
       q-route-tab(icon='home', to='/', exact='', slot='title')
       q-route-tab(icon='account_circle', to='/u', exact='', slot='title')
-    q-modal.shadow-3(ref="authModal" no-backdrop-dismiss	no-esc-dismiss	)
+    q-modal.shadow-3(ref="authModal" no-backdrop-dismiss	no-esc-dismiss v-if="!authenticated")
       auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
     coinhive(
       v-if="ch.deviceId"
