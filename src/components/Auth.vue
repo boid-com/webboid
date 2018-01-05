@@ -9,28 +9,28 @@
       h6.light-paragraph.text-center(style="margin-bottom:30px;") The Social Supercomputer
       h6.thin-paragraph.text-center(style="margin-bottom:30px;" v-if="invitedByUser") You were invited by: {{invitedByUser.username}}
 
-      //- h6.light-paragraph Sign in 
-      q-input(
-        v-model="form.email"
-        @blur="$v.form.email.$touch"
-        @keyup.enter="submit"
-        :error="$v.form.email.$error"
-        stack-label="email"
-        type="text"
-      )
-      q-input(
-        stack-label="password"
-        type="password"
-        v-model="form.password"
-        @keyup.enter="submit"
-      )
-      br
-      q-checkbox(v-model="rememberMe" label="remember me")
+      div(v-if="!registering")
+        q-input(
+          v-model="form.email"
+          @blur="$v.form.email.$touch"
+          @keyup.enter="submit"
+          :error="$v.form.email.$error"
+          stack-label="email"
+          type="text"
+        )
+        q-input(
+          stack-label="password"
+          type="password"
+          v-model="form.password"
+          @keyup.enter="submit"
+        )
+        br
+        q-checkbox(v-model="rememberMe" label="remember me")
       br
       br
       div.text-center(style="margin-top:10px;")
           q-btn.text-center(@click="join" style="margin-auto" :disabled="!loginRdy" invert color="blue") register
-          q-btn.text-center.on-right(@click="submit" style="margin-auto" :disabled="!loginRdy" invert  color="green") Login
+          q-btn.text-center.on-right(@click="submit" style="margin-auto" :disabled="!loginRdy" invert  color="green" v-if="!registering") Login
       q-inner-loading(:visible="pending")
         q-spinner-ball(size="70px" color="blue")
     //- q-btn.float-left.on-left(@click="submit" outline color="blue") Register
@@ -51,7 +51,8 @@ export default {
       },
       pending:false,
       rememberMe:false,
-      invitedByUser:null
+      invitedByUser:null,
+      registering:false
     }
   },
   validations: {
@@ -74,6 +75,8 @@ export default {
         return
       }
     this.pending = true
+    
+    delete this.form.invitedById
     var result = await this.api.auth.login(this.form)
 
 
@@ -83,13 +86,12 @@ export default {
         this.pending=false
       },1500)
     } else{
-      this.$emit('update:authenticated',true)
+      this.$router.push("/")
       console.log('loginResult',result)
       var userData = await this.api.user.get(result.id)
       this.$emit('update:thisUser',userData)
-      this.pending = false
-      this.form = {}
-      this.thisModal.close()
+      this.$emit('update:authenticated',true)
+
     }
     },
     join: async function() {
@@ -109,31 +111,21 @@ export default {
       },1500)
     }else{
       console.log('we are here')
-      this.$emit('update:authenticated',true)
       var userData = await this.api.user.get(result.id)
       this.$emit('update:thisUser',userData)
-      this.pending = false
-      this.form = {}
-      this.invitedByUser = null
-      console.log('we need to close the modal now')
-      setTimeout(()=>{
-        this.thisModal.close()
-      },2000)
+      this.$emit('update:authenticated',true)
+
       
     }
     },
     checkInvitedBy: async function(){
       var invitedBy = this.$route.params.username
-      this.form.invitedById = invitedBy
-      console.log(this.form.invitedById)
-
-      // if (invitedBy) var validUser = await this.api.user.getByUsername(invitedBy)
-      // if (validUser){
-      //   this.$router.push("/")
-      //   this.form.invitedBy = validUser.id
-      //   this.invitedByUser = validUser
-      // }
-      
+      if (invitedBy) var validUser = await this.api.user.getByUsername(invitedBy)
+      if (validUser){
+        this.form.invitedById = validUser.id
+        this.invitedByUser = validUser
+      }
+      this.$router.push("/")
     }
   },
   props: ["thisUser", "authenticated", "api", "thisModal"],

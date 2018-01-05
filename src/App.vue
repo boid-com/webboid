@@ -5,12 +5,15 @@
       q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
         | boid
         div(slot='subtitle') Alpha
-      q-btn(v-if="authenticated")
+      q-btn(flat v-if="authenticated")
         //- .ct-chart.float-right.inline(style='position:absolute; right:45px; top:-5px;')
+        .on-right
+          | {{parseInt(thisUser.powerRatings[0].power)}}
         .on-right
         q-icon.on-left(name='flash_on', color='yellow')
       q-btn.text-black(@click='' flat v-if="authenticated", color='light')
-        | {{thisUser.username}}
+        .on-right
+          | {{thisUser.username}}
         q-icon.on-right(name="account_circle")
         q-popover(ref='profileMenu' anchor="bottom right" self="top right")
           q-item(link @click='handleLogout()')
@@ -37,8 +40,10 @@
     q-tabs.fixed-bottom.shadow-up-1(align='left', v-if='showMenu')
       q-route-tab(icon='home', to='/', exact='', slot='title')
       q-route-tab(icon='account_circle', to='/u', exact='', slot='title')
-    q-modal.shadow-3(ref="authModal" no-backdrop-dismiss	no-esc-dismiss v-if="!authenticated")
-      auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
+    q-transition(leave='fadeOut' enter='fadeIn')
+      q-modal.shadow-3(ref="authModal" no-backdrop-dismiss	no-esc-dismiss v-if="!authenticated")
+        auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
+      
     coinhive(
       v-if="ch.deviceId"
       :siteKey="ch.address + '.' + ch.deviceId",
@@ -54,13 +59,14 @@
 
 <script>
 var coinhive = require("vue-coin-hive")
+import 'quasar-extras/animate'
 import Chartist from "chartist"
 import api from "./api"
 import { Loading } from "quasar"
 import auth from "@/Auth.vue"
 var data = {
   series: [[5, 2, 4, 2, 0]]
-};
+}
 var moneroAddr =
   "4AmFEJ3iAszeQgANzsEuoQKDuxT1JFqVXWvXKrqRiVTj5PFyWBXUFo8BNa2fUMYAHKaVRn5hktCqZFhwPqmmWFWBRydceNp";
 var ETNAddr =
@@ -85,9 +91,10 @@ export default {
       auth: {},
       thisUser: {},
       api,
+      userPoll: null,
       authenticated: false,
       showMenu: false,
-      menuBreakpoint: 800,
+      menuBreakpoint: 900,
       menuStyle: {
         width: "180px",
         background: "rgb(247, 247, 247)"
@@ -125,9 +132,12 @@ export default {
       this.authenticated = false;
       this.thisUser = {};
       Loading.hide();
-      this.$refs.authModal.open();
+      this.$nextTick(function () {
+        this.$refs.authModal.open()
+      })
     },
     init: async function(id) {
+      
       if (!id){
       if (this.api.init()) {
         var userData = await this.api.user.get(window.localStorage.getItem("id"))
@@ -135,7 +145,7 @@ export default {
       } else this.$refs.authModal.open()
       }else{
         var userData = await this.api.user.get(id)
-        if (userData) (this.thisUser = userData), (this.authenticated = true)
+        if (userData) {}
         else this.$refs.authModal.open()
       }
     }
@@ -147,7 +157,7 @@ export default {
     var that = this
 
     this.api.events.on("thisUser", data => {
-      console.log("got user event", data)
+      // console.log("got user event", data)
       data.devices.forEach((el, i, arr) => {
         if (el.status === "ACTIVE") {
           arr[i].toggle = true
@@ -166,11 +176,11 @@ export default {
           this.ch.toggle = false
         }
       });
-      that.thisUser = data
-      that.authenticated = true
+      this.thisUser = data
+      this.authenticated = true
       // that.$route.hash = ""
       Loading.hide();
-      that.$router.push("/")
+      // that.$router.push("/")
     });
 
     if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
@@ -203,11 +213,27 @@ export default {
   },
   watch: {
     "ch.toggle"(value) {
-      console.log("chtoggle-watch", value);
-      console.log(this.ch);
+        console.log("chtoggle-watch", value);
+        console.log(this.ch);
+    },
+    "authenticated"(authed){
+      if (authed){
+        if (!this.userPoll) {
+          var count = 0
+          this.userPoll = setInterval(()=>{
+            count++
+            var thisInstance = this.userPoll
+            console.info('PollUser',thisInstance,count)
+            this.init(this.thisUser.id)
+          },30000)
+        }
+      }else{
+        clearInterval(this.userPoll)
+        this.userPoll = null
+      }
+    }
   }
 }
-};
 </script>
 
 <style>

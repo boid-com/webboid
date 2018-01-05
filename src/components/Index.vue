@@ -8,10 +8,24 @@
       q-card.animate-scale
         p.light-paragraph.text-center Power Rating
         div(style="margin:auto;")
-          p.text-center 500
+          p.text-center {{parseInt(thisUser.powerRatings[0].power)}}
             q-icon.text-center(color="yellow" name='flash_on' style="font-size:50px;")
+            small.block.light-paragraph.small Devices: {{parseInt(thisUser.powerRatings[0].meta.devices)}}
+              q-icon(name="flash_on" color="yellow")
+            small.block.light-paragraph Social: {{parseInt(thisUser.powerRatings[0].meta.social)}}
+              q-icon(name="flash_on" color="yellow")
         q-btn(small flat color="blue").block.full-width
           | What is Power Rating?
+      q-card.animate-scale
+        p.light-paragraph.text-center Wallet
+        table.q-table(style="width:100%")
+          tbody(v-for="token in thisUser.wallet.tokens" :key="token.id")
+            tr.tokenlist.cursor-pointer()
+              td 
+                img.tokenimg(:src="token.tokenType.image")
+              td {{token.tokenType.name}}
+              td {{token.balance}}
+              td
     .col
       q-card.animate-scale
         p.light-paragraph.text-center My Devices
@@ -38,7 +52,42 @@
           | add more Devices
           q-icon.on-right(name="add")
       q-card.animate-scale
-        p.light-paragraph.text-center Global Leaderboard
+        p.light-paragraph.text-center User Leaderboard
+        table.q-table.horizontal-separator(style="width:100%")
+          thead
+            tr
+              th
+              th Username
+              th Team
+              th Power
+                q-icon(name="flash_on" color="yellow")
+              th
+          tbody(v-for="user in this.leaderboard" :key="user.id")
+            tr
+              td 
+                img.avatar(:src="user.image")
+              td(data-th="Username") {{user.username}}
+              td(data-th="Team") $10.11
+              td(data-th="Power") {{parseInt(user.power)}}
+      q-card.animate-scale
+        p.light-paragraph.text-center Team Leaderboard
+        table.q-table.horizontal-separator(style="width:100%")
+          thead
+            tr
+              th
+              th Teamname
+              th Leader
+              th Power
+                q-icon(name="flash_on" color="yellow")
+              th
+          tbody(v-for="team in this.teamLeaderboard" :key="team.id")
+            tr
+              td 
+                img.avatar(:src="team.image")
+              td(data-th="Username") {{team.name}}
+              td(data-th="Leader") $10.11
+              td(data-th="Power") {{parseInt(team.power)}}
+      
   q-modal(ref="deviceModal" @close="currentDevice = null")
     device(
       :deviceId="currentDevice"
@@ -59,11 +108,24 @@ export default {
     return {
       currentDevice: null,
       devices: [],
-      parseDevice
+      parseDevice,
+      leaderboard:[],
+      teamLeaderboard:[],
+      pollLeaderboard:null
     }
   },
-  computed: {},
+  computed: {
+    userPower:() => {
+      return 'lul'
+    }
+  },
   methods: {
+    updateLeaderboards: async function(){
+      this.leaderboard = await this.api.leaderboard.global() 
+      this.teamLeaderboard = await this.api.leaderboard.teams() 
+      console.log('updateLeaderboard',this.leaderboard)
+
+    },
     toggleDevice(device) {
       console.log(device)
     },
@@ -100,14 +162,12 @@ export default {
   },
   mounted() {
     this.init()
+    this.updateLeaderboards()
+    setInterval(this.updateLeaderboard,200000)
   },
   watch: {
     thisUser() {
       this.init()
-    },
-    devices(val) {
-      if (val){
-      }
     }
   },
   props: ["thisUser", "authenticated", "api", "ch"],
@@ -118,8 +178,18 @@ export default {
 </script>
 
 <style lang="stylus">
+@import '~variables'
 .q-card {
   padding: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
 }
+.tokenimg{
+  width:50px;
+}
+.tokenlist{
+
+}
+.tokenlist:hover
+  background-color: $grey-2
+
 </style>

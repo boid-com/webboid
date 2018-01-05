@@ -1,6 +1,7 @@
 <template lang="pug">
 .layout-padding
-  h3.text-center user Profile
+  h4.text-center user Profile
+  img.avatar.text-center(:src="thisUser.image")
 
 
   
@@ -20,7 +21,8 @@ export default {
   },
   methods: {
 
-  }
+  },
+  props:['thisUser','api']
 }
 </script>
 

@@ -10,6 +10,7 @@ export default {
             id
             email
             username
+            image
             devices {
               type
               id
@@ -20,7 +21,16 @@ export default {
               tokens {
                 id
                 balance
+                tokenType{
+                  name
+                  image
+                  description
+                }
               }
+            }
+            powerRatings(last:1){
+              power
+              meta
             }
           }
         }
@@ -63,6 +73,28 @@ export default {
           }
         }
         `
+    }
+  },
+  leaderboard: {
+    global () {
+      return gql`
+      query($teamId:ID){
+        leaderboard(teamId:$teamId){
+          users
+        }
+      }`
+    },
+    teams () {
+      return gql`
+      query{
+        allTeams{
+          name
+          power
+          id
+          image
+          change24
+        }
+      }`
     }
   }
 }

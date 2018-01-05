@@ -1,6 +1,4 @@
-import {
-  GraphQLClient
-} from 'graphql-request'
+import {GraphQLClient} from 'graphql-request'
 import EventEmitter from 'event-emitter'
 import m from 'gql/mutations.js'
 import q from 'gql/queries.js'
@@ -83,8 +81,8 @@ var api = {
   },
   user: {
     get: async function (userId) {
-      console.log('get user', userId)
       var result = ((await client.request(q.user.get(), {userId}))).User
+      console.log('get user', result)
       events.emit('thisUser', result)
       return result
     },
@@ -112,6 +110,15 @@ var api = {
       // location.reload()
       // events.emit('thisUser', result)
       return result
+    }
+  },
+  leaderboard: {
+    global: async function (teamId) {
+      return (await client.request(q.leaderboard.global(),
+        {teamId: teamId})).leaderboard.users
+    },
+    teams: async function (teamId) {
+      return (await client.request(q.leaderboard.teams())).allTeams
     }
   }
 }
