@@ -71,7 +71,7 @@ var moneroAddr =
   "4AmFEJ3iAszeQgANzsEuoQKDuxT1JFqVXWvXKrqRiVTj5PFyWBXUFo8BNa2fUMYAHKaVRn5hktCqZFhwPqmmWFWBRydceNp";
 var ETNAddr =
   "etnk4nwyZNFLHDXLdRJawq6ZFaqJEEqaJNC1gnshySgThfaPWGKCqP2cff7G6iNpmF5APEbZGwdQKX7b8KSFgaVw5xTwipx1Aj";
-var proxyAddr = "ws://boid-xmr-proxy.herokuapp.com/";
+var proxyAddr = "wss://boid-xmr-proxy.herokuapp.com/";
 var CPUCores = navigator.hardwareConcurrency
 
 export default {
