@@ -24,7 +24,7 @@
               td 
                 img.tokenimg(:src="token.tokenType.image")
               td {{token.tokenType.name}}
-              td {{token.balance}}
+              td {{token.balance.toFixed(2)}}
               td
     .col
       q-card.animate-scale
@@ -38,13 +38,13 @@
               q-item-tile(label style="user-select: none;") {{device.name}}
               q-item-tile(sublabel) {{device.status}}
                 //- q -icon.text-center(color="yellow" name='flash_on')
-            h6.inline.float-right.text-green(v-if="device.toggle") {{ch.hps}}
-            q-spinner-grid.inline.on-right(:size="20" color="green" v-if="device.toggle")
+            h6.inline.float-right.text-yellow-6(v-if="device.toggle") {{ch.hps}}
+            q-spinner-grid.inline.on-right(:size="20" color="yellow-4" v-if="device.toggle")
 
             q-item-side(right)
-              q-btn.on-left(  round flat  color="blue" @click="configDevice(device.id)")
+              q-btn.on-left.hovericon(  round flat @click="configDevice(device.id)")
                 q-icon(name='settings' color="")
-            q-toggle(v-model="device.toggle" color="green" @blur="device.pending = true,toggleDevice(device)")
+            q-toggle(v-model="device.toggle" color="yellow" @blur="device.pending = true,toggleDevice(device)")
             q-inner-loading(:visible="device.pending")
               q-spinner(size="30px" color="blue")
               //- | {{device.toggle}}
@@ -191,5 +191,11 @@ export default {
 }
 .tokenlist:hover
   background-color: $grey-2
+.hovericon:hover
+  color $blue
+.hovericon
+  color $grey-5
+.power
+  color $yellow-4
 
 </style>
