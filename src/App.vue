@@ -1,4 +1,5 @@
 <template lang="pug">
+
  #q-app
   //- q-layout(ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
   q-layout(ref='layout', view='hHR Lpr lFf')  
@@ -70,6 +71,9 @@
 </template>
 
 <script>
+// (function(o,l,a,r,k,y){if(o.olark)return; r="script";y=l.createElement(r);r=l.getElementsByTagName(r)[0]; y.async=1;y.src="//"+a;r.parentNode.insertBefore(y,r); y=o.olark=function(){k.s.push(arguments);k.t.push(+new Date)}; y.extend=function(i,j){y("extend",i,j)}; y.identify=function(i){y("identify",k.i=i)}; y.configure=function(i,j){y("configure",i,j);k.c[i]=j}; k=y._={s:[],t:[+new Date],c:{},l:a}; })(window,document,"static.olark.com/jsclient/loader.js");
+  /* custom configuration goes here (www.olark.com/documentation) */
+window.olark.identify('3844-769-10-6059')
 var coinhive = require("vue-coin-hive")
 import 'quasar-extras/animate'
 import Chartist from "chartist"
@@ -257,14 +261,14 @@ export default {
     },
     "authenticated"(authed){
       if (authed){
-        if (window.olark){
-          window.olark('api.visitor.updateFullName', {
-            fullName: this.thisUser.username
-          })
-          window.olark('api.visitor.updateEmailAddress', {
-              emailAddress: this.thisUser.email
-          })
-        }
+        // if (window.olark){
+        //   window.olark('api.visitor.updateFullName', {
+        //     fullName: this.thisUser.username
+        //   })
+        //   window.olark('api.visitor.updateEmailAddress', {
+        //       emailAddress: this.thisUser.email
+        //   })
+        // }
 
 
         if (!this.userPoll) {
