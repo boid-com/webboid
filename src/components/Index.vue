@@ -4,8 +4,10 @@
   br
   br
   .row.gutter.justify-center
-    .col-auto
-      q-card.animate-scale
+    .col-auto(style="max-width:270px")
+      q-card.animate-scale.relative-position
+        q-btn.absolute.infobtn(round small flat)
+          q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.power)")
         p.light-paragraph.text-center Power Rating
         div(style="margin:auto;")
           p.text-center {{parseInt(thisUser.powerRatings[0].power)}}
@@ -14,9 +16,44 @@
               q-icon(name="flash_on" color="yellow")
             small.block.light-paragraph Social: {{parseInt(thisUser.powerRatings[0].meta.social)}}
               q-icon(name="flash_on" color="yellow")
-        q-btn(small flat color="blue").block.full-width
-          | What is Power Rating?
-      q-card.animate-scale
+      q-card.animate-scale.relative-position
+        q-btn.absolute.infobtn(round small flat)
+          q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.social)")
+        p.light-paragraph.text-center Social
+        p Users Invited: {{thisUser.invited.length}}
+        p Power from Invited Users: {{parseInt(thisUser.powerRatings[0].meta.social)}}
+        q-btn.full-width(color="green" @click="openURL(thisUser.team.meta.social.telegram)")
+          | Get Invite Link
+      q-card.animate-scale.relative-position
+        div.light-paragraph.text-center My Profile
+        table.q-table(style="width:100%")
+          tbody
+            tr
+              td 
+                img.tokenimg(:src="thisUser.image")
+              td {{thisUser.username}}
+        div(style="padding-left:5px")
+          p.light-paragraph(v-if="!thisUser.tagline") No tagline set...
+          p(v-else) {{thisUser.tagline}}
+        q-btn.full-width(color="blue" @click="openURL(thisUser.team.meta.social.telegram)")
+          | Update profile
+      q-card.animate-scale.relative-position
+        q-btn.absolute.infobtn(round small flat)
+          q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.team)")
+        div.light-paragraph.text-center My Team
+        table.q-table(style="width:100%")
+          tbody()
+            tr
+              td 
+                img.tokenimg(:src="thisUser.team.image")
+              td {{thisUser.team.name}}
+        q-btn.full-width(color="blue" outline @click="openURL(thisUser.team.meta.social.telegram)")
+          img.on-left(style="width:25px" src="https://telegram.org/img/t_logo.png")
+          | Join Telegram Chat
+
+      q-card.animate-scale.relative-position
+        q-btn.absolute.infobtn(round small flat)
+          q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.wallet)")
         p.light-paragraph.text-center Wallet
         table.q-table(style="width:100%")
           tbody(v-for="token in thisUser.wallet.tokens" :key="token.id")
@@ -26,11 +63,17 @@
               td {{token.tokenType.name}}
               td {{token.balance.toFixed(2)}}
               td
-    .col
       q-card.animate-scale
+        p.light-paragraph.text-center Inventory
+        p.text-centered.text-grey Inventory Items are coming soon...
+
+    .col
+      q-card.animate-scale.relative-position
         p.light-paragraph.text-center My Devices
+          q-btn.absolute.infobtn(round small flat)
+            q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.devices)")
         q-list( v-for="(device,index) in devices" :key="device.id")
-          q-item.relative-position()
+          q-item.relative-position(v-if="!adBlock && device.type == 'BROWSER'")
             //- | {{device.status}}
             q-item-side
               q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)")         
@@ -48,34 +91,38 @@
             q-inner-loading(:visible="device.pending")
               q-spinner(size="30px" color="blue")
               //- | {{device.toggle}}
-        q-btn.full-width( small color="green")
+          q-item.relative-position.bg-red(v-else color="red" style="height:80px")
+            h5.text-white Disable AdBlock and refresh to continue
+
+        q-btn.full-width( disabled small color="green")
           | add more Devices
           q-icon.on-right(name="add")
       q-card.animate-scale
-        p.light-paragraph.text-center User Leaderboard
+        p.light-paragraph.text-center Top Users
         table.q-table.horizontal-separator(style="width:100%")
           thead
             tr
-              th
+              th 
               th Username
               th Team
               th Power
                 q-icon(name="flash_on" color="yellow")
-              th
-          tbody(v-for="user in this.leaderboard" :key="user.id")
+              th Rank
+          tbody(v-for="(user,index) in this.leaderboard" :key="user.id")
             tr
               td 
                 img.avatar(:src="user.image")
               td(data-th="Username") {{user.username}}
-              td(data-th="Team") $10.11
+              td(data-th="Team") {{user.team.name}}
               td(data-th="Power") {{parseInt(user.power)}}
+              td {{index + 1}}
       q-card.animate-scale
-        p.light-paragraph.text-center Team Leaderboard
+        p.light-paragraph.text-center Top Teams
         table.q-table.horizontal-separator(style="width:100%")
           thead
             tr
               th
-              th Teamname
+              th 
               th Leader
               th Power
                 q-icon(name="flash_on" color="yellow")
@@ -85,7 +132,7 @@
               td 
                 img.avatar(:src="team.image")
               td(data-th="Username") {{team.name}}
-              td(data-th="Leader") $10.11
+              td(data-th="Leader") $10. 11
               td(data-th="Power") {{parseInt(team.power)}}
       
   q-modal(ref="deviceModal" @close="currentDevice = null")
@@ -101,11 +148,46 @@
 <script>
 import device from "@/Device"
 import parseDevice from "src/lib/parseDevice"
+import { openURL } from 'quasar'
+
+var info = {
+  wallet:{
+    heading:"Your Wallet",
+    body:`Tokens and coins which you earn from your team will show up in your wallet.
+          To earn more, you need to increase your Power by running Boid on more devices or inviting more users.
+          During the Alpha, only BOIDs are generated.`
+  },
+  power:{
+    heading:"Boid Power",
+    body:`Your Boid Power is your score that shows how much influence you have on Boid.  The higher your Power,
+          the more you will earn and the higher you will climb in the leaderboards. When you invite others, you
+          earn some power when they run the app.`
+  },
+  devices:{
+    heading:"Your Devices",
+    body:`When you install the Boid application on multiple devices (desktops, laptops, phones), 
+          you will be able to manage your devices here.`
+  },
+  team:{
+    heading:"Your Team",
+    body:`Your power generated goes towards your Team, in eachange, each team will distribute exclusive rewards. 
+          You are automatically on the team of the user who has invited you, Soon you will be able to change teams.`
+  },
+  social:{
+    heading:"Social",
+    body:`When users join Boid using your invite link you will receive a small percentage of bonus power based
+          on their contributions. Your Invite link changes if you change your username.`
+  }
+
+}
+
 
 export default {
   name: "index",
   data() {
     return {
+      openURL,
+      info,
       currentDevice: null,
       devices: [],
       parseDevice,
@@ -168,9 +250,12 @@ export default {
   watch: {
     thisUser() {
       this.init()
+    },
+    adBlock(){
+      console.log('here we are')
     }
   },
-  props: ["thisUser", "authenticated", "api", "ch"],
+  props: ["thisUser", "authenticated", "api", "ch","adBlock"],
   components: {
     device
   }
@@ -197,5 +282,14 @@ export default {
   color $grey-5
 .power
   color $yellow-4
+.infobtn
+  color $grey-6
+  font-size 15px
+  right 10px
+.infobtn:hover
+  color $green
+.q-btn-round.q-btn-small
+  width 30px
+  height 30px
 
 </style>

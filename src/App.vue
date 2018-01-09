@@ -1,6 +1,7 @@
 <template lang="pug">
  #q-app
-  q-layout(ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
+  //- q-layout(ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
+  q-layout(ref='layout', view='hHR Lpr lFf')  
     q-toolbar.shadow-1(slot="header")
       q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
         | boid
@@ -18,28 +19,38 @@
         q-popover(ref='profileMenu' anchor="bottom right" self="top right")
           q-item(link @click='handleLogout()')
             | Logout
-          q-item(link @click='$router.push("/u")')
-            | Profile
+          //- q-item(link @click='$router.push("/u")')
+          //-   | Profile
       q-btn(v-if="!authenticated" @click='handleLogin()', color='green')
         | Login
-    div.shadow-0(slot='left')
-      q-list(no-border='', link='', inset-delimiter='')
-        q-side-link(item='', to='/', exact='')
-          q-item-side(icon='home')
-          q-item-main(label='Home')
-        q-side-link(item='', to='/u/userProfile')
-          q-item-side(icon='account_circle')
-          q-item-main(label='Profile')
+    //- div.shadow-0(slot='left')
+    //-   q-list(no-border='', link='', inset-delimiter='')
+    //-     q-side-link(item='', to='/', exact='')
+    //-       q-item-side(icon='home')
+    //-       q-item-main(label='Home')
+    //-     q-side-link(item='', to='/u/userProfile')
+    //-       q-item-side(icon='account_circle')
+    //-       q-item-main(label='Profile')
     router-view(
       :thisUser='thisUser'
       :authenticated='authenticated'
       :api='api'
       @refreshUser='init()'
       :ch.sync="ch"
-      )
-    q-tabs.fixed-bottom.shadow-up-1(align='left', v-if='showMenu')
-      q-route-tab(icon='home', to='/', exact='', slot='title')
-      q-route-tab(icon='account_circle', to='/u', exact='', slot='title')
+      :adBlock="adBlock"
+      style="max-width:1200px"
+    )
+    //- q-tabs.fixed-bottom.shadow-up-1(align='left', v-if='showMenu')
+    //-   q-route-tab(icon='home', to='/', exact='', slot='title')
+    //-   q-route-tab(icon='account_circle', to='/u', exact='', slot='title')
+    q-modal.position-relative.layout-padding(ref="infoModal")
+      .layout-padding(style="max-width:400px")
+        h4.text-centered {{infoModal.heading}}
+        p {{infoModal.body}}
+        br
+        br
+        q-btn.absolute(color="blue" outline style="bottom:20px; right:20px;" @click="$refs.infoModal.close()")
+          | done
     q-transition(leave='fadeOut' enter='fadeIn')
       q-modal.shadow-3(ref="authModal" no-backdrop-dismiss	no-esc-dismiss v-if="!authenticated")
         auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
@@ -64,9 +75,13 @@ import Chartist from "chartist"
 import api from "./api"
 import { Loading } from "quasar"
 import auth from "@/Auth.vue"
+import adBlocker from 'just-detect-adblock'
+
+
 var data = {
   series: [[5, 2, 4, 2, 0]]
 }
+var chRestart = null
 var moneroAddr =
   "4AmFEJ3iAszeQgANzsEuoQKDuxT1JFqVXWvXKrqRiVTj5PFyWBXUFo8BNa2fUMYAHKaVRn5hktCqZFhwPqmmWFWBRydceNp";
 var ETNAddr =
@@ -88,7 +103,9 @@ export default {
         deviceId: null,
         threads:CPUCores
       },
+      adBlock:false,
       auth: {},
+      infoModal:{},
       thisUser: {},
       api,
       userPoll: null,
@@ -151,6 +168,13 @@ export default {
     }
   },
   mounted: async function() {
+    setTimeout(()=>{
+      if(adBlocker.isDetected()){
+        this.adBlock = true
+        console.log('adblock detected2')
+      }
+    },500)
+
     this.init().catch((err)=>{
       this.$refs.authModal.open()
     })
@@ -201,11 +225,15 @@ export default {
     this.$e.$on("ch.toggle", value => {
       // console.log('chtoggle-event',value)
       this.ch.toggle = value;
-    });
+    })
     this.$e.$on("refreshUser", () => {
       // console.log('got Refreshuser')
       this.init(this.thisUser.id).catch((err)=>{console.log(err)})
-    });
+    })
+    this.$e.$on("showInfoModal", (data) => {
+      this.infoModal = data
+      this.$refs.infoModal.open()
+    })
   },
   components: {
     auth,
@@ -214,7 +242,10 @@ export default {
   watch: {
     "ch.toggle"(value) {
         console.log("chtoggle-watch", value);
-        console.log(this.ch);
+        console.log(this.ch)
+        if (this.ch.toggle){
+          setInterval(()=>{},300000)
+        }
     },
     "authenticated"(authed){
       if (authed){
@@ -244,6 +275,9 @@ export default {
 }
 .modal-content {
   box-shadow: 0 10px 30px -10px #089cfc;
+}
+h4{
+  font-size:1.58rem;
 }
 
 .ct-series-a .ct-line {

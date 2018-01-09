@@ -11,11 +11,22 @@ export default {
             email
             username
             image
+            tagline
+            invited{
+              id
+            }
             devices {
               type
               id
               name
               status
+            }
+            team {
+              id
+              name
+              image
+              ownerId
+              meta
             }
             wallet {
               tokens {
@@ -87,7 +98,7 @@ export default {
     teams () {
       return gql`
       query{
-        allTeams{
+        allTeams(orderBy: power_DESC first:3 filter:{power_gt:0}){
           name
           power
           id
