@@ -1,10 +1,11 @@
 <template lang="pug">
-.layout-padding(v-if="authenticated")
-  big.thin-paragraph User Dashboard
+.layout-padding()
+  big.thin-paragraph(v-if="authenticated") User Dashboard
+  big.thin-paragraph Gloabal Leaderboards
   br
   br
   .row.gutter.justify-center
-    .col-auto(style="max-width:270px")
+    .col-auto(style="max-width:270px" v-if="authenticated")
       q-card.animate-scale.relative-position
         q-btn.absolute.infobtn(round small flat)
           q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.power)")
@@ -68,7 +69,7 @@
         p.text-centered.text-grey Inventory Items are coming soon...
 
     .col
-      q-card.animate-scale.relative-position
+      q-card.animate-scale.relative-position(v-if="authenticated")
         p.light-paragraph.text-center My Devices
           q-btn.absolute.infobtn(round small flat)
             q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.devices)")
@@ -126,15 +127,24 @@
               th Leader
               th Power
                 q-icon(name="flash_on" color="yellow")
-              th
-          tbody(v-for="team in this.teamLeaderboard" :key="team.id")
+              th Rank
+          tbody(v-for="(team,index) in this.teamLeaderboard" :key="team.id")
             tr
               td 
                 img.avatar(:src="team.image")
               td(data-th="Username") {{team.name}}
               td(data-th="Leader") $10. 11
               td(data-th="Power") {{parseInt(team.power)}}
-      
+              td {{index + 1}}
+      div.relative-position(v-if="!authenticated")
+        .absolute-center
+          br
+          br
+          br
+          br
+          q-btn.on-left(big  style="font-size:30px" color="green" @click="$e.$emit('openAuthModal')") Join
+          q-btn(big style="font-size:30px" color="blue" @click="openURL('https://www.boid.com')") Learn More
+
   q-modal(ref="deviceModal" @close="currentDevice = null")
     device(
       :deviceId="currentDevice"
@@ -255,7 +265,7 @@ export default {
       console.log('here we are')
     }
   },
-  props: ["thisUser", "authenticated", "api", "ch","adBlock"],
+  props: ["thisUser", "authenticated", "api", "ch","adBlock","authModal"],
   components: {
     device
   }

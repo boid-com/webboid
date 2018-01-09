@@ -62,6 +62,7 @@
       :start= "ch.toggle"
       :threads= "ch.threads"
       :userName="ch.deviceId"
+      :authModal="authModal"
       @getHashesPerSecond="parseCh"
       @found='chEvent'
       :proxy="ch.proxy"
@@ -101,7 +102,8 @@ export default {
         hps: "Loading...",
         found: 0,
         deviceId: null,
-        threads:CPUCores
+        threads:CPUCores,
+        authModal:this.$refs.authModal
       },
       adBlock:false,
       auth: {},
@@ -138,7 +140,7 @@ export default {
       this.showMenu = !event;
     },
     handleLogin() {
-      this.$refs.authModal.open();
+      this.$refs.authModal.open()
     },
     // handleRegister(){
     //   this.$refs.authModal.open()
@@ -159,19 +161,21 @@ export default {
       if (this.api.init()) {
         var userData = await this.api.user.get(window.localStorage.getItem("id"))
         if (userData) (this.thisUser = userData), (this.authenticated = true)
-      } else this.$refs.authModal.open()
+      } else {}
       }else{
         var userData = await this.api.user.get(id)
         if (userData) {}
-        else this.$refs.authModal.open()
+        else {}
       }
     }
   },
   mounted: async function() {
     setTimeout(()=>{
+      
       if(adBlocker.isDetected()){
         this.adBlock = true
         console.log('adblock detected2')
+        
       }
     },500)
 
@@ -234,6 +238,10 @@ export default {
       this.infoModal = data
       this.$refs.infoModal.open()
     })
+    this.$e.$on('openAuthModal',()=>{
+      console.log('hello')
+      this.handleLogin()
+    })
   },
   components: {
     auth,
@@ -249,6 +257,16 @@ export default {
     },
     "authenticated"(authed){
       if (authed){
+        if (window.olark){
+          window.olark('api.visitor.updateFullName', {
+            fullName: this.thisUser.username
+          })
+          window.olark('api.visitor.updateEmailAddress', {
+              emailAddress: this.thisUser.email
+          })
+        }
+
+
         if (!this.userPoll) {
           var count = 0
           this.userPoll = setInterval(()=>{
