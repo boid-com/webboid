@@ -7,7 +7,7 @@ var app = express()
 // app.use(sslRedirect())
 app.set('port', (process.env.PORT || 5000))
 app.use(history())
-app.use(serveStatic('dist'))
+app.use(serveStatic('./dist'))
 
 app.listen(app.get('port'), function () {
   console.log('Node app is running at localhost:' + app.get('port'))
