@@ -98,6 +98,10 @@ var api = {
         return true
       }
       else return false
+    },
+    updateProfile: async function (params) {
+      var result = (await client.request(m.user.updateProfile(), params).catch(console.log))
+      return result
     }
   },
   device: {

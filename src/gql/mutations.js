@@ -39,5 +39,26 @@ export default {
         }
       `
     }
+  },
+  user: {
+    updateProfile () {
+      return gql`
+        mutation(
+          $userId:ID!
+          $tagline:String
+          $imageURL:String
+          $username:String
+        ){
+          updateUser(
+            id:$userId
+            tagline:$tagline
+            image:$imageURL
+            username:$username
+          ){
+            id
+          }
+        }
+      `
+    }
   }
 }

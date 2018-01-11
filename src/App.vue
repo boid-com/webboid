@@ -46,7 +46,7 @@
     //-   q-route-tab(icon='account_circle', to='/u', exact='', slot='title')
     q-modal.position-relative.layout-padding(ref="infoModal")
       .layout-padding(style="max-width:400px")
-        h4.text-centered {{infoModal.heading}}
+        h4.text-centered(style="color:#089cfc;") {{infoModal.heading}}
         p {{infoModal.body}}
         br
         br

@@ -181,7 +181,7 @@ var info = {
   team:{
     heading:"Your Team",
     body:`Your power generated goes towards your Team, in eachange, each team will distribute exclusive rewards. 
-          You are automatically on the team of the user who has invited you, Soon you will be able to change teams.`
+          You are automatically on the team of the user who has invited you.`
   },
   social:{
     heading:"Social",

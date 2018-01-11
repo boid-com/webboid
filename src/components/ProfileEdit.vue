@@ -38,7 +38,7 @@
             :loading="this.$v.form.$pending"
           )
           p.text-red.inline(v-if="$v.form.username.$error") Username already claimed
-          small.thin-paragraph.float-left(v-else) Changing your username changes your sharing URL
+          small.thin-paragraph.float-left(v-else) Changing your username will change your invite link
         br
         q-field(:count="50")
           q-input(
@@ -52,7 +52,6 @@
         br
       div.text-center(style="margin-top:10px;")
           q-btn.text-center(@click="thisModal.close()" style="margin-auto" invert color="red") cancel
-          
           q-btn.text-center.on-right(@click="submit" style="margin-auto" :disabled="!rdy" invert  color="green") Update
 
       q-inner-loading(:visible="pending")
@@ -63,6 +62,7 @@
 <script>
 import { required, email, minLength,url } from "vuelidate/lib/validators"
 import { Toast } from "quasar"
+
 const isImageUrl = require('is-image-url')
 
 export default {
@@ -111,46 +111,32 @@ export default {
         Toast.create("Please review fields again.")
         return
       }
-    this.pending = true
-    
-    delete this.form.invitedById
-    var result = await this.api.auth.login(this.form)
-
-
-    if (result.error){
-      Toast.create.negative(result.error)
-      setTimeout(()=>{
-        this.pending=false
-      },1500)
-    } else{
-      this.$router.push("/")
-      console.log('loginResult',result)
-      var userData = await this.api.user.get(result.id)
-      this.$emit('update:thisUser',userData)
-      this.$emit('update:authenticated',true)
-
-    }
-    },
-    join: async function() {
-      this.$v.form.$touch()
-      if (this.$v.form.$error) {
-        Toast.create("Please review fields again.")
-        return
-      }
-    this.pending = true
-    var result = await this.api.auth.authenticateUser(this.form)
-    
-    console.log(result)
-    if (result.error){
-      Toast.create.negative(result.error)
-      setTimeout(()=>{
-        this.pending=false
-      },1500)
-    }else{
-      // Update user Info Here
-
+      this.pending = true
       
-    }
+      var params = {}
+
+      params.userId = this.thisUser.id
+      
+      if (this.form.username != '') params.username = this.form.username
+      if (this.form.imageURL != '') params.imageURL = this.form.imageURL 
+      if (this.form.tagline != '') params.tagline = this.form.tagline
+      
+      var result = (await this.api.user.updateProfile(params))
+      console.log(result)
+
+      if (result.error){
+        Toast.create.negative(result.error)
+        setTimeout(()=>{
+          this.pending=false
+        },1500)
+      } else{
+        this.$e.$emit('refreshUser')
+        setTimeout(()=>{
+          this.pending=false
+          this.thisModal.close()
+        },1000)
+
+      }
     }
   },
   props: ["thisUser","api", "thisModal"],
@@ -165,8 +151,8 @@ export default {
       if(val.split(" ").length > 1){
         this.form.username = val.split(" ").join('')
       }
-      if (val === this.thisUser.username) this.form.username = "",this.$v.form.imageURL.$reset()
-      this.form.username = this.form.username.toLowerCase()
+      // if (val === this.thisUser.username) this.form.username = "",this.$v.form.imageURL.$reset()
+      // this.form.username = this.form.username.toLowerCase()
     },
     "form.imageURL":function(val){
       if (val==="") this.$v.form.imageURL.$reset()
@@ -183,7 +169,7 @@ export default {
   color black
 .tagline
   padding 10px 
-  background-color $grey-1
+  background-color $grey-2
   border-radius 10px
 
 </style>
