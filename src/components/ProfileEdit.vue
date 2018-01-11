@@ -8,12 +8,16 @@
       h4.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") Update Profile
       .layout-padding.full-width.relative-position(style="height:140px;")
         img.avatar.absolute-center.block(style="width:120px; height:120px;" :src="thisUser.image")
-      h5.text-center {{thisUser.username}}
-      h5.light-paragraph {{thisUser.tagline}}
+      h5.text-center(v-if="!rdy && !$v.form.$pending") {{thisUser.username}}
+      h5.text-center(v-else) {{form.username}}
+      .tagline(v-if="thisUser.tagline || form.tagline != ''")
+        h6.light-paragraph.text-center(v-if="form.tagline === '' ") {{thisUser.tagline}}
+        h6.light-paragraph.text-center(v-else) {{form.tagline}}
+
       br
       div
         q-input(
-          v-model="form.imageURL"
+          v-model.trim="form.imageURL"
           @input="$v.form.imageURL.$touch()"
           :error="$v.form.imageURL.$error"
           stack-label="Profile Image URL"
@@ -21,19 +25,34 @@
           :placeholder="thisUser.image"
         )
         p.text-red.inline(v-if="$v.form.imageURL.$error") Image URL needs to be valid (.jpg .png .svg)
-        p.light-paragraph Changing your username changes your sharing URL
-        q-input(
-          @input="$v.form.username.$touch()"
-          stack-label="username"
-          type="text"
-          v-model="form.username"
-          :error="$v.form.username.$error"
-          :placeholder="thisUser.username"
-        )
-        p.text-red.inline(v-if="$v.form.username.$error") Username already claimed
+        br
+        q-field(:count="15")
+          q-input(
+            stack-label="username"
+            @input="$v.form.username.$touch()"
+            type="text"
+            v-model.trim="form.username"
+            :error="$v.form.username.$error"
+            :placeholder="thisUser.username"
+            :max-length="15"
+            :loading="this.$v.form.$pending"
+          )
+          p.text-red.inline(v-if="$v.form.username.$error") Username already claimed
+          small.thin-paragraph.float-left(v-else) Changing your username changes your sharing URL
+        br
+        q-field(:count="50")
+          q-input(
+            stack-label="tagline"
+            type="text"
+            v-model.trim="form.tagline"
+            :placeholder="thisUser.tagline"
+            :max-length="50"
+          )
+          small.thin-paragraph.float-left Your tagline appears under your name in leaderboards
         br
       div.text-center(style="margin-top:10px;")
           q-btn.text-center(@click="thisModal.close()" style="margin-auto" invert color="red") cancel
+          
           q-btn.text-center.on-right(@click="submit" style="margin-auto" :disabled="!rdy" invert  color="green") Update
 
       q-inner-loading(:visible="pending")
@@ -44,6 +63,7 @@
 <script>
 import { required, email, minLength,url } from "vuelidate/lib/validators"
 import { Toast } from "quasar"
+const isImageUrl = require('is-image-url')
 
 export default {
   data() {
@@ -58,12 +78,18 @@ export default {
   },
   validations: {
       form: {
-        imageURL: { url },
-        username: {     checkUsername: async function(value){
-      if (value === '') return true
-      var result = (await this.api.user.checkValidUsername(value))
-      return !result
-    }}
+        imageURL: { checkImage: function(value){
+          if (value === '') return true
+          else return isImageUrl(value) 
+          }
+        },
+        username: {     
+          checkUsername: async function(value){
+            if (value === '') return true
+            var result = (await this.api.user.checkValidUsername(value))
+            return !result
+          }
+        }
       }
   },
   computed: {
@@ -77,6 +103,7 @@ export default {
     init: async function() {
       this.form.imageURL = ""
       this.form.username = ""
+      this.form.tagline = ""
     },
     submit: async function() {
       this.$v.form.$touch()
@@ -134,15 +161,29 @@ export default {
     })
   },
   watch:{
-    "$v.form.$invalid"(){
-      console.log('ok')
+    "form.username": function(val){
+      if(val.split(" ").length > 1){
+        this.form.username = val.split(" ").join('')
+      }
+      if (val === this.thisUser.username) this.form.username = "",this.$v.form.imageURL.$reset()
+      this.form.username = this.form.username.toLowerCase()
+    },
+    "form.imageURL":function(val){
+      if (val==="") this.$v.form.imageURL.$reset()
     }
-
   }
 
 }
 </script>
 
 <style lang="stylus">
+@import '~variables'
+
+.q-field-label
+  color black
+.tagline
+  padding 10px 
+  background-color $grey-1
+  border-radius 10px
 
 </style>

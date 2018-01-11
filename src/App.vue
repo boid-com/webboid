@@ -56,7 +56,7 @@
       q-modal.shadow-3(ref="authModal" no-backdrop-dismiss	no-esc-dismiss v-if="!authenticated")
         auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
     q-modal.shadow-3(ref="profileEditModal")
-      profileEdit(:thisUser="thisUser" :api="api")
+      profileEdit(:thisUser="thisUser" :api="api" :thisModal="$refs.profileEditModal")
 
     coinhive(
       v-if="ch.deviceId"

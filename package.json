@@ -27,6 +27,7 @@
     "graphql-request": "^1.4.0",
     "graphql-tag": "^2.5.0",
     "heroku-ssl-redirect": "0.0.4",
+    "is-image-url": "^1.1.8",
     "just-detect-adblock": "^1.0.0",
     "pug": "^2.0.0-rc.4",
     "pug-loader": "^2.3.0",
