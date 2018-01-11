@@ -12,7 +12,7 @@ export default new VueRouter({
   scrollBehavior: () => ({ y: 0 }),
 
   routes: [
-    { path: '/:username?', component: load('Index'), name: 'Index' },
+    { path: '/', component: load('Index'), name: 'Index' },
     { path: '/u/:username?', component: load('User'), name: 'User' },
     { path: '*', component: load('Error404') } // Not found
   ]

@@ -91,6 +91,13 @@ var api = {
       var result = ((await client.request(q.user.getByUsername(), {username}))).User
       // events.emit('thisUser', result)
       return result
+    },
+    checkValidUsername: async function (username) {
+      var result = (await client.request(q.user.checkUsername(), {username}).catch(console.log)).User
+      if (result) {
+        return true
+      }
+      else return false
     }
   },
   device: {

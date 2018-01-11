@@ -3,6 +3,14 @@ function gql (strings) { return strings[0] }
 
 export default {
   user: {
+    checkUsername () {
+      return gql`
+        query User($username: String!){
+          User(username:$username){
+            id
+          }
+        }`
+    },
     get () {
       return gql`
         query User($userId: ID!) {

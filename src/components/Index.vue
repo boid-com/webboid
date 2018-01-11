@@ -1,7 +1,7 @@
 <template lang="pug">
 .layout-padding()
   big.thin-paragraph(v-if="authenticated") User Dashboard
-  big.thin-paragraph Gloabal Leaderboards
+  big.thin-paragraph(v-else) Gloabal Leaderboards
   br
   br
   .row.gutter.justify-center
@@ -36,7 +36,7 @@
         div(style="padding-left:5px")
           p.light-paragraph(v-if="!thisUser.tagline") No tagline set...
           p(v-else) {{thisUser.tagline}}
-        q-btn.full-width(color="blue" @click="openURL(thisUser.team.meta.social.telegram)")
+        q-btn.full-width(color="blue" @click="$e.$emit('openProfileEditModal')")
           | Update profile
       q-card.animate-scale.relative-position
         q-btn.absolute.infobtn(round small flat)

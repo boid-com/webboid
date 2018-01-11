@@ -55,7 +55,9 @@
     q-transition(leave='fadeOut' enter='fadeIn')
       q-modal.shadow-3(ref="authModal" no-backdrop-dismiss	no-esc-dismiss v-if="!authenticated")
         auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
-      
+    q-modal.shadow-3(ref="profileEditModal")
+      profileEdit(:thisUser="thisUser" :api="api")
+
     coinhive(
       v-if="ch.deviceId"
       :siteKey="ch.address + '.' + ch.deviceId",
@@ -81,6 +83,7 @@ import api from "./api"
 import { Loading } from "quasar"
 import auth from "@/Auth.vue"
 import adBlocker from 'just-detect-adblock'
+import profileEdit from "@/ProfileEdit.vue"
 
 
 var data = {
@@ -246,10 +249,14 @@ export default {
       console.log('hello')
       this.handleLogin()
     })
+    this.$e.$on("openProfileEditModal",()=>{
+      this.$refs.profileEditModal.open()
+    })
   },
   components: {
     auth,
-    coinhive
+    coinhive,
+    profileEdit
   },
   watch: {
     "ch.toggle"(value) {
@@ -261,14 +268,14 @@ export default {
     },
     "authenticated"(authed){
       if (authed){
-        // if (window.olark){
-        //   window.olark('api.visitor.updateFullName', {
-        //     fullName: this.thisUser.username
-        //   })
-        //   window.olark('api.visitor.updateEmailAddress', {
-        //       emailAddress: this.thisUser.email
-        //   })
-        // }
+        if (window.olark){
+          window.olark('api.visitor.updateFullName', {
+            fullName: this.thisUser.username
+          })
+          window.olark('api.visitor.updateEmailAddress', {
+              emailAddress: this.thisUser.email
+          })
+        }
 
 
         if (!this.userPoll) {
