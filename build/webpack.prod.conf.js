@@ -8,7 +8,10 @@ var
   ExtractTextPlugin = require('extract-text-webpack-plugin'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-
+  BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+  const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+  
+  
 module.exports = merge(baseWebpackConfig, {
   module: {
     rules: cssUtils.styleRules({
@@ -19,6 +22,13 @@ module.exports = merge(baseWebpackConfig, {
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   plugins: [
+    new BundleAnalyzerPlugin({
+      analyzerMode:'static',
+      analyzerPort:9999
+    }),
+    new UglifyJsPlugin({
+      parallel:true
+    }),
     // new webpack.optimize.UglifyJsPlugin({
     //   sourceMap: config.build.productionSourceMap,
     //   minimize: true,

@@ -7,7 +7,8 @@
     div
       h4.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") Update Profile
       .layout-padding.full-width.relative-position(style="height:140px;")
-        img.avatar.absolute-center.block(style="width:120px; height:120px;" :src="thisUser.image")
+        img.avatar.absolute-center.block(v-if="$v.form.imageURL.$invalid || form.imageURL === '' " style="width:120px; height:120px;" :src="thisUser.image")
+        img.avatar.absolute-center.block(v-else style="width:120px; height:120px;" :src="form.imageURL")
       h5.text-center(v-if="!rdy && !$v.form.$pending") {{thisUser.username}}
       h5.text-center(v-else) {{form.username}}
       .tagline(v-if="thisUser.tagline || form.tagline != ''")
@@ -63,7 +64,7 @@
 import { required, email, minLength,url } from "vuelidate/lib/validators"
 import { Toast } from "quasar"
 
-const isImageUrl = require('is-image-url')
+import isImageUrl from 'is-image-url'
 
 export default {
   data() {

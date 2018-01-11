@@ -78,7 +78,7 @@
 window.olark.identify('3844-769-10-6059')
 var coinhive = require("vue-coin-hive")
 import 'quasar-extras/animate'
-import Chartist from "chartist"
+// import Chartist from "chartist"
 import api from "./api"
 import { Loading } from "quasar"
 import auth from "@/Auth.vue"

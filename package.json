@@ -18,7 +18,6 @@
     "auth0-js": "^8.11.3",
     "auth0-lock": "^10.24.1",
     "babel-runtime": "^6.25.0",
-    "chartist": "^0.11.0",
     "coin-hive": "^1.9.3",
     "event-emitter": "^0.3.5",
     "eventlistener": "0.0.1",
@@ -36,9 +35,7 @@
     "vue": "^2.5.0",
     "vue-coin-hive": "0.0.8",
     "vue-router": "^3.0.1",
-    "vuelidate": "^0.6.1",
-    "vuex": "^3.0.1",
-    "vuex-nested-mutations": "^1.0.2"
+    "vuelidate": "^0.6.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
@@ -78,11 +75,13 @@
     "shelljs": "^0.7.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
+    "uglifyjs-webpack-plugin": "^1.1.6",
     "url-loader": "^0.5.7",
     "vue-loader": "^13.0.5",
     "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.5.0",
     "webpack": "^3.6.0",
+    "webpack-bundle-analyzer": "^2.9.2",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1",
     "webpack-merge": "^4.1.0"
