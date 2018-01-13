@@ -8,7 +8,7 @@ div
     .row.gutter.justify-center
       .col-md-4.col-lg-4.col-xl-3(v-if="authenticated")
         div
-          q-card.relative-position
+          q-card.relative-position.animate-scale
             q-btn.absolute.infobtn(round small flat)
               q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.power)")
             p.light-paragraph.text-center Power Rating
@@ -218,7 +218,6 @@ export default {
       this.leaderboard = await this.api.leaderboard.global() 
       this.teamLeaderboard = await this.api.leaderboard.teams() 
       console.log('updateLeaderboard',this.leaderboard)
-
     },
     toggleDevice(device) {
       console.log(device)

@@ -132,6 +132,7 @@ export default {
         },1500)
       } else{
         this.$e.$emit('refreshUser')
+        
         setTimeout(()=>{
           this.pending=false
           this.thisModal.close()

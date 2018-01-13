@@ -1,5 +1,5 @@
 <template lang="pug">
-.layout-padding
+.layout-padding(v-if="thatUser.id")
   big.thin-paragraph(v-if="myProfile") My Profile
   big.thin-paragraph(v-else) User Profile
   //- | {{thatUser.username}}
@@ -10,25 +10,32 @@
         div(style="margin:auto;")
           p.text-center {{parseInt(thatUser.powerRatings[0].power)}}
             q-icon.text-center(color="yellow" name='flash_on' style="font-size:50px;")
-      q-card.animate-scale.relative-position
+      q-card.animate-scale.relative-position(v-if="thatUser.team")
         div.light-paragraph.text-center My Team
         table.q-table(style="width:100%")
           tbody()
             tr
               td 
-                img.tokenimg(:src="thisUser.team.image")
-              td {{thisUser.team.name}}
+                img.tokenimg( :src="thatUser.team.image")
+              td {{thatUser.team.name}}
         q-btn.full-width(color="blue" outline @click="openURL(thisUser.team.meta.social.telegram)")
           | Telegram Chat
     .col
       q-card.relative-position.layout-padding(style="min-width:300px")
-        h5.text-center {{thatUser.username}}
+        h5.text-center(v-if="myProfile") {{thisUser.username}}
+        h5.text-center(v-else) {{thatUser.username}}
         .layout-padding.full-width.relative-position(style="height:140px;")
-          img.avatar.absolute-center.block(style="width:120px; height:120px;" :src="thatUser.image")
-        .tagline(v-if="thatUser.tagline")
-          h6.light-paragraph.text-center {{thatUser.tagline}}
-        .tagline(v-else-if="myProfile")
-          h6.light-paragraph.text-center add a cool tagline here
+          img.avatar.absolute-center.block( v-if="myProfile" style="width:120px; height:120px;" :src="thisUser.image")
+          img.avatar.absolute-center.block(v-else style="width:120px; height:120px;" :src="thatUser.image")
+        div(v-if="!myProfile")
+          .tagline(v-if="thatUser.tagline")
+            h6.light-paragraph.text-center {{thatUser.tagline}}
+          .tagline(v-else-if="myProfile")
+            h6.light-paragraph.text-center add a cool tagline here
+        div(v-else)
+          .tagline(v-if="thisUser.tagline")
+            h6.light-paragraph.text-center {{thisUser.tagline}}
+
         br
         br
         .layout-padding(v-if="myProfile").relative-position

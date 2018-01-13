@@ -72,6 +72,14 @@ export default {
             powerRatings(last:1){
               power
             }
+            team{
+              id
+              name
+              image
+              owner{
+                username
+              }
+            }
           }
         }
       `
