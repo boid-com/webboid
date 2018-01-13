@@ -33,7 +33,12 @@ export default {
               id
               name
               image
-              ownerId
+              owner{
+                id
+                username
+                image
+                tagline
+              }
               meta
             }
             wallet {
@@ -61,18 +66,11 @@ export default {
           User(username: $username) {
             id
             email
+            image
             username
-            devices {
-              type
-              id
-              name
-              status
-            }
-            wallet {
-              tokens {
-                id
-                balance
-              }
+            tagline
+            powerRatings(last:1){
+              power
             }
           }
         }
@@ -114,6 +112,24 @@ export default {
           change24
         }
       }`
+    }
+  },
+  team:{
+    getByName(){
+      return gql`
+      query($teamName:String!){
+        Team(name:$teamName){
+          name
+          id
+          power
+          image
+          owner{
+            id
+            username
+          }
+        }
+      }
+      `
     }
   }
 }

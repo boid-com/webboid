@@ -9,7 +9,7 @@
       .layout-padding.full-width.relative-position(style="height:140px;")
         img.avatar.absolute-center.block(v-if="$v.form.imageURL.$invalid || form.imageURL === '' " style="width:120px; height:120px;" :src="thisUser.image")
         img.avatar.absolute-center.block(v-else style="width:120px; height:120px;" :src="form.imageURL")
-      h5.text-center(v-if="!rdy && !$v.form.$pending") {{thisUser.username}}
+      h5.text-center(v-if="!rdy && !$v.form.$pending || form.username === '' ") {{thisUser.username}}
       h5.text-center(v-else) {{form.username}}
       .tagline(v-if="thisUser.tagline || form.tagline != ''")
         h6.light-paragraph.text-center(v-if="form.tagline === '' ") {{thisUser.tagline}}
@@ -38,7 +38,7 @@
             :max-length="15"
             :loading="this.$v.form.$pending"
           )
-          p.text-red.inline(v-if="$v.form.username.$error") Username already claimed
+          div.text-red.float-left(v-if="$v.form.username.$error" style="padding-top:5px") Username already claimed
           small.thin-paragraph.float-left(v-else) Changing your username will change your invite link
         br
         q-field(:count="50")
@@ -95,7 +95,7 @@ export default {
   },
   computed: {
     rdy() {
-      if ((this.form.username==="" && this.form.imageURL === "") || this.$v.form.$invalid){
+      if ((this.form.username==="" && this.form.imageURL === ""  && this.form.tagline === "") || this.$v.form.$invalid){
         return false
       } else return true
     }

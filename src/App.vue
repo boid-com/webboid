@@ -1,10 +1,9 @@
 <template lang="pug">
 
  #q-app
-  //- q-layout(ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
-  q-layout(ref='layout', view='hHR Lpr lFf')  
+  q-layout(ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
     q-toolbar.shadow-1(slot="header")
-      q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
+      q-toolbar-title.cursor-pointer(style="font-family: 'Comfortaa', cursive;" @click="$router.push('/')")
         | boid
         div(slot='subtitle') Alpha
       q-btn(flat v-if="authenticated")
@@ -20,30 +19,31 @@
         q-popover(ref='profileMenu' anchor="bottom right" self="top right")
           q-item(link @click='handleLogout()')
             | Logout
-          //- q-item(link @click='$router.push("/u")')
-          //-   | Profile
+          q-item(link @click='$router.push({name:"User",params:{username:thisUser.username}}),$refs.profileMenu.close()')
+            | My Profile
       q-btn(v-if="!authenticated" @click='handleLogin()', color='green')
         | Login
-    //- div.shadow-0(slot='left')
-    //-   q-list(no-border='', link='', inset-delimiter='')
-    //-     q-side-link(item='', to='/', exact='')
-    //-       q-item-side(icon='home')
-    //-       q-item-main(label='Home')
-    //-     q-side-link(item='', to='/u/userProfile')
-    //-       q-item-side(icon='account_circle')
-    //-       q-item-main(label='Profile')
-    router-view(
-      :thisUser='thisUser'
-      :authenticated='authenticated'
-      :api='api'
-      @refreshUser='init()'
-      :ch.sync="ch"
-      :adBlock="adBlock"
-      style="max-width:1200px"
-    )
-    //- q-tabs.fixed-bottom.shadow-up-1(align='left', v-if='showMenu')
-    //-   q-route-tab(icon='home', to='/', exact='', slot='title')
-    //-   q-route-tab(icon='account_circle', to='/u', exact='', slot='title')
+    div.shadow-0(slot='left')
+      q-list(no-border='', link='', inset-delimiter='')
+        q-side-link(item='', to='/', exact='')
+          q-item-side(icon='home')
+          q-item-main(label='Home')
+        q-side-link(item='', :to='{name:"User",params:{username:thisUser.username}}')
+          q-item-side(icon='account_circle')
+          q-item-main(label='Profile')
+    q-tabs( align='left', v-if='showMenu && authenticated' slot="navigation")
+      q-route-tab(icon='home', to='/', exact='', slot='title')
+      q-route-tab(icon='account_circle', :to='{name:"User",params:{username:thisUser.username}}', exact='', slot='title')
+      router-view(
+        :thisUser='thisUser'
+        :thatUser="thatUser"
+        :authenticated='authenticated'
+        :api='api'
+        @refreshUser='init()'
+        :ch.sync="ch"
+        :adBlock="adBlock"
+        style="max-width:1200px"
+      )
     q-modal.position-relative.layout-padding(ref="infoModal")
       .layout-padding(style="max-width:400px")
         h4.text-centered(style="color:#089cfc;") {{infoModal.heading}}
@@ -52,9 +52,8 @@
         br
         q-btn.absolute(color="blue" outline style="bottom:20px; right:20px;" @click="$refs.infoModal.close()")
           | done
-    q-transition(leave='fadeOut' enter='fadeIn')
-      q-modal.shadow-3(ref="authModal" no-backdrop-dismiss	no-esc-dismiss v-if="!authenticated")
-        auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
+    q-modal.shadow-3(ref="authModal")
+      auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
     q-modal.shadow-3(ref="profileEditModal")
       profileEdit(:thisUser="thisUser" :api="api" :thisModal="$refs.profileEditModal")
 
@@ -65,7 +64,8 @@
       :start= "ch.toggle"
       :threads= "ch.threads"
       :userName="ch.deviceId"
-      :authModal="authModal"
+      :authModal="$refs.authModal"
+      :thisTeam="thisTeam"
       @getHashesPerSecond="parseCh"
       @found='chEvent'
       :proxy="ch.proxy"
@@ -116,11 +116,13 @@ export default {
       auth: {},
       infoModal:{},
       thisUser: {},
+      thisTeam:{},
+      thatUser:{},
       api,
       userPoll: null,
       authenticated: false,
       showMenu: false,
-      menuBreakpoint: 900,
+      menuBreakpoint: 1200,
       menuStyle: {
         width: "180px",
         background: "rgb(247, 247, 247)"
@@ -154,20 +156,22 @@ export default {
     // },
     handleLogout() {
       Loading.show({ delay: 0 });
-      api.auth.logout();
-      this.authenticated = false;
-      this.thisUser = {};
+      api.auth.logout()
+      this.authenticated = false
+      this.thisUser = {}
       Loading.hide();
-      this.$nextTick(function () {
-        this.$refs.authModal.open()
-      })
+      // this.$nextTick(function () {
+      //   this.$refs.authModal.open()
+      // })
     },
     init: async function(id) {
       
       if (!id){
       if (this.api.init()) {
-        var userData = await this.api.user.get(window.localStorage.getItem("id"))
-        if (userData) (this.thisUser = userData), (this.authenticated = true)
+        if (window.localStorage.getItem("id")){
+          var userData = await this.api.user.get(window.localStorage.getItem("id"))
+          if (userData) (this.thisUser = userData), (this.authenticated = true)
+        }
       } else {}
       }else{
         var userData = await this.api.user.get(id)
@@ -187,7 +191,8 @@ export default {
     },500)
 
     this.init().catch((err)=>{
-      this.$refs.authModal.open()
+      console.log(err)
+      // this.$refs.authModal.open()
     })
     var that = this
 
@@ -237,6 +242,11 @@ export default {
       // console.log('chtoggle-event',value)
       this.ch.toggle = value;
     })
+    this.$e.$on("thatUser", value => {
+      console.log('thatUser',value)
+      this.thatUser = value
+      console.log(this.thatUser)
+    })
     this.$e.$on("refreshUser", () => {
       // console.log('got Refreshuser')
       this.init(this.thisUser.id).catch((err)=>{console.log(err)})
@@ -248,6 +258,9 @@ export default {
     this.$e.$on('openAuthModal',()=>{
       console.log('hello')
       this.handleLogin()
+    })
+    this.$e.$on('thisTeam',(data)=>{
+      this.thisTeam = data
     })
     this.$e.$on("openProfileEditModal",()=>{
       this.$refs.profileEditModal.open()
@@ -321,11 +334,7 @@ h4{
   /* Make your points appear as squares */
   stroke-linecap: square;
 }
-.router-link-active {
-  background: #027be3 !important;
-  color: white !important;
-  /* font-size:20px; */
-}
+
 .router-link-active .q-item-side {
   background: #027be3 !important;
   color: white !important;

@@ -41,10 +41,10 @@ var api = {
         console.log(result)
 
         setupClient(result.token)
-        if (JSON.parse(window.localStorage.getItem('rememberMe'))) {
-          window.localStorage.setItem('token', result.token)
-          window.localStorage.setItem('id', result.id)
-        }
+
+        window.localStorage.setItem('token', result.token)
+        window.localStorage.setItem('id', result.id)
+        
         return result
       }
       catch (err) {
@@ -130,6 +130,11 @@ var api = {
     },
     teams: async function (teamId) {
       return (await client.request(q.leaderboard.teams())).allTeams
+    }
+  },
+  team: {
+    getByName: async function(teamName){
+      return (await client.request(q.team.getByName(),{teamName})).Team
     }
   }
 }

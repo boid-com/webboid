@@ -7,7 +7,7 @@
     div
       h4.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
       h6.light-paragraph.text-center(style="margin-bottom:30px;") The Social Supercomputer
-      h6.thin-paragraph.text-center(style="margin-bottom:30px;" v-if="invitedByUser") You were invited by: {{invitedByUser.username}}
+      h6.thin-paragraph.text-center(style="margin-bottom:30px;" v-if="invitedByUser") You were invited by {{invitedByUser.username}}
 
       div(v-if="!registering")
         q-input(
@@ -50,7 +50,7 @@ export default {
         invitedById: null
       },
       pending:false,
-      rememberMe:false,
+      rememberMe:true,
       invitedByUser:null,
       registering:false
     }
@@ -86,11 +86,13 @@ export default {
         this.pending=false
       },1500)
     } else{
-      this.$router.push("/")
+      // this.$router.push("/")
       console.log('loginResult',result)
       var userData = await this.api.user.get(result.id)
       this.$emit('update:thisUser',userData)
       this.$emit('update:authenticated',true)
+      this.pending = false
+      this.thisModal.close()
 
     }
     },
@@ -119,30 +121,49 @@ export default {
     }
     },
     checkInvitedBy: async function(){
-      var invitedBy = this.$route.params.username
-      if (invitedBy) var validUser = await this.api.user.getByUsername(invitedBy)
-      if (validUser){
-        this.form.invitedById = validUser.id
-        this.invitedByUser = validUser
-      }
-      this.$router.push("/")
+      console.log(this.$route)
+
+      // var invitedBy = this.$route.params.username
+      // if (invitedBy) var validUser = await this.api.user.getByUsername(invitedBy)
+      // if (validUser){
+      //   this.form.invitedById = validUser.id
+      //   this.invitedByUser = validUser
+      // }
+      // this.$router.push("/")
     }
   },
   props: ["thisUser", "authenticated", "api", "thisModal"],
-  mounted() {
-    if (JSON.parse(window.localStorage.getItem('rememberMe'))) this.rememberMe = true
-    console.log()
-    setTimeout(()=>{
-      this.checkInvitedBy()
-    },1000)
+  created() {
+    if (window.localStorage.getItem('rememberMe') === null) window.localStorage.setItem('rememberMe',"true")
+    else this.rememberMe = JSON.parse(window.localStorage.getItem('rememberMe'))
+
+    console.log(window.localStorage.getItem('rememberMe'))
   },
   watch:{
     rememberMe:function(value){
       window.localStorage.setItem('rememberMe',value)
+    },
+    "$route.params.username":async function(username){
+      if (!username) return
+      var user = await this.api.user.getByUsername(username)
+      if (!user) return this.$router.push("/")
+      this.$e.$emit('thatUser',user)
+      console.log('on User Page',user.username)
+      if (this.thisUser.id === user.id) return
+      this.form.invitedById = user.id
+      this.invitedByUser = user
+    },
+    "$route.params.teamname":async function(teamname){
+      if (!teamname) return
+      console.log('found Teamname',teamname)
+      var team = (await this.api.team.getByName(teamname))
+      if(!team) return
+      console.log(team)
+      this.$e.$emit('thisTeam',team)
+      if(!team.owner.id) return
+      this.form.invitedById = team.owner.id
     }
-
   }
-
 }
 </script>
 
