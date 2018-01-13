@@ -5,11 +5,12 @@
   enter="fadeIn"
   leave="fadeOut")
     div
-      h4.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
+      h3.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
       h6.light-paragraph.text-center(style="margin-bottom:30px;") The Social Supercomputer
-      h6.thin-paragraph.text-center(style="margin-bottom:30px;" v-if="invitedByUser") You were invited by {{invitedByUser.username}}
+      h6.light-paragraph.text-center(style="margin-bottom:30px;" v-if="invitedByUser") You were invited by 
+        h6.text-center {{invitedByUser.username}}
 
-      div(v-if="!registering")
+      div
         q-input(
           v-model="form.email"
           @blur="$v.form.email.$touch"
@@ -138,6 +139,10 @@ export default {
     else this.rememberMe = JSON.parse(window.localStorage.getItem('rememberMe'))
 
     console.log(window.localStorage.getItem('rememberMe'))
+    this.$e.$on('openAuthModal',(val)=>{
+      console.log(val)
+      this.registering = val
+    })
   },
   watch:{
     rememberMe:function(value){

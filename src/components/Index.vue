@@ -2,7 +2,7 @@
 div
   .layout-padding()
     big.thin-paragraph(v-if="authenticated") User Dashboard
-    big.thin-paragraph(v-else) Gloabal Leaderboards
+    big.thin-paragraph(v-else) Global Leaderboards
     br
     br
     .row.gutter.justify-center
@@ -25,7 +25,7 @@ div
             p.light-paragraph.text-center Social
             p Users Invited: {{thisUser.invited.length}}
             p Power from Invited Users: {{parseInt(thisUser.powerRatings[0].meta.social)}}
-            q-btn.full-width(color="green" @click="openURL(thisUser.team.meta.social.telegram)")
+            q-btn.full-width(color="green" @click="$e.$emit('openSocialModal')")
               | Get Invite Link
           q-card.animate-scale.relative-position
             div.light-paragraph.text-center My Profile
@@ -144,7 +144,7 @@ div
             br
             br
             br
-            q-btn.on-left(big  style="font-size:30px" color="green" @click="$e.$emit('openAuthModal')") Join
+            q-btn.on-left(big  style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join
             q-btn(big style="font-size:30px" color="blue" @click="openURL('https://www.boid.com')") Learn More
 
     q-modal(ref="deviceModal" @close="currentDevice = null")

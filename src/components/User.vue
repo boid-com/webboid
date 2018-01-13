@@ -1,5 +1,9 @@
 <template lang="pug">
 .layout-padding(v-if="thatUser.id")
+  .layout-padding.full-width(v-if=("!authenticated") style="min-height=300px;")
+    .row.justify-center.gutter
+      q-btn( big rounded push glossy color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join Boid
+
   big.thin-paragraph(v-if="myProfile") My Profile
   big.thin-paragraph(v-else) User Profile
   //- | {{thatUser.username}}
@@ -15,7 +19,7 @@
         div(style="margin:auto;")
           h5.text-center.light-paragraph {{thatUser._invitedMeta.count}}
           p.text-center Invited Users
-        q-btn.full-width(v-if="myProfile" color="green" @click="openURL()")
+        q-btn.full-width(v-if="myProfile" color="green" @click="$e.$emit('openSocialModal')")
               | Get Invite Link
       q-card.animate-scale.relative-position(v-if="thatUser.team")
         div.light-paragraph.text-center My Team

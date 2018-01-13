@@ -21,7 +21,7 @@
             | Logout
           q-item(link @click='$router.push({name:"User",params:{username:thisUser.username}}),$refs.profileMenu.close()')
             | My Profile
-      q-btn(v-if="!authenticated" @click='handleLogin()', color='green')
+      q-btn(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
         | Login
     div.shadow-0(slot='left')
       q-list(no-border='', link='', inset-delimiter='')
@@ -56,9 +56,32 @@
       auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
     q-modal.shadow-3(ref="profileEditModal")
       profileEdit(:thisUser="thisUser" :api="api" :thisModal="$refs.profileEditModal")
-  div.bg-white.fullscreen(v-if="pending")
-    //- q-inner-loading(:visible="pending")
-    //-   q-spinner-ball(size="70px" color="blue")
+    q-modal.position-relative(ref="socialModal")
+      .layout-padding
+        h4.text-centered(style="color:#089cfc;") Share Boid
+        .layout-padding
+          p When Users join Boid and run the app you get a small amount of bonus Power for inviting them.
+        .layout-padding.position-relative
+          p.text-center.thin-paragraph Share this link
+          h4.text-center( @click="selectText($event)") 
+            textarea.text-center.full-width(readonly ref="socialLink") app.boid.com/u/{{thisUser.username}}
+        .row.gutter.justify-center
+          q-btn.absolute.gt-md(style="bottom:160px;" @click="selectText()") Copy Link
+          q-btn.absolute.lt-lg(style="bottom:120px;" @click="selectText()") Copy Link
+
+          p.text-center.strong Your link will change if you change your username
+
+        br
+        br
+        q-btn.absolute(color="blue" outline style="bottom:20px; right:20px;" @click="$refs.socialModal.close()")
+          | done
+  q-transition(
+    enter="fadeIn"
+    leave="fadeOut"
+  )
+    div.bg-white.fullscreen(v-if="pending")
+      q-inner-loading(:visible="pending")
+        q-spinner-ball(size="70px" color="blue")
 
     coinhive(
       v-if="ch.deviceId"
@@ -83,11 +106,10 @@ var coinhive = require("vue-coin-hive")
 import 'quasar-extras/animate'
 // import Chartist from "chartist"
 import api from "./api"
-import { Loading } from "quasar"
+import { Loading,Toast } from "quasar"
 import auth from "@/Auth.vue"
 import adBlocker from 'just-detect-adblock'
 import profileEdit from "@/ProfileEdit.vue"
-
 
 var data = {
   series: [[5, 2, 4, 2, 0]]
@@ -136,6 +158,12 @@ export default {
   },
   // computed:mapState(['count','authenticated']),
   methods: {
+    selectText(data){
+      this.$refs.socialLink.select()
+      console.log(this.$refs.socialLink)
+      Toast.create.info("Link copied to clipboard")
+      document.execCommand('Copy')
+    },
     parseCh(data) {
       // console.log(data)
       if (data.hashesPerSecond) {
@@ -154,6 +182,7 @@ export default {
       this.showMenu = !event;
     },
     handleLogin() {
+      // this.$e.$emit('openAuthModal',false)
       this.$refs.authModal.open()
     },
     // handleRegister(){
@@ -176,16 +205,21 @@ export default {
         if (window.localStorage.getItem("id")){
           var userData = await this.api.user.get(window.localStorage.getItem("id"))
           if (userData) (this.thisUser = userData), (this.authenticated = true)
+          this.pending=false
         }
       } else {this.pending=false}
       }else{
         var userData = await this.api.user.get(id)
+        this.pending=false
         if (userData) {this.pending=false}
         else {this.pending=false}
       }
     }
   },
   mounted: async function() {
+    setTimeout(()=>{
+      this.pending=false
+    },1000)
     setTimeout(()=>{
       
       if(adBlocker.isDetected()){
@@ -270,6 +304,9 @@ export default {
     this.$e.$on("openProfileEditModal",()=>{
       this.$refs.profileEditModal.open()
     })
+    this.$e.$on("openSocialModal",()=>{
+      this.$refs.socialModal.open()
+    })
   },
   components: {
     auth,
@@ -340,10 +377,22 @@ h4{
 }
 
 .router-link-active .q-item-side {
-  background: #027be3 !important;
-  color: white !important;
+  /* background: #027be3 !important; */
+  color: black !important;
 }
 .layout-aside.fixed.on-layout {
   box-shadow: 0 0 0;
 }
+textarea:focus{
+  border: 0px;
+  outline: none;
+  resize: none;
+}
+
+textarea{
+  border: 0px;
+  outline: none;
+  resize: none;
+}
+
 </style>
