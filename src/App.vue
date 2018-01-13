@@ -295,8 +295,6 @@ export default {
               emailAddress: this.thisUser.email
           })
         }
-
-
         if (!this.userPoll) {
           var count = 0
           this.userPoll = setInterval(()=>{

@@ -10,6 +10,13 @@
         div(style="margin:auto;")
           p.text-center {{parseInt(thatUser.powerRatings[0].power)}}
             q-icon.text-center(color="yellow" name='flash_on' style="font-size:50px;")
+      q-card.animate-scale.relative-position(v-if="thatUser.powerRatings")
+        p.light-paragraph.text-center Social
+        div(style="margin:auto;")
+          h5.text-center.light-paragraph {{thatUser._invitedMeta.count}}
+          p.text-center Invited Users
+        q-btn.full-width(v-if="myProfile" color="green" @click="openURL()")
+              | Get Invite Link
       q-card.animate-scale.relative-position(v-if="thatUser.team")
         div.light-paragraph.text-center My Team
         table.q-table(style="width:100%")
@@ -80,10 +87,20 @@ export default {
     'thatUser'(){
           console.log('thatUser',this.thatUser)
 
+    },
+    "thisUser":function(val,oldVal){
+      if ((val.username != oldVal.username) && this.myProfile && this.$route.params.username){
+        setTimeout(()=>{
+          this.$router.push({name:"User",params:{username:this.thisUser.username}})
+        },1000)
+      }
     }
 
   },
   created(){
+    this.$e.$on('userUpdated',()=>{
+      console.log('userUpdated',this.myProfile,this.$route.params.username)
+    })
   },
   props:['thisUser','thatUser','api','authenticated'],
   components:{profileEdit}

@@ -132,7 +132,7 @@ export default {
         },1500)
       } else{
         this.$e.$emit('refreshUser')
-        
+        this.$e.$emit('userUpdated')
         setTimeout(()=>{
           this.pending=false
           this.thisModal.close()
@@ -159,6 +159,7 @@ export default {
     "form.imageURL":function(val){
       if (val==="") this.$v.form.imageURL.$reset()
     }
+    
   }
 
 }

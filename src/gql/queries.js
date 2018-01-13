@@ -69,6 +69,9 @@ export default {
             image
             username
             tagline
+            _invitedMeta{
+              count
+            }
             powerRatings(last:1){
               power
             }
