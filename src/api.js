@@ -60,6 +60,7 @@ var api = {
     },
     authenticateUser: async function (formData) {
       try {
+        console.log('formData',formData)
         var result = (await client.request(m.auth.signupUser(), formData)).signupUser
         console.log(result)
         setupClient(result.token)

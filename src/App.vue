@@ -34,16 +34,17 @@
     q-tabs( align='left', v-if='showMenu && authenticated' slot="navigation")
       q-route-tab(icon='home', to='/', exact='', slot='title')
       q-route-tab(icon='account_circle', :to='{name:"User",params:{username:thisUser.username}}', exact='', slot='title')
-    router-view(
-      :thisUser='thisUser'
-      :thatUser="thatUser"
-      :authenticated='authenticated'
-      :api='api'
-      @refreshUser='init()'
-      :ch.sync="ch"
-      :adBlock="adBlock"
-      style="max-width:1200px"
-    )
+    .row.justify-center
+      router-view(
+        :thisUser='thisUser'
+        :thatUser="thatUser"
+        :authenticated='authenticated'
+        :api='api'
+        @refreshUser='init()'
+        :ch.sync="ch"
+        :adBlock="adBlock"
+        style="max-width:1400px"
+      )
     q-modal.position-relative.layout-padding(ref="infoModal")
       .layout-padding(style="max-width:400px")
         h4.text-centered(style="color:#089cfc;") {{infoModal.heading}}
@@ -60,7 +61,7 @@
       .layout-padding
         h4.text-centered(style="color:#089cfc;") Share Boid
         .layout-padding
-          p When Users join Boid and run the app you get a small amount of bonus Power for inviting them.
+          h6 When Users join Boid and run the app you get a small amount of bonus Power for inviting them.
         .layout-padding.position-relative
           p.text-center.thin-paragraph Share this link
           h4.text-center( @click="selectText($event)") 
@@ -148,8 +149,8 @@ export default {
       api,
       userPoll: null,
       authenticated: false,
-      showMenu: false,
-      menuBreakpoint: 1200,
+      showMenu: true,
+      menuBreakpoint: 0,
       menuStyle: {
         width: "180px",
         background: "rgb(247, 247, 247)"
@@ -322,8 +323,10 @@ export default {
         }
     },
     "authenticated"(authed){
+      
       this.pending=false
       if (authed){
+        this.menuBreakpoint=1200
         if (window.olark){
           window.olark('api.visitor.updateFullName', {
             fullName: this.thisUser.username
@@ -344,6 +347,7 @@ export default {
       }else{
         clearInterval(this.userPoll)
         this.userPoll = null
+        this.menuBreakpoint=0
       }
     }
   }

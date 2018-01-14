@@ -7,14 +7,13 @@
     div
       h3.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
       h6.light-paragraph.text-center(style="margin-bottom:30px;") The Social Supercomputer
-      h6.light-paragraph.text-center(style="margin-bottom:30px;" v-if="invitedByUser") You were invited by 
+      h6.light-paragraph.text-center(style="margin-bottom:30px;" v-if="invitedByUser && registering") You were invited by 
         h6.text-center {{invitedByUser.username}}
 
       div
         q-input(
           v-model="form.email"
           @blur="$v.form.email.$touch"
-          @keyup.enter="submit"
           :error="$v.form.email.$error"
           stack-label="email"
           type="text"
@@ -24,7 +23,10 @@
           type="password"
           v-model="form.password"
           @keyup.enter="submit"
+          @blur="$v.form.password.$touch"
+          :error="$v.form.password.$error"
         )
+        p.float-left.text-red(v-if="$v.form.password.$error" color="red") Password should be longer
         br
         q-checkbox(v-model="rememberMe" label="remember me")
       br
@@ -58,7 +60,8 @@ export default {
   },
   validations: {
     form: {
-      email: { required, email }
+      email: { required, email },
+      password:{required,minLength:minLength(5)}
     }
   },
   computed: {
@@ -77,7 +80,7 @@ export default {
       }
     this.pending = true
     
-    delete this.form.invitedById
+    // delete this.form.invitedById
     var result = await this.api.auth.login(this.form)
 
 
@@ -104,6 +107,8 @@ export default {
         return
       }
     this.pending = true
+    if (this.invitedByUser) this.form.invitedById = this.invitedByUser.id
+    console.log('this form',this.form)
     var result = await this.api.auth.authenticateUser(this.form)
     
     console.log(result)
@@ -117,8 +122,9 @@ export default {
       var userData = await this.api.user.get(result.id)
       this.$emit('update:thisUser',userData)
       this.$emit('update:authenticated',true)
-
-      
+      this.pending=false
+      this.thisModal.close()
+      this.$router.push('/')
     }
     },
     checkInvitedBy: async function(){
@@ -134,13 +140,26 @@ export default {
     }
   },
   props: ["thisUser", "authenticated", "api", "thisModal"],
-  created() {
+  created: async function () {
     if (window.localStorage.getItem('rememberMe') === null) window.localStorage.setItem('rememberMe',"true")
     else this.rememberMe = JSON.parse(window.localStorage.getItem('rememberMe'))
+    var username = window.localStorage.getItem('invitedBy')
+    if (username){
+      var user = await this.api.user.getByUsername(username)
+      if (this.thisUser.id === user.id) return
+      this.form.invitedById = user.id
+      this.invitedByUser = user
+    }
 
-    console.log(window.localStorage.getItem('rememberMe'))
     this.$e.$on('openAuthModal',(val)=>{
       console.log(val)
+      this.pending=false
+      this.form = {
+        email: "",
+        password: "",
+        invitedById: null
+      }
+      this.$v.form.$reset()
       this.registering = val
     })
   },
@@ -154,7 +173,8 @@ export default {
       if (!user) return this.$router.push("/")
       this.$e.$emit('thatUser',user)
       console.log('on User Page',user.username)
-      if (this.thisUser.id === user.id) return
+      // if (this.thisUser.id === user.id) return
+      window.localStorage.setItem('invitedBy',user.username)
       this.form.invitedById = user.id
       this.invitedByUser = user
     },
@@ -167,6 +187,13 @@ export default {
       this.$e.$emit('thisTeam',team)
       if(!team.owner.id) return
       this.form.invitedById = team.owner.id
+    },
+    "form.email"(val){
+      // console.log(this.$v.form.email.$error)
+      // // if()
+      // if (!val && this.form.email != "" ){
+      //   console.log(this.form.email)
+      // }
     }
   }
 }

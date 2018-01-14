@@ -6,7 +6,7 @@ div
     br
     br
     .row.gutter.justify-center
-      .col-md-4.col-lg-4.col-xl-3(v-if="authenticated")
+      .col-md-4.col-lg-4.col-xl-4(v-if="authenticated")
         div
           q-card.relative-position.animate-scale
             q-btn.absolute.infobtn(round small flat)
@@ -145,7 +145,7 @@ div
             br
             br
             q-btn.on-left(big  style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join
-            q-btn(big style="font-size:30px" color="blue" @click="openURL('https://www.boid.com')") Learn More
+            //- q-btn(big style="font-size:30px" color="blue" @click="openURL('https://www.boid.com')") Learn More
 
     q-modal(ref="deviceModal" @close="currentDevice = null")
       device(

@@ -4,40 +4,17 @@
     .row.justify-center.gutter
       q-btn( big rounded push glossy color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join Boid
 
-  big.thin-paragraph(v-if="myProfile") My Profile
-  big.thin-paragraph(v-else) User Profile
+  //- big.thin-paragraph(v-if="myProfile") My Profile
+  //- big.thin-paragraph(v-else) User Profile
   //- | {{thatUser.username}}
-  .row.gutter
-    .col-3
-      q-card.animate-scale.relative-position(v-if="thatUser.powerRatings")
-        p.light-paragraph.text-center Power Rating
-        div(style="margin:auto;")
-          p.text-center {{parseInt(thatUser.powerRatings[0].power)}}
-            q-icon.text-center(color="yellow" name='flash_on' style="font-size:50px;")
-      q-card.animate-scale.relative-position(v-if="thatUser.powerRatings")
-        p.light-paragraph.text-center Social
-        div(style="margin:auto;")
-          h5.text-center.light-paragraph {{thatUser._invitedMeta.count}}
-          p.text-center Invited Users
-        q-btn.full-width(v-if="myProfile" color="green" @click="$e.$emit('openSocialModal')")
-              | Get Invite Link
-      q-card.animate-scale.relative-position(v-if="thatUser.team")
-        div.light-paragraph.text-center My Team
-        table.q-table(style="width:100%")
-          tbody()
-            tr
-              td 
-                img.tokenimg( :src="thatUser.team.image")
-              td {{thatUser.team.name}}
-        q-btn.full-width(color="blue" outline @click="openURL(thisUser.team.meta.social.telegram)")
-          | Telegram Chat
+  .row.row-gutter
     .col
-      q-card.relative-position.layout-padding(style="min-width:300px")
-        h5.text-center(v-if="myProfile") {{thisUser.username}}
-        h5.text-center(v-else) {{thatUser.username}}
+      q-card.animate-scale.relative-position(style="min-width:300px")
         .layout-padding.full-width.relative-position(style="height:140px;")
           img.avatar.absolute-center.block( v-if="myProfile" style="width:120px; height:120px;" :src="thisUser.image")
           img.avatar.absolute-center.block(v-else style="width:120px; height:120px;" :src="thatUser.image")
+        h5.text-center(v-if="myProfile") {{thisUser.username}}
+        h5.text-center(v-else) {{thatUser.username}}
         div(v-if="!myProfile")
           .tagline(v-if="thatUser.tagline")
             h6.light-paragraph.text-center {{thatUser.tagline}}
@@ -46,18 +23,36 @@
         div(v-else)
           .tagline(v-if="thisUser.tagline")
             h6.light-paragraph.text-center {{thisUser.tagline}}
-
-        br
-        br
-        .layout-padding(v-if="myProfile").relative-position
-          q-btn.full-width.absolute-center(color='blue' @click="$e.$emit('openProfileEditModal')") Update Profile
+      div(v-if="myProfile" style="margin:8px; margin-bottom:0px;")
+        q-btn.full-width(color='blue' @click="$e.$emit('openProfileEditModal')") Update Profile
+      .row
+        q-card.animate-scale.relative-position(v-if="thatUser.powerRatings")
+          p.light-paragraph.text-center Power Rating
+          div(style="margin:auto;")
+            p.text-center {{parseInt(thatUser.powerRatings[0].power)}}
+              q-icon.text-center(color="yellow" name='flash_on' style="font-size:50px;")
+              
+        q-card.animate-scale.relative-position(v-if="thatUser.powerRatings")
+          p.light-paragraph.text-center Social
+          div(style="margin:auto;")
+            h5.text-center.light-paragraph {{thatUser._invitedMeta.count}}
+            p.text-center Invited Users
+          q-btn.full-width(v-if="myProfile" color="green" @click="$e.$emit('openSocialModal')")
+                | Get Invite Link
+        q-card.animate-scale.relative-position(v-if="thatUser.team")
+          div.light-paragraph.text-center My Team
+          table.q-table(style="width:100%")
+            tbody()
+              tr
+                td 
+                  img.tokenimg( :src="thatUser.team.image")
+                td {{thatUser.team.name}}
+          q-btn.full-width(color="blue" outline @click="openURL(thisUser.team.meta.social.telegram)")
+            | Telegram Chat
   .row.justify-center.gutter
     .layout-padding(v-if="!authenticated")
-      h5.text-center.light-paragraph.animate-spin You Are Invited!!!!
       .layout-padding
-        br
-        br
-        br
+
         q-btn( big rounded push glossy color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal')") Join Boid
 
 
