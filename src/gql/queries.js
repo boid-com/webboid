@@ -65,7 +65,6 @@ export default {
         query User($username: String!) {
           User(username: $username) {
             id
-            email
             image
             username
             tagline
