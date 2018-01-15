@@ -89,7 +89,7 @@ div
               q-spinner-grid.inline.on-right(:size="20" color="grey-4" v-if="device.toggle")
 
 
-              q-item-side(right v-if="device.toggle && userPower < 1 " )
+              q-item-side(right v-if="device.toggle && !userPower < 1 " )
                 q-btn.on-left.hovericon(  round flat @click="configDevice(device.id)")
                   q-icon(name='settings' color="")
               q-item-side.text-green(right v-else )
