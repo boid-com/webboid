@@ -211,12 +211,12 @@ export default {
   },
   computed: {
     userPower(){
-      return 0
-      // try {
-      //   return parseInt(this.thisUser.powerRatings[0].power)
-      // } catch (err) {
-      //   return 0
-      // }
+      // return 0
+      try {
+        return parseInt(this.thisUser.powerRatings[0].power)
+      } catch (err) {
+        return 0
+      }
     }
   },
   methods: {
