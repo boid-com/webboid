@@ -6,7 +6,7 @@
       q-toolbar-title.cursor-pointer(style="font-family: 'Comfortaa', cursive;" @click="$router.push('/')")
         | boid
         div(slot='subtitle') Alpha
-      q-btn(flat v-if="authenticated")
+      q-btn(flat v-if="authenticated" @click="$router.push('/')")
         //- .ct-chart.float-right.inline(style='position:absolute; right:45px; top:-5px;')
         .on-right
           | {{parseInt(thisUser.powerRatings[0].power)}}
@@ -66,9 +66,9 @@
           p.text-center.thin-paragraph Share this link
           h4.text-center( @click="selectText($event)") 
             textarea.text-center.full-width(readonly ref="socialLink") app.boid.com/u/{{thisUser.username}}
-        .row.gutter.justify-center
-          q-btn.absolute.gt-md(style="bottom:160px;" @click="selectText()") Copy Link
-          q-btn.absolute.lt-lg(style="bottom:120px;" @click="selectText()") Copy Link
+          .row.gutter.justify-center
+            q-btn.absolute.gt-md(style="bottom:160px;" @click="selectText()") Copy Link
+            q-btn.absolute.lt-lg(style="bottom:120px;" @click="selectText()") Copy Link
 
           p.text-center.strong Your link will change if you change your username
 

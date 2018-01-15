@@ -146,6 +146,7 @@ export default {
     var username = window.localStorage.getItem('invitedBy')
     if (username){
       var user = await this.api.user.getByUsername(username)
+      if (!user) return localStorage.removeItem('invitedBy')
       if (this.thisUser.id === user.id) return
       this.form.invitedById = user.id
       this.invitedByUser = user

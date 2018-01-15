@@ -13,7 +13,7 @@ div
               q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.power)")
             p.light-paragraph.text-center Power Rating
             div(style="margin:auto;")
-              p.text-center {{parseInt(thisUser.powerRatings[0].power)}}
+              p.text-center {{userPower}}
                 q-icon.text-center(color="yellow" name='flash_on' style="font-size:50px;")
                 small.block.light-paragraph.small Devices: {{parseInt(thisUser.powerRatings[0].meta.devices)}}
                   q-icon(name="flash_on" color="yellow")
@@ -44,21 +44,20 @@ div
             q-btn.absolute.infobtn(round small flat)
               q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.team)")
             div.light-paragraph.text-center My Team
-            table.q-table(style="width:100%")
+            table.q-table( style="width:100%")
               tbody()
                 tr
                   td 
                     img.tokenimg(:src="thisUser.team.image")
                   td {{thisUser.team.name}}
             q-btn.full-width(color="blue" outline @click="openURL(thisUser.team.meta.social.telegram)")
-              img.on-left(style="width:25px" src="https://telegram.org/img/t_logo.png")
-              | Join Telegram Chat
+              | Join Telegram
 
           q-card.animate-scale.relative-position
             q-btn.absolute.infobtn(round small flat)
               q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.wallet)")
             p.light-paragraph.text-center Wallet
-            table.q-table(style="width:100%")
+            table.q-table.reactive(style="width:100%")
               tbody(v-for="token in thisUser.wallet.tokens" :key="token.id")
                 tr.tokenlist.cursor-pointer()
                   td 
@@ -87,9 +86,12 @@ div
               h6.inline.float-right.text-yellow-6(v-if="device.toggle") {{ch.hps}}
               q-spinner-grid.inline.on-right(:size="20" color="yellow-4" v-if="device.toggle")
 
-              q-item-side(right)
+              q-item-side(right v-if="!userPower < 1")
                 q-btn.on-left.hovericon(  round flat @click="configDevice(device.id)")
                   q-icon(name='settings' color="")
+              q-item-side.animate-blink.text-green(right v-else )
+                div.inline Start Here
+                  q-icon(name="arrow_forward" size="30px")
               q-toggle(v-model="device.toggle" color="yellow" @blur="device.pending = true,toggleDevice(device)")
               q-inner-loading(:visible="device.pending")
                 q-spinner(size="30px" color="blue")
@@ -107,7 +109,6 @@ div
               tr
                 th 
                 th Username
-                th Team
                 th Power
                   q-icon(name="flash_on" color="yellow")
                 th Rank
@@ -115,8 +116,7 @@ div
               tr
                 td 
                   img.avatar(:src="user.image")
-                td(data-th="Username") {{user.username}}
-                td(data-th="Team") {{user.team.name}}
+                td.ellipsis(style="max-width:20px;" data-th="Username") {{user.username}}
                 td(data-th="Power") {{parseInt(user.power)}}
                 td {{index + 1}}
         q-card.animate-scale
@@ -126,7 +126,6 @@ div
               tr
                 th
                 th 
-                th Leader
                 th Power
                   q-icon(name="flash_on" color="yellow")
                 th Rank
@@ -134,8 +133,7 @@ div
               tr
                 td 
                   img.avatar(:src="team.image")
-                td(data-th="Username") {{team.name}}
-                td(data-th="Leader") $10. 11
+                td.ellipsis(style="max-width:120px;" data-th="Username") {{team.name}}
                 td(data-th="Power") {{parseInt(team.power)}}
                 td {{index + 1}}
         div.relative-position(v-if="!authenticated")
@@ -209,8 +207,13 @@ export default {
     }
   },
   computed: {
-    userPower:() => {
-      return 'lul'
+    userPower(){
+      return 0
+      // try {
+      //   return parseInt(this.thisUser.powerRatings[0].power)
+      // } catch (err) {
+      //   return 0
+      // }
     }
   },
   methods: {
@@ -303,4 +306,8 @@ export default {
   width 30px
   height 30px
 
+@media (max-width: 767px)
+  table.q-table.responsive:not(.flipped) tr, table.q-table.responsive:not(.flipped) td {
+      display: inline-table
+  }
 </style>
