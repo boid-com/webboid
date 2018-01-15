@@ -124,7 +124,11 @@ export default {
       this.$emit('update:authenticated',true)
       this.pending=false
       this.thisModal.close()
-      this.$router.push('/')
+      this.$nextTick(function () {
+        setTimeout(()=>{
+          this.$router.push('/')
+        },1000)
+      })
     }
     },
     checkInvitedBy: async function(){

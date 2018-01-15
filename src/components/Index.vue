@@ -14,7 +14,9 @@ div
             p.light-paragraph.text-center Power Rating
             div(style="margin:auto;")
               p.text-center {{userPower}}
-                q-icon.text-center(color="yellow" name='flash_on' style="font-size:50px;")
+                //- p.text-center(v-if="!ch.toggle") Enable a device to generate Power
+                q-icon.text-center( v-if="ch.toggle" color="yellow" name='flash_on' style="font-size:50px;")
+                q-icon.text-center( v-else color="grey-4" name='flash_on' style="font-size:50px;")
                 small.block.light-paragraph.small Devices: {{parseInt(thisUser.powerRatings[0].meta.devices)}}
                   q-icon(name="flash_on" color="yellow")
                 small.block.light-paragraph Social: {{parseInt(thisUser.powerRatings[0].meta.social)}}
@@ -82,14 +84,15 @@ div
               q-item-main
                 q-item-tile(label style="user-select: none;") {{device.name}}
                 q-item-tile(sublabel) {{device.status}}
-                  //- q -icon.text-center(color="yellow" name='flash_on')
-              h6.inline.float-right.text-yellow-6(v-if="device.toggle") {{ch.hps}}
-              q-spinner-grid.inline.on-right(:size="20" color="yellow-4" v-if="device.toggle")
+                  //- q -icon.text-center(color="yellow" name='flash_on'
+              h6.inline.float-right.text-green-4(v-if="device.toggle") {{ch.hps}}
+              q-spinner-grid.inline.on-right(:size="20" color="grey-4" v-if="device.toggle")
 
-              q-item-side(right v-if="!userPower < 1")
+
+              q-item-side(right v-if="device.toggle && userPower < 1 " )
                 q-btn.on-left.hovericon(  round flat @click="configDevice(device.id)")
                   q-icon(name='settings' color="")
-              q-item-side.animate-blink.text-green(right v-else )
+              q-item-side.text-green(right v-else )
                 div.inline Start Here
                   q-icon(name="arrow_forward" size="30px")
               q-toggle(v-model="device.toggle" color="yellow" @blur="device.pending = true,toggleDevice(device)")

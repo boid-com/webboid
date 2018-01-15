@@ -11,7 +11,8 @@
         .on-right
           | {{parseInt(thisUser.powerRatings[0].power)}}
         .on-right
-        q-icon.on-left(name='flash_on', color='yellow')
+        q-icon.on-left(v-if="ch.toggle" name='flash_on', color='yellow')
+        q-icon.on-left(v-else name='flash_on', color='grey-4')
       q-btn.text-black(@click='' flat v-if="authenticated", color='light')
         .on-right
           | {{thisUser.username}}
