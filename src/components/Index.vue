@@ -36,7 +36,8 @@ div
                 tr
                   td 
                     img.tokenimg(:src="thisUser.image")
-                  td {{thisUser.username}}
+                    div.ellipsis.inline(style="max-width:220px;") {{thisUser.username}}
+                  td
             div(style="padding-left:5px")
               p.light-paragraph(v-if="!thisUser.tagline") No tagline set...
               p(v-else) {{thisUser.tagline}}
@@ -89,10 +90,10 @@ div
               q-spinner-grid.inline.on-right(:size="20" color="grey-4" v-if="device.toggle")
 
 
-              q-item-side(right v-if="device.toggle && !userPower < 1 " )
-                q-btn.on-left.hovericon(  round flat @click="configDevice(device.id)")
+              q-item-side(right v-if="device.toggle" )
+                //- q-btn.on-left.hovericon(  round flat @click="configDevice(device.id)")
                   q-icon(name='settings' color="")
-              q-item-side.text-green(right v-else )
+              q-item-side.text-green(right v-else-if="userPower < 1" )
                 div.inline Start Here
                   q-icon(name="arrow_forward" size="30px")
               q-toggle(v-model="device.toggle" color="yellow" @blur="device.pending = true,toggleDevice(device)")
