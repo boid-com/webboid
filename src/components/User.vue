@@ -3,10 +3,6 @@
   .layout-padding.full-width(v-if=("!authenticated") style="min-height=300px;")
     .row.justify-center.gutter
       q-btn( big rounded push glossy color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join Boid
-
-  //- big.thin-paragraph(v-if="myProfile") My Profile
-  //- big.thin-paragraph(v-else) User Profile
-  //- | {{thatUser.username}}
   .row.row-gutter
     .col
       q-card.animate-scale.relative-position(style="min-width:300px")
@@ -47,29 +43,26 @@
                 td 
                   img.tokenimg( :src="thatUser.team.image")
                 td {{thatUser.team.name}}
-          q-btn.full-width(color="blue" outline @click="openURL(thisUser.team.meta.social.telegram)")
+          q-btn.full-width( v-if="thatUser.team.meta.social.telegram" color="blue" outline @click="openURL(thatUser.team.meta.social.telegram)")
             | Telegram Chat
+          q-btn.full-width( v-if="thatUser.team.meta.social.facebook" color="blue" outline @click="openURL(thatUser.team.meta.social.facebook)")
+            | Facebook Group
   .row.justify-center.gutter
     .layout-padding(v-if="!authenticated")
       .layout-padding
 
         q-btn( big rounded push glossy color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal')") Join Boid
 
-
-
-  //- img.avatar.text-center(v-else :src="thisUser.image")
-
-
-  
 </template>
 
 <script>
-import profileEdit from "@/ProfileEdit"
+import { openURL } from 'quasar'
 
 export default {
   name: 'index',
   data () {
     return {
+      openURL
     }
   },
   computed: {
@@ -102,7 +95,6 @@ export default {
     })
   },
   props:['thisUser','thatUser','api','authenticated'],
-  components:{profileEdit}
 }
 </script>
 

@@ -78,6 +78,7 @@ export default {
               id
               name
               image
+              meta
               owner{
                 username
               }
