@@ -108,7 +108,7 @@ div
             q-icon.on-right(name="add")
         q-card.animate-scale
           p.light-paragraph.text-center Top Users
-          table.q-table.horizontal-separator(style="width:100%")
+          table.q-table.horizontal-separator.highlight(style="width:100%")
             thead
               tr
                 th 
@@ -117,10 +117,11 @@ div
                   q-icon(name="flash_on" color="yellow")
                 th Rank
             tbody(v-for="(user,index) in this.leaderboard" :key="user.id")
-              tr
+              tr.cursor-pointer(@click="$router.push({name:'User',params:{username:user.username}})")
                 td 
                   img.avatar(:src="user.image")
                 td.ellipsis(style="max-width:20px;" data-th="Username") {{user.username}}
+                  small.block.light-paragraph {{user.tagline}}
                 td(data-th="Power") {{parseInt(user.power)}}
                 td {{index + 1}}
         q-card.animate-scale
@@ -136,7 +137,7 @@ div
             tbody(v-for="(team,index) in this.teamLeaderboard" :key="team.id")
               tr
                 td 
-                  img.avatar(:src="team.image")
+                  img.tokenimg(:src="team.image")
                 td.ellipsis(style="max-width:120px;" data-th="Username") {{team.name}}
                 td(data-th="Power") {{parseInt(team.power)}}
                 td {{index + 1}}
@@ -263,7 +264,7 @@ export default {
   mounted() {
     this.init()
     this.updateLeaderboards()
-    setInterval(this.updateLeaderboard,200000)
+    setInterval(this.updateLeaderboard,100000)
   },
   watch: {
     thisUser() {

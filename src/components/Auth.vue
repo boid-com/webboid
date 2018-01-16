@@ -191,6 +191,7 @@ export default {
       console.log(team)
       this.$e.$emit('thisTeam',team)
       if(!team.owner.id) return
+      this.invitedByUser = team.owner
       this.form.invitedById = team.owner.id
     },
     "form.email"(val){

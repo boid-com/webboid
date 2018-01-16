@@ -117,6 +117,7 @@ export default {
       query{
         allTeams(orderBy: power_DESC first:3 filter:{power_gt:0}){
           name
+          tagline
           power
           id
           image
@@ -134,6 +135,7 @@ export default {
           id
           power
           image
+          meta
           owner{
             id
             username

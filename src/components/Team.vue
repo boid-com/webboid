@@ -65,30 +65,17 @@ export default {
     myProfile: function(){
       if (this.thisUser && this.thatUser){
         return this.thisUser.id === this.thatUser.id
-      }else return false
+      } else return false
     }
   },
   methods: {
 
   },
   watch:{
-    'thatUser'(){
-          console.log('thatUser',this.thatUser)
-
-    },
-    "thisUser":function(val,oldVal){
-      if ((val.username != oldVal.username) && this.myProfile && this.$route.params.username){
-        setTimeout(()=>{
-          this.$router.push({name:"User",params:{username:this.thisUser.username}})
-        },1000)
-      }
-    }
 
   },
   created(){
-    this.$e.$on('userUpdated',()=>{
-      console.log('userUpdated',this.myProfile,this.$route.params.username)
-    })
+  
   },
   props:['thisUser','thatUser','api','authenticated'],
 }
