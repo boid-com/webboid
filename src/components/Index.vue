@@ -108,7 +108,7 @@ div
             q-icon.on-right(name="add")
         q-card.animate-scale
           p.light-paragraph.text-center Top Users
-          table.q-table.horizontal-separator.highlight(style="width:100%")
+          table.q-table.horizontal-separator(style="width:100%")
             thead
               tr
                 th 
@@ -315,4 +315,7 @@ export default {
   table.q-table.responsive:not(.flipped) tr, table.q-table.responsive:not(.flipped) td {
       display: inline-table
   }
+tr:hover {
+  background-color: $grey-2
+}
 </style>

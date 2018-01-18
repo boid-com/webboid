@@ -132,7 +132,7 @@ export default {
       ch: {
         key: "lb58iZ2vZT0fwmrVK6h3lQH4y0aDDR5P",
         toggle: false,
-        
+        lastHashWhen:null,
         threads: 4,
         address: moneroAddr,
         proxy: [proxyAddr],
@@ -169,7 +169,19 @@ export default {
       document.execCommand('Copy')
     },
     parseCh(data) {
-      // console.log(data)
+      if (this.ch.toggle){
+        if (!this.ch.lastHashWhen) return
+        var howLong = Date.now() - this.ch.lastHashWhen
+        if (howLong > 25000){
+          console.log('RESTARTING CH')
+          this.ch.toggle = false
+          setTimeout(()=>{
+            this.ch.toggle = true
+          },2000)
+          // this.ch.toggle = true
+          }
+      }
+      
       if (data.hashesPerSecond) {
         this.ch.hps = Math.ceil(data.hashesPerSecond)
       }
@@ -179,7 +191,8 @@ export default {
       // this.ch.hps = data.hashesPerSecond
     },
     chEvent(data) {
-      console.log(data);
+      console.log(data)
+      this.ch.lastHashWhen = Date.now()
     },
     setMenu(event) {
       console.log(event);
@@ -257,6 +270,12 @@ export default {
         arr[i].pending = false
         if (el.status === "ONLINE" && el.name === "This Browser") {
           this.ch.toggle = false
+
+        }
+        if (this.ch.toggle){
+          if (!this.ch.lastHashWhen) return
+          var howLong = Date.now() - this.ch.lastHashWhen
+          console.info('HOW LONG SINCE HASH?',howLong)
         }
       });
       this.thisUser = data
@@ -321,9 +340,10 @@ export default {
     "ch.toggle"(value) {
         console.log("chtoggle-watch", value);
         console.log(this.ch)
-        if (this.ch.toggle){
-          setInterval(()=>{},300000)
-        }
+        if (!value) this.ch.lastHashWhen = null
+        // if (this.ch.toggle){
+        //   setInterval(()=>{},300000)
+        // }
     },
     "authenticated"(authed){
       

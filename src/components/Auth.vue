@@ -189,10 +189,10 @@ export default {
       var team = (await this.api.team.getByName(teamname))
       if(!team) return
       console.log(team)
-      this.$e.$emit('thisTeam',team)
-      if(!team.owner.id) return
-      this.invitedByUser = team.owner
-      this.form.invitedById = team.owner.id
+      this.$e.$emit('team',team)
+      // if(!team.owner.id) return
+      // this.invitedByUser = team.owner
+      // this.form.invitedById = team.owner.id
     },
     "form.email"(val){
       // console.log(this.$v.form.email.$error)
