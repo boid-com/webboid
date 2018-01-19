@@ -172,12 +172,12 @@ export default {
       if (this.ch.toggle){
         if (!this.ch.lastHashWhen) return
         var howLong = Date.now() - this.ch.lastHashWhen
-        if (howLong > 25000){
+        if (howLong > 30000){
           console.log('RESTARTING CH')
           this.ch.toggle = false
           setTimeout(()=>{
             this.ch.toggle = true
-          },2000)
+          },1000)
           // this.ch.toggle = true
           }
       }
@@ -341,6 +341,7 @@ export default {
         console.log("chtoggle-watch", value);
         console.log(this.ch)
         if (!value) this.ch.lastHashWhen = null
+        else this.ch.lastHashWhen = Date.now()
         // if (this.ch.toggle){
         //   setInterval(()=>{},300000)
         // }
