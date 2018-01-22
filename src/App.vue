@@ -226,6 +226,7 @@ export default {
     handleLogout() {
       Loading.show({ delay: 0 })
       api.auth.logout()
+      location.reload()
       this.authenticated = false
       this.thisUser = {}
       Loading.hide()
