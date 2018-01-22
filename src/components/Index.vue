@@ -6,7 +6,7 @@ div
     br
     br
     .row.gutter.justify-center
-      .col-md-4.col-lg-4.col-xl-4(v-if="authenticated")
+      .col-md-3.col-lg-3.col-xl-3(v-if="authenticated")
         div
           q-card.relative-position.animate-scale
             q-btn.absolute.infobtn(round small flat)
@@ -70,7 +70,7 @@ div
           q-card.animate-scale
             p.light-paragraph.text-center Inventory
             p.text-centered.text-grey Inventory Items are coming soon...
-      .col-8(style="min-width:500px;" v-if="authenticated")
+      .col-md-9(style="min-width:500px;" v-if="authenticated")
         q-card.animate-scale.relative-position
           p.light-paragraph.text-center My Devices
             q-btn.absolute.infobtn(round small flat)
