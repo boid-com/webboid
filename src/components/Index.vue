@@ -49,12 +49,12 @@ div
             div.light-paragraph.text-center My Team
             table.q-table( style="width:100%")
               tbody()
-                tr
+                tr.cursor-pointer(@click="$router.push({name:'Team',params:{teamname:thisUser.team.name}})")
                   td 
                     img.tokenimg(:src="thisUser.team.image")
                   td {{thisUser.team.name}}
-            q-btn.full-width(color="blue" outline @click="openURL(thisUser.team.meta.social.telegram)")
-              | Join Telegram
+            //- q-btn.full-width(color="blue" outline @click="openURL(thisUser.team.meta.social.telegram)")
+            //-   | Join Telegram
           q-card.animate-scale.relative-position
             q-btn.absolute.infobtn(round small flat)
               q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.wallet)")
