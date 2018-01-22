@@ -3,7 +3,7 @@
   .layout-padding.full-width(v-if=("!authenticated") style="min-height=300px;")
     .row.justify-center.gutter
       q-btn( big rounded push glossy color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join Boid
-  .row.row-gutter
+  .row.gutter.justify-center
     .col
       q-card.animate-scale.relative-position(style="min-width:300px")
         .layout-padding.full-width.relative-position(style="height:140px;")
@@ -11,7 +11,7 @@
         h5.text-center {{team.name | removeDash}}
         h6.light-paragraph.text-center {{team.tagline}}
         br
-  .row.items-stretch
+  .row.gutter.justify-center.items-stretch
       q-card.animate-scale(style="min-width:70px;")
         //- p.light-paragraph.text-center Power
         div.relative-position(style="margin:auto; margin-top:30px")
@@ -31,7 +31,7 @@
             q-item-tile(sublabel) {{team.owner.tagline}}
           q-item-side(right icon="flash_on" stamp="") 
             small.text-center {{parseInt(team.owner.powerRatings[0].power)}}
-  .row
+  .row.gutter.justify-center
     .col
       q-card.animate-scale
         p.light-paragraph.text-center Top Users on {{team.name | removeDash}}
@@ -51,10 +51,10 @@
                 small.block.light-paragraph {{user.tagline}}
               td(data-th="Power") {{parseInt(user.power)}}
               td {{index + 1}}
-    .row.justify-center.gutter
-      .layout-padding(v-if="!authenticated")
-        .layout-padding
-          q-btn( big rounded push glossy color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal')") Join Boid
+  .row.justify-center.gutter
+    .layout-padding(v-if="!authenticated")
+      .layout-padding
+        q-btn( big rounded push glossy color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal')") Join Boid
 
 </template>
 

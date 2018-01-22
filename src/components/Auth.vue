@@ -41,27 +41,27 @@
 </template>
 
 <script>
-import { required, email, minLength } from "vuelidate/lib/validators"
-import { Toast } from "quasar"
+import { required, email, minLength } from 'vuelidate/lib/validators'
+import { Toast } from 'quasar'
 
 export default {
   data() {
     return {
       form: {
-        email: "",
-        password: "",
+        email: '',
+        password: '',
         invitedById: null
       },
-      pending:false,
-      rememberMe:true,
-      invitedByUser:null,
-      registering:false
+      pending: false,
+      rememberMe: true,
+      invitedByUser: null,
+      registering: false
     }
   },
   validations: {
     form: {
       email: { required, email },
-      password:{required,minLength:minLength(5)}
+      password: { required, minLength: minLength(5) }
     }
   },
   computed: {
@@ -75,63 +75,61 @@ export default {
     submit: async function() {
       this.$v.form.$touch()
       if (this.$v.form.$error) {
-        Toast.create("Please review fields again.")
+        Toast.create('Please review fields again.')
         return
       }
-    this.pending = true
-    
-    // delete this.form.invitedById
-    var result = await this.api.auth.login(this.form)
+      this.pending = true
 
+      // delete this.form.invitedById
+      var result = await this.api.auth.login(this.form)
 
-    if (result.error){
-      Toast.create.negative(result.error)
-      setTimeout(()=>{
-        this.pending=false
-      },1500)
-    } else{
-      // this.$router.push("/")
-      console.log('loginResult',result)
-      var userData = await this.api.user.get(result.id)
-      this.$emit('update:thisUser',userData)
-      this.$emit('update:authenticated',true)
-      this.pending = false
-      this.thisModal.close()
-
-    }
+      if (result.error) {
+        Toast.create.negative(result.error)
+        setTimeout(() => {
+          this.pending = false
+        }, 1500)
+      } else {
+        // this.$router.push("/")
+        console.log('loginResult', result)
+        var userData = await this.api.user.get(result.id)
+        this.$emit('update:thisUser', userData)
+        this.$emit('update:authenticated', true)
+        this.pending = false
+        this.thisModal.close()
+      }
     },
     join: async function() {
       this.$v.form.$touch()
       if (this.$v.form.$error) {
-        Toast.create("Please review fields again.")
+        Toast.create('Please review fields again.')
         return
       }
-    this.pending = true
-    if (this.invitedByUser) this.form.invitedById = this.invitedByUser.id
-    console.log('this form',this.form)
-    var result = await this.api.auth.authenticateUser(this.form)
-    
-    console.log(result)
-    if (result.error){
-      Toast.create.negative(result.error)
-      setTimeout(()=>{
-        this.pending=false
-      },1500)
-    }else{
-      console.log('we are here')
-      var userData = await this.api.user.get(result.id)
-      this.$emit('update:thisUser',userData)
-      this.$emit('update:authenticated',true)
-      this.pending=false
-      this.thisModal.close()
-      this.$nextTick(function () {
-        setTimeout(()=>{
-          this.$router.push('/')
-        },1000)
-      })
-    }
+      this.pending = true
+      if (this.invitedByUser) this.form.invitedById = this.invitedByUser.id
+      console.log('this form', this.form)
+      var result = await this.api.auth.authenticateUser(this.form)
+
+      console.log(result)
+      if (result.error) {
+        Toast.create.negative(result.error)
+        setTimeout(() => {
+          this.pending = false
+        }, 1500)
+      } else {
+        console.log('we are here')
+        var userData = await this.api.user.get(result.id)
+        this.$emit('update:thisUser', userData)
+        this.$emit('update:authenticated', true)
+        this.pending = false
+        this.thisModal.close()
+        this.$nextTick(function() {
+          setTimeout(() => {
+            this.$router.push('/')
+          }, 1000)
+        })
+      }
     },
-    checkInvitedBy: async function(){
+    checkInvitedBy: async function() {
       console.log(this.$route)
 
       // var invitedBy = this.$route.params.username
@@ -143,12 +141,13 @@ export default {
       // this.$router.push("/")
     }
   },
-  props: ["thisUser", "authenticated", "api", "thisModal"],
-  created: async function () {
-    if (window.localStorage.getItem('rememberMe') === null) window.localStorage.setItem('rememberMe',"true")
+  props: ['thisUser', 'authenticated', 'api', 'thisModal'],
+  created: async function() {
+    if (window.localStorage.getItem('rememberMe') === null)
+      window.localStorage.setItem('rememberMe', 'true')
     else this.rememberMe = JSON.parse(window.localStorage.getItem('rememberMe'))
     var username = window.localStorage.getItem('invitedBy')
-    if (username){
+    if (username) {
       var user = await this.api.user.getByUsername(username)
       if (!user) return localStorage.removeItem('invitedBy')
       if (this.thisUser.id === user.id) return
@@ -156,45 +155,46 @@ export default {
       this.invitedByUser = user
     }
 
-    this.$e.$on('openAuthModal',(val)=>{
+    this.$e.$on('openAuthModal', val => {
       console.log(val)
-      this.pending=false
+      this.pending = false
       this.form = {
-        email: "",
-        password: "",
+        email: '',
+        password: '',
         invitedById: null
       }
       this.$v.form.$reset()
       this.registering = val
     })
   },
-  watch:{
-    rememberMe:function(value){
-      window.localStorage.setItem('rememberMe',value)
+  watch: {
+    rememberMe: function(value) {
+      window.localStorage.setItem('rememberMe', value)
     },
-    "$route.params.username":async function(username){
+    '$route.params.username': async function(username) {
       if (!username) return
       var user = await this.api.user.getByUsername(username)
-      if (!user) return this.$router.push("/")
-      this.$e.$emit('thatUser',user)
-      console.log('on User Page',user.username)
+      if (!user) return this.$router.push('/')
+      this.$e.$emit('thatUser', user)
+      console.log('on User Page', user.username)
       // if (this.thisUser.id === user.id) return
-      window.localStorage.setItem('invitedBy',user.username)
+      window.localStorage.setItem('invitedBy', user.username)
       this.form.invitedById = user.id
       this.invitedByUser = user
     },
-    "$route.params.teamname":async function(teamname){
+    '$route.params.teamname': async function(teamname) {
       if (!teamname) return
-      console.log('found Teamname',teamname)
-      var team = (await this.api.team.getByName(teamname))
-      if(!team) return
+      console.log('found Teamname', teamname)
+      var team = await this.api.team.getByName(teamname)
+      if (!team) return
       console.log(team)
-      this.$e.$emit('team',team)
-      // if(!team.owner.id) return
-      // this.invitedByUser = team.owner
-      // this.form.invitedById = team.owner.id
+      this.$e.$emit('team', team)
+      if (!team.owner) return
+      this.invitedByUser = team.owner
+      this.form.invitedById = team.owner.id
+      window.localStorage.setItem('invitedBy', team.owner.username)
     },
-    "form.email"(val){
+    'form.email'(val) {
       // console.log(this.$v.form.email.$error)
       // // if()
       // if (!val && this.form.email != "" ){
