@@ -14,7 +14,8 @@ export default new VueRouter({
   routes: [
     { path: '/', component: load('Index'), name: 'Index' },
     { path: '/u/:username?', component: load('User'), name: 'User' },
-    { path: '/t/:teamname?', component: load('Team'), name: 'Team' },    
+    { path: '/t/:teamname?', component: load('Team'), name: 'Team' },   
+    { path: '/leaderboards/', component: load('Leaderboards'), name: 'Leaderboards' }, 
     { path: '*', component: load('Index') } // Not found
   ]
 })

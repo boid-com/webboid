@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  .layout-padding()
+  div
     big.thin-paragraph(v-if="authenticated") User Dashboard
     big.thin-paragraph(v-else) Global Leaderboards
     br
@@ -55,7 +55,6 @@ div
                   td {{thisUser.team.name}}
             q-btn.full-width(color="blue" outline @click="openURL(thisUser.team.meta.social.telegram)")
               | Join Telegram
-
           q-card.animate-scale.relative-position
             q-btn.absolute.infobtn(round small flat)
               q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.wallet)")
@@ -71,9 +70,8 @@ div
           q-card.animate-scale
             p.light-paragraph.text-center Inventory
             p.text-centered.text-grey Inventory Items are coming soon...
-
-      .col
-        q-card.animate-scale.relative-position(v-if="authenticated")
+      .col-8(style="min-width:500px;" v-if="authenticated")
+        q-card.animate-scale.relative-position
           p.light-paragraph.text-center My Devices
             q-btn.absolute.infobtn(round small flat)
               q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.devices)")
@@ -106,49 +104,12 @@ div
           q-btn.full-width( disabled small color="green")
             | add more Devices
             q-icon.on-right(name="add")
-        q-card.animate-scale
-          p.light-paragraph.text-center Top Users
-          table.q-table.horizontal-separator(style="width:100%")
-            thead
-              tr
-                th 
-                th Username
-                th Power
-                  q-icon(name="flash_on" color="yellow")
-                th Rank
-            tbody(v-for="(user,index) in this.leaderboard" :key="user.id")
-              tr.cursor-pointer(@click="$router.push({name:'User',params:{username:user.username}})")
-                td 
-                  img.avatar(:src="user.image")
-                td.ellipsis(style="max-width:20px;" data-th="Username") {{user.username}}
-                  small.block.light-paragraph {{user.tagline}}
-                td(data-th="Power") {{parseInt(user.power)}}
-                td {{index + 1}}
-        q-card.animate-scale
-          p.light-paragraph.text-center Top Teams
-          table.q-table.horizontal-separator(style="width:100%")
-            thead
-              tr
-                th
-                th 
-                th Power
-                  q-icon(name="flash_on" color="yellow")
-                th Rank
-            tbody(v-for="(team,index) in this.teamLeaderboard" :key="team.id")
-              tr
-                td 
-                  img.tokenimg(:src="team.image")
-                td.ellipsis(style="max-width:120px;" data-th="Username") {{team.name}}
-                td(data-th="Power") {{parseInt(team.power)}}
-                td {{index + 1}}
-        div.relative-position(v-if="!authenticated")
-          .absolute-center
-            br
-            br
-            br
-            br
-            q-btn.on-left(big  style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join
-            //- q-btn(big style="font-size:30px" color="blue" @click="openURL('https://www.boid.com')") Learn More
+        div.full-width
+          leaderboard(:leaderboard='leaderboard' :teamLeaderboard="teamLeaderboard")
+    div.relative-position.layout-padding(v-if="!authenticated")
+      .block.absolute-center
+        q-btn.on-left(big  style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join
+        //- q-btn(big style="font-size:30px" color="blue" @click="openURL('https://www.boid.com')") Learn More
 
     q-modal(ref="deviceModal" @close="currentDevice = null")
       device(
@@ -161,44 +122,43 @@ div
 </template>
 
 <script>
-import device from "@/Device"
-import parseDevice from "src/lib/parseDevice"
+import device from '@/Device'
+import parseDevice from 'src/lib/parseDevice'
 import { openURL } from 'quasar'
+import leaderboard from '@/Leaderboards'
 
 var info = {
-  wallet:{
-    heading:"Your Wallet",
-    body:`Tokens and coins which you earn from your team will show up in your wallet.
+  wallet: {
+    heading: 'Your Wallet',
+    body: `Tokens and coins which you earn from your team will show up in your wallet.
           To earn more, you need to increase your Power by running Boid on more devices or inviting more users.
           During the Alpha, only BOIDs are generated.`
   },
-  power:{
-    heading:"Boid Power",
-    body:`Your Boid Power is your score that shows how much influence you have on Boid.  The higher your Power,
+  power: {
+    heading: 'Boid Power',
+    body: `Your Boid Power is your score that shows how much influence you have on Boid.  The higher your Power,
           the more you will earn and the higher you will climb in the leaderboards. When you invite others, you
           earn some power when they run the app.`
   },
-  devices:{
-    heading:"Your Devices",
-    body:`When you install the Boid application on multiple devices (desktops, laptops, phones), 
+  devices: {
+    heading: 'Your Devices',
+    body: `When you install the Boid application on multiple devices (desktops, laptops, phones), 
           you will be able to manage your devices here.`
   },
-  team:{
-    heading:"Your Team",
-    body:`Your power generated goes towards your Team, in eachange, each team will distribute exclusive rewards. 
+  team: {
+    heading: 'Your Team',
+    body: `Your power generated goes towards your Team, in eachange, each team will distribute exclusive rewards. 
           You are automatically on the team of the user who has invited you.`
   },
-  social:{
-    heading:"Social",
-    body:`When users join Boid using your invite link you will receive a small percentage of bonus power based
+  social: {
+    heading: 'Social',
+    body: `When users join Boid using your invite link you will receive a small percentage of bonus power based
           on their contributions. Your Invite link changes if you change your username.`
   }
-
 }
 
-
 export default {
-  name: "index",
+  name: 'index',
   data() {
     return {
       openURL,
@@ -206,13 +166,11 @@ export default {
       currentDevice: null,
       devices: [],
       parseDevice,
-      leaderboard:[],
-      teamLeaderboard:[],
-      pollLeaderboard:null
+      pollLeaderboard: null
     }
   },
   computed: {
-    userPower(){
+    userPower() {
       // return 0
       try {
         return parseInt(this.thisUser.powerRatings[0].power)
@@ -222,11 +180,6 @@ export default {
     }
   },
   methods: {
-    updateLeaderboards: async function(){
-      this.leaderboard = await this.api.leaderboard.global() 
-      this.teamLeaderboard = await this.api.leaderboard.teams() 
-      console.log('updateLeaderboard',this.leaderboard)
-    },
     toggleDevice(device) {
       console.log(device)
     },
@@ -234,27 +187,27 @@ export default {
       this.currentDevice = deviceId
       this.$refs.deviceModal.open()
     },
-    toggleDevice:async function(device) {
-      console.log('TOGGLE STATE',device.toggle)
+    toggleDevice: async function(device) {
+      console.log('TOGGLE STATE', device.toggle)
       try {
-        if(!device.toggle){
-        var result = await this.api.device.updateStatus({
-          deviceId:device.id,
-          status:'ACTIVE'
-        })
-      }else{
-        console.log('online')
-        var result = await this.api.device.updateStatus({
-          deviceId:device.id,
-          status:'ONLINE'
-        })
-      }
+        if (!device.toggle) {
+          var result = await this.api.device.updateStatus({
+            deviceId: device.id,
+            status: 'ACTIVE'
+          })
+        } else {
+          console.log('online')
+          var result = await this.api.device.updateStatus({
+            deviceId: device.id,
+            status: 'ONLINE'
+          })
+        }
       } catch (error) {
         console.log(error)
-      }finally{
+      } finally {
         console.log(result)
         this.$e.$emit('refreshUser')
-        this.$e.$emit('ch.toggle',device.toggle)
+        this.$e.$emit('ch.toggle', device.toggle)
       }
     },
     init() {
@@ -263,20 +216,27 @@ export default {
   },
   mounted() {
     this.init()
-    this.updateLeaderboards()
-    setInterval(this.updateLeaderboard,100000)
   },
   watch: {
     thisUser() {
       this.init()
     },
-    adBlock(){
+    adBlock() {
       console.log('here we are')
     }
   },
-  props: ["thisUser", "authenticated", "api", "ch","adBlock"],
+  props: [
+    'thisUser',
+    'authenticated',
+    'api',
+    'ch',
+    'adBlock',
+    'leaderboard',
+    'teamLeaderboard'
+  ],
   components: {
-    device
+    device,
+    leaderboard
   }
 }
 </script>

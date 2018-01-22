@@ -1,15 +1,18 @@
 // import gql from 'graphql-tag'
-function gql (strings) { return strings[0] }
+function gql (strings) {
+  return strings[0]
+}
 
 export default {
   user: {
     checkUsername () {
       return gql`
-        query User($username: String!){
-          User(username:$username){
+        query User($username: String!) {
+          User(username: $username) {
             id
           }
-        }`
+        }
+      `
     },
     get () {
       return gql`
@@ -20,7 +23,7 @@ export default {
             username
             image
             tagline
-            invited{
+            invited {
               id
             }
             devices {
@@ -33,7 +36,7 @@ export default {
               id
               name
               image
-              owner{
+              owner {
                 id
                 username
                 image
@@ -45,14 +48,14 @@ export default {
               tokens {
                 id
                 balance
-                tokenType{
+                tokenType {
                   name
                   image
                   description
                 }
               }
             }
-            powerRatings(last:1){
+            powerRatings(last: 1) {
               power
               meta
             }
@@ -68,18 +71,18 @@ export default {
             image
             username
             tagline
-            _invitedMeta{
+            _invitedMeta {
               count
             }
-            powerRatings(last:1){
+            powerRatings(last: 1) {
               power
             }
-            team{
+            team {
               id
               name
               image
               meta
-              owner{
+              owner {
                 username
               }
             }
@@ -91,8 +94,8 @@ export default {
   device: {
     get () {
       return gql`
-        query Device($deviceId:ID!){
-          Device(id:$deviceId){
+        query Device($deviceId: ID!) {
+          Device(id: $deviceId) {
             id
             name
             status
@@ -100,48 +103,60 @@ export default {
             meta
           }
         }
-        `
+      `
     }
   },
   leaderboard: {
     global () {
       return gql`
-      query($teamId:ID){
-        leaderboard(teamId:$teamId){
-          users
+        query($teamId: ID) {
+          leaderboard(teamId: $teamId) {
+            users
+          }
         }
-      }`
+      `
     },
     teams () {
       return gql`
-      query{
-        allTeams(orderBy: power_DESC first:3 filter:{power_gt:0}){
-          name
-          tagline
-          power
-          id
-          image
-          change24
-        }
-      }`
-    }
-  },
-  team:{
-    getByName(){
-      return gql`
-      query($teamName:String!){
-        Team(name:$teamName){
-          name
-          id
-          power
-          image
-          meta
-          owner{
+        query {
+          allTeams(orderBy: power_DESC, first: 3, filter: { power_gt: 0 }) {
+            name
+            tagline
+            power
             id
-            username
+            image
+            change24
           }
         }
-      }
+      `
+    }
+  },
+  team: {
+    getByName () {
+      return gql`
+        query($teamName: String!) {
+          Team(name: $teamName) {
+            name
+            tagline
+            social
+            id
+            power
+            image
+            meta
+            _membersMeta {
+              count
+            }
+            owner {
+              powerRatings(last: 1) {
+                power
+              }
+              id
+              username
+              image
+              tagline
+            }
+          }
+        }
       `
     }
   }

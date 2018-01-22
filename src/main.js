@@ -3,12 +3,18 @@ require(`quasar/dist/quasar.${__THEME}.css`)
 import Vue from 'vue'
 import Quasar, * as All from 'quasar'
 import router from './router'
+import 'quasar-extras/ionicons'
+import 'quasar-extras/fontawesome'
 // import storePlugin from './storePlugin'
 
 Vue.config.productionTip = false
 Vue.use(Quasar, {
   components: All,
   directives: All
+})
+Vue.filter('removeDash', function (value) {
+  if (!value) return ''
+  return value.toString().replace('-', ' ')
 })
 
 import Vuelidate from 'vuelidate'

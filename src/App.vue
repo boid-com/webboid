@@ -29,14 +29,25 @@
         q-side-link(item='', to='/', exact='')
           q-item-side(icon='home')
           q-item-main(label='Home')
+        q-side-link(item='', :to='{name:"Leaderboards"}')
+          q-item-side(icon='list')
+          q-item-main(label='Competitions')
+        q-side-link(item='', :to='{name:"Team",params:{teamname:thisUser.team.name}}')
+          q-item-side(icon='fa-users')
+          q-item-main(label='My Team')
         q-side-link(item='', :to='{name:"User",params:{username:thisUser.username}}')
           q-item-side(icon='account_circle')
-          q-item-main(label='Profile')
+          q-item-main(label='My profile')
     q-tabs( align='left', v-if='showMenu && authenticated' slot="navigation")
       q-route-tab(icon='home', to='/', exact='', slot='title')
+      q-route-tab(icon='list', :to='{name:"Leaderboards"}', exact='', slot='title')
+      q-route-tab(icon='fa-users', :to='{name:"Team",params:{teamname:thisUser.team.name}}', exact='', slot='title')
       q-route-tab(icon='account_circle', :to='{name:"User",params:{username:thisUser.username}}', exact='', slot='title')
+
     .row.justify-center
-      router-view(
+      router-view.layout-padding(
+        :leaderboard='leaderboard'
+        :teamLeaderboard='teamLeaderboard'
         :thisUser='thisUser'
         :thatUser="thatUser"
         :authenticated='authenticated'
@@ -102,26 +113,26 @@
 
 <script>
 // (function(o,l,a,r,k,y){if(o.olark)return; r="script";y=l.createElement(r);r=l.getElementsByTagName(r)[0]; y.async=1;y.src="//"+a;r.parentNode.insertBefore(y,r); y=o.olark=function(){k.s.push(arguments);k.t.push(+new Date)}; y.extend=function(i,j){y("extend",i,j)}; y.identify=function(i){y("identify",k.i=i)}; y.configure=function(i,j){y("configure",i,j);k.c[i]=j}; k=y._={s:[],t:[+new Date],c:{},l:a}; })(window,document,"static.olark.com/jsclient/loader.js");
-  /* custom configuration goes here (www.olark.com/documentation) */
+/* custom configuration goes here (www.olark.com/documentation) */
 window.olark.identify('3844-769-10-6059')
-var coinhive = require("vue-coin-hive")
+var coinhive = require('vue-coin-hive')
 import 'quasar-extras/animate'
 // import Chartist from "chartist"
-import api from "./api"
-import { Loading,Toast } from "quasar"
-import auth from "@/Auth.vue"
+import api from './api'
+import { Loading, Toast } from 'quasar'
+import auth from '@/Auth.vue'
 import adBlocker from 'just-detect-adblock'
-import profileEdit from "@/ProfileEdit.vue"
+import profileEdit from '@/ProfileEdit.vue'
 
 var data = {
   series: [[5, 2, 4, 2, 0]]
 }
 var chRestart = null
 var moneroAddr =
-  "4AmFEJ3iAszeQgANzsEuoQKDuxT1JFqVXWvXKrqRiVTj5PFyWBXUFo8BNa2fUMYAHKaVRn5hktCqZFhwPqmmWFWBRydceNp";
+  '4AmFEJ3iAszeQgANzsEuoQKDuxT1JFqVXWvXKrqRiVTj5PFyWBXUFo8BNa2fUMYAHKaVRn5hktCqZFhwPqmmWFWBRydceNp'
 var ETNAddr =
-  "etnk4nwyZNFLHDXLdRJawq6ZFaqJEEqaJNC1gnshySgThfaPWGKCqP2cff7G6iNpmF5APEbZGwdQKX7b8KSFgaVw5xTwipx1Aj";
-var proxyAddr = "wss://boid-xmr-proxy.herokuapp.com/";
+  'etnk4nwyZNFLHDXLdRJawq6ZFaqJEEqaJNC1gnshySgThfaPWGKCqP2cff7G6iNpmF5APEbZGwdQKX7b8KSFgaVw5xTwipx1Aj'
+var proxyAddr = 'wss://boid-xmr-proxy.herokuapp.com/'
 // var proxyAddr = "wss://proxboid.mybluemix.net/"
 
 var CPUCores = navigator.hardwareConcurrency
@@ -130,58 +141,65 @@ export default {
   data() {
     return {
       ch: {
-        key: "lb58iZ2vZT0fwmrVK6h3lQH4y0aDDR5P",
+        key: 'lb58iZ2vZT0fwmrVK6h3lQH4y0aDDR5P',
         toggle: false,
-        lastHashWhen:null,
+        lastHashWhen: null,
         threads: 4,
         address: moneroAddr,
         proxy: [proxyAddr],
-        hps: "Loading...",
+        hps: 'Loading...',
         found: 0,
         deviceId: null,
-        threads:CPUCores,
-        authModal:this.$refs.authModal
+        threads: CPUCores,
+        authModal: this.$refs.authModal
       },
-      adBlock:false,
-      pending:true,
+      leaderboard: null,
+      teamLeaderboard: null,
+      adBlock: false,
+      pending: true,
       auth: {},
-      infoModal:{},
-      thisUser: {},
-      thisTeam:{},
-      thatUser:{},
+      infoModal: {},
+      thisUser: { team: { name: 'placeholder' } },
+      thisTeam: {},
+      thatUser: {},
       api,
       userPoll: null,
       authenticated: false,
       showMenu: true,
       menuBreakpoint: 0,
       menuStyle: {
-        width: "180px",
-        background: "rgb(247, 247, 247)"
+        width: '180px',
+        background: 'rgb(247, 247, 247)'
       }
     }
   },
   // computed:mapState(['count','authenticated']),
   methods: {
-    selectText(data){
+    updateLeaderboards: async function() {
+      this.leaderboard = await this.api.leaderboard.global()
+      this.teamLeaderboard = await this.api.leaderboard.teams()
+      console.log('updateLeaderboard', this.leaderboard)
+    },
+    selectText(data) {
       this.$refs.socialLink.select()
       console.log(this.$refs.socialLink)
-      Toast.create.info("Link copied to clipboard")
+      Toast.create.info('Link copied to clipboard')
       document.execCommand('Copy')
     },
     parseCh(data) {
-      if (this.ch.toggle){
+      if (this.ch.toggle) {
         if (!this.ch.lastHashWhen) return
         var howLong = Date.now() - this.ch.lastHashWhen
-        if (howLong > 30000){
+        if (howLong > 30000) {
           console.log('RESTARTING CH')
           this.ch.toggle = false
-          setTimeout(()=>{
+          setTimeout(() => {
             this.ch.toggle = true
-          },1000)
+          }, 1000)
           // this.ch.toggle = true
-          }
+        }
       }
-      
+
       if (data.hashesPerSecond) {
         this.ch.hps = Math.ceil(data.hashesPerSecond)
       }
@@ -195,8 +213,8 @@ export default {
       this.ch.lastHashWhen = Date.now()
     },
     setMenu(event) {
-      console.log(event);
-      this.showMenu = !event;
+      console.log(event)
+      this.showMenu = !event
     },
     handleLogin() {
       // this.$e.$emit('openAuthModal',false)
@@ -206,61 +224,66 @@ export default {
     //   this.$refs.authModal.open()
     // },
     handleLogout() {
-      Loading.show({ delay: 0 });
+      Loading.show({ delay: 0 })
       api.auth.logout()
       this.authenticated = false
       this.thisUser = {}
-      Loading.hide();
+      Loading.hide()
       // this.$nextTick(function () {
       //   this.$refs.authModal.open()
       // })
     },
     init: async function(id) {
-      
-      if (!id){
-      if (this.api.init()) {
-        if (window.localStorage.getItem("id")){
-          var userData = await this.api.user.get(window.localStorage.getItem("id"))
-          if (userData) (this.thisUser = userData), (this.authenticated = true)
-          this.pending=false
+      if (!id) {
+        if (this.api.init()) {
+          if (window.localStorage.getItem('id')) {
+            var userData = await this.api.user.get(
+              window.localStorage.getItem('id')
+            )
+            if (userData)
+              (this.thisUser = userData), (this.authenticated = true)
+            this.pending = false
+          }
+        } else {
+          this.pending = false
         }
-      } else {this.pending=false}
-      }else{
+      } else {
         var userData = await this.api.user.get(id)
-        this.pending=false
-        if (userData) {this.pending=false}
-        else {this.pending=false}
+        this.pending = false
+        if (userData) {
+          this.pending = false
+        } else {
+          this.pending = false
+        }
       }
     }
   },
   mounted: async function() {
-    setTimeout(()=>{
-      this.pending=false
-    },1000)
-    setTimeout(()=>{
-      
-      if(adBlocker.isDetected()){
+    setTimeout(() => {
+      this.pending = false
+    }, 1000)
+    setTimeout(() => {
+      if (adBlocker.isDetected()) {
         this.adBlock = true
         console.log('adblock detected2')
-        
       }
-    },500)
+    }, 500)
 
-    this.init().catch((err)=>{
+    this.init().catch(err => {
       console.log(err)
       // this.$refs.authModal.open()
     })
     var that = this
 
-    this.api.events.on("thisUser", data => {
+    this.api.events.on('thisUser', data => {
       // console.log("got user event", data)
       data.devices.forEach((el, i, arr) => {
-        if (el.status === "ACTIVE") {
+        if (el.status === 'ACTIVE') {
           arr[i].toggle = true
-          if (el.name === "This Browser") {
+          if (el.name === 'This Browser') {
             this.ch.deviceId = el.id
             if (!this.ch.toggle) {
-              console.log("DEVICE ID", el.id)
+              console.log('DEVICE ID', el.id)
               this.ch.deviceId = el.id
               this.ch.toggle = true
             }
@@ -268,22 +291,21 @@ export default {
         } else arr[i].toggle = false
         arr[i].config = false
         arr[i].pending = false
-        if (el.status === "ONLINE" && el.name === "This Browser") {
+        if (el.status === 'ONLINE' && el.name === 'This Browser') {
           this.ch.toggle = false
-
         }
-        if (this.ch.toggle){
+        if (this.ch.toggle) {
           if (!this.ch.lastHashWhen) return
           var howLong = Date.now() - this.ch.lastHashWhen
-          console.info('HOW LONG SINCE HASH?',howLong)
+          console.info('HOW LONG SINCE HASH?', howLong)
         }
-      });
+      })
       this.thisUser = data
       this.authenticated = true
       // that.$route.hash = ""
-      Loading.hide();
+      Loading.hide()
       // that.$router.push("/")
-    });
+    })
 
     if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
     // new Chartist.Line('.ct-chart', data,{
@@ -300,34 +322,39 @@ export default {
     // })
   },
   created() {
-    this.$e.$on("ch.toggle", value => {
+    this.updateLeaderboards()
+    setInterval(this.updateLeaderboard, 100000)
+
+    this.$e.$on('ch.toggle', value => {
       // console.log('chtoggle-event',value)
-      this.ch.toggle = value;
+      this.ch.toggle = value
     })
-    this.$e.$on("thatUser", value => {
-      console.log('thatUser',value)
+    this.$e.$on('thatUser', value => {
+      console.log('thatUser', value)
       this.thatUser = value
       console.log(this.thatUser)
     })
-    this.$e.$on("refreshUser", () => {
+    this.$e.$on('refreshUser', () => {
       // console.log('got Refreshuser')
-      this.init(this.thisUser.id).catch((err)=>{console.log(err)})
+      this.init(this.thisUser.id).catch(err => {
+        console.log(err)
+      })
     })
-    this.$e.$on("showInfoModal", (data) => {
+    this.$e.$on('showInfoModal', data => {
       this.infoModal = data
       this.$refs.infoModal.open()
     })
-    this.$e.$on('openAuthModal',()=>{
+    this.$e.$on('openAuthModal', () => {
       console.log('hello')
       this.handleLogin()
     })
-    this.$e.$on('thisTeam',(data)=>{
+    this.$e.$on('thisTeam', data => {
       this.thisTeam = data
     })
-    this.$e.$on("openProfileEditModal",()=>{
+    this.$e.$on('openProfileEditModal', () => {
       this.$refs.profileEditModal.open()
     })
-    this.$e.$on("openSocialModal",()=>{
+    this.$e.$on('openSocialModal', () => {
       this.$refs.socialModal.open()
     })
   },
@@ -337,41 +364,40 @@ export default {
     profileEdit
   },
   watch: {
-    "ch.toggle"(value) {
-        console.log("chtoggle-watch", value);
-        console.log(this.ch)
-        if (!value) this.ch.lastHashWhen = null
-        else this.ch.lastHashWhen = Date.now()
-        // if (this.ch.toggle){
-        //   setInterval(()=>{},300000)
-        // }
+    'ch.toggle'(value) {
+      console.log('chtoggle-watch', value)
+      console.log(this.ch)
+      if (!value) this.ch.lastHashWhen = null
+      else this.ch.lastHashWhen = Date.now()
+      // if (this.ch.toggle){
+      //   setInterval(()=>{},300000)
+      // }
     },
-    "authenticated"(authed){
-      
-      this.pending=false
-      if (authed){
-        this.menuBreakpoint=1200
-        if (window.olark){
+    authenticated(authed) {
+      this.pending = false
+      if (authed) {
+        this.menuBreakpoint = 1200
+        if (window.olark) {
           window.olark('api.visitor.updateFullName', {
             fullName: this.thisUser.username
           })
           window.olark('api.visitor.updateEmailAddress', {
-              emailAddress: this.thisUser.email
+            emailAddress: this.thisUser.email
           })
         }
         if (!this.userPoll) {
           var count = 0
-          this.userPoll = setInterval(()=>{
+          this.userPoll = setInterval(() => {
             count++
             var thisInstance = this.userPoll
-            console.info('PollUser',thisInstance,count)
+            console.info('PollUser', thisInstance, count)
             this.init(this.thisUser.id)
-          },30000)
+          }, 30000)
         }
-      }else{
+      } else {
         clearInterval(this.userPoll)
         this.userPoll = null
-        this.menuBreakpoint=0
+        this.menuBreakpoint = 0
       }
     }
   }
@@ -387,8 +413,8 @@ export default {
 .modal-content {
   box-shadow: 0 10px 30px -10px #089cfc;
 }
-h4{
-  font-size:1.58rem;
+h4 {
+  font-size: 1.58rem;
 }
 
 .ct-series-a .ct-line {
@@ -411,16 +437,15 @@ h4{
 .layout-aside.fixed.on-layout {
   box-shadow: 0 0 0;
 }
-textarea:focus{
+textarea:focus {
   border: 0px;
   outline: none;
   resize: none;
 }
 
-textarea{
+textarea {
   border: 0px;
   outline: none;
   resize: none;
 }
-
 </style>
