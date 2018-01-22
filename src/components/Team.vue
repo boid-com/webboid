@@ -21,8 +21,8 @@
         //- p.light-paragraph.text-center Members
         div.relative-position(style="margin:auto; margin-top:30px")
           p.text-center(style="z-index:5;") {{parseInt(team._membersMeta.count)}}
-            q-icon.text-center.absolute-center(color="grey-2" name='fa-users' style="font-size:50px; z-index:-4;")
-      q-card
+            q-icon.text-center.absolute-center(color="green-1" name='fa-users' style="font-size:50px; z-index:-4;")
+      q-card(v-if="team.owner")
         p.light-paragraph.text-center Manager
         q-item(highlight :to="{name:'User',params:{username:team.owner.username}}")
           q-item-side(:avatar="team.owner.image")

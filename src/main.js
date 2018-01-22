@@ -5,6 +5,8 @@ import Quasar, * as All from 'quasar'
 import router from './router'
 import 'quasar-extras/ionicons'
 import 'quasar-extras/fontawesome'
+import { AddressbarColor } from 'quasar'
+AddressbarColor.set('#089cfc')
 // import storePlugin from './storePlugin'
 
 Vue.config.productionTip = false

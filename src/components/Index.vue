@@ -73,7 +73,7 @@ div
           q-card.animate-scale
             p.light-paragraph.text-center Inventory
             p.text-centered.text-grey Inventory Items are coming soon...
-      .col-md-9(style="min-width:500px;" )
+      .col-md-9(style="min-width:300px;" )
         q-card.animate-scale.relative-position(v-if="authenticated")
           p.light-paragraph.text-center My Devices
             q-btn.absolute.infobtn(round small flat)
@@ -108,7 +108,7 @@ div
             | add more Devices
             q-icon.on-right(name="add")
         div.full-width
-          leaderboard(:leaderboard='leaderboard' :teamLeaderboard="teamLeaderboard")
+          leaderboard.gt-sm(:leaderboard='leaderboard' :teamLeaderboard="teamLeaderboard")
     div.relative-position.layout-padding(v-if="!authenticated")
       .block.absolute-center
         q-btn.on-left(big  style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join
