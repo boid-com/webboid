@@ -22,7 +22,6 @@
           stack-label="password"
           type="password"
           v-model="form.password"
-          @keyup.enter="submit"
           @blur="$v.form.password.$touch"
           :error="$v.form.password.$error"
         )
@@ -143,8 +142,7 @@ export default {
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal'],
   created: async function() {
-    if (window.localStorage.getItem('rememberMe') === null)
-      window.localStorage.setItem('rememberMe', 'true')
+    if (window.localStorage.getItem('rememberMe') === null) window.localStorage.setItem('rememberMe', 'true')
     else this.rememberMe = JSON.parse(window.localStorage.getItem('rememberMe'))
     var username = window.localStorage.getItem('invitedBy')
     if (username) {
@@ -155,7 +153,7 @@ export default {
       this.invitedByUser = user
     }
 
-    this.$e.$on('openAuthModal', val => {
+    this.$e.$on('openAuthModal', (val) => {
       console.log(val)
       this.pending = false
       this.form = {
@@ -164,7 +162,7 @@ export default {
         invitedById: null
       }
       this.$v.form.$reset()
-      this.registering = val
+      // this.registering = val
     })
   },
   watch: {

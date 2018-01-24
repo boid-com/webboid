@@ -89,8 +89,6 @@ div
                   //- q -icon.text-center(color="yellow" name='flash_on'
               h6.inline.float-right.text-green-4(v-if="device.toggle") {{ch.hps}}
               q-spinner-grid.inline.on-right(:size="20" color="grey-4" v-if="device.toggle")
-
-
               q-item-side(right v-if="device.toggle" )
                 //- q-btn.on-left.hovericon(  round flat @click="configDevice(device.id)")
                   q-icon(name='settings' color="")
