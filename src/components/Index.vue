@@ -106,7 +106,7 @@ div
             | add more Devices
             q-icon.on-right(name="add")
         div.full-width
-          leaderboard.gt-sm(:leaderboard='leaderboard' :teamLeaderboard="teamLeaderboard")
+          leaderboard(:leaderboard='leaderboard' :teamLeaderboard="teamLeaderboard")
     div.relative-position.layout-padding(v-if="!authenticated")
       .block.absolute-center
         q-btn.on-left(big  style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join
@@ -226,15 +226,7 @@ export default {
       console.log('here we are')
     }
   },
-  props: [
-    'thisUser',
-    'authenticated',
-    'api',
-    'ch',
-    'adBlock',
-    'leaderboard',
-    'teamLeaderboard'
-  ],
+  props: ['thisUser', 'authenticated', 'api', 'ch', 'adBlock', 'leaderboard', 'teamLeaderboard'],
   components: {
     device,
     leaderboard
