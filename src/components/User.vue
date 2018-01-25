@@ -43,7 +43,7 @@
                 td 
                   img.tokenimg( :src="thatUser.team.image")
                 td {{thatUser.team.name}}
-          q-btn.full-width( v-if="thatUser.team.meta.social.telegram" color="blue" outline @click="openURL(thatUser.team.meta.social.telegram)")
+          q-btn.full-width(v-if="thatUser.team.meta.social.telegram" color="blue" outline @click="openURL(thatUser.team.meta.social.telegram)")
             | Telegram Chat
           q-btn.full-width( v-if="thatUser.team.meta.social.facebook" color="blue" outline @click="openURL(thatUser.team.meta.social.facebook)")
             | Facebook Group
