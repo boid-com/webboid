@@ -119,7 +119,7 @@ export default {
     teams () {
       return gql`
         query {
-          allTeams(orderBy: power_DESC, first: 3, filter: { power_gt: 0 }) {
+          allTeams(orderBy: power_DESC, first: 10, filter: { power_gt: 0 }) {
             name
             tagline
             power
