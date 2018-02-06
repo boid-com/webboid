@@ -366,6 +366,9 @@ export default {
     this.$e.$on('openSocialModal', () => {
       this.$refs.socialModal.open()
     })
+    // this.$e.$on('logout', () => {
+    //   this.handleLogout()
+    // })
   },
   components: {
     auth,

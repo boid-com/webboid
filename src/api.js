@@ -39,7 +39,7 @@ var api = {
       try {
         var result = (await client.request(m.auth.authenticateUser(), formData)).authenticateUser
         console.log(result)
-
+        
         setupClient(result.token)
 
         window.localStorage.setItem('token', result.token)
