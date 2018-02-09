@@ -1,5 +1,4 @@
-var
-  path = require('path'),
+var path = require('path'),
   config = require('../config'),
   cssUtils = require('./css-utils'),
   webpack = require('webpack'),
@@ -8,10 +7,9 @@ var
   ExtractTextPlugin = require('extract-text-webpack-plugin'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
   OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-  BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-  const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-  
-  
+BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+
 module.exports = merge(baseWebpackConfig, {
   module: {
     rules: cssUtils.styleRules({
@@ -23,21 +21,12 @@ module.exports = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   plugins: [
     new BundleAnalyzerPlugin({
-      analyzerMode:'static',
-      analyzerPort:9999
+      analyzerMode: 'static',
+      analyzerPort: 9999
     }),
     new UglifyJsPlugin({
-      parallel:true
+      parallel: true
     }),
-    // new webpack.optimize.UglifyJsPlugin({
-    //   sourceMap: config.build.productionSourceMap,
-    //   minimize: true,
-    //   compress: {
-    //     warnings: false
-    //   }
-    // }),
-    // Compress extracted CSS. We are using this plugin so that possible
-    // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
       cssProcessorOptions: {
         safe: true
@@ -66,16 +55,7 @@ module.exports = merge(baseWebpackConfig, {
       name: 'vendor',
       minChunks: function (module, count) {
         // any required modules inside node_modules are extracted to vendor
-        return (
-          module.resource &&
-          /\.js$/.test(module.resource) &&
-          (
-            module.resource.indexOf('quasar') > -1 ||
-            module.resource.indexOf(
-              path.join(__dirname, '../node_modules')
-            ) === 0
-          )
-        )
+        return module.resource && /\.js$/.test(module.resource) && (module.resource.indexOf('quasar') > -1 || module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0)
       }
     }),
     // extract webpack runtime and module manifest to its own file in order to

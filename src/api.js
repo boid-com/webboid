@@ -1,4 +1,4 @@
-import {GraphQLClient} from 'graphql-request'
+import { GraphQLClient } from 'graphql-request'
 import EventEmitter from 'event-emitter'
 import m from 'gql/mutations.js'
 import q from 'gql/queries.js'
@@ -39,12 +39,12 @@ var api = {
       try {
         var result = (await client.request(m.auth.authenticateUser(), formData)).authenticateUser
         console.log(result)
-        
+
         setupClient(result.token)
 
         window.localStorage.setItem('token', result.token)
         window.localStorage.setItem('id', result.id)
-        
+
         return result
       }
       catch (err) {
@@ -60,7 +60,7 @@ var api = {
     },
     authenticateUser: async function (formData) {
       try {
-        console.log('formData',formData)
+        console.log('formData', formData)
         var result = (await client.request(m.auth.signupUser(), formData)).signupUser
         console.log(result)
         setupClient(result.token)
@@ -82,26 +82,26 @@ var api = {
   },
   user: {
     get: async function (userId) {
-      var result = ((await client.request(q.user.get(), {userId}))).User
+      var result = (await client.request(q.user.get(), { userId })).User
       console.log('get user', result)
       events.emit('thisUser', result)
       return result
     },
     getByUsername: async function (username) {
       // console.log('get user', userId)
-      var result = ((await client.request(q.user.getByUsername(), {username}))).User
+      var result = (await client.request(q.user.getByUsername(), { username })).User
       // events.emit('thisUser', result)
       return result
     },
     checkValidUsername: async function (username) {
-      var result = (await client.request(q.user.checkUsername(), {username}).catch(console.log)).User
+      var result = (await client.request(q.user.checkUsername(), { username }).catch(console.log)).User
       if (result) {
         return true
       }
       else return false
     },
     updateProfile: async function (params) {
-      var result = (await client.request(m.user.updateProfile(), params).catch(console.log))
+      var result = await client.request(m.user.updateProfile(), params).catch(console.log)
       return result
     }
   },
@@ -122,20 +122,24 @@ var api = {
       // location.reload()
       // events.emit('thisUser', result)
       return result
+    },
+    check: async function (deviceData) {
+      console.log('apiDevice', device)
+      var result = (await client.request(m.device.check(), device)).updateDevice
+      return result
     }
   },
   leaderboard: {
     global: async function (teamId) {
-      return (await client.request(q.leaderboard.global(),
-        {teamId: teamId})).leaderboard.users
+      return (await client.request(q.leaderboard.global(), { teamId: teamId })).leaderboard.users
     },
     teams: async function (teamId) {
       return (await client.request(q.leaderboard.teams())).allTeams
     }
   },
   team: {
-    getByName: async function(teamName){
-      return (await client.request(q.team.getByName(),{teamName})).Team
+    getByName: async function (teamName) {
+      return (await client.request(q.team.getByName(), { teamName })).Team
     }
   }
 }
