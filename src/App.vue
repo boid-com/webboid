@@ -32,7 +32,7 @@
         q-side-link(item='', :to='{name:"Leaderboards"}')
           q-item-side(icon='list')
           q-item-main(label='Competitions')
-        q-side-link(item='', :to='{name:"Team",params:{teamname:thisUser.team.name}}')
+        q-side-link(v-if='thisUser.team' item='', :to='{name:"Team",params:{teamname:thisUser.team.name}}')
           q-item-side(icon='fa-users')
           q-item-main(label='My Team')
         q-side-link(item='', :to='{name:"User",params:{username:thisUser.username}}')
@@ -41,7 +41,7 @@
     q-tabs( align='left', v-if='showMenu && authenticated' slot="navigation")
       q-route-tab(icon='home', to='/', exact='', slot='title')
       q-route-tab(icon='list', :to='{name:"Leaderboards"}', exact='', slot='title')
-      q-route-tab(icon='fa-users', :to='{name:"Team",params:{teamname:thisUser.team.name}}', exact='', slot='title')
+      q-route-tab(v-if='thisUser.team' icon='fa-users', :to='{name:"Team",params:{teamname:thisUser.team.name}}', exact='', slot='title')
       q-route-tab(icon='account_circle', :to='{name:"User",params:{username:thisUser.username}}', exact='', slot='title')
 
     .row.justify-center
@@ -123,15 +123,13 @@ import { Loading, Toast } from 'quasar'
 import auth from '@/Auth.vue'
 import adBlocker from 'just-detect-adblock'
 import profileEdit from '@/ProfileEdit.vue'
-
+var trackJs = window.trackJs
 var data = {
   series: [[5, 2, 4, 2, 0]]
 }
 var chRestart = null
-var moneroAddr =
-  '4AmFEJ3iAszeQgANzsEuoQKDuxT1JFqVXWvXKrqRiVTj5PFyWBXUFo8BNa2fUMYAHKaVRn5hktCqZFhwPqmmWFWBRydceNp'
-var ETNAddr =
-  'etnk4nwyZNFLHDXLdRJawq6ZFaqJEEqaJNC1gnshySgThfaPWGKCqP2cff7G6iNpmF5APEbZGwdQKX7b8KSFgaVw5xTwipx1Aj'
+var moneroAddr = '4AmFEJ3iAszeQgANzsEuoQKDuxT1JFqVXWvXKrqRiVTj5PFyWBXUFo8BNa2fUMYAHKaVRn5hktCqZFhwPqmmWFWBRydceNp'
+var ETNAddr = 'etnk4nwyZNFLHDXLdRJawq6ZFaqJEEqaJNC1gnshySgThfaPWGKCqP2cff7G6iNpmF5APEbZGwdQKX7b8KSFgaVw5xTwipx1Aj'
 var proxyAddr = 'wss://boid-xmr-proxy.herokuapp.com/'
 // var proxyAddr = "wss://proxboid.mybluemix.net/"
 
@@ -238,11 +236,8 @@ export default {
       if (!id) {
         if (this.api.init()) {
           if (window.localStorage.getItem('id')) {
-            var userData = await this.api.user.get(
-              window.localStorage.getItem('id')
-            )
-            if (userData)
-              (this.thisUser = userData), (this.authenticated = true)
+            var userData = await this.api.user.get(window.localStorage.getItem('id'))
+            if (userData) (this.thisUser = userData), (this.authenticated = true)
             this.pending = false
           }
         } else {
@@ -270,13 +265,16 @@ export default {
       }
     }, 500)
 
-    this.init().catch(err => {
+    this.init().catch((err) => {
       console.log(err)
       // this.$refs.authModal.open()
     })
     var that = this
 
-    this.api.events.on('thisUser', data => {
+    this.api.events.on('thisUser', (data) => {
+      trackJs.addMetadata('id', data.id)
+      trackJs.addMetadata('username', data.username)
+      trackJs.configure({ userId: data.id })
       // console.log("got user event", data)
       data.devices.forEach((el, i, arr) => {
         if (el.status === 'ACTIVE') {
@@ -326,22 +324,22 @@ export default {
     this.updateLeaderboards()
     setInterval(this.updateLeaderboard, 100000)
 
-    this.$e.$on('ch.toggle', value => {
+    this.$e.$on('ch.toggle', (value) => {
       // console.log('chtoggle-event',value)
       this.ch.toggle = value
     })
-    this.$e.$on('thatUser', value => {
+    this.$e.$on('thatUser', (value) => {
       console.log('thatUser', value)
       this.thatUser = value
       console.log(this.thatUser)
     })
     this.$e.$on('refreshUser', () => {
       // console.log('got Refreshuser')
-      this.init(this.thisUser.id).catch(err => {
+      this.init(this.thisUser.id).catch((err) => {
         console.log(err)
       })
     })
-    this.$e.$on('showInfoModal', data => {
+    this.$e.$on('showInfoModal', (data) => {
       this.infoModal = data
       this.$refs.infoModal.open()
     })
@@ -349,7 +347,7 @@ export default {
       console.log('hello')
       this.handleLogin()
     })
-    this.$e.$on('thisTeam', data => {
+    this.$e.$on('thisTeam', (data) => {
       this.thisTeam = data
     })
     this.$e.$on('openProfileEditModal', () => {
