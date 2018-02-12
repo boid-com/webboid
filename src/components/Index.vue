@@ -46,7 +46,7 @@ div
               p(v-else) {{thisUser.tagline}}
             q-btn.full-width(color="blue" @click="$e.$emit('openProfileEditModal')")
               | Update profile
-          q-card.animate-scale.relative-position(v-if='thisUser.team')\
+          q-card.animate-scale.relative-position(v-if='thisUser.team')
             q-btn.absolute.infobtn(round small flat)
               q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.team)")
             div.light-paragraph.text-center My Team

@@ -1,7 +1,20 @@
 <template lang="pug">
 
  #q-app
-  q-layout(color="" ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
+  .row.justify-center(v-if="this.$route.path === '/auth'")
+    router-view.layout-padding(
+      :leaderboard='leaderboard'
+      :teamLeaderboard='teamLeaderboard'
+      :thisUser='thisUser'
+      :thatUser="thatUser"
+      :authenticated='authenticated'
+      :api='api'
+      @refreshUser='init()'
+      :ch.sync="ch"
+      :adBlock="adBlock"
+      style="max-width:1400px"
+    )
+  q-layout(v-else color="" ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
     q-toolbar.shadow-1(slot="header")
       q-toolbar-title.cursor-pointer(style="font-family: 'Comfortaa', cursive;" @click="$router.push('/')")
         | boid
@@ -363,6 +376,13 @@ export default {
     profileEdit
   },
   watch: {
+    '$route.path'(path) {
+      if (window.olark) {
+        if (path === '/auth') {
+          window.olark('api.box.hide')
+        } else window.olark('api.box.show')
+      }
+    },
     'ch.toggle'(value) {
       console.log('chtoggle-watch', value)
       console.log(this.ch)
