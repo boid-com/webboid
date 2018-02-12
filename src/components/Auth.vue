@@ -9,7 +9,7 @@
       h6.light-paragraph.text-center(style="margin-bottom:30px;") The Social Supercomputer
       h6.light-paragraph.text-center(style="margin-bottom:30px;" v-if="invitedByUser && registering") You were invited by 
         h6.text-center {{invitedByUser.username}}
-
+      h6.light-paragraph.text-center(v-if="localAuth" style="margin-bottom:30px;") Desktop Application
       div
         q-input(
           v-model="form.email"
@@ -46,10 +46,12 @@ import { Toast } from 'quasar'
 export default {
   data() {
     return {
+      localAuth: false,
       form: {
         email: '',
         password: '',
-        invitedById: null
+        invitedById: null,
+        device: null
       },
       pending: false,
       rememberMe: true,
@@ -81,20 +83,21 @@ export default {
 
       // delete this.form.invitedById
       var result = await this.api.auth.login(this.form)
-
       if (result.error) {
         Toast.create.negative(result.error)
         setTimeout(() => {
           this.pending = false
         }, 1500)
       } else {
-        // this.$router.push("/")
-        console.log('loginResult', result)
-        var userData = await this.api.user.get(result.id)
-        this.$emit('update:thisUser', userData)
-        this.$emit('update:authenticated', true)
-        this.pending = false
-        this.thisModal.close()
+        if (this.localAuth) window.local.ipcRenderer.sendToHost('token', result)
+        else {
+          console.log('loginResult', result)
+          var userData = await this.api.user.get(result.id)
+          this.$emit('update:thisUser', userData)
+          this.$emit('update:authenticated', true)
+          this.pending = false
+          this.thisModal.close()
+        }
       }
     },
     join: async function() {
@@ -142,6 +145,20 @@ export default {
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal'],
   created: async function() {
+    // console.log(window.local.device)
+
+    if (window.local) {
+      // window.local.ipcRenderer.sendToHost('user', 'USER WORKS')
+      this.localAuth = true
+      this.$e.$emit('logout')
+      // var i = 0
+      // window.local.ipcRenderer.on('deviceReadyAuth', (event, device) => {
+      //   i += 1
+      //   console.log(i, 'got Device in Auth Window')
+      //   this.form.device = device
+      //   console.log(JSON.stringify(this.form.device, null, 2))
+      // })
+    }
     if (window.localStorage.getItem('rememberMe') === null) window.localStorage.setItem('rememberMe', 'true')
     else this.rememberMe = JSON.parse(window.localStorage.getItem('rememberMe'))
     var username = window.localStorage.getItem('invitedBy')
@@ -168,6 +185,9 @@ export default {
   watch: {
     rememberMe: function(value) {
       window.localStorage.setItem('rememberMe', value)
+    },
+    'window.local'() {
+      console.log(window.local)
     },
     '$route.params.username': async function(username) {
       if (!username) return

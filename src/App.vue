@@ -248,7 +248,7 @@ export default {
     init: async function(id) {
       if (!id) {
         if (this.api.init()) {
-          if (window.localStorage.getItem('id')) {
+          if (window.localStorage.getItem('id') && !window.local) {
             var userData = await this.api.user.get(window.localStorage.getItem('id'))
             if (userData) (this.thisUser = userData), (this.authenticated = true)
             this.pending = false
@@ -369,6 +369,9 @@ export default {
     this.$e.$on('openSocialModal', () => {
       this.$refs.socialModal.open()
     })
+    // this.$e.$on('logout', () => {
+    //   this.handleLogout()
+    // })
   },
   components: {
     auth,
