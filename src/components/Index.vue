@@ -181,9 +181,6 @@ export default {
     }
   },
   methods: {
-    toggleDevice(device) {
-      console.log(device)
-    },
     configDevice(deviceId) {
       this.currentDevice = deviceId
       this.$refs.deviceModal.open()
@@ -226,7 +223,7 @@ export default {
       console.log('here we are')
     }
   },
-  props: ['thisUser', 'authenticated', 'api', 'ch', 'adBlock', 'leaderboard', 'teamLeaderboard'],
+  props: ['thisUser', 'thisDevice', 'authenticated', 'api', 'ch', 'adBlock', 'leaderboard', 'teamLeaderboard'],
   components: {
     device,
     leaderboard
@@ -235,40 +232,58 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '~variables'
+@import '~variables';
+
 .q-card {
   padding: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
 }
-.tokenimg{
-  width:50px;
-}
-.tokenlist{
 
+.tokenimg {
+  width: 50px;
 }
-.tokenlist:hover
-  background-color: $grey-2
-.hovericon:hover
-  color $blue
-.hovericon
-  color $grey-5
-.power
-  color $yellow-4
-.infobtn
-  color $grey-6
-  font-size 15px
-  right 10px
-.infobtn:hover
-  color $green
-.q-btn-round.q-btn-small
-  width 30px
-  height 30px
 
-@media (max-width: 767px)
+.tokenlist {
+}
+
+.tokenlist:hover {
+  background-color: $grey-2;
+}
+
+.hovericon:hover {
+  color: $blue;
+}
+
+.hovericon {
+  color: $grey-5;
+}
+
+.power {
+  color: $yellow-4;
+}
+
+.infobtn {
+  color: $grey-6;
+  font-size: 15px;
+  right: 10px;
+}
+
+.infobtn:hover {
+  color: $green;
+}
+
+.q-btn-round.q-btn-small {
+  width: 30px;
+  height: 30px;
+}
+
+@media (max-width: 767px) {
   table.q-table.responsive:not(.flipped) tr, table.q-table.responsive:not(.flipped) td {
-      display: inline-table
+    display: inline-table;
   }
+}
+
 tr:hover {
-  background-color: $grey-2
+  background-color: $grey-2;
 }
 </style>

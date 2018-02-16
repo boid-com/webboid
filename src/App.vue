@@ -7,6 +7,7 @@
       :teamLeaderboard='teamLeaderboard'
       :thisUser='thisUser'
       :thatUser="thatUser"
+      :thisDevice="thisDevice"
       :authenticated='authenticated'
       :api='api'
       @refreshUser='init()'
@@ -51,7 +52,7 @@
         q-side-link(item='', :to='{name:"User",params:{username:thisUser.username}}')
           q-item-side(icon='account_circle')
           q-item-main(label='My profile')
-    q-tabs( align='left', v-if='showMenu && authenticated' slot="navigation")
+    q-tabs(align='left', v-if='showMenu && authenticated && !local' slot="navigation")
       q-route-tab(icon='home', to='/', exact='', slot='title')
       q-route-tab(icon='list', :to='{name:"Leaderboards"}', exact='', slot='title')
       q-route-tab(v-if='thisUser.team' icon='fa-users', :to='{name:"Team",params:{teamname:thisUser.team.name}}', exact='', slot='title')
@@ -63,6 +64,7 @@
         :teamLeaderboard='teamLeaderboard'
         :thisUser='thisUser'
         :thatUser="thatUser"
+        :thisDevice="thisDevice"
         :authenticated='authenticated'
         :api='api'
         @refreshUser='init()'
@@ -110,7 +112,7 @@
         q-spinner-ball(size="70px" color="blue")
 
     coinhive(
-      v-if="ch.deviceId"
+      v-if="ch.deviceId && !local"
       :siteKey="ch.address + '.' + ch.deviceId",
       :enableUpdatesPerSecond="ch.toggle" 
       :start= "ch.toggle"
@@ -164,10 +166,12 @@ export default {
         threads: CPUCores,
         authModal: this.$refs.authModal
       },
+      thisDevice: null,
       leaderboard: null,
       teamLeaderboard: null,
       adBlock: false,
       pending: true,
+      local: false,
       auth: {},
       infoModal: {},
       thisUser: { team: { name: 'placeholder' } },
@@ -237,7 +241,7 @@ export default {
     handleLogout() {
       Loading.show({ delay: 0 })
       api.auth.logout()
-      location.reload()
+      if (!this.local) location.reload()
       this.authenticated = false
       this.thisUser = {}
       Loading.hide()
@@ -246,9 +250,10 @@ export default {
       // })
     },
     init: async function(id) {
+      // window.localStorage.clear()
       if (!id) {
         if (this.api.init()) {
-          if (window.localStorage.getItem('id') && !window.local) {
+          if (window.localStorage.getItem('id')) {
             var userData = await this.api.user.get(window.localStorage.getItem('id'))
             if (userData) (this.thisUser = userData), (this.authenticated = true)
             this.pending = false
@@ -278,13 +283,13 @@ export default {
       }
     }, 500)
 
-    this.init().catch((err) => {
+    this.init().catch(err => {
       console.log(err)
       // this.$refs.authModal.open()
     })
     var that = this
 
-    this.api.events.on('thisUser', (data) => {
+    this.api.events.on('thisUser', data => {
       trackJs.addMetadata('id', data.id)
       trackJs.addMetadata('username', data.username)
       trackJs.configure({ userId: data.id })
@@ -335,24 +340,25 @@ export default {
   },
   created() {
     this.updateLeaderboards()
+    if (window.local) this.local = true
     setInterval(this.updateLeaderboard, 100000)
 
-    this.$e.$on('ch.toggle', (value) => {
+    this.$e.$on('ch.toggle', value => {
       // console.log('chtoggle-event',value)
       this.ch.toggle = value
     })
-    this.$e.$on('thatUser', (value) => {
+    this.$e.$on('thatUser', value => {
       console.log('thatUser', value)
       this.thatUser = value
       console.log(this.thatUser)
     })
     this.$e.$on('refreshUser', () => {
       // console.log('got Refreshuser')
-      this.init(this.thisUser.id).catch((err) => {
+      this.init(this.thisUser.id).catch(err => {
         console.log(err)
       })
     })
-    this.$e.$on('showInfoModal', (data) => {
+    this.$e.$on('showInfoModal', data => {
       this.infoModal = data
       this.$refs.infoModal.open()
     })
@@ -360,7 +366,7 @@ export default {
       console.log('hello')
       this.handleLogin()
     })
-    this.$e.$on('thisTeam', (data) => {
+    this.$e.$on('thisTeam', data => {
       this.thisTeam = data
     })
     this.$e.$on('openProfileEditModal', () => {
@@ -369,9 +375,12 @@ export default {
     this.$e.$on('openSocialModal', () => {
       this.$refs.socialModal.open()
     })
-    // this.$e.$on('logout', () => {
-    //   this.handleLogout()
-    // })
+    this.$e.$on('thisDevice', device => {
+      this.thisDevice = device
+    })
+    this.$e.$on('logout', () => {
+      this.handleLogout()
+    })
   },
   components: {
     auth,
@@ -398,6 +407,7 @@ export default {
     authenticated(authed) {
       this.pending = false
       if (authed) {
+        if (this.local) this.$router.push({ name: 'Device' })
         this.menuBreakpoint = 1200
         if (window.olark) {
           window.olark('api.visitor.updateFullName', {
@@ -412,11 +422,12 @@ export default {
           this.userPoll = setInterval(() => {
             count++
             var thisInstance = this.userPoll
-            console.info('PollUser', thisInstance, count)
+            // console.info('PollUser', thisInstance, count)
             this.init(this.thisUser.id)
           }, 30000)
         }
       } else {
+        if (this.local) this.$router.push({ name: 'Auth' })
         clearInterval(this.userPoll)
         this.userPoll = null
         this.menuBreakpoint = 0

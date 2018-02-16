@@ -27,7 +27,7 @@
         )
         p.float-left.text-red(v-if="$v.form.password.$error" color="red") Password should be longer
         br
-        q-checkbox(v-model="rememberMe" label="remember me")
+        q-checkbox(v-if="!localAuth" v-model="rememberMe" label="remember me")
       br
       br
       div.text-center(style="margin-top:10px;")
@@ -89,13 +89,19 @@ export default {
           this.pending = false
         }, 1500)
       } else {
-        if (this.localAuth) window.local.ipcRenderer.sendToHost('token', result)
-        else {
-          console.log('loginResult', result)
-          var userData = await this.api.user.get(result.id)
-          this.$emit('update:thisUser', userData)
-          this.$emit('update:authenticated', true)
-          this.pending = false
+        console.log('loginResult', result)
+        var userData = await this.api.user.get(result.id)
+        this.$emit('update:thisUser', userData)
+        this.$emit('update:authenticated', true)
+        this.pending = false
+        if (this.localAuth) {
+          window.local.ipcRenderer.sendToHost('token', result)
+          window.local.ipcRenderer.sendToHost('user', userData)
+          if (this.form.device) {
+            console.log('ready to check user device!!!!!!', this.form.device)
+          }
+          // $router.push({name:'Team',params:{teamname:thisUser.team.name}})
+        } else {
           this.thisModal.close()
         }
       }
@@ -145,19 +151,8 @@ export default {
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal'],
   created: async function() {
-    // console.log(window.local.device)
-
     if (window.local) {
-      // window.local.ipcRenderer.sendToHost('user', 'USER WORKS')
       this.localAuth = true
-      this.$e.$emit('logout')
-      // var i = 0
-      // window.local.ipcRenderer.on('deviceReadyAuth', (event, device) => {
-      //   i += 1
-      //   console.log(i, 'got Device in Auth Window')
-      //   this.form.device = device
-      //   console.log(JSON.stringify(this.form.device, null, 2))
-      // })
     }
     if (window.localStorage.getItem('rememberMe') === null) window.localStorage.setItem('rememberMe', 'true')
     else this.rememberMe = JSON.parse(window.localStorage.getItem('rememberMe'))
@@ -170,7 +165,7 @@ export default {
       this.invitedByUser = user
     }
 
-    this.$e.$on('openAuthModal', (val) => {
+    this.$e.$on('openAuthModal', val => {
       console.log(val)
       this.pending = false
       this.form = {
@@ -224,5 +219,4 @@ export default {
 </script>
 
 <style lang="stylus">
-
 </style>

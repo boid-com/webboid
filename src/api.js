@@ -25,6 +25,13 @@ setupClient()
 var api = {
   events,
   init () {
+    // if (window.local) {
+    //   console.log('need local token')
+    //   var token = window.local.ipcRenderer.sendSync('getTokenSync')
+    //   if (token) return true
+    //   else return false
+    // }
+    // else {
     if (JSON.parse(window.localStorage.getItem('rememberMe'))) {
       setupClient(window.localStorage.getItem('token'))
       return true
@@ -32,6 +39,7 @@ var api = {
     else {
       return false
     }
+    // }
   },
   auth: {
     login: async function (formData) {
@@ -83,7 +91,8 @@ var api = {
   user: {
     get: async function (userId) {
       var result = (await client.request(q.user.get(), { userId })).User
-      console.log('get user', result)
+      // console.log('get user', result)
+      if (window.local) window.local.thisUser = result
       events.emit('thisUser', result)
       return result
     },
@@ -115,6 +124,14 @@ var api = {
       // events.emit('thisUser', result)
       return result
     },
+    getByCpid: async function (cpid) {
+      var result = await client.request(q.device.getByCpid(), {
+        cpid
+      })
+      console.log('CPID Device:')
+      console.log(JSON.stringify(result))
+      return result.Device
+    },
     updateStatus: async function (device) {
       console.log('apiDevice', device)
       var result = (await client.request(m.device.updateStatus(), device)).updateDevice
@@ -123,10 +140,10 @@ var api = {
       // events.emit('thisUser', result)
       return result
     },
-    check: async function (deviceData) {
-      console.log('apiDevice', device)
-      var result = (await client.request(m.device.check(), device)).updateDevice
-      return result
+    create: async function (deviceData) {
+      var result = await client.request(m.device.create(), deviceData)
+      console.log(JSON.stringify(result))
+      return result.createDevice
     }
   },
   leaderboard: {

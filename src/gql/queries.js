@@ -104,6 +104,18 @@ export default {
           }
         }
       `
+    },
+    getByCpid () {
+      return gql`
+        query Device($cpid: String!) {
+          Device(cpid: $cpid) {
+            id
+            owner {
+              id
+            }
+          }
+        }
+      `
     }
   },
   leaderboard: {

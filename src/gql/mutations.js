@@ -29,11 +29,17 @@ export default {
   device: {
     updateStatus () {
       return gql`
-        mutation($deviceId:ID! $status:DeviceStatus){
-          updateDevice(
-            id:$deviceId
-            status:$status
-          ){
+        mutation($deviceId: ID!, $status: DeviceStatus) {
+          updateDevice(id: $deviceId, status: $status) {
+            id
+          }
+        }
+      `
+    },
+    create () {
+      return gql`
+        mutation($cpid: String, $name: String!, $ownerId: ID, $type: DeviceType!, $meta: Json) {
+          createDevice(cpid: $cpid, name: $name, type: $type, meta: $meta, ownerId: $ownerId) {
             id
           }
         }
@@ -43,18 +49,8 @@ export default {
   user: {
     updateProfile () {
       return gql`
-        mutation(
-          $userId:ID!
-          $tagline:String
-          $imageURL:String
-          $username:String
-        ){
-          updateUser(
-            id:$userId
-            tagline:$tagline
-            image:$imageURL
-            username:$username
-          ){
+        mutation($userId: ID!, $tagline: String, $imageURL: String, $username: String) {
+          updateUser(id: $userId, tagline: $tagline, image: $imageURL, username: $username) {
             id
           }
         }
