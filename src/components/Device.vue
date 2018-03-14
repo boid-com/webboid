@@ -81,7 +81,7 @@ export default {
   computed: {},
   methods: {
     modulateTaskProgress(progress) {
-      console.log('PROGRESS', progress)
+      // console.log('PROGRESS', progress)
       function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max))
       }
@@ -134,6 +134,9 @@ export default {
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
   created() {
+    setInterval(() => {
+      this.init()
+    }, 4000)
     this.init()
     window.local.ipcRenderer.on('boinc.toggle', (event, toggle) => {
       console.log('GOT TOGGLE:', toggle)
@@ -166,9 +169,9 @@ export default {
           this.actionbg.backgroundColor = 'li'
           window.local.ipcRenderer.send('startBoinc')
           this.deviceStatePoll = setInterval(() => {
-            console.log('request device active tasks')
+            // console.log('request device active tasks')
             var result = window.local.ipcRenderer.sendSync('boinc.activeTasks')
-            console.log(result)
+            // console.log(result)
             if (result) {
               this.activeTasks = result
             } else {

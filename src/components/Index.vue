@@ -79,7 +79,7 @@ div
             q-btn.absolute.infobtn(round small flat)
               q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.devices)")
           q-list( v-for="(device,index) in devices" :key="device.id")
-            q-item.relative-position(v-if="!adBlock && device.type == 'BROWSER'")
+            q-item.relative-position(v-if="!adBlock")
               //- | {{device.status}}
               q-item-side
                 q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)")         
@@ -87,7 +87,7 @@ div
                 q-item-tile(label style="user-select: none;") {{device.name}}
                 q-item-tile(sublabel) {{device.status}}
                   //- q -icon.text-center(color="yellow" name='flash_on'
-              h6.inline.float-right.text-green-4(v-if="device.toggle") {{ch.hps}}
+              h6.inline.float-right.text-green-4(v-if="device.toggle && device.type=='BROWSER'") {{ch.hps}}
               q-spinner-grid.inline.on-right(:size="20" color="grey-4" v-if="device.toggle")
               q-item-side(right v-if="device.toggle" )
                 //- q-btn.on-left.hovericon(  round flat @click="configDevice(device.id)")
