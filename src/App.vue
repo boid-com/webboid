@@ -488,4 +488,7 @@ textarea {
   outline: none;
   resize: none;
 }
+body {
+  user-select: none;
+}
 </style>

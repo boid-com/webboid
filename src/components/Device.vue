@@ -126,6 +126,10 @@ export default {
   props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
   created() {
     this.init()
+    window.local.ipcRenderer.on('boinc.toggle', (event, toggle) => {
+      console.log('GOT TOGGLE:', toggle)
+      this.toggle = toggle
+    })
   },
   watch: {
     thisDevice: async function(value) {
@@ -154,7 +158,7 @@ export default {
           window.local.ipcRenderer.send('startBoinc')
           this.deviceStatePoll = setInterval(() => {
             console.log('request device active tasks')
-            // var result = window.local.ipcRenderer.sendSync('boinc.activeTasks')
+            var result = window.local.ipcRenderer.sendSync('boinc.activeTasks')
             console.log(result)
             if (result) {
               this.activeTasks = result
@@ -189,5 +193,9 @@ export default {
 
 .taller {
   height: 60px;
+}
+
+body {
+  user-select: none;
 }
 </style>
