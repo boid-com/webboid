@@ -17,10 +17,10 @@
     )
   q-layout(v-else color="" ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
     q-toolbar.shadow-1(slot="header")
-      q-toolbar-title.cursor-pointer(style="font-family: 'Comfortaa', cursive;" @click="$router.push('/')")
+      q-toolbar-title(v-bind:class="{'cursor-pointer':notLocal}" style="font-family: 'Comfortaa', cursive;" @click="if(!local)$router.push('/')")
         | boid
         div(slot='subtitle') Alpha
-      q-btn(flat v-if="authenticated" @click="$router.push('/')")
+      q-btn(flat disabled v-if="authenticated" @click="if(!local)$router.push('/')")
         //- .ct-chart.float-right.inline(style='position:absolute; right:45px; top:-5px;')
         .on-right
           | {{parseInt(thisUser.powerRatings[0].power)}}
@@ -34,7 +34,7 @@
         q-popover(ref='profileMenu' anchor="bottom right" self="top right")
           q-item(link @click='handleLogout()')
             | Logout
-          q-item(link @click='$router.push({name:"User",params:{username:thisUser.username}}),$refs.profileMenu.close()')
+          q-item(link v-if="!local" @click='$router.push({name:"User",params:{username:thisUser.username}}),$refs.profileMenu.close()')
             | My Profile
       q-btn(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
         | Login
@@ -138,7 +138,7 @@ import { Loading, Toast } from 'quasar'
 import auth from '@/Auth.vue'
 import adBlocker from 'just-detect-adblock'
 import profileEdit from '@/ProfileEdit.vue'
-var trackJs = window.trackJs
+// var trackJs = window.trackJs
 var data = {
   series: [[5, 2, 4, 2, 0]]
 }
@@ -188,7 +188,11 @@ export default {
       }
     }
   },
-  // computed:mapState(['count','authenticated']),
+  computed: {
+    notLocal() {
+      return !this.local
+    }
+  },
   methods: {
     updateLeaderboards: async function() {
       this.leaderboard = await this.api.leaderboard.global()
@@ -290,9 +294,9 @@ export default {
     var that = this
 
     this.api.events.on('thisUser', data => {
-      trackJs.addMetadata('id', data.id)
-      trackJs.addMetadata('username', data.username)
-      trackJs.configure({ userId: data.id })
+      // trackJs.addMetadata('id', data.id)
+      // trackJs.addMetadata('username', data.username)
+      // trackJs.configure({ userId: data.id })
       // console.log("got user event", data)
       data.devices.forEach((el, i, arr) => {
         if (el.status === 'ACTIVE') {
@@ -339,9 +343,11 @@ export default {
     // })
   },
   created() {
-    this.updateLeaderboards()
     if (window.local) this.local = true
-    setInterval(this.updateLeaderboard, 100000)
+    if (!this.local) {
+      this.updateLeaderboards()
+      setInterval(this.updateLeaderboard, 10000)
+    }
 
     this.$e.$on('ch.toggle', value => {
       // console.log('chtoggle-event',value)
@@ -407,6 +413,7 @@ export default {
     authenticated(authed) {
       this.pending = false
       if (authed) {
+        console.log('we are here', this.local)
         if (this.local) this.$router.push({ name: 'Device' })
         this.menuBreakpoint = 1200
         if (window.olark) {

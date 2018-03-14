@@ -101,6 +101,9 @@ export default {
             status
             type
             meta
+            powerRatings(last: 1) {
+                power
+              }
           }
         }
       `

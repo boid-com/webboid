@@ -1,24 +1,38 @@
 <template lang="pug">
-    .layout-padding.relative-position
-      p {{thisDevice.name}}
+  //- div(style="background-color:black; width:100%; height:50%;")
+  q-transition(    
+    enter="fadeIn"
+    leave="fadeOut")
+    .layout-padding.relative-position(v-if="!loading")
+      p {{thisDevice.name}} 
         q-icon.float-lefth.on-right.inline(:name='parseDevice.icon(thisDevice)' :color="parseDevice.color(thisDevice)")
-      h6.light-paragraph CPU
+      h6.light-paragraph CPU 
+        q-icon.text-center(v-if="toggle" color="yellow" name='flash_on' style="font-size:20px;")
+        q-icon.text-center(v-else color="grey-4" name='flash_off' style="font-size:20px;")
+          div(v-if="thisDevice.powerRatings[0]")
+            | {{thisDevice.powerRatings[0].power}}
+
       q-card(style='width:90vw;')
-        q-card-media
-          img(style="opacity:.9;" src="https://www.worldcommunitygrid.org/images/slideshowImages/large/scc1Big.jpg")
-          h5.absolute-bottom-left.text-grey-4(style="margin:20px;") Fight Childhood Cancer
-        q-card-main
-          q-list(v-for="(task,index) in activeTasks" :key='task.slot[0]')
-            q-item
-              pre {{JSON.stringify(task,null,2)}}
+        q-card-media.relative-position
+          img(style="opacity:.9; width:100px; height:100px;" src="https://www.boid.com/media/boid/science-magnifying-glass-dna-cell.svg")
+          h6.absolute-bottom-right.text-grey-7(style="margin:20px;") Fight Childhood Cancer
+        q-card-main(v-if="toggle")
+          p(v-if="activeTasks.length > 0") Active Tasks
+          p(v-else) Downloading Tasks....
+          div(v-if="activeTasks.length > 0" v-for="(task,index) in activeTasks" :key='task.slot[0]')
+            q-progress(:buffer="0" :height="20" stripe animate :percentage="parseFloat(task.checkpoint_fraction_done[0])*100")
+            //- q-item
+              //- h5 {{task.checkpoint_fraction_done[0]}}
+              //- pre {{JSON.stringify(task,null,2)}}
         q-card-separator
         q-card-actions.taller.relative-position()
+          q-spinner-grid.inline.on-right.absolute-right(:size="20" color="grey-4" v-if="toggle" style="right:70px; top:20px;")
           q-toggle.absolute-right(color="green" :disable="pending" style="padding:20px;" v-model="toggle")
-      q-inner-loading()
-        q-spinner-ball(size="70px" color="blue")
-    //- q-btn.float-left.on-left(@click="submit" outline color="blue") Register
+    .layout-padding.relative-position(v-else)
+      .text-center Initializing....
 
-</template>
+
+  </template>
 
 <script>
 import parseDevice from 'src/lib/parseDevice'
@@ -32,17 +46,18 @@ function setupDevice(device) {
   console.log(window.local.thisUser.id)
   var ownerId = window.local.thisUser.id
   return {
+    ownerId,
     cpid: device.cpid,
     name: device.name,
     type,
-    meta: device,
-    ownerId
+    meta: device
   }
 }
 
 export default {
   data() {
     return {
+      loading: true,
       parseDevice,
       deviceStatePoll: null,
       actionbg: {
@@ -66,17 +81,27 @@ export default {
   computed: {},
   methods: {
     handleLocalDevice: async function(localDevice) {
+      if (!localDevice) {
+        // this.$router.push({ name: 'Auth' })
+        console.log('received blank localDevice')
+        window.local.ipcRenderer.send('initBoinc')
+        setTimeout(() => {
+          this.init()
+        }, 3000)
+        // alert('This device is acting up. 😢 \n \n Contact us: support@boid.com')
+        return
+      }
       if (localDevice.cpid) {
         try {
           var result = await this.api.device.getByCpid(localDevice.cpid).catch(console.log)
           if (!result) {
-            console.log('device does not exist, adding device to User')
-            var newDevice = await this.api.device.create(setupDevice(device))
+            console.log('device does not exist, User can claim device')
+            var newDevice = await this.api.device.create(setupDevice(localDevice))
             this.thisDevice = await this.api.device.get(newDevice.id)
           } else {
             if (result.owner.id === this.thisUser.id) {
               console.log('this device is owned by this user')
-              this.thisDevice = await this.api.device.get(result.id)
+              this.thisDevice = await this.api.device.get(result.id).catch(console.log)
             } else {
               this.$e.$emit('logout')
               alert('This device is already claimed by a different account. 😢 \n \n Contact us: support@boid.com')
@@ -89,23 +114,30 @@ export default {
         this.$router.push({ name: 'Auth' })
         alert('This device is acting up. 😢 \n \n Contact us: support@boid.com')
       }
+    },
+    init() {
+      if (window.local) {
+        setTimeout(() => {
+          this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
+        }, 200)
+      }
     }
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
   created() {
-    if (window.local) {
-      setTimeout(() => {
-        this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
-      }, 500)
-    }
+    this.init()
   },
   watch: {
     thisDevice: async function(value) {
       console.log('got deviceid')
       if (value) {
+        this.loading = false
         console.log(JSON.stringify(this.thisDevice))
         if (this.thisDevice.status == 'ACTIVE') this.toggle = true
-        else this.toggle = false
+        else {
+          this.toggle = false
+          window.local.ipcRenderer.send('boinc.cmd', 'quit')
+        }
         this.thisDevice.icon = parseDevice.icon(this.thisDevice)
       }
     },
@@ -122,8 +154,13 @@ export default {
           window.local.ipcRenderer.send('startBoinc')
           this.deviceStatePoll = setInterval(() => {
             console.log('request device active tasks')
-            var result = window.local.ipcRenderer.sendSync('boinc.activeTasks')
-            this.activeTasks = result
+            // var result = window.local.ipcRenderer.sendSync('boinc.activeTasks')
+            console.log(result)
+            if (result) {
+              this.activeTasks = result
+            } else {
+              this.activeTasks = []
+            }
           }, 1000)
         } else {
           deviceStatus.status = 'ONLINE'
@@ -134,7 +171,7 @@ export default {
         var result = await this.api.device.updateStatus(deviceStatus)
       } catch (error) {
         console.log('error')
-        alert('error')
+        alert(error)
         console.log(error)
       } finally {
         this.thisDevice = await this.api.device.get(this.thisDevice.id)
