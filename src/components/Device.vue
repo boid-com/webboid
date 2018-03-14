@@ -140,7 +140,7 @@ export default {
     this.init()
     window.local.ipcRenderer.on('boinc.toggle', (event, toggle) => {
       console.log('GOT TOGGLE:', toggle)
-      this.toggle = toggle
+      if (!this.loading) this.toggle = toggle
     })
     window.local.ipcRenderer.on('boinc.error', (event, error) => {
       alert(error)
