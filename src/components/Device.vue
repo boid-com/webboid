@@ -142,6 +142,9 @@ export default {
       console.log('GOT TOGGLE:', toggle)
       this.toggle = toggle
     })
+    window.local.ipcRenderer.on('boinc.error', (event, error) => {
+      alert(error)
+    })
   },
   watch: {
     thisDevice: async function(value) {
