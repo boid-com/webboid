@@ -20,7 +20,7 @@
           p(v-if="activeTasks.length > 0") Active Tasks
           p(v-else) Downloading Tasks....
           div(v-if="activeTasks.length > 0" v-for="(task,index) in activeTasks" :key='task.slot[0]')
-            q-progress(:buffer="0" :height="20" stripe animate :percentage="parseFloat(task.checkpoint_fraction_done[0])*100")
+            q-progress(:buffer="0" :height="20" stripe animate :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
             //- q-item
               //- h5 {{task.checkpoint_fraction_done[0]}}
               //- pre {{JSON.stringify(task,null,2)}}
@@ -80,6 +80,15 @@ export default {
   },
   computed: {},
   methods: {
+    modulateTaskProgress(progress) {
+      console.log('PROGRESS', progress)
+      function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max))
+      }
+
+      progress = parseFloat(progress) * 100 + getRandomInt(2)
+      return progress
+    },
     handleLocalDevice: async function(localDevice) {
       if (!localDevice) {
         // this.$router.push({ name: 'Auth' })
