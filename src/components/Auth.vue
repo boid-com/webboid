@@ -152,6 +152,7 @@ export default {
   props: ['thisUser', 'authenticated', 'api', 'thisModal'],
   created: async function() {
     if (window.local) {
+      console.log("FOUND WINDOW.LOCAL")
       this.localAuth = true
     }
     if (window.localStorage.getItem('rememberMe') === null) window.localStorage.setItem('rememberMe', 'true')

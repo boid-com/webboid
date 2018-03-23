@@ -20,7 +20,9 @@
           p(v-if="activeTasks.length > 0") Active Tasks
           p(v-else) Downloading Tasks....
           div(v-if="activeTasks.length > 0" v-for="(task,index) in activeTasks" :key='task.slot[0]')
-            q-progress(:buffer="0" :height="20" stripe animate :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
+            q-progress(v-if="task.active_task_state[0] === 1" :buffer="0" :height="20" stripe animate :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
+            q-progress(v-else :buffer="0" :height="20" stripe :percentage="task.checkpoint_fraction_done[0]" color="Grey")
+            
             //- q-item
               //- h5 {{task.checkpoint_fraction_done[0]}}
               //- pre {{JSON.stringify(task,null,2)}}
@@ -143,6 +145,7 @@ export default {
       if (!this.loading) this.toggle = toggle
     })
     window.local.ipcRenderer.on('boinc.error', (event, error) => {
+      console.log('got errorfrom boinc', error)
       alert(error)
     })
   },
