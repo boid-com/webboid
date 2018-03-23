@@ -8,6 +8,8 @@
         q-icon.float-lefth.on-right.inline(:name='parseDevice.icon(thisDevice)' :color="parseDevice.color(thisDevice)")
       h6.light-paragraph CPU 
         q-icon.text-center(v-if="toggle" color="yellow" name='flash_on' style="font-size:20px;")
+          div(v-if="thisDevice.powerRatings[0]")
+            | {{thisDevice.powerRatings[0].power}}
         q-icon.text-center(v-else color="grey-4" name='flash_off' style="font-size:20px;")
           div(v-if="thisDevice.powerRatings[0]")
             | {{thisDevice.powerRatings[0].power}}
