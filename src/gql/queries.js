@@ -101,6 +101,7 @@ export default {
             status
             type
             meta
+            wcgid
             powerRatings(last: 1) {
                 power
               }

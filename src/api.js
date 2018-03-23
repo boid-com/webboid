@@ -119,7 +119,7 @@ var api = {
       var result = (await client.request(q.device.get(), {
         deviceId
       })).Device
-      console.log(result)
+      // console.log(result)
       // location.reload()
       // events.emit('thisUser', result)
       return result
@@ -128,16 +128,20 @@ var api = {
       var result = await client.request(q.device.getByCpid(), {
         cpid
       })
-      console.log('CPID Device:')
-      console.log(JSON.stringify(result))
       return result.Device
     },
     updateStatus: async function (device) {
-      console.log('apiDevice', device)
+      // console.log('apiDevice', device)
       var result = (await client.request(m.device.updateStatus(), device)).updateDevice
-      console.log(result)
+      // console.log(result)
       // location.reload()
       // events.emit('thisUser', result)
+      return result
+    },
+    updateWcgid: async function (device) {
+      // console.log('UPDATE WCGID',device)
+      var result = (await client.request(m.device.updateWcgid(), device)).updateDevice
+
       return result
     },
     create: async function (deviceData) {

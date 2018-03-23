@@ -96,34 +96,43 @@ export default {
         // this.$router.push({ name: 'Auth' })
         console.log('received blank localDevice')
         window.local.ipcRenderer.send('initBoinc')
-        setTimeout(() => {
-          this.init()
-        }, 3000)
         // alert('This device is acting up. 😢 \n \n Contact us: support@boid.com')
         return
-      }
-      if (localDevice.cpid) {
-        try {
-          var result = await this.api.device.getByCpid(localDevice.cpid).catch(console.log)
-          if (!result) {
-            console.log('device does not exist, User can claim device')
-            var newDevice = await this.api.device.create(setupDevice(localDevice))
-            this.thisDevice = await this.api.device.get(newDevice.id)
-          } else {
-            if (result.owner.id === this.thisUser.id) {
-              console.log('this device is owned by this user')
-              this.thisDevice = await this.api.device.get(result.id).catch(console.log)
-            } else {
-              this.$e.$emit('logout')
-              alert('This device is already claimed by a different account. 😢 \n \n Contact us: support@boid.com')
-            }
-          }
-        } catch (error) {
-          console.log(error)
-        }
       } else {
-        this.$router.push({ name: 'Auth' })
-        alert('This device is acting up. 😢 \n \n Contact us: support@boid.com')
+        if (localDevice.cpid) {
+          try {
+            var result = await this.api.device.getByCpid(localDevice.cpid).catch(console.log)
+            if (!result) {
+              console.log('device does not exist, User can claim device')
+              var newDevice = await this.api.device.create(setupDevice(localDevice))
+              this.thisDevice = await this.api.device.get(newDevice.id).catch(console.log)
+            } else {
+              if (result.owner.id === this.thisUser.id) {
+                console.log('this device is owned by this user')
+                this.thisDevice = await this.api.device.get(result.id).catch(console.log)
+              } else {
+                this.$e.$emit('logout')
+                alert('This device is already claimed by a different account. 😢 \n \n Contact us: support@boid.com')
+              }
+            }
+          } catch (error) {
+            console.log(error)
+          }
+        } else {
+          this.$router.push({ name: 'Auth' })
+          alert('This device is acting up. 😢 \n \n Contact us: support@boid.com')
+        }
+        if (localDevice.wcgid) {
+          // console.log('GOT WCGID', localDevice.wcgid)
+          if (this.thisDevice.wcgid === localDevice.wcgid) return
+          else {
+            var result = await this.api.device.updateWcgid({
+              deviceId: this.thisDevice.id,
+              wcgid: localDevice.wcgid
+            })
+            console.log(result)
+          }
+        }
       }
     },
     init() {
@@ -144,6 +153,9 @@ export default {
       console.log('GOT TOGGLE:', toggle)
       if (!this.loading) this.toggle = toggle
     })
+    window.local.ipcRenderer.on('deviceReady', (event, device) => {
+      console.log('GOT DEVICE:', device)
+    })
     window.local.ipcRenderer.on('boinc.error', (event, error) => {
       console.log('got errorfrom boinc', error)
       alert(error)
@@ -151,7 +163,7 @@ export default {
   },
   watch: {
     thisDevice: async function(value) {
-      console.log('got deviceid')
+      // console.log('got deviceid')
       if (value) {
         this.loading = false
         console.log(JSON.stringify(this.thisDevice))

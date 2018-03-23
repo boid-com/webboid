@@ -36,6 +36,15 @@ export default {
         }
       `
     },
+    updateWcgid () {
+      return gql`
+        mutation($deviceId: ID!, $wcgid: String) {
+          updateDevice(id: $deviceId, wcgid: $wcgid) {
+            id
+          }
+        }
+      `
+    },
     create () {
       return gql`
         mutation($cpid: String, $name: String!, $ownerId: ID, $type: DeviceType!, $meta: Json) {
