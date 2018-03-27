@@ -84,6 +84,9 @@
       auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
     q-modal.shadow-3(ref="profileEditModal")
       profileEdit(:thisUser="thisUser" :api="api" :thisModal="$refs.profileEditModal")
+    q-modal.shadow-3(ref="boincConfigModal" @close="showOlark(true)" @open="showOlark(false)" )
+      .layout-padding
+        boincConfig(:config="boincConfigData" :thisModal="$refs.boincConfigModal")
     q-modal.position-relative(ref="socialModal")
       .layout-padding
         h4.text-centered(style="color:#089cfc;") Share Boid
@@ -138,10 +141,12 @@ import { Loading, Toast } from 'quasar'
 import auth from '@/Auth.vue'
 import adBlocker from 'just-detect-adblock'
 import profileEdit from '@/ProfileEdit.vue'
+import boincConfig from '@/BoincConfig.vue'
 // var trackJs = window.trackJs
 var data = {
   series: [[5, 2, 4, 2, 0]]
 }
+var defaultConfig = null
 var chRestart = null
 var moneroAddr = '4AmFEJ3iAszeQgANzsEuoQKDuxT1JFqVXWvXKrqRiVTj5PFyWBXUFo8BNa2fUMYAHKaVRn5hktCqZFhwPqmmWFWBRydceNp'
 var ETNAddr = 'etnk4nwyZNFLHDXLdRJawq6ZFaqJEEqaJNC1gnshySgThfaPWGKCqP2cff7G6iNpmF5APEbZGwdQKX7b8KSFgaVw5xTwipx1Aj'
@@ -166,6 +171,7 @@ export default {
         threads: CPUCores,
         authModal: this.$refs.authModal
       },
+      boincConfigData: defaultConfig,
       thisDevice: null,
       leaderboard: null,
       teamLeaderboard: null,
@@ -194,6 +200,15 @@ export default {
     }
   },
   methods: {
+    showOlark(val) {
+      try {
+        if (val) {
+          window.olark('api.box.show')
+        } else window.olark('api.box.hide')
+      } catch (error) {
+        console.log(error)
+      }
+    },
     updateLeaderboards: async function() {
       this.leaderboard = await this.api.leaderboard.global()
       this.teamLeaderboard = await this.api.leaderboard.teams()
@@ -315,7 +330,7 @@ export default {
         if (el.status === 'ONLINE' && el.name === 'This Browser') {
           this.ch.toggle = false
         }
-        if (this.ch.toggle) {
+        if (this.ch.toggle && !this.local) {
           if (!this.ch.lastHashWhen) return
           var howLong = Date.now() - this.ch.lastHashWhen
           console.info('HOW LONG SINCE HASH?', howLong)
@@ -387,11 +402,35 @@ export default {
     this.$e.$on('logout', () => {
       this.handleLogout()
     })
+    this.$e.$on('openBoincConfigModal', configData => {
+      this.boincConfigData = configData
+      if (configData.run_if_user_active == 1) {
+        configData.run_if_user_active = false
+      } else {
+        configData.run_if_user_active = true
+      }
+      if (window.olark) {
+        window.olark('api.box.hide')
+      }
+      this.$refs.boincConfigModal.open()
+    })
+    this.$e.$on('boincConfigChanged', configData => {
+      this.boincConfigData = defaultConfig
+      if (this.local) {
+        if (configData.run_if_user_active == true) {
+          configData.run_if_user_active = 0
+        } else {
+          configData.run_if_user_active = 1
+        }
+        window.local.ipcRenderer.send('boinc.config.set', configData)
+      }
+    })
   },
   components: {
     auth,
     coinhive,
-    profileEdit
+    profileEdit,
+    boincConfig
   },
   watch: {
     '$route.path'(path) {
