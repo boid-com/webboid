@@ -7,7 +7,7 @@
       p {{thisDevice.name}} 
         q-icon.float-lefth.on-right.inline(:name='parseDevice.icon(thisDevice)' :color="parseDevice.color(thisDevice)")
       h6.light-paragraph CPU 
-        div(v-if="thisDevice.powerRatings[0].power")
+        div(v-if="thisDevice.powerRatings[0]")
           | {{parseInt(thisDevice.powerRatings[0].power)}}
           q-icon.text-center(v-if="toggle" color="yellow" name='flash_on' style="font-size:20px;")
           q-icon.text-center(v-else color="grey-4" name='flash_off' style="font-size:20px;")
@@ -18,7 +18,7 @@
           q-btn.infobtn.absolute-top-right(color='blue' flat round @click="openConfigModal()")
             q-icon(color='grey-7' name="settings")
           img(style="opacity:.9; width:100px; height:100px;" src="https://www.boid.com/media/boid/science-magnifying-glass-dna-cell.svg")
-          h6.absolute-bottom-right.text-grey-7(style="margin-right:10px;") Fight Childhood Cancer
+          h6.absolute-bottom-right.text-grey-7(style="margin-right:10px;") Mapping Cancer Makers
         q-card-main(v-if="toggle")
           p(v-if="activeTasks.length > 0") Active Tasks
           p(v-else) Downloading Tasks....
@@ -96,10 +96,7 @@ export default {
   computed: {},
   methods: {
     openConfigModal() {
-      window.local.ipcRenderer.once('boinc.config', () => {
-        this.$e.$emit('openBoincConfigModal', this.config)
-      })
-      window.local.ipcRenderer.send('boinc.config.get')
+      this.$e.$emit('openBoincConfigModal', this.config)
     },
     modulateTaskProgress(progress) {
       // console.log('PROGRESS', progress)
@@ -186,6 +183,12 @@ export default {
       console.log('GOT CONFIG', value)
       this.config = value
     })
+    window.local.ipcRenderer.on('boinc.activeTasks', (event, activeTasks) => {
+      // console.log('got ACTIVETASKS',JSON.stringify(activeTasks))
+      if (activeTasks) {
+        this.activeTasks = activeTasks
+      }
+    })
     window.local.ipcRenderer.on('boinc.suspended', (event, status) => {
       console.log('GOT BOINC SUSPENDED:', status)
       if (status) {
@@ -225,11 +228,11 @@ export default {
       }
     },
     thisDevice: async function(value) {
-      // window.local.ipcRenderer.send('boinc.config.get')
       // console.log('got deviceid')
       if (value) {
+        window.local.ipcRenderer.send('boinc.config.get')
         this.loading = false
-        // console.log(JSON.stringify(this.thisDevice))
+        console.log(JSON.stringify(this.thisDevice))
         if (this.thisDevice.status == 'ACTIVE') this.toggle = true
         else {
           this.toggle = false
@@ -249,15 +252,10 @@ export default {
           deviceStatus.status = 'ACTIVE'
           this.actionbg.backgroundColor = 'li'
           window.local.ipcRenderer.send('startBoinc')
+          clearInterval(this.deviceStatePoll)
           this.deviceStatePoll = setInterval(() => {
             // console.log('request device active tasks')
-            var result = window.local.ipcRenderer.sendSync('boinc.activeTasks')
-            // console.log(result)
-            if (result) {
-              this.activeTasks = result
-            } else {
-              this.activeTasks = []
-            }
+            window.local.ipcRenderer.send('boinc.activeTasks')
           }, 1000)
         } else {
           deviceStatus.status = 'ONLINE'

@@ -1,11 +1,11 @@
 <template lang="pug">
 div
   div
-    big.thin-paragraph(v-if="authenticated") User Dashboard
+    big.thin-paragraph(v-if="authenticated") User Dashboard!!!
     big.thin-paragraph(v-else) Global Leaderboards
     br
     br
-    div.relative-position.layout-padding(v-if="!authenticated")
+    .relative-position.layout-padding(v-if="!authenticated")
       .block.absolute-center
         q-btn.on-left(big  style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join
     .row.gutter.justify-center
