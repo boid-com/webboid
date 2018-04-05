@@ -47,8 +47,8 @@ export default {
     },
     create () {
       return gql`
-        mutation($cpid: String, $name: String!, $ownerId: ID, $type: DeviceType!, $meta: Json) {
-          createDevice(cpid: $cpid, name: $name, type: $type, meta: $meta, ownerId: $ownerId) {
+        mutation($cpid: String, $name: String!, $ownerId: ID, $status: DeviceStatus $type: DeviceType!, $meta: Json) {
+          createDevice(cpid: $cpid, name: $name, type: $type, meta: $meta, ownerId: $ownerId, status:$status) {
             id
           }
         }

@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   div
-    big.thin-paragraph(v-if="authenticated") User Dashboard!!!
+    big.thin-paragraph(v-if="authenticated") User Dashboard
     big.thin-paragraph(v-else) Global Leaderboards
     br
     br

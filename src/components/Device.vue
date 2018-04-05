@@ -55,6 +55,7 @@ function setupDevice(device) {
   var ownerId = window.local.thisUser.id
   return {
     ownerId,
+    status:'ACTIVE',
     cpid: device.cpid,
     name: device.name,
     type,
