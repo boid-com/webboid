@@ -1,6 +1,5 @@
-# Quasar App
+# app.boid.com
 
-> A Quasar project
 
 ## Build Setup
 
