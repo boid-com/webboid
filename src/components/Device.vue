@@ -175,40 +175,43 @@ export default {
       this.init()
     }, 4000)
     this.init()
-    window.local.ipcRenderer.send('boinc.config.get')
-    window.local.ipcRenderer.on('boinc.toggle', (event, toggle) => {
-      console.log('GOT TOGGLE:', toggle)
-      if (!this.loading) this.toggle = toggle
-    })
-    window.local.ipcRenderer.on('boinc.config', (event, value) => {
-      console.log('GOT CONFIG', value)
-      this.config = value
-    })
-    window.local.ipcRenderer.on('boinc.activeTasks', (event, activeTasks) => {
-      // console.log('got ACTIVETASKS',JSON.stringify(activeTasks))
-      if (activeTasks) {
-        this.activeTasks = activeTasks
-      }
-    })
-    window.local.ipcRenderer.on('boinc.suspended', (event, status) => {
-      console.log('GOT BOINC SUSPENDED:', status)
-      if (status) {
-        this.onBatteries = true
-        this.boincStatus = `Paused: ${status}`
-        this.boincStatusIcon = 'pause'
-      } else {
-        this.onBatteries = false
-        this.boincStatus = 'Computing Tasks...'
-        this.boincStatusIcon = 'check'
-      }
-    })
-    window.local.ipcRenderer.on('deviceReady', (event, device) => {
-      console.log('GOT DEVICE:', device)
-    })
-    window.local.ipcRenderer.on('boinc.error', (event, error) => {
-      console.log('got errorfrom boinc', error)
-      alert(error)
-    })
+    if (window.local){
+      window.local.ipcRenderer.send('boinc.config.get')
+      window.local.ipcRenderer.on('boinc.toggle', (event, toggle) => {
+        console.log('GOT TOGGLE:', toggle)
+        if (!this.loading) this.toggle = toggle
+      })
+      window.local.ipcRenderer.on('boinc.config', (event, value) => {
+        console.log('GOT CONFIG', value)
+        this.config = value
+      })
+      window.local.ipcRenderer.on('boinc.activeTasks', (event, activeTasks) => {
+        // console.log('got ACTIVETASKS',JSON.stringify(activeTasks))
+        if (activeTasks) {
+          this.activeTasks = activeTasks
+        }
+      })
+      window.local.ipcRenderer.on('boinc.suspended', (event, status) => {
+        console.log('GOT BOINC SUSPENDED:', status)
+        if (status) {
+          this.onBatteries = true
+          this.boincStatus = `Paused: ${status}`
+          this.boincStatusIcon = 'pause'
+        } else {
+          this.onBatteries = false
+          this.boincStatus = 'Computing Tasks...'
+          this.boincStatusIcon = 'check'
+        }
+      })
+      window.local.ipcRenderer.on('deviceReady', (event, device) => {
+        console.log('GOT DEVICE:', device)
+      })
+      window.local.ipcRenderer.on('boinc.error', (event, error) => {
+        console.log('got errorfrom boinc', error)
+        alert(error)
+      })
+    }
+
   },
   watch: {
     activeTasks(value) {

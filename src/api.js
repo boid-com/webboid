@@ -5,7 +5,7 @@ import q from 'gql/queries.js'
 
 var events = new EventEmitter()
 
-var gqlEndpoint = 'https://api.graph.cool/simple/v1/boid'
+var gqlEndpoint = 'https://api.boid.com/simple/v1/cjjyr2gyf000i0192g53uoze3'
 var client = {}
 
 function setupClient (token) {
@@ -15,6 +15,7 @@ function setupClient (token) {
         Authorization: 'Bearer ' + token
       }
     })
+    console.log(token)
   }
   else {
     client = new GraphQLClient(gqlEndpoint)

@@ -2,7 +2,7 @@
 
  #q-app
   .row.justify-center(v-if="this.$route.path === '/auth'")
-    router-view.layout-padding(
+    router-view(
       :leaderboard='leaderboard'
       :teamLeaderboard='teamLeaderboard'
       :thisUser='thisUser'
@@ -59,7 +59,7 @@
       q-route-tab(icon='account_circle', :to='{name:"User",params:{username:thisUser.username}}', exact='', slot='title')
 
     .row.justify-center
-      router-view.layout-padding(
+      router-view(
         :leaderboard='leaderboard'
         :teamLeaderboard='teamLeaderboard'
         :thisUser='thisUser'
@@ -88,22 +88,19 @@
       .layout-padding
         boincConfig(:config="boincConfigData" :thisModal="$refs.boincConfigModal")
     q-modal.position-relative(ref="socialModal")
-      .layout-padding
-        h4.text-centered(style="color:#089cfc;") Share Boid
-        .layout-padding
+      div(style="max-width: 500px;")
+        div(style="padding:40px;")
+          h4.text-centered(style="color:#089cfc;") Share Boid
           h6 When Users join Boid and run the app you get a small amount of bonus Power for inviting them.
         .layout-padding.position-relative
-          p.text-center.thin-paragraph Share this link
+          p.text-center.light-paragraph Share this link
           h4.text-center( @click="selectText($event)") 
             textarea.text-center.full-width(readonly ref="socialLink") app.boid.com/u/{{thisUser.username}}
-          .row.gutter.justify-center
-            q-btn.absolute.gt-md(style="bottom:160px;" @click="selectText()") Copy Link
-            q-btn.absolute.lt-lg(style="bottom:120px;" @click="selectText()") Copy Link
-
-          p.text-center.strong Your link will change if you change your username
-
         br
         br
+        q-btn.absolute(color="green" style="bottom:20px; right:100px;" @click="selectText()")
+          q-icon.on-left(name="content_copy")
+          | Copy Link
         q-btn.absolute(color="blue" outline style="bottom:20px; right:20px;" @click="$refs.socialModal.close()")
           | done
   q-transition(
@@ -452,7 +449,7 @@ export default {
     authenticated(authed) {
       this.pending = false
       if (authed) {
-        console.log('we are here', this.local)
+        console.log('checking Local:', this.local)
         if (this.local) this.$router.push({ name: 'Device' })
         this.menuBreakpoint = 1200
         if (window.olark) {

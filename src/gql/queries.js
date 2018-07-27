@@ -42,7 +42,6 @@ export default {
                 image
                 tagline
               }
-              meta
             }
             wallet {
               tokens {
@@ -73,9 +72,6 @@ export default {
             tagline
             _invitedMeta {
               count
-            }
-            powerRatings(last: 1) {
-              power
             }
             team {
               id
