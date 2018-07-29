@@ -1,6 +1,6 @@
 <template lang="pug">
-div.full-width
-  div.full-width
+div
+  div
     div.thin-paragraph(v-if="authenticated")
     div(v-else) 
       bHeader(style="drop-shadow: 0px 4px 10px grey").shadow-3
@@ -10,7 +10,7 @@ div.full-width
         q-btn.on-left(big style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join Us
         q-btn.on-left(big style="font-size:20px" color="blue" @click="openURL('https://www.boid.com')") Learn More
     br
-  .row.layout-padding
+  .row.layout-padding.justify-center
     .col-md-4.col-lg-4.col-xl-3(v-if="authenticated")
       .row.justify-center
         .col-12
@@ -36,7 +36,7 @@ div.full-width
                 p.light-paragraph.text-center Social
                 p Users Invited: {{thisUser.invited.length}}
                 p Power from Invited Users: {{parseInt(thisUser.powerRatings[0].meta.social)}}
-                q-btn.full-width(color="green" @click="$e.$emit('openSocialModal')")
+                q-btn.full-width( outline color="green" @click="$e.$emit('openSocialModal')")
                   | Get Invite Link
           .row(style="align-items: stretch;")
             .col-xs-12.col-sm-6.col-md-12
@@ -52,7 +52,7 @@ div.full-width
                 div(style="padding-left:5px")
                   p.light-paragraph(v-if="!thisUser.tagline") No tagline set...
                   p(v-else) {{thisUser.tagline}}
-                q-btn.full-width(color="blue" @click="$e.$emit('openProfileEditModal')")
+                q-btn.full-width(outline color="blue" @click="$e.$emit('openProfileEditModal')")
                   | Update profile
             .col-xs-12.col-sm-6.col-md-12
               q-card.animate-scale.relative-position(v-if='thisUser.team' )
@@ -93,7 +93,7 @@ div.full-width
                         td Boid Items
                   
                         
-    .col-md-8.col-lg-8.col-xl-9
+    .col-md-8.col-lg-8.col-xl-7
       .row
         .col-12
           q-card.animate-scale.relative-position(v-if="authenticated")
@@ -124,7 +124,7 @@ div.full-width
               q-item.relative-position.bg-red(v-else color="red" style="height:80px")
                 h5.text-white Disable AdBlock and refresh to continue
 
-            q-btn.full-width( disabled small color="green")
+            q-btn.full-width( color="green" @click="$root.$emit('modal.addDevice',true)")
               | add more Devices
               q-icon.on-right(name="add")
           div.full-width
@@ -206,24 +206,23 @@ export default {
     toggleDevice: async function(device) {
       console.log('TOGGLE STATE', device.toggle)
       try {
-        if (!device.toggle) {
-          var result = await this.api.device.updateStatus({
-            deviceId: device.id,
-            status: 'ACTIVE'
-          })
-        } else {
-          console.log('online')
-          var result = await this.api.device.updateStatus({
-            deviceId: device.id,
-            status: 'ONLINE'
-          })
-        }
+        // if (!device.toggle) {
+        //   var result = await this.api.device.updateStatus({
+        //     deviceId: device.id,
+        //     status: 'ACTIVE'
+        //   })
+        // } else {
+          // console.log('online')
+          // var result = await this.api.device.updateStatus({
+          //   deviceId: device.id,
+          //   status: 'ONLINE'
+          // })
+        // }
       } catch (error) {
         console.log(error)
       } finally {
-        console.log(result)
-        this.$e.$emit('refreshUser')
-        this.$e.$emit('ch.toggle', device.toggle)
+        // this.$e.$emit('refreshUser')
+        // this.$e.$emit('ch.toggle', device.toggle)
       }
     },
     init() {
@@ -256,8 +255,15 @@ export default {
 
 h5
   font-family: 'Comfortaa', cursive;  
+  font-size: 20px 
   @media screen and (max-width 500px)
-    font-size: 20px 
+    font-size: 15px 
+  
+h4
+  font-family: 'Comfortaa', cursive;  
+h6
+  font-family: 'Comfortaa', cursive;  
+
 
 .q-card {
   padding: 10px;
@@ -303,12 +309,12 @@ h5
 }
 
 @media (max-width: 767px) {
-  table.q-table.responsive:not(.flipped) tr, table.q-table.responsive:not(.flipped) td {
+  table.q-table.responsive:not(.flipped) table.q-table.responsive:not(.flipped) td {
     display: inline-table;
   }
 }
 
-tr:hover {
-  background-color: $grey-2;
-}
+// tr:hover {
+//   background-color: $grey-2;
+// }
 </style>

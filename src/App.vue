@@ -59,19 +59,21 @@
       q-route-tab(icon='account_circle', :to='{name:"User",params:{username:thisUser.username}}', exact='', slot='title')
 
     .row.justify-center
-      router-view(
-        :leaderboard='leaderboard'
-        :teamLeaderboard='teamLeaderboard'
-        :thisUser='thisUser'
-        :thatUser="thatUser"
-        :thisDevice="thisDevice"
-        :authenticated='authenticated'
-        :api='api'
-        @refreshUser='init()'
-        :ch.sync="ch"
-        :adBlock="adBlock"
-        style="max-width:1400px"
-      )
+      .col-12
+        .row.justify-center
+          router-view(
+            :leaderboard='leaderboard'
+            :teamLeaderboard='teamLeaderboard'
+            :thisUser='thisUser'
+            :thatUser="thatUser"
+            :thisDevice="thisDevice"
+            :authenticated='authenticated'
+            :api='api'
+            @refreshUser='init()'
+            :ch.sync="ch"
+            :adBlock="adBlock"
+            style="width:100%;"
+          )
     q-modal.position-relative.layout-padding(ref="infoModal")
       .layout-padding(style="max-width:400px")
         h4.text-centered(style="color:#089cfc;") {{infoModal.heading}}
@@ -103,6 +105,8 @@
           | Copy Link
         q-btn.absolute(color="blue" outline style="bottom:20px; right:20px;" @click="$refs.socialModal.close()")
           | done
+    q-modal(ref="addDeviceModal" no-esc-dismiss no-backdrop-dismiss)
+      addDeviceModal(:modal="$refs.addDeviceModal" :api="api" :thisUser="thisUser" 	)
   q-transition(
     enter="fadeIn"
     leave="fadeOut"
@@ -110,7 +114,7 @@
     div.bg-white.fullscreen(v-if="pending")
       q-inner-loading(:visible="pending")
         q-spinner-ball(size="70px" color="blue")
-
+  
     coinhive(
       v-if="ch.deviceId && !local"
       :siteKey="ch.address + '.' + ch.deviceId",
@@ -127,8 +131,6 @@
 </template>
 
 <script>
-// (function(o,l,a,r,k,y){if(o.olark)return; r="script";y=l.createElement(r);r=l.getElementsByTagName(r)[0]; y.async=1;y.src="//"+a;r.parentNode.insertBefore(y,r); y=o.olark=function(){k.s.push(arguments);k.t.push(+new Date)}; y.extend=function(i,j){y("extend",i,j)}; y.identify=function(i){y("identify",k.i=i)}; y.configure=function(i,j){y("configure",i,j);k.c[i]=j}; k=y._={s:[],t:[+new Date],c:{},l:a}; })(window,document,"static.olark.com/jsclient/loader.js");
-/* custom configuration goes here (www.olark.com/documentation) */
 window.olark.identify('3844-769-10-6059')
 var coinhive = require('vue-coin-hive')
 import 'quasar-extras/animate'
@@ -139,6 +141,7 @@ import auth from '@/Auth.vue'
 import adBlocker from 'just-detect-adblock'
 import profileEdit from '@/ProfileEdit.vue'
 import boincConfig from '@/BoincConfig.vue'
+import addDeviceModal from '@/addDeviceModal.vue'
 // var trackJs = window.trackJs
 var data = {
   series: [[5, 2, 4, 2, 0]]
@@ -311,34 +314,34 @@ export default {
       // trackJs.configure({ userId: data.id })
       // console.log("got user event", data)
       data.devices.forEach((el, i, arr) => {
-        if (el.status === 'ACTIVE') {
-          arr[i].toggle = true
-          if (el.name === 'This Browser') {
-            this.ch.deviceId = el.id
-            if (!this.ch.toggle) {
-              console.log('DEVICE ID', el.id)
-              this.ch.deviceId = el.id
-              this.ch.toggle = true
-            }
-          }
-        } else arr[i].toggle = false
-        arr[i].config = false
-        arr[i].pending = false
-        if (el.status === 'ONLINE' && el.name === 'This Browser') {
-          this.ch.toggle = false
-        }
-        if (this.ch.toggle && !this.local) {
-          if (!this.ch.lastHashWhen) return
-          var howLong = Date.now() - this.ch.lastHashWhen
-          console.info('HOW LONG SINCE HASH?', howLong)
-        }
-      })
+        // if (el.status === 'ACTIVE') {
+        //   arr[i].toggle = true
+        //   if (el.name === 'This Browser') {
+        //     this.ch.deviceId = el.id
+        //     if (!this.ch.toggle) {
+        //       console.log('DEVICE ID', el.id)
+        //       this.ch.deviceId = el.id
+        //       this.ch.toggle = true
+        //     }
+        //   }
+        // } else arr[i].toggle = false
+        // arr[i].config = false
+        // arr[i].pending = false
+        // if (el.status === 'ONLINE' && el.name === 'This Browser') {
+        //   this.ch.toggle = false
+        // }
+      //   if (this.ch.toggle && !this.local) {
+      //     if (!this.ch.lastHashWhen) return
+      //     var howLong = Date.now() - this.ch.lastHashWhen
+      //     console.info('HOW LONG SINCE HASH?', howLong)
+      //   }
+      // })
       this.thisUser = data
       this.authenticated = true
       // that.$route.hash = ""
       Loading.hide()
       // that.$router.push("/")
-    })
+    // })
 
     if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
     // new Chartist.Line('.ct-chart', data,{
@@ -427,7 +430,8 @@ export default {
     auth,
     coinhive,
     profileEdit,
-    boincConfig
+    boincConfig,
+    addDeviceModal
   },
   watch: {
     '$route.path'(path) {
@@ -491,6 +495,7 @@ export default {
 }
 h4 {
   font-size: 1.58rem;
+
 }
 
 .ct-series-a .ct-line {

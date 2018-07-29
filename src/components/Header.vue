@@ -1,17 +1,17 @@
 <template lang="pug">
   div.bg-green-6 
     .row.justify-center.xl-padding.md-padding(style="padding-top:145px; padding-bottom: 10px;" )
-      .col-4
+      .col-3
         .row.justify-center.relative-position
           img.heroicon.absolute-center(src="https://assets.boid.com/images/connectdevices.svg")
         .herocard
           h5.text-center.text-white Connect Your Devices
-      .col-4
+      .col-3
         .row.justify-center.relative-position
           img.heroicon.absolute-center(src="https://assets.boid.com/images/contribute3.svg")
         .herocard
           h5.text-center.text-white Contribute To Big Ideas
-      .col-4
+      .col-3
         .row.justify-center.relative-position
           img.heroicon.absolute-center(src="https://assets.boid.com/images/earnrewards3.svg")
         .herocard

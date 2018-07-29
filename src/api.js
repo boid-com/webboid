@@ -149,6 +149,10 @@ var api = {
       var result = await client.request(m.device.create(), deviceData)
       console.log(JSON.stringify(result))
       return result.createDevice
+    },
+    add: async function (deviceData){
+      var result = await client.request(m.device.add(),deviceData)
+      return result
     }
   },
   leaderboard: {

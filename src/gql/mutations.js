@@ -53,6 +53,18 @@ export default {
           }
         }
       `
+    },
+    add (){
+      return gql`
+        mutation($type:String $name:String){
+          addUserDevice(
+            name:$name
+            type:$type
+          ){
+            id
+          }
+        }
+      `
     }
   },
   user: {
