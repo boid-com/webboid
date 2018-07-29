@@ -109,15 +109,22 @@ div
                   q-item-tile(label style="user-select: none;") {{device.name}}
                   q-item-tile(sublabel) {{device.status}}
                     //- q -icon.text-center(color="yellow" name='flash_on'
-                h6.inline.float-right.text-green-4(v-if="device.toggle && device.type=='BROWSER'") {{ch.hps}}
-                q-spinner-grid.inline.on-right(:size="20" color="grey-4" v-if="device.toggle")
+                div.absolute(style="width:190px; height:50px; left:180px; padding-top:8px;" v-if="browserDeviceToggle && device.type=='BROWSER'")
+                  div.relative-position.float-left
+                    q-btn.on-left(style="margin-right:20px;" small round @click="$root.$emit('browserDeviceThrottle',ch.throttle += .05 )") -
+                    h6.absolute-center.text-grey-6( style="margin-top:3px; width:35px;" v-if="browserDeviceToggle && device.type=='BROWSER'") {{throttlePercent}}
+                    q-btn(style="margin-left:35px;" small round @click="$root.$emit('browserDeviceThrottle',ch.throttle -= .05 )") +
+                .relative-position(style="width: 80px;")
+                  h6.inline.float-right.text-green-4(v-if="browserDeviceToggle && device.type=='BROWSER'") {{ch.hps}}
+                q-spinner-grid.inline.on-right(:size="20" color="grey-4" v-if="browserDeviceToggle" style="margin-right:10px;")
                 q-item-side(right v-if="device.toggle" )
                   //- q-btn.on-left.hovericon(  round flat @click="configDevice(device.id)")
                     q-icon(name='settings' color="")
-                q-item-side.text-green(right v-else-if="userPower < 1" )
-                  div.inline Start Here
-                    q-icon(name="arrow_forward" size="30px")
-                q-toggle(v-model="device.toggle" color="yellow" @blur="device.pending = true,toggleDevice(device)")
+                // q-item-side.text-green(right v-else-if="userPower < 1" )
+                //   div.inline Start Here
+                //     q-icon(name="arrow_forward" size="30px")
+
+                q-toggle(v-if="device.type==='BROWSER'" v-model="browserDeviceToggle" color="yellow")
                 q-inner-loading(:visible="device.pending")
                   q-spinner(size="30px" color="blue")
                   //- | {{device.toggle}}
@@ -180,6 +187,9 @@ export default {
   name: 'index',
   data() {
     return {
+      browserDeviceId:null,
+      chThrottleDisplay:null,
+      browserDeviceToggle:false,
       openURL,
       info,
       currentDevice: null,
@@ -196,6 +206,11 @@ export default {
       } catch (err) {
         return 0
       }
+    },
+    throttlePercent(){
+
+      if (this.ch.throttle === 0) return "100%"
+      else return (100 - (this.ch.throttle * 100).toFixed(0)) + "%"
     }
   },
   methods: {
@@ -204,36 +219,44 @@ export default {
       this.$refs.deviceModal.open()
     },
     toggleDevice: async function(device) {
-      console.log('TOGGLE STATE', device.toggle)
-      try {
-        // if (!device.toggle) {
-        //   var result = await this.api.device.updateStatus({
-        //     deviceId: device.id,
-        //     status: 'ACTIVE'
-        //   })
-        // } else {
-          // console.log('online')
-          // var result = await this.api.device.updateStatus({
-          //   deviceId: device.id,
-          //   status: 'ONLINE'
-          // })
-        // }
-      } catch (error) {
-        console.log(error)
-      } finally {
-        // this.$e.$emit('refreshUser')
-        // this.$e.$emit('ch.toggle', device.toggle)
-      }
     },
     init() {
       this.devices = this.thisUser.devices
+      this.devices.forEach((el)=>{
+        if (el.type === "BROWSER"){
+          this.browserDeviceId = el.id
+        }
+      })
+      // this.devices = this.thisUser.devices.map((el,i)=>{
+      //   if (el.type === "BROWSER"){
+      //     if (this.devices[i]){
+      //       el.toggle = this.devices[i].toggle
+      //     }else{
+      //       el.toggle = false
+      //     }
+      //   } else el.toggle = false
+      //   return el
+      // })
+    },
+    disableToggle(device){
+      if (device.type==="BROWSER"){
+        return false
+      }else return true
     }
   },
   mounted() {
     this.init()
   },
   watch: {
+    ch(){
+      this.chThrottleDisplay = this.ch.throttle
+    },
+    browserDeviceToggle(value){
+      console.log('browserdevicetoggle',value)
+      this.$root.$emit('browserDeviceToggle',value,this.browserDeviceId)
+    },
     thisUser() {
+      console.log('GOT THIS USER')
       this.init()
     },
     adBlock() {

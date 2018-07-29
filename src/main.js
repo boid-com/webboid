@@ -6,6 +6,8 @@ import router from './router'
 import 'quasar-extras/ionicons'
 import 'quasar-extras/fontawesome'
 import { AddressbarColor } from 'quasar'
+import LoadScript from 'vue-plugin-load-script';
+
 AddressbarColor.set('#089cfc')
 // import storePlugin from './storePlugin'
 
@@ -18,6 +20,7 @@ Vue.filter('removeDash', function (value) {
   if (!value) return ''
   return value.toString().replace('-', ' ')
 })
+Vue.use(LoadScript);
 
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
