@@ -216,7 +216,9 @@ export default {
     userPower() {
       // return 0
       try {
-        return parseInt(this.thisUser.powerRatings[0].power)
+        var total = parseInt(this.thisUser.powerRatings[0].meta.devices) + parseInt(this.thisUser.powerRatings[0].meta.social)
+        return total
+
       } catch (err) {
         return 0
       }
