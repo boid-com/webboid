@@ -137,7 +137,6 @@ export default {
             power
             id
             image
-            change24
           }
         }
       `

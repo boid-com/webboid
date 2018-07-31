@@ -5,7 +5,7 @@
       q-btn( big rounded push glossy color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join US
   .row.gutter.justify-center
     .col
-      q-card.animate-scale.relative-position(style="min-width:300px")
+      div.animate-scale.relative-position(style="min-width:300px")
         .layout-padding.full-width.relative-position(style="height:140px;")
           img.absolute-center.block(style="width:120px; height:120px;" :src="team.image")
         h5.text-center {{team.name | removeDash}}
@@ -16,14 +16,16 @@
         //- p.light-paragraph.text-center Power
         div.relative-position(style="margin:auto; margin-top:30px")
           p.text-center(style="z-index:5;") {{parseInt(team.power)}}
-            q-icon.text-center.absolute-center(color="yellow-3" name='flash_on' style="font-size:70px; z-index:-4") 
+            img.text-center.absolute-center(src="/statics/images/BoidPower.svg" style="height:70px; z-index:-4") 
+            q-tooltip Team Power
       q-card.animate-scale(style="min-width:70px;")
         //- p.light-paragraph.text-center Members
         div.relative-position(style="margin:auto; margin-top:30px")
           p.text-center(style="z-index:5;") {{parseInt(team._membersMeta.count)}}
             q-icon.text-center.absolute-center(color="green-1" name='fa-users' style="font-size:50px; z-index:-4;")
+          q-tooltip Team Members
       q-card(v-if="team.owner")
-        p.light-paragraph.text-center Manager
+        p.light-paragraph.text-center Leader
         q-item(highlight :to="{name:'User',params:{username:team.owner.username}}")
           q-item-side(:avatar="team.owner.image")
           q-item-main

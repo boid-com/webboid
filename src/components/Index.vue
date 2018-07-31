@@ -11,7 +11,7 @@ div
         q-btn.on-left(big style="font-size:20px" color="blue" @click="openURL('https://www.boid.com')") Learn More
     br
   .row.layout-padding.justify-center
-    .col-md-4.col-lg-4.col-xl-3(v-if="authenticated")
+    .col-md-4.col-lg-3.col-xl-3(v-if="authenticated")
       .row.justify-center
         .col-12
           .row
@@ -19,23 +19,33 @@ div
               q-card.relative-position.animate-scale
                 q-btn.absolute.infobtn(round small flat)
                   q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.power)")
-                p.light-paragraph.text-center Power Rating
-                div(style="margin:auto;")
-                  p.text-center {{userPower}}
-                    //- p.text-center(v-if="!ch.toggle") Enable a device to generate Power
-                    q-icon.text-center( v-if="ch.toggle" color="yellow" name='flash_on' style="font-size:50px;")
-                    q-icon.text-center( v-else color="grey-4" name='flash_on' style="font-size:50px;")
-                    small.block.light-paragraph.small Devices: {{parseInt(thisUser.powerRatings[0].meta.devices)}}
-                      q-icon(name="flash_on" color="yellow")
-                    small.block.light-paragraph Social: {{parseInt(thisUser.powerRatings[0].meta.social)}}
-                      q-icon(name="flash_on" color="yellow")
+                p.light-paragraph.text-center My Boid Power
+                .row.justify-center
+                  .col-6
+                    
+                    img.float-right(v-if="userPower > 0" src="/statics/images/BoidPower.svg" style="fill:white; width:100%; max-height:140px; padding:20px;")
+                    img.float-right(v-else src="/statics/images/BoidPower-Off.svg" style="fill:white; width:100%; max-height:140px; padding:20px;")
+                  .col-6
+                    div.relative-position(style="margin:auto;")
+                      small.block.light-paragraph.small Total: 
+                      p {{userPower}}
+                        //- p.text-center(v-if="!ch.toggle") Enable a device to generate Power
+                        // q-icon.text-center( v-if="ch.toggle" color="yellow" name='flash_on' style="font-size:50px;")
+                        // q-icon.text-center( v-else color="grey-4" name='flash_on' style="font-size:50px;")
+                        small.block.light-paragraph.small Devices: 
+                        | {{parseInt(thisUser.powerRatings[0].meta.devices)}}
+                        small.block.light-paragraph Social: 
+                        | {{parseInt(thisUser.powerRatings[0].meta.social)}}
             .col-xs-12.col-sm-6.col-md-12
               q-card.animate-scale.relative-position
                 q-btn.absolute.infobtn(round small flat)
                   q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.social)")
                 p.light-paragraph.text-center Social
-                p Users Invited: {{thisUser.invited.length}}
-                p Power from Invited Users: {{parseInt(thisUser.powerRatings[0].meta.social)}}
+                div.relative-position(style="margin:auto; margin-top:30px")
+                  q-tooltip Invited Users
+                  h3.text-center(style="z-index:5;") {{parseInt(thisUser.invited.length)}}
+                    q-icon.text-center.absolute-center(color="blue-1" name='fa-users' style="font-size:50px; z-index:-4;")
+                div(style="height:15px;")
                 q-btn.full-width( outline color="green" @click="$e.$emit('openSocialModal')")
                   | Get Invite Link
           .row(style="align-items: stretch;")
@@ -50,8 +60,8 @@ div
                         div.ellipsis.inline(style="max-width:220px;") {{thisUser.username}}
                       td
                 div(style="padding-left:5px")
-                  p.light-paragraph(v-if="!thisUser.tagline") No tagline set...
-                  p(v-else) {{thisUser.tagline}}
+                  p.light-paragraph.text-truncate(v-if="!thisUser.tagline") No tagline set...
+                  p.text-truncate(v-else) {{thisUser.tagline}}
                 q-btn.full-width(outline color="blue" @click="$e.$emit('openProfileEditModal')")
                   | Update profile
             .col-xs-12.col-sm-6.col-md-12
@@ -77,7 +87,7 @@ div
                       td 
                         img.tokenimg(:src="token.tokenType.image")
                       td {{token.tokenType.name}}
-                      td {{token.balance.toFixed(2)}}
+                      td {{token.balance.toFixed(4)}}
                       td
             .col-xs-12.col-sm-6.col-md-12
               div
@@ -93,7 +103,7 @@ div
                         td Boid Items
                   
                         
-    .col-md-8.col-lg-8.col-xl-7
+    .col-md-8.col-lg-9.col-xl-8
       .row
         .col-12
           q-card.animate-scale.relative-position(v-if="authenticated")
@@ -101,7 +111,7 @@ div
               q-btn.absolute.infobtn(round small flat)
                 q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.devices)")
             q-list( v-for="(device,index) in devices" :key="device.id")
-              q-item.relative-position(v-if="!adBlock")
+              q-item.relative-position(v-if="!adBlock" style="padding-bottom:30px;")
                 //- | {{device.status}}
                 q-item-side
                   q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)")         
@@ -109,20 +119,24 @@ div
                   q-item-tile(label style="user-select: none;") {{device.name}}
                   q-item-tile(sublabel) {{device.status}}
                     //- q -icon.text-center(color="yellow" name='flash_on'
-                div.absolute(style="width:190px; height:50px; left:180px; padding-top:8px;" v-if="browserDeviceToggle && device.type=='BROWSER'")
+                div.absolute(style="width:190px; height:50px; left:180px; padding-top:8px;" v-show="browserDeviceToggle && device.type=='BROWSER'")
+                  q-tooltip CPU Usage
                   div.relative-position.float-left
-                    q-btn.on-left(style="margin-right:20px;" small round @click="$root.$emit('browserDeviceThrottle',ch.throttle += .05 )") -
-                    h6.absolute-center.text-grey-6( style="margin-top:3px; width:35px;" v-if="browserDeviceToggle && device.type=='BROWSER'") {{throttlePercent}}
-                    q-btn(style="margin-left:35px;" small round @click="$root.$emit('browserDeviceThrottle',ch.throttle -= .05 )") +
+                    q-btn.on-left(style="margin-right:20px;" small round @click="$root.$emit('browserDeviceThrottle',ch.throttle += .1 )") -
+                    h6.absolute-center.text-black(style="margin-top:3px; width:35px;" v-if="browserDeviceToggle && device.type=='BROWSER'") {{throttlePercent}}
+                    q-btn(style="margin-left:35px;" small round @click="$root.$emit('browserDeviceThrottle',ch.throttle -= .1 )") +
                 .relative-position(style="width: 80px;")
-                  h6.inline.float-right.text-green-4(v-if="browserDeviceToggle && device.type=='BROWSER'") {{ch.hps}}
-                q-spinner-grid.inline.on-right(:size="20" color="grey-4" v-if="browserDeviceToggle" style="margin-right:10px;")
+                  q-tooltip Hashes Per Second
+                  h5.inline.float-right.text-green-4(style="margin-top:0px; margin-bottom: 0px" v-if="browserDeviceToggle && device.type=='BROWSER'") {{ch.hps}}
+                q-spinner-grid.inline.on-right( :size="30" color="grey-4" v-if="browserDeviceToggle && !ch.accepted" style="margin-right:10px;")
+                q-spinner-cube.inline.on-right( :size="30" color="yellow" v-if="browserDeviceToggle && ch.accepted" style="margin-right:10px;")
                 q-item-side(right v-if="device.toggle" )
                   //- q-btn.on-left.hovericon(  round flat @click="configDevice(device.id)")
                     q-icon(name='settings' color="")
                 // q-item-side.text-green(right v-else-if="userPower < 1" )
                 //   div.inline Start Here
                 //     q-icon(name="arrow_forward" size="30px")
+                q-progress.absolute-bottom(v-if="browserDeviceToggle && device.type=='BROWSER'" :indeterminate="ch.found" color="yellow" style="bottom:10px;")
 
                 q-toggle(v-if="device.type==='BROWSER'" v-model="browserDeviceToggle" color="yellow")
                 q-inner-loading(:visible="device.pending")
@@ -221,7 +235,9 @@ export default {
     toggleDevice: async function(device) {
     },
     init() {
+      if (!this.thisUser) return
       this.devices = this.thisUser.devices
+      if (!this.devices) return
       this.devices.forEach((el)=>{
         if (el.type === "BROWSER"){
           this.browserDeviceId = el.id

@@ -79,7 +79,7 @@
         div(style="max-width: 500px;")
           div(style="padding:40px;")
             h4.text-centered(style="color:#089cfc;") Share Boid
-            h6 When Users join Boid and run the app you get a small amount of bonus Power for inviting them.
+            h6 When Users join Boid and run the app you get a small percent of any Boid Power they generate.
           .layout-padding.position-relative
             p.text-center.light-paragraph Share this link
             h4.text-center( @click="selectText($event)") 
@@ -110,6 +110,7 @@ import adBlocker from 'just-detect-adblock'
 import profileEdit from '@/ProfileEdit.vue'
 import boincConfig from '@/BoincConfig.vue'
 import addDeviceModal from '@/addDeviceModal.vue'
+var hashInterval = null
 // var trackJs = window.trackJs
 var data = {
   series: [[5, 2, 4, 2, 0]]
@@ -128,7 +129,9 @@ export default {
       ch:{
         toggle:false,
         hps: "loading",
-        throttle:null
+        throttle:null,
+        found:null,
+        accepted:null
       },
       boincConfigData: defaultConfig,
       thisDevice: null,
@@ -257,12 +260,13 @@ export default {
     this.$root.$on('browserDeviceThrottle',(input)=>{
       if (miner){
         if (input){
+          if (input > .9) input = .9
+          if (input < .09) input = 0
           miner.setThrottle(input)
         }
         this.ch.throttle = miner.getThrottle()
-        // this.ch.hps = miner.getHashesPerSecond( )
       }else {
-        console.log('miner not ready')
+        this.ch.throttle = 0
       }
     })
     this.$root.$on('browserDeviceToggle',(toggle,deviceId)=>{
@@ -271,10 +275,20 @@ export default {
         this.$loadScript("https://coinhive.com/lib/coinhive.min.js").then(()=>{
           this.ch.hps = "Loading..."
           miner = new window.CoinHive.User('i3u3mkfSxqzZKwsJVrTEfo0IV8QHJOjR', deviceId)
-          miner.start()
+          miner.start({
+            throttle:0.3,
+            threads: ()=>{if (CPUCores>2) {return CPUCores - 1} else{ return CPUCores}}
+          })
+          miner.setThrottle(.3)
+          hashInterval = setInterval(()=>{
+            this.ch.hps = miner.getHashesPerSecond().toFixed(0)
+          },3000)
           this.ch.throttle = miner.getThrottle()
           miner.on('found', (data) => {
-            this.ch.hps = data.hashesPerSecond.toFixed(2)
+            this.ch.found = true
+            setTimeout(()=>{
+              this.ch.found = false 
+            },2000)
           });
 
           miner.on('error', function(params) {
@@ -287,15 +301,18 @@ export default {
             console.log(data)
           })
 
-          miner.on('accepted', function(data) {
-            console.log(data)
+          miner.on('accepted', (data) => {
+            this.ch.accepted = true
+            setTimeout(()=>{
+              this.ch.accepted = false 
+            },2000)
           })
       })
 
       }else {
         if (miner) {
           miner.stop() 
-          // miner.removeAllListeners()
+          if (hashInterval) clearInterval(hashInterval)
           }
       }
 

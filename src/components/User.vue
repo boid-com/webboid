@@ -2,7 +2,9 @@
 .layout-padding(v-if="thatUser.id")
   .layout-padding.full-width(v-if=("!authenticated") style="min-height=300px;")
     .row.justify-center.gutter
-      q-btn( big rounded push glossy color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join Boid
+      div
+        q-btn.on-left(big style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join Us
+        q-btn.on-left(big style="font-size:20px" color="blue" @click="openURL('https://www.boid.com')") Learn More
   .row.row-gutter
     .col
       q-card.animate-scale.relative-position(style="min-width:300px")
@@ -43,16 +45,13 @@
                 td 
                   img.tokenimg( :src="thatUser.team.image")
                 td {{thatUser.team.name}}
-          q-btn.full-width(v-if="thatUser.team.meta.social.telegram" color="blue" outline @click="openURL(thatUser.team.meta.social.telegram)")
+          // q-btn.full-width(v-if="thatUser.team.meta.social.telegram" color="blue" outline @click="openURL(thatUser.team.meta.social.telegram)")
             | Telegram Chat
-          q-btn.full-width( v-if="thatUser.team.meta.social.facebook" color="blue" outline @click="openURL(thatUser.team.meta.social.facebook)")
+          // q-btn.full-width( v-if="thatUser.team.meta.social.facebook" color="blue" outline @click="openURL(thatUser.team.meta.social.facebook)")
             | Facebook Group
   .row.justify-center.gutter
     .layout-padding(v-if="!authenticated")
       .layout-padding
-
-        q-btn( big rounded push glossy color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal')") Join Boid
-
 </template>
 
 <script>
