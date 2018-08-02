@@ -129,6 +129,7 @@ var api = {
       var result = await client.request(q.device.getByCpid(), {
         cpid
       })
+      console.log('GOT CPID DEVICE',result)
       return result.Device
     },
     updateStatus: async function (device) {
@@ -152,7 +153,7 @@ var api = {
     },
     add: async function (deviceData){
       var result = await client.request(m.device.add(),deviceData)
-      return result
+      return result.addUserDevice
     }
   },
   leaderboard: {

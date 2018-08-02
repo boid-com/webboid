@@ -51,10 +51,7 @@ function setupDevice(device) {
   var type
   if (device.os.name === 'Darwin') type = 'MAC'
   else type = 'WINDOWS'
-  console.log(window.local.thisUser.id)
-  var ownerId = window.local.thisUser.id
   return {
-    ownerId,
     status:'ACTIVE',
     cpid: device.cpid,
     name: device.name,
@@ -118,11 +115,13 @@ export default {
       } else {
         if (localDevice.cpid) {
           try {
+            // console.log('CHECKING CPID',cpid)
             var result = await this.api.device.getByCpid(localDevice.cpid).catch(console.log)
+            console.log('RESULT FROM CHECK',result)
             if (!result) {
               console.log('device does not exist, User can claim device')
               try {
-                var newDevice = await this.api.device.create(setupDevice(localDevice))
+                var newDevice = await this.api.device.add(setupDevice(localDevice))
                 this.thisDevice = await this.api.device.get(newDevice.id)
               } catch (error) {
                 console.log(error)
@@ -164,6 +163,7 @@ export default {
     init() {
       if (window.local) {
         setTimeout(() => {
+          console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) 
           this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
         }, 200)
       }
@@ -237,11 +237,11 @@ export default {
         window.local.ipcRenderer.send('boinc.config.get')
         this.loading = false
         console.log(JSON.stringify(this.thisDevice))
-        if (this.thisDevice.status == 'ACTIVE') this.toggle = true
-        else {
-          this.toggle = false
-          window.local.ipcRenderer.send('boinc.cmd', 'quit')
-        }
+        // if (this.thisDevice.status == 'ACTIVE') this.toggle = true
+        // else {
+          // this.toggle = false
+          // window.local.ipcRenderer.send('boinc.cmd', 'quit')
+        // }
         this.thisDevice.icon = parseDevice.icon(this.thisDevice)
       }
     },
@@ -266,8 +266,8 @@ export default {
           this.actionbg.backgroundColor = 'white'
           window.local.ipcRenderer.send('boinc.cmd', 'quit')
           clearInterval(this.deviceStatePoll)
-        }
-        var result = await this.api.device.updateStatus(deviceStatus)
+        } 
+        // var result = await this.api.device.updateStatus(deviceStatus)
       } catch (error) {
         console.log('error')
         alert(error)

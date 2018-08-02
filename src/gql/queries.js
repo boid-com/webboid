@@ -116,6 +116,18 @@ export default {
           }
         }
       `
+    },
+    getByWcgid () {
+      return gql`
+        query Device($wcgid: String!) {
+          Device(wcgid: $wcgid) {
+            id
+            owner {
+              id
+            }
+          }
+        }
+      `
     }
   },
   leaderboard: {

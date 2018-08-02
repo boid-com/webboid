@@ -56,10 +56,11 @@ export default {
     },
     add (){
       return gql`
-        mutation($type:String $name:String){
+        mutation($type:String $name:String $cpid:String){
           addUserDevice(
             name:$name
             type:$type
+            cpid:$cpid
           ){
             id
           }

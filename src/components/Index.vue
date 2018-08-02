@@ -10,7 +10,7 @@ div
         q-btn.on-left(big style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join Us
         q-btn.on-left(big style="font-size:20px" color="blue" @click="openURL('https://www.boid.com')") Learn More
     br
-  .row.layout-padding.justify-center
+  .row.justify-center
     .col-md-4.col-lg-3.col-xl-3(v-if="authenticated")
       .row.justify-center
         .col-12
@@ -21,21 +21,22 @@ div
                   q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.power)")
                 p.light-paragraph.text-center My Boid Power
                 .row.justify-center
-                  .col-6
-                    
-                    img.float-right(v-if="userPower > 0" src="/statics/images/BoidPower.svg" style="fill:white; width:100%; max-height:140px; padding:20px;")
+                  .col-7
+                    img.float-right(v-if="userPower > 0" src="/statics/images/BoidPower.svg" style=" margin-top: 10px; fill:white; width:100%; max-height:140px; padding:20px;")
                     img.float-right(v-else src="/statics/images/BoidPower-Off.svg" style="fill:white; width:100%; max-height:140px; padding:20px;")
-                  .col-6
-                    div.relative-position(style="margin:auto;")
+                  .col-5
+                    div.relative-position(style="padding-top: 10px;")
                       small.block.light-paragraph.small Total: 
-                      p {{userPower}}
+                      h5 {{userPower}} 
+                        small Amps
                         //- p.text-center(v-if="!ch.toggle") Enable a device to generate Power
                         // q-icon.text-center( v-if="ch.toggle" color="yellow" name='flash_on' style="font-size:50px;")
                         // q-icon.text-center( v-else color="grey-4" name='flash_on' style="font-size:50px;")
+                      div(v-if="thisUser.powerRatings[0]")
                         small.block.light-paragraph.small Devices: 
-                        | {{parseInt(thisUser.powerRatings[0].meta.devices)}}
+                        p.light-paragraph {{parseInt(thisUser.powerRatings[0].meta.devices)}}
                         small.block.light-paragraph Social: 
-                        | {{parseInt(thisUser.powerRatings[0].meta.social)}}
+                        p.light-paragraph {{parseInt(thisUser.powerRatings[0].meta.social)}}
             .col-xs-12.col-sm-6.col-md-12
               q-card.animate-scale.relative-position
                 q-btn.absolute.infobtn(round small flat)
@@ -145,8 +146,11 @@ div
               q-item.relative-position.bg-red(v-else color="red" style="height:80px")
                 h5.text-white Disable AdBlock and refresh to continue
 
-            q-btn.full-width( color="green" @click="$root.$emit('modal.addDevice',true)")
+            q-btn.full-width(v-if="thisUser.devices.length > 0 " style="margin-top:20px;" color="green" @click="$root.$emit('modal.addDevice',true)")
               | add more Devices
+              q-icon.on-right(name="add")
+            q-btn.full-width.animate-bounce(v-else style="margin-top:20px;" color="green"           @click="$root.$emit('modal.addDevice',true)")
+              | add your first device
               q-icon.on-right(name="add")
           div.full-width
             leaderboard.full-width(:leaderboard='leaderboard' :teamLeaderboard="teamLeaderboard")
@@ -216,7 +220,7 @@ export default {
     userPower() {
       // return 0
       try {
-        var total = parseInt(this.thisUser.powerRatings[0].meta.devices) + parseInt(this.thisUser.powerRatings[0].meta.social)
+        var total = this.thisUser.powerRatings[0].power.toFixed(4)
         return total
 
       } catch (err) {
@@ -293,6 +297,8 @@ export default {
 <style lang="stylus">
 @import '~variables'
 @import url('/statics/Comfortaa-Regular.ttf')
+p
+  margin-bottom 0px
 
 h5
   font-family: 'Comfortaa', cursive;  

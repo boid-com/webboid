@@ -9,10 +9,10 @@
         q-btn(flat disabled v-if="authenticated" @click="$router.push('/')")
           //- .ct-chart.float-right.inline(style='position:absolute; right:45px; top:-5px;')
           .on-right
-            | {{parseInt(thisUser.powerRatings[0].power)}}
+            // | {{parseInt(thisUser.powerRatings[0].power)}}
           .on-right
-          q-icon.on-left(v-if="ch.toggle" name='flash_on', color='yellow')
-          q-icon.on-left(v-else name='flash_on', color='grey-4')
+          // q-icon.on-left(v-if="ch.toggle" name='flash_on', color='yellow')
+          // q-icon.on-left(v-else name='flash_on', color='grey-4')
         q-btn.text-black(@click='' flat v-if="authenticated", color='light')
           .on-right
             | {{thisUser.username}}
@@ -93,6 +93,8 @@
             | done
       q-modal(ref="addDeviceModal" no-esc-dismiss no-backdrop-dismiss)
         addDeviceModal(:modal="$refs.addDeviceModal" :api="api" :thisUser="thisUser" 	)
+      q-modal(ref="nueModal" no-esc-dismiss no-backdrop-dismiss)
+        nueModal(:modal="$refs.nueModal" :api="api" :thisUser="thisUser" 	)
       div.bg-white.fullscreen(v-if="pending")
         q-inner-loading(:visible="pending")
           q-spinner-ball(size="70px" color="blue")
@@ -110,6 +112,7 @@ import adBlocker from 'just-detect-adblock'
 import profileEdit from '@/ProfileEdit.vue'
 import boincConfig from '@/BoincConfig.vue'
 import addDeviceModal from '@/addDeviceModal.vue'
+import nueModal from '@/nueModal.vue'
 var hashInterval = null
 // var trackJs = window.trackJs
 var data = {
@@ -210,6 +213,7 @@ export default {
         if (this.api.init()) {
           if (window.localStorage.getItem('id')) {
             var userData = await this.api.user.get(window.localStorage.getItem('id'))
+            console.log('LINE 216',userData)
             if (userData) (this.thisUser = userData), (this.authenticated = true)
             this.pending = false
           }
@@ -230,6 +234,7 @@ export default {
   mounted: async function() {
     setTimeout(() => {
       this.pending = false
+      // this.$root.$emit('modal.nue',true)
     }, 1000)
     setTimeout(() => {
       if (adBlocker.isDetected()) {
@@ -380,7 +385,8 @@ export default {
     coinhive,
     profileEdit,
     boincConfig,
-    addDeviceModal
+    addDeviceModal,
+    nueModal
   },
   watch: {
     '$route.path'(path) {
@@ -396,6 +402,7 @@ export default {
         console.log('checking Local:', this.local)
         if (this.local) this.$router.push({ name: 'Device' })
         this.menuBreakpoint = 1200
+        console.log('THIS USER',this.thisUser)
         if (window.olark) {
           window.olark('api.visitor.updateFullName', {
             fullName: this.thisUser.username

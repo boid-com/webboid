@@ -1,5 +1,5 @@
 <template lang="pug">
-.row.justify-center.full-width
+.row.justify-center.full-width(style="z-index:10000")
   .col-md-12.col-lg-6
     q-card.animate-scale.full-wi
       p.light-paragraph.text-center Top Users
@@ -11,7 +11,7 @@
               q-tooltip User Boid Power
               img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px;")
         tbody(v-for="(user,index) in leaderboard" :key="user.id")
-          tr.user.cursor-pointer(@click="$router.push({name:'User',params:{username:user.username}})")
+          tr.user(style="cursor: pointer;" @click="$router.push({name:'User',params:{username:user.username}})")
             td.relative-position
               .absolute-left.text-grey-7 {{index + 1}}
               .row

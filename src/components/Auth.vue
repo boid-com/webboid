@@ -27,6 +27,7 @@
           :error="$v.form.email.$error"
           stack-label="email"
           type="text"
+          @keyup.enter="join"
         )
         .q-ma-lg
         q-input(
@@ -36,6 +37,7 @@
           v-model="form.password"
           @blur="$v.form.password.$touch"
           :error="$v.form.password.$error"
+          @keyup.enter="join"
         )
         .col
           .row.justify-center.q-mt-sm(style="min-height:35px;")
@@ -160,7 +162,6 @@ export default {
       if (this.invitedByUser) this.form.invitedById = this.invitedByUser.id
       console.log('this form', this.form)
       var result = await this.api.auth.authenticateUser(this.form)
-
       console.log(result)
       if (result.error) {
         if (result.error.search('already registered') > -1){
@@ -181,6 +182,10 @@ export default {
           setTimeout(() => {
             this.$router.push('/')
           }, 1000)
+          setTimeout(()=>{
+            console.log('open nue modal')
+            this.$root.$emit('modal.nue',true)
+          },2000)
         })
       }
     },
