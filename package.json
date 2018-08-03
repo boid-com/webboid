@@ -1,7 +1,7 @@
 {
-  "name": "quasar-app",
+  "name": "webboid2",
   "productName": "Boid",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "Boid",
   "author": "Your Name <your@email.com>",
@@ -9,7 +9,7 @@
     "clean": "node build/script.clean.js",
     "dev": "node build/script.dev.js",
     "build": "node build/script.build.js && cp _redirects dist",
-    "deploy": "node build/script.build.js && git add -A && git commit -a -m 'deploy' && git push heroku master",
+    "deploy": "node build/script.build.js && git add -A && git commit -a -m 'deploy' && git push origin master",
     "push": "git add -A && git commit -a -m 'autopush' && git push heroku master",
     "start": "node server.js",
     "lint": "eslint --ext .js,.vue src"
@@ -84,6 +84,9 @@
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1",
     "webpack-merge": "^4.1.0"
+  },
+  "now": {
+    "alias": "boid"
   },
   "main": ".eslintrc.js",
   "license": "ISC"
