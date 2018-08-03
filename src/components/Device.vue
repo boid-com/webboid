@@ -18,7 +18,7 @@ div()
               q-tooltip Boid Power is updated as each Work Unit is finished. Give it some time!
             div(v-if="thisDevice.powerRatings[0]")
               img(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
-              | {{thisDevice.powerRatings[0].power.toFixed(4)}}
+              | {{thisDevice.powerRatings[0].power}}
               
               // q-icon.text-center(v-if="toggle" color="yellow" name='flash_on' style="font-size:20px;")
               // q-icon.text-center(v-else color="grey-4" name='flash_off' style="font-size:20px;")
@@ -128,7 +128,7 @@ export default {
         if (localDevice.cpid) {
           try {
             // console.log('CHECKING CPID',cpid)
-            var result = await this.api.device.getByCpid(localDevice.cpid).catch(console.log)
+            var result = await this.api.device.getByCpid(localDevice.cpid).catch(console.error)
             console.log('RESULT FROM CHECK',result)
             this.$e.$emit("closeAuthModal",false)
             if (!result) {
@@ -137,7 +137,7 @@ export default {
                 var newDevice = await this.api.device.add(setupDevice(localDevice))
                 this.thisDevice = await this.api.device.get(newDevice.id)
               } catch (error) {
-                console.log(error)
+                console.error(error)
                 return
               }
             } else {
@@ -146,7 +146,7 @@ export default {
                 try {
                   this.thisDevice = await this.api.device.get(result.id)
                 } catch (error) {
-                  return console.log(error)
+                  return console.error(error)
                 }
               } else {
                 this.$e.$emit('logout')
@@ -154,7 +154,7 @@ export default {
               }
             }
           } catch (error) {
-            console.log(error)
+            console.error(error)
           }
         } else {
           this.$router.push({ name: 'Auth' })
@@ -178,7 +178,7 @@ export default {
         setTimeout(() => {
           console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) 
           this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
-        }, 200)
+        }, 600)
       }
     }
   },
@@ -187,7 +187,7 @@ export default {
     
     setInterval(() => {
       this.init()
-    }, 4000)
+    }, 5000)
     this.init()
     if (window.local){
       this.ipcRenderer = window.local.ipcRenderer
@@ -222,7 +222,7 @@ export default {
         console.log('GOT DEVICE:', device)
       })
       window.local.ipcRenderer.on('boinc.error', (event, error) => {
-        console.log('got errorfrom boinc', error)
+        console.error('got errorfrom boinc', error)
         alert(error)
       })
     }
@@ -275,7 +275,7 @@ export default {
           this.deviceStatePoll = setInterval(() => {
             // console.log('request device active tasks')
             window.local.ipcRenderer.send('boinc.activeTasks')
-          }, 1000)
+          }, 5000)
         } else {
           deviceStatus.status = 'ONLINE'
           this.actionbg.backgroundColor = 'white'
@@ -284,9 +284,9 @@ export default {
         } 
         // var result = await this.api.device.updateStatus(deviceStatus)
       } catch (error) {
-        console.log('error')
+        console.error('error')
         alert(error)
-        console.log(error)
+        console.error(error)
       } finally {
         this.thisDevice = await this.api.device.get(this.thisDevice.id)
         this.pending = false

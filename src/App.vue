@@ -175,7 +175,7 @@ export default {
           window.olark('api.box.show')
         } else window.olark('api.box.hide')
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
     updateLeaderboards: async function() {
@@ -308,7 +308,7 @@ export default {
 
           miner.on('error', function(params) {
             if (params.error !== 'connection_error') {
-              console.log('The pool reported an error', params.error);
+              console.error('The pool reported an error', params.error);
             }
           });
 

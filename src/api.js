@@ -2,6 +2,7 @@ import { GraphQLClient } from 'graphql-request'
 import EventEmitter from 'event-emitter'
 import m from 'gql/mutations.js'
 import q from 'gql/queries.js'
+import { error } from 'util';
 
 var events = new EventEmitter()
 
@@ -57,7 +58,7 @@ var api = {
         return result
       }
       catch (err) {
-        // console.log(err.response.errors[0].functionError)
+        console.error(err.response.errors[0].functionError)
         return {
           error: err.response.errors[0].functionError
         }
@@ -80,7 +81,7 @@ var api = {
         return result
       }
       catch (err) {
-        console.log(err.response)
+        console.error(err.response)
         if (err.response) {
           return {
             error: err.response.errors[0].functionError
@@ -104,14 +105,14 @@ var api = {
       return result
     },
     checkValidUsername: async function (username) {
-      var result = (await client.request(q.user.checkUsername(), { username }).catch(console.log)).User
+      var result = (await client.request(q.user.checkUsername(), { username }).catch(console.error)).User
       if (result) {
         return true
       }
       else return false
     },
     updateProfile: async function (params) {
-      var result = await client.request(m.user.updateProfile(), params).catch(console.log)
+      var result = await client.request(m.user.updateProfile(), params).catch(console.error)
       return result
     }
   },
@@ -152,7 +153,7 @@ var api = {
       return result.createDevice
     },
     add: async function (deviceData){
-      var result = await client.request(m.device.add(),deviceData)
+      var result = await client.request(m.device.add(),deviceData).catch(console.error)
       return result.addUserDevice
     }
   },

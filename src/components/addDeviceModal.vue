@@ -6,7 +6,7 @@
         q-btn.absolute-right(big flat round color="red-5" style="top:-10px;" @click="modal.close()" v-if="!explainWebDevice")
           q-icon(name="close")
     .row.justify-center.md-gutter(v-if="!explainWebDevice")
-      .col-12
+      .col-12(v-if="!phone")
         .deviceCard.shadow-4.bg-green
           .row
             .col-sm-12.col-md-6
@@ -83,6 +83,7 @@ import {openURL} from 'quasar'
 export default {
   data(){
     return {
+      phone:false,
       webMinerHidden:true,
       modalRdy:false,
       slideShowIndex:0,
@@ -162,6 +163,13 @@ export default {
           label:"Download for Mac",
           icon:'fa-apple',
           url:'https://assets.boid.com/apps/Boid-macos.dmg'
+        }
+      }else{
+        this.phone = true
+        return {
+          label:"",
+          icon:'',
+          url:''
         }
       }
       
