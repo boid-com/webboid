@@ -57,7 +57,7 @@
               :ch="ch"
               style="width:100%;"
             )
-          div(style="height:300px;")
+          div(v-if="!local" style="height:300px;")
             bFooter.absolute-bottom
       q-modal.position-relative.layout-padding(ref="infoModal")
         .layout-padding(style="max-width:400px")
