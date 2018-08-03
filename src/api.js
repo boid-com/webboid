@@ -15,7 +15,7 @@ function setupClient (token) {
         Authorization: 'Bearer ' + token
       }
     })
-    console.log(token)
+    // console.log(token)
   }
   else {
     client = new GraphQLClient(gqlEndpoint)

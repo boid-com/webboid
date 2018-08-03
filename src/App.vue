@@ -181,7 +181,7 @@ export default {
     updateLeaderboards: async function() {
       this.leaderboard = await this.api.leaderboard.global()
       this.teamLeaderboard = await this.api.leaderboard.teams()
-      console.log('updateLeaderboard', this.leaderboard)
+      // console.log('updateLeaderboard', this.leaderboard)
     },
     selectText(data) {
       this.$refs.socialLink.select()
@@ -190,7 +190,7 @@ export default {
       document.execCommand('Copy')
     },
     setMenu(event) {
-      console.log(event)
+      // console.log(event)
       this.showMenu = !event
     },
     handleLogin() {
@@ -235,7 +235,6 @@ export default {
     }
   },
   mounted: async function() {
-    console.log('LOCLA??',window.local)
     if (this.local && !this.authenticated) this.handleLogin()
     if (this.local) this.ipcRenderer = window.local.ipcRenderer
     setTimeout(() => {
@@ -412,7 +411,7 @@ export default {
     authenticated(authed) {
       this.pending = false
       if (authed) {
-        console.log('checking Local:', this.local)
+        // console.log('checking Local:', this.local)
         if (this.local) this.$router.push({ name: 'Device' })
         this.menuBreakpoint = 1200
         console.log('THIS USER',this.thisUser)

@@ -109,7 +109,7 @@ export default {
       return gql`
         query Device($cpid: String!) {
           Device(cpid: $cpid) {
-            id
+            cpid
             owner {
               id
             }

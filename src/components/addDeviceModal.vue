@@ -148,14 +148,14 @@ export default {
   computed:{
     downloadButton(){
       if (this.$q.platform.is.win){
-        console.log('Detected windows platform')
+        // console.log('Detected windows platform')
         return {
           label:"Download for Windows",
           icon:'fa-windows',
           url:''
         }
       }else if (this.$q.platform.is.mac){
-        console.log('detected mac platform')
+        // console.log('detected mac platform')
         return {
           label:"Download for Mac",
           icon:'fa-apple',

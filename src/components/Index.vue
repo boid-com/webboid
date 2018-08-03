@@ -277,7 +277,7 @@ export default {
       this.$root.$emit('browserDeviceToggle',value,this.browserDeviceId)
     },
     thisUser() {
-      console.log('GOT THIS USER')
+      // console.log('GOT THIS USER')
       this.init()
     },
     adBlock() {
