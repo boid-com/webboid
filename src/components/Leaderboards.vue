@@ -20,7 +20,7 @@
                 .col(style="padding:15px;")
                   .ellipsis(data-th="Username") {{user.username}}
                   small.block.light-paragraph {{user.tagline}}
-            td(data-th="Power") {{parseInt(user.power)}}
+            td(data-th="Power") {{user.power.toFixed(2)}}
   .col-md-12.col-lg-6
     q-card.animate-scale
       p.light-paragraph.text-center Top Teams

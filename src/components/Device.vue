@@ -18,7 +18,7 @@ div()
               q-tooltip Boid Power is updated as each Work Unit is finished. Give it some time!
             div(v-if="thisDevice.powerRatings[0]")
               img(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
-              | {{thisDevice.powerRatings[0].power}}
+              | {{thisDevice.powerRatings[0].power.toFixed(4)}}
               
               // q-icon.text-center(v-if="toggle" color="yellow" name='flash_on' style="font-size:20px;")
               // q-icon.text-center(v-else color="grey-4" name='flash_off' style="font-size:20px;")

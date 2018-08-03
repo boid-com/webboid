@@ -270,7 +270,7 @@ export default {
       }
     if (!this.local) {
       this.updateLeaderboards()
-      setInterval(this.updateLeaderboard, 10000)
+      setInterval(this.updateLeaderboards, 10000)
     }
     this.$root.$on('browserDeviceThrottle',(input)=>{
       if (miner){
@@ -426,10 +426,10 @@ export default {
         if (!this.userPoll) {
           var count = 0
           this.userPoll = setInterval(() => {
-            count++
-            var thisInstance = this.userPoll
-            // console.info('PollUser', thisInstance, count)
             this.init(this.thisUser.id)
+            if (!this.local){
+
+            }
           }, 10000)
         }
       } else {
