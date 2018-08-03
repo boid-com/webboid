@@ -1,31 +1,45 @@
 <template lang="pug">
 div()
   .layout-padding.relative-position(v-if="!loading && thisDevice.name")
-    p {{thisDevice.name}} 
-      q-icon.float-lefth.on-right.inline(:name='parseDevice.icon(thisDevice)' :color="parseDevice.color(thisDevice)")
-    h6.light-paragraph CPU 
-      div(v-if="thisDevice.powerRatings[0]")
-        | {{parseInt(thisDevice.powerRatings[0].power)}}
-        q-icon.text-center(v-if="toggle" color="yellow" name='flash_on' style="font-size:20px;")
-        q-icon.text-center(v-else color="grey-4" name='flash_off' style="font-size:20px;")
-    
-
-    q-card(style='width:90vw;')
+    h6.text-center(style="padding: 0px; margin: 0px;") {{thisDevice.name}} 
+      q-icon.float-lefth.on-right.inline( style="padding-bottom:3px;" :name='parseDevice.icon(thisDevice)' :color="parseDevice.color(thisDevice)")
+      q-tooltip Your Device Name
+  
+    q-card(style='width:90vw; max-height:400px;')
       q-card-media.relative-position
         q-btn.infobtn.absolute-top-right(color='blue' flat round @click="openConfigModal()")
           q-icon(color='grey-7' name="settings")
-        img(style="opacity:.9; width:100px; height:100px;" src="https://www.boid.com/media/boid/science-magnifying-glass-dna-cell.svg")
-        h6.absolute-bottom-right.text-grey-7(style="margin-right:10px;") Mapping Cancer Makers
+          q-tooltip Settings
+        .row
+          .col-auto
+            img(style="opacity:.9; width:100px; height:100px; padding:15px;" src="statics/images/magnifyingglass.svg")
+          .col-7.relative-position
+            h6.light-paragraph Device Boid Power
+              q-tooltip Boid Power is updated as each Work Unit is finished. Give it some time!
+            div(v-if="thisDevice.powerRatings[0]")
+              img(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
+              | {{thisDevice.powerRatings[0].power.toFixed(4)}}
+              
+              // q-icon.text-center(v-if="toggle" color="yellow" name='flash_on' style="font-size:20px;")
+              // q-icon.text-center(v-else color="grey-4" name='flash_off' style="font-size:20px;")
+            q-btn.absolute-bottom.light-paragraph( flat style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://app.boid.com/impact')") Mapping Cancer Markers
+              q-tooltip Learn more about the current computational task
+              // h6.absolute-bottom-right.text-grey-7(style="margin-right:10px;") Mapping Cancer Makers
       q-card-main(v-if="toggle")
-        p(v-if="activeTasks.length > 0") Active Tasks
-        p(v-else) Downloading Tasks....
-        div(v-if="activeTasks.length > 0" v-for="(task,index) in activeTasks" :key='task.slot[0]')
-          q-progress(v-if="task.active_task_state[0] == 1 && !onBatteries" :buffer="0" :height="20" stripe animate :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
-          q-progress(v-else :buffer="0" :height="20" stripe :percentage="task.checkpoint_fraction_done[0]*100" color="grey-4")
+        p(v-if="activeTasks.length > 0") Work Units
+          q-tooltip Work Units are small tasks that help solve huge problems.
+        p(v-else) Downloading Work Units....
+        div(v-if="activeTasks.length > 0" v-for="(task,index) in activeTasks" :key='task.slot[0]' style="margin-bottom:5px;")
           
-          //- q-item
-            //- h5 {{task.checkpoint_fraction_done[0]}}
-            //- pre {{JSON.stringify(task,null,2)}}
+          q-progress( style="height:10px;" v-if="task.active_task_state[0] == 1 && !onBatteries" :buffer="0" height="40px" stripe animate :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
+          q-progress(v-else :buffer="0" height="40px" stripe :percentage="task.checkpoint_fraction_done[0]*100" color="grey-4")
+          q-tooltip 
+            p(style="margin:0px;") Task:
+            | {{task.result_name[0]}} 
+            div(style="height:10px;")
+            p(style="margin:0px;") Progress:
+            | {{(task.checkpoint_fraction_done[0]*100).toFixed(0)}}%
+          
       q-card-separator
       q-card-actions.taller.relative-position()
         q-btn(small round flat)
@@ -60,6 +74,7 @@ function setupDevice(device) {
 export default {
   data() {
     return {
+      ipcRenderer:null,
       loading: true,
       parseDevice,
       onBatteries: false,
@@ -115,6 +130,7 @@ export default {
             // console.log('CHECKING CPID',cpid)
             var result = await this.api.device.getByCpid(localDevice.cpid).catch(console.log)
             console.log('RESULT FROM CHECK',result)
+            this.$e.$emit("closeAuthModal",false)
             if (!result) {
               console.log('device does not exist, User can claim device')
               try {
@@ -168,11 +184,13 @@ export default {
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
   created() {
+    
     setInterval(() => {
       this.init()
     }, 4000)
     this.init()
     if (window.local){
+      this.ipcRenderer = window.local.ipcRenderer
       window.local.ipcRenderer.send('boinc.config.get')
       window.local.ipcRenderer.on('boinc.toggle', (event, toggle) => {
         console.log('GOT TOGGLE:', toggle)

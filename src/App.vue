@@ -3,16 +3,9 @@
  #q-app
     q-layout(color="" ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
       q-toolbar.shadow-1(slot="header")
-        q-toolbar-title(v-bind:class="{'cursor-pointer':notLocal}" style="font-family: 'Comfortaa', cursive;" @click="$router.push('/')")
+        q-toolbar-title(v-bind:class="{'cursor-pointer':notLocal}" style="font-family: 'Comfortaa', cursive;")
           | boid
-          div(slot='subtitle') Alpha
-        q-btn(flat disabled v-if="authenticated")
-          //- .ct-chart.float-right.inline(style='position:absolute; right:45px; top:-5px;')
-          .on-right
-            // | {{parseInt(thisUser.powerRatings[0].power)}}
-          .on-right
-          // q-icon.on-left(v-if="ch.toggle" name='flash_on', color='yellow')
-          // q-icon.on-left(v-else name='flash_on', color='grey-4')
+          div(slot='subtitle') Alpha 0.0.2
         q-btn.text-black(@click='' flat v-if="authenticated", color='light')
           .on-right
             | {{thisUser.username}}
@@ -22,6 +15,10 @@
               | Logout
             q-item(link v-if="!local" @click='$router.push({name:"User",params:{username:thisUser.username}}),$refs.profileMenu.close()')
               | My Profile
+            q-item(link v-else @click="ipcRenderer.send('openURL','https://app.boid.com/u/'+thisUser.username)")
+              | My Profile
+        q-btn( v-if="local" flat style="margin-right:10px;" @click="ipcRenderer.send('openURL','https://app.boid.com')")
+          q-icon(name="home")
         q-btn(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
           | Login
       div.shadow-0(slot='left')
@@ -60,6 +57,8 @@
               :ch="ch"
               style="width:100%;"
             )
+          div(style="height:300px;")
+            bFooter.absolute-bottom
       q-modal.position-relative.layout-padding(ref="infoModal")
         .layout-padding(style="max-width:400px")
           h4.text-centered(style="color:#089cfc;") {{infoModal.heading}}
@@ -113,6 +112,7 @@ import profileEdit from '@/ProfileEdit.vue'
 import boincConfig from '@/BoincConfig.vue'
 import addDeviceModal from '@/addDeviceModal.vue'
 import nueModal from '@/nueModal.vue'
+import bFooter from '@/Footer.vue'
 var hashInterval = null
 // var trackJs = window.trackJs
 var data = {
@@ -129,6 +129,7 @@ var CPUCores = navigator.hardwareConcurrency
 export default {
   data() {
     return {
+      ipcRenderer:null,
       ch:{
         toggle:false,
         hps: "loading",
@@ -165,6 +166,9 @@ export default {
     }
   },
   methods: {
+    openWebsite(url){
+
+    },
     showOlark(val) {
       try {
         if (val) {
@@ -231,7 +235,9 @@ export default {
     }
   },
   mounted: async function() {
+    console.log('LOCLA??',window.local)
     if (this.local && !this.authenticated) this.handleLogin()
+    if (this.local) this.ipcRenderer = window.local.ipcRenderer
     setTimeout(() => {
       this.pending = false
       // this.$root.$emit('modal.nue',true)
@@ -252,13 +258,17 @@ export default {
     this.api.events.on('thisUser', data => {
       this.thisUser = data
       this.authenticated = true
-      this.$refs.authModal.close()
+      if (this.$refs.authModal) this.$refs.authModal.close()
       Loading.hide()
     })
     if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
   },
   created() {
-    if (window.local) this.local = true
+    if (window.local) {
+      this.local = true
+      console.log('FOUND LOCAL IN APP',window.local.ipcRenderer)
+      
+      }
     if (!this.local) {
       this.updateLeaderboards()
       setInterval(this.updateLeaderboard, 10000)
@@ -388,7 +398,8 @@ export default {
     profileEdit,
     boincConfig,
     addDeviceModal,
-    nueModal
+    nueModal,
+    bFooter
   },
   watch: {
     '$route.path'(path) {
