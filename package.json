@@ -8,9 +8,9 @@
   "scripts": {
     "clean": "node build/script.clean.js",
     "dev": "node build/script.dev.js",
-    "build": "node build/script.build.js && cp _redirects dist",
-    "deploy": "node build/script.build.js && git add -A && git commit -a -m 'deploy' && git push origin master",
-    "push": "git add -A && git commit -a -m 'autopush' && git push heroku master",
+    "build": "node build/script.build.js && cp _redirects dist && cp nowconfig.json dist/package.json",
+    "deploy": "node build/script.build.js && cp nowconfig.json dist/package.json",
+    "push": "git add -A && git commit -a -m 'autopush' && git push origin master",
     "start": "node server.js",
     "lint": "eslint --ext .js,.vue src"
   },
