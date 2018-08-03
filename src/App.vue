@@ -6,7 +6,7 @@
         q-toolbar-title(v-bind:class="{'cursor-pointer':notLocal}" style="font-family: 'Comfortaa', cursive;" @click="$router.push('/')")
           | boid
           div(slot='subtitle') Alpha
-        q-btn(flat disabled v-if="authenticated" @click="$router.push('/')")
+        q-btn(flat disabled v-if="authenticated")
           //- .ct-chart.float-right.inline(style='position:absolute; right:45px; top:-5px;')
           .on-right
             // | {{parseInt(thisUser.powerRatings[0].power)}}
@@ -213,7 +213,6 @@ export default {
         if (this.api.init()) {
           if (window.localStorage.getItem('id')) {
             var userData = await this.api.user.get(window.localStorage.getItem('id'))
-            console.log('LINE 216',userData)
             if (userData) (this.thisUser = userData), (this.authenticated = true)
             this.pending = false
           }
@@ -232,6 +231,7 @@ export default {
     }
   },
   mounted: async function() {
+    if (this.local && !this.authenticated) this.handleLogin()
     setTimeout(() => {
       this.pending = false
       // this.$root.$emit('modal.nue',true)
@@ -252,6 +252,7 @@ export default {
     this.api.events.on('thisUser', data => {
       this.thisUser = data
       this.authenticated = true
+      this.$refs.authModal.close()
       Loading.hide()
     })
     if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
@@ -329,6 +330,7 @@ export default {
     })
     this.$e.$on('refreshUser', () => {
       // console.log('got Refreshuser')
+      this.updateLeaderboards()
       this.init(this.thisUser.id).catch(err => {
         console.log(err)
       })
@@ -418,7 +420,7 @@ export default {
             var thisInstance = this.userPoll
             // console.info('PollUser', thisInstance, count)
             this.init(this.thisUser.id)
-          }, 30000)
+          }, 10000)
         }
       } else {
         if (this.local) this.$router.push({ name: 'Auth' })

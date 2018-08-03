@@ -28,7 +28,7 @@ div
                     div.relative-position(style="padding-top: 10px;")
                       small.block.light-paragraph.small Total: 
                       h5 {{userPower}} 
-                        small Amps
+                        small PWR
                         //- p.text-center(v-if="!ch.toggle") Enable a device to generate Power
                         // q-icon.text-center( v-if="ch.toggle" color="yellow" name='flash_on' style="font-size:50px;")
                         // q-icon.text-center( v-else color="grey-4" name='flash_on' style="font-size:50px;")

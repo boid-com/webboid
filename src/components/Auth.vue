@@ -1,5 +1,5 @@
 <template lang="pug">
-.relative-position(style="padding:20px;")
+.relative-position(style="padding:20px; overflow:hidden;")
   div.relative-position.q-pa-lg(style="min-height: 350px;")
     div
       h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
@@ -10,7 +10,7 @@
       h6.text-weight-light.q-mb-md.text-grey-9 Login / Register
     div(v-if="!emailForm")
       .row.justify-center(style="padding-top:30px")
-        .col-sm-3.col-md-4(v-for="login in socialLogins" :key="login.name")
+        // .col-auto(v-for="login in socialLogins" :key="login.name")
           .row.justify-center
             .socialBtn(q-ripple @click="login.auth()")
               img.socialIcon(:src="login.icon")
@@ -279,14 +279,11 @@ export default {
   margin 5px
   padding 10px
   border-radius 100%
-  height: 130px
-  width: 130px
+  height: 50px
+  width: 50px
   drop-shadow: 0px 2px 5px black
   cursor: pointer
   transition background-color .4s
-  @media screen and (max-width: 570px) 
-    height: 145px
-    width: 145px
 .socialBtn:hover
   background-color $grey-2
   box-shadow 0px 2px 1px $grey-5
@@ -298,9 +295,7 @@ input.q-input-target
   height: 70px
   width: 70px
   margin: 20px
-  @media screen and (max-width: 570px) 
-    height: 90px
-    width: 90px
+
 .q-if
   padding 0px
   padding-top 5px
