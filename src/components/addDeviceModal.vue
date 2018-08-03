@@ -24,7 +24,7 @@
                 img(src="https://assets.boid.com/images/connectdevices.svg")
           div(style="height:25px;")
           .row.justify-center
-            q-btn.text-white(big color="blue" v-if="webMinerHidden") 
+            q-btn.text-white(@click="openURL(downloadButton.url),modal.close()" big color="blue" v-if="webMinerHidden") 
               q-icon.on-left(name="fa-download")
               | {{downloadButton.label}}
               q-icon.on-right(:name="downloadButton.icon")
@@ -79,6 +79,7 @@
 </style>
 <script>
 var slideshowInterval = null
+import {openURL} from 'quasar'
 export default {
   data(){
     return {
@@ -104,6 +105,7 @@ export default {
     this.init()
   },
   methods:{
+    openURL,
     webMinerIcon(index){if(index === 3) {return 'check'} else return 'clear'},
     init(){
       this.$root.$on('modal.addDevice',(toggle) =>{
@@ -152,14 +154,14 @@ export default {
         return {
           label:"Download for Windows",
           icon:'fa-windows',
-          url:''
+          url:'https://assets.boid.com/apps/Boid-windows-installer.exe'
         }
       }else if (this.$q.platform.is.mac){
         // console.log('detected mac platform')
         return {
           label:"Download for Mac",
           icon:'fa-apple',
-          url:''
+          url:'https://assets.boid.com/apps/Boid-macos.dmg'
         }
       }
       

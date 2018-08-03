@@ -128,6 +128,7 @@ div
                 .relative-position(style="width: 80px;")
                   q-tooltip Hashes Per Second
                   h5.inline.float-right.text-green-4(style="margin-top:0px; margin-bottom: 0px" v-if="browserDeviceToggle && device.type=='BROWSER'") {{ch.hps}}
+                div(v-if="device.type=='BROWSER'")
                 q-spinner-grid.inline.on-right( :size="30" color="grey-4" v-if="browserDeviceToggle && !ch.accepted" style="margin-right:10px;")
                 q-spinner-cube.inline.on-right( :size="30" color="yellow" v-if="browserDeviceToggle && ch.accepted" style="margin-right:10px;")
                 q-item-side(right v-if="device.toggle" )
@@ -148,7 +149,7 @@ div
             q-btn.full-width(v-if="thisUser.devices.length > 0 " style="margin-top:20px;" color="green" @click="$root.$emit('modal.addDevice',true)")
               | add more Devices
               q-icon.on-right(name="add")
-            q-btn.full-width.animate-bounce(v-else style="margin-top:20px;" color="green"           @click="$root.$emit('modal.addDevice',true)")
+            q-btn.full-width(v-else style="margin-top:20px;" color="green"           @click="$root.$emit('modal.addDevice',true)")
               | add your first device
               q-icon.on-right(name="add")
           div.full-width
@@ -173,15 +174,11 @@ import bHeader from '@/Header'
 var info = {
   wallet: {
     heading: 'Your Wallet',
-    body: `Tokens and coins which you earn from your team will show up in your wallet.
-          To earn more, you need to increase your Power by running Boid on more devices or inviting more users.
-          During the Alpha, only BOIDs are generated.`
+    body: `Tokens and coins that you earn will show up here, during the Alpha, only BOIDs are generated. Soon you will be able to earn other coins as well.`
   },
   power: {
     heading: 'Boid Power',
-    body: `Your Boid Power is your score that shows how much influence you have on Boid.  The higher your Power,
-          the more you will earn and the higher you will climb in the leaderboards. When you invite others, you
-          earn some power when they run the app.`
+    body: `Boid Power increases when you run Boid on devices. Your Power will also decrease when devices are turned off. The higher your Power, the more you will earn and the higher you will climb in the leaderboards.`
   },
   devices: {
     heading: 'Your Devices',
@@ -190,13 +187,13 @@ var info = {
   },
   team: {
     heading: 'Your Team',
-    body: `Your power generated goes towards your Team, in eachange, each team will distribute exclusive rewards. 
+    body: `Your power generated goes towards your team, in eachange, each team will distribute exclusive rewards. 
           You are automatically on the team of the user who has invited you.`
   },
   social: {
     heading: 'Social',
     body: `When users join Boid using your invite link you will receive a small percentage of bonus power based
-          on their contributions. Your Invite link changes if you change your username.`
+          on their contributions. Your invite link changes if you change your username.`
   }
 }
 
