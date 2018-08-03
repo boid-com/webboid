@@ -110,6 +110,7 @@ export default {
         query Device($cpid: String!) {
           Device(cpid: $cpid) {
             cpid
+            id
             owner {
               id
             }
