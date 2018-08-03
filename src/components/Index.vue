@@ -295,7 +295,7 @@ export default {
 
 <style lang="stylus">
 @import '~variables'
-@import url('/statics/Comfortaa-Regular.ttf')
+// @import url('/statics/Comfortaa-Regular.ttf')
 p
   margin-bottom 0px
 
