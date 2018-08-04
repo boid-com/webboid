@@ -23,6 +23,7 @@
     "graphql": "^0.11.7",
     "graphql-request": "^1.4.0",
     "graphql-tag": "^2.5.0",
+    "hellojs": "^1.17.1",
     "heroku-ssl-redirect": "0.0.4",
     "is-image-url": "^1.1.8",
     "just-detect-adblock": "^1.0.0",
@@ -32,6 +33,7 @@
     "quasar-framework": "^0.14.4",
     "vue": "^2.5.0",
     "vue-coin-hive": "0.0.8",
+    "vue-hellojs": "0.0.4",
     "vue-router": "^3.0.1",
     "vuelidate": "^0.6.1"
   },

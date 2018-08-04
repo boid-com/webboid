@@ -10,6 +10,9 @@
       h6.light-paragraph.text-center(style="margin-bottom:30px;" v-if="invitedByUser && registering") You were invited by 
         h6.text-center {{invitedByUser.username}}
       h6.light-paragraph.text-center(v-if="localAuth" style="margin-bottom:30px;") Desktop Application
+      div.text-center
+        q-icon(@click="socialAuth('google')" name="fa-google" size="2rem" style="margin:0 10px" color="blue")
+        q-icon(@click="socialAuth('twitter')" name="fa-twitter" size="2rem" style="margin:0 10px" color="blue")
       div
         q-input(
           v-model="form.email"
@@ -136,6 +139,27 @@ export default {
           }, 1000)
         })
       }
+    },
+    socialAuth(network) {
+      const hello = this.hello;
+      hello(network).login({
+        scope: 'email',
+        force: true,
+        auth_type: 'rerequest'
+      }).then(() => {
+        const authRes = hello(network).getAuthResponse();
+        /*
+          performs operations using the token from authRes
+        */
+        console.log(authRes.access_token);
+        hello(network).api('me').then(function (json) {
+          const profile = json;
+          console.log(profile);
+          /*
+            performs operations using the user info from profile
+          */
+        });
+      })
     },
     checkInvitedBy: async function() {
       console.log(this.$route)
