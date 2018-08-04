@@ -130,14 +130,19 @@ export default {
             // console.log('CHECKING CPID',cpid)
             var result = await this.api.device.getByCpid(localDevice.cpid).catch(console.error)
             console.log('RESULT FROM CHECK',result)
-            this.$e.$emit("closeAuthModal",false)
+            // this.$e.$emit("closeAuthModal",false)
             if (!result) {
               console.log('device does not exist, User can claim device')
               try {
-                var newDevice = await this.api.device.add(setupDevice(localDevice))
+                var newDevice = await this.api.device.add(setupDevice(localDevice)).catch(()=>{
+                  this.$e.$on('logout')
+                })
                 this.thisDevice = await this.api.device.get(newDevice.id)
               } catch (error) {
                 console.error(error)
+                clearInterval(this.deviceStatePoll)
+                this.$e.$emit('logout')
+                this.$e.$emit('openAuthModal')
                 return
               }
             } else {
@@ -155,9 +160,13 @@ export default {
             }
           } catch (error) {
             console.error(error)
+            clearInterval(this.deviceStatePoll)
+            this.$e.$emit('logout')
+            this.$e.$emit('openAuthModal')
           }
         } else {
-          this.$router.push({ name: 'Auth' })
+          this.$e.$emit('logout')
+          this.$e.$emit('openAuthModal')
           alert('This device is acting up. 😢 \n \n Contact us: support@boid.com')
         }
         if (localDevice.wcgid) {
