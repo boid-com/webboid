@@ -57,6 +57,10 @@
               :ch="ch"
               style="width:100%;"
             )
+          div(
+            server="467640777187655700"
+            channel="general"
+            id="embed")
           div(v-if="!local" style="height:300px;")
             bFooter.absolute-bottom
       q-modal.position-relative.layout-padding(ref="infoModal")
@@ -235,6 +239,10 @@ export default {
     }
   },
   mounted: async function() {
+    if (!this.local){
+      this.$loadScript("https://cdn.jsdelivr.net/npm/@widgetbot/html-embed")
+      var embed = document.getElementById('embed')
+    }
     if (this.local && !this.authenticated) this.handleLogin()
     if (this.local) this.ipcRenderer = window.local.ipcRenderer
     setTimeout(() => {
