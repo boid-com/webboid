@@ -32,6 +32,16 @@ import 'quasar-extras/material-icons'
 import 'quasar-extras/fontawesome'
 // import 'quasar-extras/animate'
 
+const HelloJs = require('hellojs/dist/hello.all.min.js');
+const VueHello = require('vue-hellojs');
+
+HelloJs.init({
+  google: '474818646334-kgl6rsvpflvksrev5c0jvh6eem1dd9aj.apps.googleusercontent.com'
+}, {
+  redirect_uri: 'authcallback/'
+});
+Vue.use(VueHello, HelloJs);
+
 Quasar.start(() => {
   /* eslint-disable no-new */
   new Vue({
