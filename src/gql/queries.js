@@ -134,9 +134,12 @@ export default {
   leaderboard: {
     global () {
       return gql`
-        query($teamId: ID) {
-          leaderboard(teamId: $teamId) {
-            users
+        query {
+          allUsers(orderBy: tPower_DESC, first: 20, filter: { tPower_gt: 0 }) {
+            username
+            tagline
+            tPower
+            image
           }
         }
       `

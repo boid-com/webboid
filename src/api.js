@@ -154,12 +154,12 @@ var api = {
     },
     add: async function (deviceData){
       var result = await client.request(m.device.add(),deviceData).catch(console.error)
-      return result.addUserDevice
+      return result.addUserDevice2
     }
   },
   leaderboard: {
     global: async function (teamId) {
-      return (await client.request(q.leaderboard.global(), { teamId: teamId })).leaderboard.users
+      return (await client.request(q.leaderboard.global(), { teamId: teamId })).allUsers
     },
     teams: async function (teamId) {
       return (await client.request(q.leaderboard.teams())).allTeams

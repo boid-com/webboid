@@ -196,7 +196,7 @@ export default {
     
     setInterval(() => {
       this.init()
-    }, 5000)
+    }, 8000)
     this.init()
     if (window.local){
       this.ipcRenderer = window.local.ipcRenderer
