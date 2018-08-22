@@ -1,0 +1,11 @@
+{
+"scripts": {
+  "start": "serve . --single"
+},
+"dependencies": {
+  "serve": "latest"
+},
+"now": {
+  "alias": "boid"
+}
+}

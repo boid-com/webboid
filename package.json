@@ -10,7 +10,7 @@
     "dev": "node build/script.dev.js",
     "build": "node build/script.build.js && cp _redirects dist && cp nowconfig.json dist/package.json",
     "deploy": "node build/script.build.js && cp _redirects dist && npm run push",
-    "push": "git add -A && git commit -a -m 'autopush' && git push origin master",
+    "push": "git add -A && git commit -a -m 'deploy live' && git push origin master",
     "start": "node server.js",
     "lint": "eslint --ext .js,.vue src"
   },
