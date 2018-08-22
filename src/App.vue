@@ -71,7 +71,7 @@
           br
           q-btn.absolute(color="blue" outline style="bottom:20px; right:20px;" @click="$refs.infoModal.close()")
             | done
-      q-modal.shadow-3(ref="authModal")
+      q-modal.shadow-3(ref="authModal" @close="showOlark(true)" @open="showOlark(false)")
         auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
       q-modal.shadow-3(ref="profileEditModal")
         profileEdit(:thisUser="thisUser" :api="api" :thisModal="$refs.profileEditModal")
@@ -255,7 +255,9 @@ export default {
         console.log('adblock detected2')
       }
     }, 500)
-
+    if (window.olark) {
+     window.olark.configure('system.hb_position', 'right') 
+    }
     this.init().catch(err => {
       console.log(err)
       // this.$refs.authModal.open()
