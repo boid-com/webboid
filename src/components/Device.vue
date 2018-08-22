@@ -48,7 +48,7 @@ div()
         q-spinner-grid.inline.on-right.absolute-right(:size="20" color="grey-4" v-if="toggle" style="right:70px; top:20px;")
         q-toggle.absolute-right(color="green" :disable="pending" style="padding:20px;" v-model="toggle")
   .layout-padding.relative-position(v-else)
-    .text-center Initializing....
+    .text-center {{initStatus}}
 
 
   </template>
@@ -56,6 +56,11 @@ div()
 <script>
 import parseDevice from 'src/lib/parseDevice'
 import { Alert } from 'quasar'
+
+function ec(err){
+  console.error(err)
+  alert(err)
+}
 
 function setupDevice(device) {
   if (!device) return null
@@ -77,6 +82,7 @@ export default {
       ipcRenderer:null,
       loading: true,
       parseDevice,
+      initStatus:"Initializing...",
       onBatteries: false,
       deviceStatePoll: null,
       actionbg: {
@@ -109,13 +115,12 @@ export default {
       this.$e.$emit('openBoincConfigModal', this.config)
     },
     modulateTaskProgress(progress) {
-      // console.log('PROGRESS', progress)
+      progress = parseFloat(progress)
       function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max))
       }
-
-      progress = parseFloat(progress) * 100 + getRandomInt(2)
-      return progress
+      if (progress < .02) progress += .01
+      return progress * 100 + getRandomInt(2)
     },
     handleLocalDevice: async function(localDevice) {
       if (!localDevice) {
@@ -128,21 +133,20 @@ export default {
         if (localDevice.cpid) {
           try {
             // console.log('CHECKING CPID',cpid)
-            var result = await this.api.device.getByCpid(localDevice.cpid).catch(console.error)
+            var result = await this.api.device.getByCpid(localDevice.cpid).catch(alert)
             console.log('RESULT FROM CHECK',result)
             // this.$e.$emit("closeAuthModal",false)
             if (!result) {
               console.log('device does not exist, User can claim device')
               try {
-                var newDevice = await this.api.device.add(setupDevice(localDevice)).catch(()=>{
-                  this.$e.$on('logout')
-                })
+                var newDevice = await this.api.device.add(setupDevice(localDevice)).catch(ec)
                 this.thisDevice = await this.api.device.get(newDevice.id)
               } catch (error) {
                 console.error(error)
+                alert(error)
                 clearInterval(this.deviceStatePoll)
-                this.$e.$emit('logout')
-                this.$e.$emit('openAuthModal')
+                // this.$e.$emit('logout')
+                // this.$e.$emit('openAuthModal')
                 return
               }
             } else {
@@ -151,6 +155,7 @@ export default {
                 try {
                   this.thisDevice = await this.api.device.get(result.id)
                 } catch (error) {
+                  alert(error)
                   return console.error(error)
                 }
               } else {
@@ -161,8 +166,9 @@ export default {
           } catch (error) {
             console.error(error)
             clearInterval(this.deviceStatePoll)
-            this.$e.$emit('logout')
-            this.$e.$emit('openAuthModal')
+            alert(error)
+            // this.$e.$emit('logout')
+            // this.$e.$emit('openAuthModal')
           }
         } else {
           this.$e.$emit('logout')
@@ -231,11 +237,17 @@ export default {
         console.log('GOT DEVICE:', device)
       })
       window.local.ipcRenderer.on('boinc.error', (event, error) => {
-        console.error('got errorfrom boinc', error)
-        alert(error)
+        console.error('boinc.error', error)
+        if (typeof error == "string") alert(error)
+        else{
+          try {
+            alert(JSON.stringify(error))
+          } catch (error) {
+            console.error('unable to display error to user')
+          }
+        }
       })
     }
-
   },
   watch: {
     activeTasks(value) {
@@ -284,7 +296,7 @@ export default {
           this.deviceStatePoll = setInterval(() => {
             // console.log('request device active tasks')
             window.local.ipcRenderer.send('boinc.activeTasks')
-          }, 5000)
+          }, 15000)
         } else {
           deviceStatus.status = 'ONLINE'
           this.actionbg.backgroundColor = 'white'
@@ -297,7 +309,7 @@ export default {
         alert(error)
         console.error(error)
       } finally {
-        this.thisDevice = await this.api.device.get(this.thisDevice.id)
+        this.thisDevice = await this.api.device.get(this.thisDevice.id).catch(alert)
         this.pending = false
       }
     }
