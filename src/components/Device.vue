@@ -59,7 +59,7 @@ import { Alert } from 'quasar'
 
 function ec(err){
   console.error(err)
-  alert(err)
+  // alert(err)
 }
 
 function setupDevice(device) {
