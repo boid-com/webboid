@@ -155,14 +155,14 @@ export default {
         return {
           label:"Download for Windows",
           icon:'fa-windows',
-          url:'https://assets.boid.com/apps/Boid-windows-installer.exe'
+          url:'https://github.com/Boid-John/BoidDesktop/releases/download/0.0.3/Boid-windows-installer-0.0.3.exe.zip'
         }
       }else if (this.$q.platform.is.mac){
         // console.log('detected mac platform')
         return {
           label:"Download for Mac",
           icon:'fa-apple',
-          url:'https://assets.boid.com/apps/Boid-macos.dmg'
+          url:'https://github.com/Boid-John/BoidDesktop/releases/download/0.0.3/Boid-0.0.03.dmg'
         }
       }else{
         this.phone = true

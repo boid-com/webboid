@@ -5,7 +5,7 @@
       q-toolbar.shadow-1(slot="header")
         q-toolbar-title(v-bind:class="{'cursor-pointer':notLocal}" style="font-family: 'Comfortaa', cursive;")
           | boid
-          div(slot='subtitle') Alpha 0.0.2
+          div(slot='subtitle') Alpha 0.0.3
         q-btn.text-black(@click='' flat v-if="authenticated", color='light')
           .on-right
             | {{thisUser.username}}

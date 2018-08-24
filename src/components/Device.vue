@@ -248,7 +248,7 @@ export default {
         }
       })
     }
-  },
+  }, 
   watch: {
     activeTasks(value) {
       if (value.length > 0) {
