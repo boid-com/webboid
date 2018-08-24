@@ -236,16 +236,17 @@ export default {
       window.local.ipcRenderer.on('deviceReady', (event, device) => {
         console.log('GOT DEVICE:', device)
       })
-      window.local.ipcRenderer.on('boinc.error', (event, error) => {
+      window.local.ipcRenderer.on('boinc.error', (event, error) => { 
+
         console.error('boinc.error', error)
-        if (typeof error == "string") alert(error)
-        else{
-          try {
-            alert(JSON.stringify(error))
-          } catch (error) {
-            console.error('unable to display error to user')
-          }
-        }
+        // if (typeof error == "string") alert(error)
+        // else{
+        //   try {
+        //     alert(JSON.stringify(error))
+        //   } catch (error) {
+        //     console.error('unable to display error to user')
+        //   }
+        // }
       })
     }
   }, 
