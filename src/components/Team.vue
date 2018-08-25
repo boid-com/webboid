@@ -2,7 +2,7 @@
 .layout-padding()
   .layout-padding.full-width(v-if=("!authenticated") style="min-height=300px;")
     .row.justify-center.gutter
-      q-btn( big rounded push glossy color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join US
+      q-btn( big color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join US
   .row.gutter.justify-center
     .col
       div.animate-scale.relative-position(style="min-width:300px")
