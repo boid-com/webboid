@@ -101,8 +101,8 @@ div
                         td 
                           img.tokenimg(src="https://assets.boid.com/images/winprizes.svg")
                         td Boid Items
-                q-card(style="padding:0px;")
-                  iframe(src="https://cl1.widgetbot.io/channels/467640777187655700/467640777703424001" height="400" width="100%")
+                //- q-card(style="padding:0px;")
+                //-   iframe(src="https://cl1.widgetbot.io/channels/467640777187655700/467640777703424001" height="400" width="100%")
     .col-md-8.col-lg-9.col-xl-8
       .row
         .col-12

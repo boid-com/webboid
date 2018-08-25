@@ -159,7 +159,10 @@ var api = {
   },
   leaderboard: {
     global: async function (teamId) {
-      return (await client.request(q.leaderboard.global(), { teamId: teamId })).allUsers
+      return (await client.request(q.leaderboard.global(), { teamId })).allUsers
+    },
+    team: async function (teamId) {
+      return (await client.request(q.leaderboard.team(), { teamId })).allUsers
     },
     teams: async function (teamId) {
       return (await client.request(q.leaderboard.teams())).allTeams

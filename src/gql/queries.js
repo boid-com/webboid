@@ -144,10 +144,22 @@ export default {
         }
       `
     },
+    team () {
+      return gql`
+        query($teamId:ID!) {
+          allUsers(orderBy: tPower_DESC, first: 20, filter: {team:{id:$teamId} }) {
+            username
+            tagline
+            tPower
+            image
+          }
+        }
+      `
+    },
     teams () {
       return gql`
         query {
-          allTeams(orderBy: power_DESC, first: 10, filter: { power_gt: 0 }) {
+          allTeams(orderBy: power_DESC, first: 10) {
             name
             tagline
             power

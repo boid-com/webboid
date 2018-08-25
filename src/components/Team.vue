@@ -66,6 +66,7 @@ export default {
   data() {
     return {
       team: {
+        id:null,
         _membersMeta: {
           count: 0
         },
@@ -86,7 +87,7 @@ export default {
   computed: {},
   methods: {
     setupLeaderboard: async function() {
-      this.leaderboard = await this.api.leaderboard.global(this.team.id)
+      this.leaderboard = await this.api.leaderboard.team(this.team.id)
       console.log('Team Leaderboard:', this.leaderboard)
     }
   },
