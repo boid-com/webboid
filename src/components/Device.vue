@@ -133,7 +133,7 @@ export default {
         if (localDevice.cpid) {
           try {
             // console.log('CHECKING CPID',cpid)
-            var result = await this.api.device.getByCpid(localDevice.cpid).catch(alert)
+            var result = await this.api.device.getByCpid(localDevice.cpid).catch(ec)
             console.log('RESULT FROM CHECK',result)
             // this.$e.$emit("closeAuthModal",false)
             if (!result) {
@@ -143,7 +143,7 @@ export default {
                 this.thisDevice = await this.api.device.get(newDevice.id)
               } catch (error) {
                 console.error(error)
-                alert(error)
+                // alert(error)
                 clearInterval(this.deviceStatePoll)
                 // this.$e.$emit('logout')
                 // this.$e.$emit('openAuthModal')
@@ -155,8 +155,8 @@ export default {
                 try {
                   this.thisDevice = await this.api.device.get(result.id)
                 } catch (error) {
-                  alert(error)
-                  return console.error(error)
+                  ec(error)
+                  return
                 }
               } else {
                 this.$e.$emit('logout')
@@ -164,9 +164,9 @@ export default {
               }
             }
           } catch (error) {
-            console.error(error)
             clearInterval(this.deviceStatePoll)
-            alert(error)
+            ec(error)
+            // alert(error)
             // this.$e.$emit('logout')
             // this.$e.$emit('openAuthModal')
           }
@@ -306,11 +306,10 @@ export default {
         } 
         // var result = await this.api.device.updateStatus(deviceStatus)
       } catch (error) {
-        console.error('error')
-        alert(error)
-        console.error(error)
+        ec(error)
+
       } finally {
-        this.thisDevice = await this.api.device.get(this.thisDevice.id).catch(alert)
+        this.thisDevice = await this.api.device.get(this.thisDevice.id).catch(ec)
         this.pending = false
       }
     }
