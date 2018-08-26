@@ -32,10 +32,10 @@ div
                         // q-icon.text-center( v-if="ch.toggle" color="yellow" name='flash_on' style="font-size:50px;")
                         // q-icon.text-center( v-else color="grey-4" name='flash_on' style="font-size:50px;")
                       div(v-if="thisUser.powerRatings[0]")
-                        small.block.light-paragraph.small Devices: 
-                        p.light-paragraph {{parseInt(thisUser.powerRatings[0].meta.devices)}}
-                        small.block.light-paragraph Social: 
-                        p.light-paragraph {{parseInt(thisUser.powerRatings[0].meta.social)}}
+                        small.block.light-paragraph.small From Devices: 
+                        p.light-paragraph {{thisUser.powerRatings[0].meta.devices.toFixed(4)}}
+                        small.block.light-paragraph From Social: 
+                        p.light-paragraph {{thisUser.powerRatings[0].meta.social.toFixed(4)}}
             .col-xs-12.col-sm-6.col-md-12
               q-card.animate-scale.relative-position
                 q-btn.absolute.infobtn(round small flat)

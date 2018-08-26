@@ -92,17 +92,29 @@ var api = {
   },
   user: {
     get: async function (userId) {
-      var result = (await client.request(q.user.get(), { userId })).User
-      // console.log('get user', result)
-      if (window.local) window.local.thisUser = result
-      events.emit('thisUser', result)
-      return result
+      try{
+        var result = (await client.request(q.user.get(), { userId })).User
+        // console.log('get user', result)
+        if (window.local) window.local.thisUser = result
+        events.emit('thisUser', result)
+        return result
+      }catch(error){
+        console.error('gerUserError')
+        // Promise.reject(error)
+        return null
+      }
+
     },
     getByUsername: async function (username) {
-      // console.log('get user', userId)
-      var result = (await client.request(q.user.getByUsername(), { username })).User
-      // events.emit('thisUser', result)
-      return result
+      try {
+        var result = (await client.request(q.user.getByUsername(), { username })).User
+        return result
+      } catch (error) {
+        console.error(error)
+        // Promise.reject(error)
+        return null
+      }
+
     },
     checkValidUsername: async function (username) {
       var result = (await client.request(q.user.checkUsername(), { username }).catch(console.error)).User
@@ -120,7 +132,8 @@ var api = {
     get: async function (deviceId) {
       var result = (await client.request(q.device.get(), {
         deviceId
-      })).Device
+      }).catch(console.error)).Device
+      if (!result) return null
       // console.log(result)
       // location.reload()
       // events.emit('thisUser', result)
@@ -129,13 +142,15 @@ var api = {
     getByCpid: async function (cpid) {
       var result = await client.request(q.device.getByCpid(), {
         cpid
-      })
+      }).catch(console.error)
+      if (!result) return null
       console.log('GOT CPID DEVICE',result)
       return result.Device
     },
     updateStatus: async function (device) {
       // console.log('apiDevice', device)
-      var result = (await client.request(m.device.updateStatus(), device)).updateDevice
+      var result = (await client.request(m.device.updateStatus(), device).catch(console.error)).updateDevice
+      if (!result) return null
       // console.log(result)
       // location.reload()
       // events.emit('thisUser', result)
@@ -143,12 +158,12 @@ var api = {
     },
     updateWcgid: async function (device) {
       // console.log('UPDATE WCGID',device)
-      var result = (await client.request(m.device.updateWcgid(), device)).updateDevice
+      var result = (await client.request(m.device.updateWcgid(), device).catch(console.error)).updateDevice
 
       return result
     },
     create: async function (deviceData) {
-      var result = await client.request(m.device.create(), deviceData)
+      var result = await client.request(m.device.create(), deviceData).catch(console.error)
       console.log(JSON.stringify(result))
       return result.createDevice
     },
@@ -159,25 +174,20 @@ var api = {
   },
   leaderboard: {
     global: async function (teamId) {
-      return (await client.request(q.leaderboard.global(), { teamId })).allUsers
+      return (await client.request(q.leaderboard.global(), { teamId }).catch(console.error)).allUsers
     },
     team: async function (teamId) {
-      return (await client.request(q.leaderboard.team(), { teamId })).allUsers
+      return (await client.request(q.leaderboard.team(), { teamId }).catch(console.error)).allUsers
     },
     teams: async function (teamId) {
-      return (await client.request(q.leaderboard.teams())).allTeams
+      return (await client.request(q.leaderboard.teams()).catch(console.error)).allTeams
     }
   },
   team: {
     getByName: async function (teamName) {
-      return (await client.request(q.team.getByName(), { teamName })).Team
+      return (await client.request(q.team.getByName(), { teamName }).catch(console.error)).Team
     }
   }
 }
 
-// export default new Vue({
-//   data () {
-//     return {}
-//   }
-// })
 export default api

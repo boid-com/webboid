@@ -183,8 +183,8 @@ export default {
       }
     },
     updateLeaderboards: async function() {
-      this.leaderboard = await this.api.leaderboard.global()
-      this.teamLeaderboard = await this.api.leaderboard.teams()
+      this.leaderboard = await this.api.leaderboard.global().catch(console.error)
+      this.teamLeaderboard = await this.api.leaderboard.teams().catch(console.error)
       // console.log('updateLeaderboard', this.leaderboard)
     },
     selectText(data) {
@@ -265,6 +265,7 @@ export default {
     var that = this
 
     this.api.events.on('thisUser', data => {
+      console.log('USERDATA')
       this.thisUser = data
       this.authenticated = true
       if (this.$refs.authModal) this.$refs.authModal.close()
@@ -280,7 +281,7 @@ export default {
       }
     if (!this.local) {
       this.updateLeaderboards()
-      setInterval(this.updateLeaderboards, 10000)
+      setInterval(this.updateLeaderboards, 30000)
     }
     this.$root.$on('browserDeviceThrottle',(input)=>{
       if (miner){
@@ -307,7 +308,7 @@ export default {
           miner.setThrottle(.3)
           hashInterval = setInterval(()=>{
             this.ch.hps = miner.getHashesPerSecond().toFixed(0)
-          },3000)
+          },8000)
           this.ch.throttle = miner.getThrottle()
           miner.on('found', (data) => {
             this.ch.found = true
@@ -440,7 +441,7 @@ export default {
             if (!this.local){
 
             }
-          }, 10000)
+          }, 30000)
         }
       } else {
         if (this.local) this.$router.push({ name: 'Auth' })
