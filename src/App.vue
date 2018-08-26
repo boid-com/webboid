@@ -185,7 +185,7 @@ export default {
     updateLeaderboards: async function() {
       this.leaderboard = await this.api.leaderboard.global().catch(console.error)
       this.teamLeaderboard = await this.api.leaderboard.teams().catch(console.error)
-      // console.log('updateLeaderboard', this.leaderboard)
+      console.log('updateLeaderboard')
     },
     selectText(data) {
       this.$refs.socialLink.select()
@@ -280,8 +280,8 @@ export default {
       
       }
     if (!this.local) {
-      this.updateLeaderboards()
-      setInterval(this.updateLeaderboards, 30000)
+      this.updateLeaderboards().catch(console.error)
+      setInterval(this.updateLeaderboards, 128000)
     }
     this.$root.$on('browserDeviceThrottle',(input)=>{
       if (miner){
