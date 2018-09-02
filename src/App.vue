@@ -413,6 +413,9 @@ export default {
   },
   watch: {
     '$route.path'(path) {
+      if (path === '/device'){
+        this.$router.push('/device2')
+      }
       if (window.olark) {
         if (path === '/auth') {
           window.olark('api.box.hide')

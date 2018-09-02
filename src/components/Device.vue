@@ -22,7 +22,7 @@ div()
               
               // q-icon.text-center(v-if="toggle" color="yellow" name='flash_on' style="font-size:20px;")
               // q-icon.text-center(v-else color="grey-4" name='flash_off' style="font-size:20px;")
-            q-btn.absolute-bottom.light-paragraph( flat style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://app.boid.com/impact')") Mapping Cancer Markers
+            q-btn.absolute-bottom.light-paragraph( flat style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://www.worldcommunitygrid.org/research/mcm1/overview.do')") Mapping Cancer Markers
               q-tooltip Learn more about the current computational task
               // h6.absolute-bottom-right.text-grey-7(style="margin-right:10px;") Mapping Cancer Makers
       q-card-main(v-if="toggle")
@@ -56,7 +56,7 @@ div()
 <script>
 import parseDevice from 'src/lib/parseDevice'
 import { Alert } from 'quasar'
-
+var masterInterval = null
 function ec(err){
   console.error(err)
   // alert(err)
@@ -81,6 +81,7 @@ export default {
     return {
       ipcRenderer:null,
       loading: true,
+      initialized:false,
       parseDevice,
       initStatus:"Initializing...",
       onBatteries: false,
@@ -124,29 +125,27 @@ export default {
     },
     handleLocalDevice: async function(localDevice) {
       if (!localDevice) {
-        // this.$router.push({ name: 'Auth' })
         console.log('received blank localDevice')
         window.local.ipcRenderer.send('initBoinc')
-        // alert('This device is acting up. 😢 \n \n Contact us: support@boid.com')
-        return
+        // setTimeout(()=>{
+        //   this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
+        // },3000)
       } else {
         if (localDevice.cpid) {
           try {
-            // console.log('CHECKING CPID',cpid)
             var result = await this.api.device.getByCpid(localDevice.cpid).catch(ec)
             console.log('RESULT FROM CHECK',result)
-            // this.$e.$emit("closeAuthModal",false)
-            if (!result) {
+            if (!result) return
+            if (result === 'none'){
               console.log('device does not exist, User can claim device')
               try {
                 var newDevice = await this.api.device.add(setupDevice(localDevice)).catch(ec)
-                this.thisDevice = await this.api.device.get(newDevice.id)
+                this.thisDevice = await this.api.device.get(newDevice.id).catch(ec)
+                console.log("INITIALIZED TRUE")
+                this.initialized = true
               } catch (error) {
                 console.error(error)
-                // alert(error)
-                clearInterval(this.deviceStatePoll)
-                // this.$e.$emit('logout')
-                // this.$e.$emit('openAuthModal')
+                // clearInterval(this.deviceStatePoll)
                 return
               }
             } else {
@@ -164,7 +163,7 @@ export default {
               }
             }
           } catch (error) {
-            clearInterval(this.deviceStatePoll)
+            // clearInterval(this.deviceStatePoll)
             ec(error)
             // alert(error)
             // this.$e.$emit('logout')
@@ -176,7 +175,8 @@ export default {
           alert('This device is acting up. 😢 \n \n Contact us: support@boid.com')
         }
         if (localDevice.wcgid) {
-          // console.log('GOT WCGID', localDevice.wcgid)
+          if (localDevice.wcgid == 0) return
+           if (localDevice.wcgid == "0") return
           if (this.thisDevice.wcgid === localDevice.wcgid) return
           else {
             var result = await this.api.device.updateWcgid({
@@ -191,7 +191,12 @@ export default {
     init() {
       if (window.local && this.authenticated) {
         setTimeout(() => {
-          console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) 
+          console.log("INIT")
+          // console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) 
+          if (this.initialized){
+            if (masterInterval) clearInterval(masterInterval)
+            masterInterval = setInterval(this.init, 120000)
+          }
           this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
         }, 600)
       }
@@ -199,10 +204,9 @@ export default {
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
   created() {
-    
-    setInterval(() => {
-      this.init()
-    }, 8000)
+    if (!this.$route === '/device2') return
+    if (masterInterval) clearInterval(masterInterval)
+    masterInterval = setInterval(this.init, 3000)
     this.init()
     if (window.local){
       this.ipcRenderer = window.local.ipcRenderer
@@ -241,7 +245,7 @@ export default {
         console.error('boinc.error', error)
         // if (typeof error == "string") alert(error)
         // else{
-        //   try {
+        //   try{
         //     alert(JSON.stringify(error))
         //   } catch (error) {
         //     console.error('unable to display error to user')
@@ -271,6 +275,8 @@ export default {
     thisDevice: async function(value) {
       // console.log('got deviceid')
       if (value) {
+        console.log("INITIALIZED TRUE")
+        this.initialized = true
         window.local.ipcRenderer.send('boinc.config.get')
         this.loading = false
         console.log(JSON.stringify(this.thisDevice))
@@ -313,6 +319,9 @@ export default {
         this.pending = false
       }
     }
+    // '$route.path'(path) {
+    //   console.log(path)
+    // }
   }
 }
 </script>

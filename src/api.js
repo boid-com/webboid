@@ -140,10 +140,16 @@ var api = {
       return result
     },
     getByCpid: async function (cpid) {
-      var result = await client.request(q.device.getByCpid(), {
-        cpid
-      }).catch(console.error)
-      if (!result) return null
+      try {
+        var result = await client.request(q.device.getByCpid(), {cpid})
+        if (result.Device) return result.Device
+        else return 'none'
+      } catch (error) {
+        console.error(error)
+        return null
+      }
+
+      if (!result.Device) return null
       console.log('GOT CPID DEVICE',result)
       return result.Device
     },
@@ -168,8 +174,12 @@ var api = {
       return result.createDevice
     },
     add: async function (deviceData){
-      var result = await client.request(m.device.add(),deviceData).catch(console.error)
-      return result.addUserDevice2
+      try {
+        var result = (await client.request(m.device.add(),deviceData)).addUserDevice2
+        return result
+      } catch (error) {
+        return null
+      }
     }
   },
   leaderboard: {
