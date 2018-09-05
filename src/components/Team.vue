@@ -51,7 +51,9 @@
                 img.avatar(:src="user.image")
               td.ellipsis(style="max-width:20px;" data-th="Username") {{user.username}}
                 small.block.light-paragraph {{user.tagline}}
-              td(data-th="Power") {{user.tPower.toFixed(2)}}
+              td(data-th="Power") 
+                p(v-if="user.tPower") {{user.tPower.toFixed(2)}}
+                p(v-else) 00.00
               td {{index + 1}}
   .row.justify-center.gutter
     .layout-padding(v-if="!authenticated")

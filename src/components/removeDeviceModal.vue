@@ -1,9 +1,10 @@
 <template lang="pug">
   div(style="padding:30px; max-width: 450px;").relative-position
-    h5 Remove Device
-    p When you remove this device, any Boid Power currently being contributed by this device will no longer count towards this account.
+    h5.text-blue Remove Device
+    p(style="padding:10px;") When you remove this device, any Boid Power currently being contributed by this device will no longer count towards this account.
     br
     q-card(v-if="device")
+      | {{device.type}}
       .row
         .col-auto.relative-position(style="padding:30px;")
           q-icon.absolute-center(:name="parseDevice.icon(device)" :color="parseDevice.color(device)" size="25px;")         
@@ -11,6 +12,9 @@
           h6 {{device.name}}
           h6.relative-position(v-if="device.powerRatings.length>0" style="padding-left:15px; padding-top:3px;") {{device.powerRatings[0].power.toFixed(4)}}
             img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+    q-card(color="red-4" v-if="device.type != 'BROWSER' ")
+      h6 Important!
+      p(style="padding:10px;") Make sure you log-out of the desktop app first!
 
     br
     br
@@ -18,7 +22,7 @@
     br
     q-btn.absolute(color="grey" outline style="bottom:20px; right:170px;" @click="modal.close()")
       | Cancel
-    q-btn.absolute(color="red-6" style="bottom:20px; right:20px;" @click="removeDevice(device.id)")
+    q-btn.absolute(color="red-4" style="bottom:20px; right:20px;" @click="removeDevice(device.id)")
       | Remove Device
     q-inner-loading(:visible="pending")
       q-spinner-ball(size="70px" color="blue")
