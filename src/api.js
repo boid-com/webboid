@@ -100,6 +100,7 @@ var api = {
         return result
       }catch(error){
         console.error('gerUserError')
+        console.log(error)
         // Promise.reject(error)
         return null
       }
@@ -179,6 +180,16 @@ var api = {
         return result
       } catch (error) {
         return null
+      }
+    },
+    remove: async function(deviceId){
+      try {
+        var result = (await client.request(`mutation($deviceId:ID!){deleteDevice(id:$deviceId){id}}`,
+        {deviceId}))
+        // console.log(result)
+        return result
+      } catch (error) {
+        return Promise.reject(error)
       }
     }
   },

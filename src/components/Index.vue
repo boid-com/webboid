@@ -112,13 +112,14 @@ div
                 q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.devices)")
             q-list( v-for="(device,index) in devices" :key="device.id")
               q-item.relative-position(v-if="!adBlock" style="padding-bottom:30px;")
-                //- | {{device.status}}
-                q-item-side
+                q-item-side()
                   q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)")         
                 q-item-main
                   q-item-tile(label style="user-select: none;") {{device.name}}
-                  q-item-tile(sublabel) {{device.status}}
-                    //- q -icon.text-center(color="yellow" name='flash_on'
+                  q-item-tile.relative-position(
+                    style="padding-left:15px;" sublabel v-if="device.powerRatings[0]"
+                    ) {{device.powerRatings[0].power.toFixed(4)}}
+                    img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
                 div.absolute(style="width:190px; height:50px; left:180px; padding-top:8px;" v-show="browserDeviceToggle && device.type=='BROWSER'")
                   q-tooltip CPU Usage
                   div.relative-position.float-left
@@ -143,6 +144,14 @@ div
                 q-inner-loading(:visible="device.pending")
                   q-spinner(size="30px" color="blue")
                   //- | {{device.toggle}}
+                q-item-side.relative-position(right)
+                  q-btn.absolute-center(
+                    flat color="red-5" 
+                    style="right:-17px; padding:5px; margin-left:20px;"
+                    @click="$root.$emit('modal.removeDevice',true,device)"
+                    )
+                    q-tooltip Remove Device
+                    q-icon(name="close" color="grey-5")
               q-item.relative-position.bg-red(v-else color="red" style="height:80px")
                 h5.text-white Disable AdBlock and refresh to continue
 

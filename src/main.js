@@ -18,7 +18,7 @@ Vue.use(Quasar, {
 })
 Vue.filter('removeDash', function (value) {
   if (!value) return ''
-  return value.toString().replace('-', ' ')
+  return value.toString().replace(/-/g, ' ')
 })
 Vue.use(LoadScript);
 

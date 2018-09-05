@@ -17,9 +17,11 @@
               .row
                 .col-auto
                   img.avatar(:src="user.image")
-                .col(style="padding:15px;")
+                .col.relative-position(style="padding:15px; padding-bottom:30px;")
                   .ellipsis(data-th="Username") {{user.username}}
-                  small.block.light-paragraph {{user.tagline}}
+                  small.ellipsis.block.light-paragraph.absolute(
+                    style="bottom:0px; max-width:100%;"
+                    ) {{user.tagline}}
             td(data-th="Power") {{user.tPower.toFixed(2)}}
   .col-md-12.col-lg-6
     q-card.animate-scale
@@ -39,7 +41,7 @@
                 .col-auto
                   img.tokenimg(:src="team.image")
                 .col(style="padding:15px;")
-                  .ellipsis(style="max-width:120px;") {{team.name | removeDash}}
+                  .ellipsis(style="max-width:100%;") {{team.name | removeDash}}
             td(data-th="Power") {{parseInt(team.power)}}
 
 </template>

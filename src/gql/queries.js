@@ -31,6 +31,7 @@ export default {
               id
               name
               status
+              powerRatings(last:1){power}
             }
             team {
               id

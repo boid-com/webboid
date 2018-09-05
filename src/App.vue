@@ -79,10 +79,10 @@
         .layout-padding
           boincConfig(:config="boincConfigData" :thisModal="$refs.boincConfigModal")
       q-modal.position-relative(ref="socialModal")
-        div(style="max-width: 500px;")
+        div(style="max-width: 800px;")
           div(style="padding:40px;")
             h4.text-centered(style="color:#089cfc;") Share Boid
-            h6 When Users join Boid and run the app you get a small percent of any Boid Power they generate.
+            h6 When you invite a user, you will receive a small percentage of any Boid Power they generate.
           .layout-padding.position-relative
             p.text-center.light-paragraph Share this link
             h4.text-center( @click="selectText($event)") 
@@ -96,6 +96,8 @@
             | done
       q-modal(ref="addDeviceModal" no-esc-dismiss no-backdrop-dismiss)
         addDeviceModal(:modal="$refs.addDeviceModal" :api="api" :thisUser="thisUser" 	)
+      q-modal(ref="removeDeviceModal")
+        removeDeviceModal(:modal="$refs.removeDeviceModal" :api="api" :thisUser="thisUser" 	)
       q-modal(ref="nueModal" no-esc-dismiss no-backdrop-dismiss)
         nueModal(:modal="$refs.nueModal" :api="api" :thisUser="thisUser" 	)
       div.bg-white.fullscreen(v-if="pending")
@@ -115,6 +117,7 @@ import adBlocker from 'just-detect-adblock'
 import profileEdit from '@/ProfileEdit.vue'
 import boincConfig from '@/BoincConfig.vue'
 import addDeviceModal from '@/addDeviceModal.vue'
+import removeDeviceModal from '@/removeDeviceModal.vue'
 import nueModal from '@/nueModal.vue'
 import bFooter from '@/Footer.vue'
 var hashInterval = null
@@ -408,6 +411,7 @@ export default {
     profileEdit,
     boincConfig,
     addDeviceModal,
+    removeDeviceModal,
     nueModal,
     bFooter
   },
