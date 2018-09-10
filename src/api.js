@@ -25,6 +25,7 @@ function setupClient (token) {
 setupClient()
 
 var api = {
+  client,
   events,
   init () {
     // if (window.local) {
@@ -44,6 +45,26 @@ var api = {
     // }
   },
   auth: {
+    validatePayoutAccountRequest: async function(requestId){
+      try {
+        return await client.request(`
+          mutation($requestId:ID){updatePayoutAccount(requestId:$requestId){payoutAccount}}
+        `,{requestId})
+      } catch (err) {
+        console.error(err.response.errors[0].functionError)
+        return {error: err.response.errors[0].functionError}
+      }
+    },
+    updatePayoutAccount: async function(payoutAccount){
+      try {
+        return await client.request(`
+          mutation($payoutAccount:String){updatePayoutAccount(payoutAccount:$payoutAccount){payoutAccount}}
+        `,{payoutAccount})
+      } catch (err) {
+        console.error(err.response.errors[0].functionError)
+        return {error: err.response.errors[0].functionError}
+      }
+    },
     login: async function (formData) {
       console.log(formData)
       try {

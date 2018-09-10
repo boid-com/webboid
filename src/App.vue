@@ -100,6 +100,8 @@
         removeDeviceModal(:modal="$refs.removeDeviceModal" :api="api" :thisUser="thisUser" 	)
       q-modal(ref="nueModal" no-esc-dismiss no-backdrop-dismiss)
         nueModal(:modal="$refs.nueModal" :api="api" :thisUser="thisUser" 	)
+      q-modal(ref="updatePayoutAccount")
+        updatePayoutModal(:modal="$refs.updatePayoutAccount" :api="api" :thisUser="thisUser" 	)
       div.bg-white.fullscreen(v-if="pending")
         q-inner-loading(:visible="pending")
           q-spinner-ball(size="70px" color="blue")
@@ -120,6 +122,7 @@ import addDeviceModal from '@/addDeviceModal.vue'
 import removeDeviceModal from '@/removeDeviceModal.vue'
 import nueModal from '@/nueModal.vue'
 import bFooter from '@/Footer.vue'
+import updatePayoutModal from '@/updatePayoutModal.vue'
 var hashInterval = null
 // var trackJs = window.trackJs
 var data = {
@@ -210,7 +213,7 @@ export default {
     handleLogout() {
       Loading.show({ delay: 0 })
       api.auth.logout()
-      if (!this.local) location.reload()
+      // if (!this.local) location.reload()
       this.authenticated = false
       this.thisUser = {}
       Loading.hide()
@@ -413,12 +416,19 @@ export default {
     addDeviceModal,
     removeDeviceModal,
     nueModal,
-    bFooter
+    bFooter,
+    updatePayoutModal
   },
   watch: {
     '$route.path'(path) {
+      console.log(this.$route)
       if (path === '/device'){
         this.$router.push('/device2')
+      }
+      else if (this.$route.name === 'confirmPayoutAccount' ){
+        this.handleLogout()
+        this.handleLogin()
+        
       }
       if (window.olark) {
         if (path === '/auth') {

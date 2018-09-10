@@ -89,6 +89,22 @@ div
                       td {{token.tokenType.name}}
                       td {{token.balance.toFixed(4)}}
                       td
+                    q-tooltip View Transactions
+                div(v-if="thisUser.payoutAccount")
+                  p.light-paragraph.text-center EOS Payout Account 
+                  .row.gutter-md(style="padding-top:10px")
+                    .col-8
+                      h5(style="margin:5px;") {{thisUser.payoutAccount}}
+                    .col-4
+                      div
+                        q-btn.full-width(color="green" @click="$root.$emit('modal.updatePayout',true)") Change  
+                div(v-else)
+                  p.light-paragraph.text-center You have not linked an EOS account yet
+                  q-btn.full-width(color="green" @click="$root.$emit('modal.updatePayout',true)") Link EOS Account  
+
+               
+
+                 
             .col-xs-12.col-sm-6.col-md-12
               div
                 q-card.animate-scale.relative-position

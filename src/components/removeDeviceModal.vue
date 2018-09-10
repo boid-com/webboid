@@ -1,10 +1,9 @@
 <template lang="pug">
-  div(style="padding:30px; max-width: 450px;").relative-position
+  div(style="padding:30px; max-width: 450px;" v-if="device").relative-position
     h5.text-blue Remove Device
     p(style="padding:10px;") When you remove this device, any Boid Power currently being contributed by this device will no longer count towards this account.
     br
-    q-card(v-if="device")
-      | {{device.type}}
+    q-card
       .row
         .col-auto.relative-position(style="padding:30px;")
           q-icon.absolute-center(:name="parseDevice.icon(device)" :color="parseDevice.color(device)" size="25px;")         

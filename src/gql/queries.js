@@ -20,6 +20,7 @@ export default {
           User(id: $userId) {
             id
             email
+            payoutAccount
             username
             image
             tagline

@@ -5,9 +5,12 @@
       h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
       h6.text-weight-light.text-center(style="margin-bottom:30px;") The Social Supercomputer
       h6.text-weight-light.text-center(style="margin-bottom:30px;" v-if="invitedByUser && registering") You were invited by 
-        h6.text-center {{invitedByUser.username}}
+      div(v-if="confirmAccount")
+        h6.text-weight-light.text-center(style="margin-bottom:30px;" ) You are linking your EOS account
+          h4.text-black {{confirmAccount.accountName}}
+      
     .row.justify-center
-      h6.text-weight-light.q-mb-md.text-grey-9 Login / Register
+      h6.text-weight-light.q-mb-md.text-grey-9(v-if="!confirmAccount") Login / Register
     div(v-if="!emailForm")
       .row.justify-center(style="padding-top:30px")
         // .col-auto(v-for="login in socialLogins" :key="login.name")
@@ -47,10 +50,13 @@
       br
       br
       div.text-center(style="margin-top:10px;")
-          q-btn.text-center( big @click="emailForm = false" flat style="margin-auto" invert color="blue")
-            q-icon.on-left(name="arrow_back")
-            | Social 
-          q-btn.text-center( big @click="join" style="margin-auto" :disabled="!loginRdy" invert color="green" size="lg") Go
+          //- q-btn.text-center( big @click="emailForm = false" flat style="margin-auto" invert color="blue")
+          //-   q-icon.on-left(name="arrow_back")
+          //-   | Back 
+          
+          q-btn.text-center( v-if="!confirmAccount" big @click="join" style="margin-auto" :disabled="!loginRdy" invert color="green" size="lg") Go
+            q-icon.on-right(name="arrow_forward")
+          q-btn.text-center( v-else big @click="submit" style="margin-auto" :disabled="!loginRdy" invert color="green" size="lg") Confirm
             q-icon.on-right(name="arrow_forward")
     q-inner-loading(:visible="pending")
       q-spinner-ball(size="90px" color="blue")
@@ -62,10 +68,13 @@
 <script>
 import { required, email, minLength } from 'vuelidate/lib/validators'
 import { Toast } from 'quasar'
-
+Toast.setDefaults({
+  timeout: 10000,
+})
 export default {
   data() {
     return {
+      confirmAccount:null,
       emailForm:false,
       disableBtns:false,
       socialLogins:[
@@ -139,6 +148,24 @@ export default {
         var userData = await this.api.user.get(result.id).catch(console.log)
         this.$emit('update:thisUser', userData)
         this.$emit('update:authenticated', true)
+        if (this.confirmAccount){
+          var validateRequest = await this.api.auth.validatePayoutAccountRequest(this.confirmAccount.requestId).catch(console.log)
+          console.log(validateRequest)
+          this.$router.push('/')
+          this.pending = false
+          if (validateRequest.error){
+            Toast.create.negative(validateRequest.error)   
+            this.confirmAccount = null       
+          } 
+          else{
+            Toast.create.positive('EOS Account linked successfully')
+            this.confirmAccount = null
+            this.$e.$emit('refreshUser')
+            this.$e.$emit('userUpdated')
+          } 
+        }else{
+          this.thisModal.close()
+        }
         this.pending = false
         if (this.localAuth) {
           window.local.ipcRenderer.sendToHost('token', result)
@@ -147,9 +174,7 @@ export default {
             console.log('ready to check user device!!!!!!', this.form.device)
           }
           // $router.push({name:'Team',params:{teamname:thisUser.team.name}})
-        } else {
-          this.thisModal.close()
-        }
+        } 
       }
     },
     join: async function() {
@@ -233,6 +258,14 @@ export default {
   watch: {
     rememberMe: function(value) {
       window.localStorage.setItem('rememberMe', value)
+    },
+    '$route.name'(name){
+      if (name != 'confirmPayoutAccount') return
+      this.emailForm = true
+      this.confirmAccount = {
+        requestId: this.$route.params.requestId,
+        accountName: this.$route.params.accountName,
+      }
     },
     'window.local'() {
       console.log(window.local)
