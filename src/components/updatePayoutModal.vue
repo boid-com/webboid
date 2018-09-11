@@ -1,12 +1,12 @@
 <template lang="pug">
-div(v-if="thisUser" style="padding:30px; min-height:300px; max-width:460px;" )
+div.relative-position(v-if="thisUser" style="padding:30px; min-height:300px; max-width:460px;" )
   h4(style="margin-bottom:0px;").text-blue Update your EOS Account
   h6(style="margin-top:6px;" v-if="page===0") Tokens earned in Boid are automatically sent to your EOS account.
   br
   div(v-if="page === 0" style="margin-bottom: 100px")
     .row
       div
-        h4.text-center(v-if="!thisUser.payoutAccount") You haven't setup an EOS account yet!
+        p.text-center(v-if="!thisUser.payoutAccount") You haven't setup an EOS account yet!
         div(v-else)
           br
           p.text-grey-7 Your linked EOS account:
@@ -25,9 +25,9 @@ div(v-if="thisUser" style="padding:30px; min-height:300px; max-width:460px;" )
             a(href="https://eos-account-creator.com/choose/") Online
           li
             a(href="https://eoslynx.com/") App
-    p.text-grey-7(v-if="!thisUser.payoutAccount") Add EOS Account:
-    p.text-grey-7(v-else) Change EOS Account:
-    div
+    //- p.text-grey-7(v-if="!thisUser.payoutAccount") Add EOS Account:
+    //- p.text-grey-7(v-else) Change EOS Account:
+    div(style="width:50%;")
       q-field(:count="12")
         q-input(
           stack-label="EOS Account"
@@ -106,9 +106,13 @@ export default {
     },
     modalOpened(){
       this.reset()
+      window.olark('api.box.hide')
+
     },
     modalClosed(){
       this.reset()
+      window.olark('api.box.show')
+
     } 
   },
   computed:{
