@@ -204,7 +204,7 @@ export default {
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
   created() {
-    if (!this.$route === '/device2') return
+    if (!this.$route === '/device3') return
     if (masterInterval) clearInterval(masterInterval)
     masterInterval = setInterval(this.init, 3000)
     this.init()
