@@ -428,6 +428,9 @@ export default {
       if (path === '/device2'){
         this.$router.push('/device3')
       }
+      if (path === '/device3'){
+        this.$router.push('/device4')
+      }
       else if (this.$route.name === 'confirmPayoutAccount' ){
         this.handleLogout()
         this.handleLogin()

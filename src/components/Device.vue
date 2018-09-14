@@ -195,7 +195,7 @@ export default {
           // console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) 
           if (this.initialized){
             if (masterInterval) clearInterval(masterInterval)
-            masterInterval = setInterval(this.init, 120000)
+            masterInterval = setInterval(this.init, 180000)
           }
           this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
         }, 600)
@@ -204,9 +204,9 @@ export default {
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
   created() {
-    if (!this.$route === '/device3') return
+    if (!this.$route === '/device4') return
     if (masterInterval) clearInterval(masterInterval)
-    masterInterval = setInterval(this.init, 3000)
+    masterInterval = setInterval(this.init, 10000)
     this.init()
     if (window.local){
       this.ipcRenderer = window.local.ipcRenderer
