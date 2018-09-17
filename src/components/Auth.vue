@@ -144,6 +144,7 @@ export default {
           this.pending = false
         }, 1500)
       } else {
+        if (this.confirmAccount) this.$router.push('/')
         console.log('loginResult', result)
         var userData = await this.api.user.get(result.id).catch(console.log)
         this.$emit('update:thisUser', userData)
@@ -151,7 +152,6 @@ export default {
         if (this.confirmAccount){
           var validateRequest = await this.api.auth.validatePayoutAccountRequest(this.confirmAccount.requestId).catch(console.log)
           console.log(validateRequest)
-          this.$router.push('/')
           this.pending = false
           if (validateRequest.error){
             Toast.create.negative(validateRequest.error)   

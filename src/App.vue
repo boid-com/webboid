@@ -244,11 +244,7 @@ export default {
       }
     }
   },
-  mounted: async function() {
-    if (!this.local){
-      this.$loadScript("https://cdn.jsdelivr.net/npm/@widgetbot/html-embed")
-      var embed = document.getElementById('embed')
-    }
+  mounted: async function() {1
     if (this.local && !this.authenticated) this.handleLogin()
     if (this.local) this.ipcRenderer = window.local.ipcRenderer
     setTimeout(() => {
@@ -271,6 +267,12 @@ export default {
     var that = this
 
     this.api.events.on('thisUser', data => {
+      if (this.$route.name === 'confirmPayoutAccount' ){
+        console.log('we should not be here',this.$route.name)
+        this.handleLogout()
+        this.handleLogin()
+        return
+      }
       console.log('USERDATA')
       this.thisUser = data
       this.authenticated = true
@@ -434,7 +436,6 @@ export default {
       else if (this.$route.name === 'confirmPayoutAccount' ){
         this.handleLogout()
         this.handleLogin()
-        
       }
       if (window.olark) {
         if (path === '/auth') {
