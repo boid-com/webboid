@@ -159,6 +159,8 @@ export default {
           } 
           else{
             Toast.create.positive('EOS Account linked successfully')
+            this.thisModal.close()
+            this.$router.push('/')
             this.confirmAccount = null
             this.$e.$emit('refreshUser')
             this.$e.$emit('userUpdated')
