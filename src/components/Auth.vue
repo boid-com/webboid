@@ -164,7 +164,9 @@ export default {
             this.confirmAccount = null
             this.$e.$emit('refreshUser')
             this.$e.$emit('userUpdated')
-            // window.location.reload()
+            setTimeout(()=>{
+              window.location.reload()
+            },3000)
           } 
         }else{
           this.thisModal.close()
@@ -213,7 +215,7 @@ export default {
           setTimeout(()=>{
             console.log('open nue modal')
             this.$root.$emit('modal.nue',true)
-          },2000)
+          },1000)
         })
       }
     },
