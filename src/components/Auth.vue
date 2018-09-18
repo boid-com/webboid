@@ -164,6 +164,7 @@ export default {
             this.confirmAccount = null
             this.$e.$emit('refreshUser')
             this.$e.$emit('userUpdated')
+            window.location.reload()
           } 
         }else{
           this.thisModal.close()
