@@ -434,7 +434,7 @@ export default {
         this.$router.push('/device4')
       }
       else if (this.$route.name === 'confirmPayoutAccount' ){
-        this.handleLogout()
+        // this.handleLogout()
         this.handleLogin()
       }
       if (window.olark) {
