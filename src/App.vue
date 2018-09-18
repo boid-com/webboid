@@ -276,7 +276,7 @@ export default {
       console.log('USERDATA')
       this.thisUser = data
       this.authenticated = true
-      if (this.$refs.authModal) this.$refs.authModal.close()
+      // if (this.$refs.authModal) this.$refs.authModal.close()
       Loading.hide()
     })
     if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
