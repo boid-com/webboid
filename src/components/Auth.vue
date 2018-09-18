@@ -165,7 +165,7 @@ export default {
             this.$e.$emit('refreshUser')
             this.$e.$emit('userUpdated')
             setTimeout(()=>{
-              window.location.reload()
+              window.location.replace('https://app.boid.com')
             },3000)
           } 
         }else{
