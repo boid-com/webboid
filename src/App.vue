@@ -269,8 +269,8 @@ export default {
     this.api.events.on('thisUser', data => {
       if (this.$route.name === 'confirmPayoutAccount' ){
         console.log('we should not be here',this.$route.name)
-        this.handleLogout()
-        this.handleLogin()
+        // this.handleLogout()
+        // this.handleLogin()
         return
       }
       console.log('USERDATA')
