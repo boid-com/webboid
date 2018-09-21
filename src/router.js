@@ -21,6 +21,7 @@ export default new VueRouter({
     { path: '/device2/', component: load('Device'), name: 'Device2' },
     { path: '/device3/', component: load('Device'), name: 'Device3' },
     { path: '/device4/', component: load('Device'), name: 'Device4' },
+    { path: '/device5/', component: load('Device'), name: 'Device5' },
     { path: '/local', component: load('Bus'), name: 'Local' },
     { path: '/auth/', component: load('Auth'), name: 'Auth' },
     { path: '*', component: load('Index') } // Not found
