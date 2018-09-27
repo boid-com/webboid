@@ -425,16 +425,19 @@ export default {
     '$route.path'(path) {
       console.log(this.$route)
       if (path === '/device'){
-        this.$router.push('/device5')
+        this.$router.push('/device6')
       }
       if (path === '/device2'){
-        this.$router.push('/device5')
+        this.$router.push('/device6')
       }
       if (path === '/device3'){
-        this.$router.push('/device5')
+        this.$router.push('/device6')
       }
       if (path === '/device4'){
-        this.$router.push('/device5')
+        this.$router.push('/device6')
+      }
+      if (path === '/device5'){
+        this.$router.push('/device6')
       }
       else if (this.$route.name === 'confirmPayoutAccount' ){
         // this.handleLogout()
