@@ -87,7 +87,11 @@ div
                       td 
                         img.tokenimg(:src="token.tokenType.image")
                       td {{token.tokenType.name}}
-                      td Pending {{token.balance.toFixed(4)}} Paid Out {{token.paid.toFixed(4)}}
+                      td 
+                        small Pending 
+                        p {{token.balance.toFixed(4)}} 
+                        small Paid Out
+                        p {{token.paid.toFixed(4)}}
                       td
                     //- q-tooltip View Transactions
                 div(v-if="thisUser.payoutAccount")
