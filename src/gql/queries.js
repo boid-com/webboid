@@ -49,6 +49,7 @@ export default {
               tokens {
                 id
                 balance
+                paid
                 tokenType {
                   name
                   image

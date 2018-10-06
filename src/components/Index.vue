@@ -87,9 +87,9 @@ div
                       td 
                         img.tokenimg(:src="token.tokenType.image")
                       td {{token.tokenType.name}}
-                      td {{token.balance.toFixed(4)}}
+                      td Pending {{token.balance.toFixed(4)}} Paid Out {{token.paid.toFixed(4)}}
                       td
-                    q-tooltip View Transactions
+                    //- q-tooltip View Transactions
                 div(v-if="thisUser.payoutAccount")
                   p.light-paragraph.text-center EOS Payout Account 
                   .row.gutter-md(style="padding-top:10px")
