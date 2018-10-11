@@ -226,7 +226,8 @@ export default {
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
   created() {
-    if (!this.$route === '/desktop') return
+    console.log('this.route',this.$route.path)
+    if (!this.$route.path === '/desktop') return
     if (masterInterval) clearInterval(masterInterval)
     // masterInterval = setInterval(this.init, 10000)
     this.init()
