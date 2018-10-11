@@ -138,7 +138,7 @@ export default {
     global () {
       return gql`
         query {
-          allUsers(orderBy: tPower_DESC, first: 20, filter: { tPower_gt: 0 }) {
+          allUsers(orderBy: tPower_DESC first: 20) {
             username
             tagline
             tPower

@@ -16,9 +16,15 @@ div()
           .col-7.relative-position
             h6.light-paragraph Device Boid Power
               q-tooltip Boid Power is updated as each Work Unit is finished. Give it some time!
-            div(v-if="thisDevice.powerRatings[0]")
-              img(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
-              | {{thisDevice.powerRatings[0].power.toFixed(4)}}
+            div.relative-position(style="width:70%")
+              img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
+              div(style="padding-left:20px; padding-top:5px;")
+                div(v-if="thisDevice.powerRatings[0]") {{thisDevice.powerRatings[0].power.toFixed(4)}}
+                div(v-else)
+                  | 0.0
+                q-btn.absolute-right(flat @click="refreshDevice()")
+                  q-tooltip Refresh Device
+                  q-icon(name="refresh")
               
               // q-icon.text-center(v-if="toggle" color="yellow" name='flash_on' style="font-size:20px;")
               // q-icon.text-center(v-else color="grey-4" name='flash_off' style="font-size:20px;")
@@ -49,6 +55,10 @@ div()
         q-toggle.absolute-right(color="green" :disable="pending" style="padding:20px;" v-model="toggle")
   .layout-padding.relative-position(v-else)
     .text-center {{initStatus}}
+    div(style="padding-top:70px;")
+    q-btn.absolute-center(flat @click="refreshDevice()" big)
+      q-tooltip Refresh Device
+      q-icon(name="refresh")
 
 
   </template>
@@ -112,6 +122,15 @@ export default {
   },
   computed: {},
   methods: {
+    refreshDevice: async function(){
+        try {
+          this.init()
+        } catch (error) {
+          alert(error.message)
+          ec(error)
+          return
+        }
+    },
     openConfigModal() {
       this.$e.$emit('openBoincConfigModal', this.config)
     },
@@ -192,21 +211,23 @@ export default {
       if (window.local && this.authenticated) {
         setTimeout(() => {
           console.log("INIT")
-          // console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) 
+          console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) 
           if (this.initialized){
             if (masterInterval) clearInterval(masterInterval)
             masterInterval = setInterval(this.init, 180000)
           }
           this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
         }, 600)
+      }else{
+        throw('Not Authenticated, restart app')
       }
     }
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
   created() {
-    if (!this.$route === '/device6') return
+    if (!this.$route === '/desktop') return
     if (masterInterval) clearInterval(masterInterval)
-    masterInterval = setInterval(this.init, 10000)
+    // masterInterval = setInterval(this.init, 10000)
     this.init()
     if (window.local){
       this.ipcRenderer = window.local.ipcRenderer
@@ -220,7 +241,7 @@ export default {
         this.config = value
       })
       window.local.ipcRenderer.on('boinc.activeTasks', (event, activeTasks) => {
-        // console.log('got ACTIVETASKS',JSON.stringify(activeTasks))
+        console.log('got ACTIVETASKS',JSON.stringify(activeTasks))
         if (activeTasks) {
           this.activeTasks = activeTasks
         }

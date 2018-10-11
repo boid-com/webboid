@@ -425,19 +425,22 @@ export default {
     '$route.path'(path) {
       console.log(this.$route)
       if (path === '/device'){
-        this.$router.push('/device6')
+        this.$router.push('/desktop')
       }
       if (path === '/device2'){
-        this.$router.push('/device6')
+        this.$router.push('/desktop')
       }
       if (path === '/device3'){
-        this.$router.push('/device6')
+        this.$router.push('/desktop')
       }
       if (path === '/device4'){
-        this.$router.push('/device6')
+        this.$router.push('/desktop')
       }
       if (path === '/device5'){
-        this.$router.push('/device6')
+        this.$router.push('/desktop')
+      }
+      if (path === '/device6'){
+        this.$router.push('/desktop')
       }
       else if (this.$route.name === 'confirmPayoutAccount' ){
         // this.handleLogout()
@@ -471,7 +474,7 @@ export default {
             if (!this.local){
 
             }
-          }, 30000)
+          }, 60000)
         }
       } else {
         if (this.local) this.$router.push({ name: 'Auth' })
