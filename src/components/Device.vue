@@ -125,6 +125,7 @@ export default {
     refreshDevice: async function(){
         try {
           this.init()
+          window.local.ipcRenderer.send('boinc.activeTasks')
         } catch (error) {
           alert(error.message)
           ec(error)
@@ -320,9 +321,10 @@ export default {
           deviceStatus.status = 'ACTIVE'
           this.actionbg.backgroundColor = 'li'
           window.local.ipcRenderer.send('startBoinc')
+          window.local.ipcRenderer.send('boinc.activeTasks')
           clearInterval(this.deviceStatePoll)
           this.deviceStatePoll = setInterval(() => {
-            // console.log('request device active tasks')
+            console.log('request device active tasks')
             window.local.ipcRenderer.send('boinc.activeTasks')
           }, 15000)
         } else {
