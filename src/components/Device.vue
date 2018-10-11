@@ -183,7 +183,7 @@ export default {
               }
             }
           } catch (error) {
-            // clearInterval(this.deviceStatePoll)
+            // clear`l(this.deviceStatePoll)
             ec(error)
             // alert(error)
             // this.$e.$emit('logout')
@@ -231,7 +231,6 @@ export default {
     if (masterInterval) clearInterval(masterInterval)
     // masterInterval = setInterval(this.init, 10000)
     this.init()
-    console.log('local?',window.local)
     if (window.local){
       console.log('creating event emitters')
       this.ipcRenderer = window.local.ipcRenderer
@@ -245,7 +244,7 @@ export default {
         this.config = value
       })
       window.local.ipcRenderer.on('boinc.activeTasks', (event, activeTasks) => {
-        console.log('got ACTIVETASKS',JSON.stringify(activeTasks))
+        // console.log('got ACTIVETASKS',JSON.stringify(activeTasks))
         if (activeTasks) {
           this.activeTasks = activeTasks
         }
