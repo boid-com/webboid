@@ -15,7 +15,7 @@ div()
             img(style="opacity:.9; width:100px; height:100px; padding:15px;" src="statics/images/magnifyingglass.svg")
           .col-7.relative-position
             h6.light-paragraph Device Boid Power
-              q-tooltip Boid Power is updated as each Work Unit is finished. Give it some time!
+              q-tooltip Boid Power is updated as each Work Unit is finished. You only receive Boid Power after you hace completed at least one Work Unit first. Work Unit can take 6-12 hours to process, so be patient when starting.
             div.relative-position(style="width:70%")
               img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
               div(style="padding-left:20px; padding-top:5px;")
@@ -220,18 +220,20 @@ export default {
           this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
         }, 600)
       }else{
-        throw('Not Authenticated, restart app')
+        // throw('Not Authenticated, restart app')
       }
     }
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
-  created() {
-    console.log('this.route',this.$route.path)
-    if (!this.$route.path === '/desktop') return
+  mounted() {
+    console.log('this.route',this.$route.name)
+    if (!this.$route.name === 'Desktop') return
     if (masterInterval) clearInterval(masterInterval)
     // masterInterval = setInterval(this.init, 10000)
     this.init()
+    console.log('local?',window.local)
     if (window.local){
+      console.log('creating event emitters')
       this.ipcRenderer = window.local.ipcRenderer
       window.local.ipcRenderer.send('boinc.config.get')
       window.local.ipcRenderer.on('boinc.toggle', (event, toggle) => {
