@@ -2,7 +2,7 @@
 
  #q-app
     q-layout(color="" ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
-      q-toolbar.shadow-1(slot="header")
+      q-toolbar.shadow-1(slot="header") 
         q-toolbar-title(v-bind:class="{'cursor-pointer':notLocal}" style="font-family: 'Comfortaa', cursive;")
           | boid
           div(slot='subtitle') Alpha 0.0.3
@@ -21,6 +21,12 @@
           q-icon(name="home")
         q-btn(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
           | Login
+      
+      div.text-grey-8(style="padding:10px;") 
+        div.bg-orange-4(style="border-radius:30px; padding:20px;")
+          h5 Boid is currently under maintenance
+            h6 Boid Power ratings are frozen and new users/devices can not be added at this time.
+            h6 Your contributions are still being tracked.
       div.shadow-0(slot='left')
         q-list(no-border='', link='', inset-delimiter='')
           q-side-link(item='', to='/', exact='')
