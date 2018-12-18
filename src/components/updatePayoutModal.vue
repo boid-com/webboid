@@ -96,7 +96,7 @@ export default {
           const result = await this.api.auth.updatePayoutAccount(this.newPayoutAccount)
           this.pending = false
           console.log(result)
-          if (result.error) alert(result.error)
+          if (result.error) alert(result.error.message)
           else this.page = 1
         }
         else{

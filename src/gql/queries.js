@@ -19,6 +19,9 @@ export default {
         query User($userId: ID!) {
           User(id: $userId) {
             id
+            tPower
+            sPower
+            dPower
             email
             payoutAccount
             username
@@ -32,7 +35,7 @@ export default {
               id
               name
               status
-              powerRatings(last:1){power}
+              # powerRatings(last:1){power}
             }
             team {
               id
@@ -57,10 +60,10 @@ export default {
                 }
               }
             }
-            powerRatings(last: 1) {
-              power
-              meta
-            }
+            # powerRatings(last: 1) {
+            #   power
+            #   meta
+            # }
           }
         }
       `
@@ -101,9 +104,9 @@ export default {
             type
             meta
             wcgid
-            powerRatings(last: 1) {
-                power
-              }
+            # powerRatings(last: 1) {
+            #     power
+            #   }
           }
         }
       `
@@ -189,9 +192,9 @@ export default {
               count
             }
             owner {
-              powerRatings(last: 1) {
-                power
-              }
+              # powerRatings(last: 1) {
+              #   power
+              # }
               id
               username
               image

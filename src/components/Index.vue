@@ -27,7 +27,7 @@ div
                   .col-5
                     div.relative-position(style="padding-top: 10px;")
                       small.block.light-paragraph.small Total: 
-                      h5 {{userPower}} 
+                      h5 {{thisUser.tPower.toFixed(4)}}
                         //- p.text-center(v-if="!ch.toggle") Enable a device to generate Power
                         // q-icon.text-center( v-if="ch.toggle" color="yellow" name='flash_on' style="font-size:50px;")
                         // q-icon.text-center( v-else color="grey-4" name='flash_on' style="font-size:50px;")
@@ -137,7 +137,7 @@ div
                 q-item-main
                   q-item-tile(label style="user-select: none;") {{device.name}}
                   q-item-tile.relative-position(
-                    style="padding-left:15px;" sublabel v-if="device.powerRatings[0]"
+                    style="padding-left:15px;" sublabel v-if="device.powerRatings"
                     ) {{device.powerRatings[0].power.toFixed(4)}}
                     img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
                 div.absolute(style="width:190px; height:50px; left:180px; padding-top:8px;" v-show="browserDeviceToggle && device.type=='BROWSER'")

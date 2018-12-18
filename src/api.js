@@ -115,6 +115,7 @@ var api = {
     get: async function (userId) {
       try{
         var result = (await client.request(q.user.get(), { userId })).User
+        result.powerRatings = []
         // console.log('get user', result)
         if (window.local) window.local.thisUser = result
         events.emit('thisUser', result)
@@ -130,6 +131,7 @@ var api = {
     getByUsername: async function (username) {
       try {
         var result = (await client.request(q.user.getByUsername(), { username })).User
+        result.powerRatings = []
         return result
       } catch (error) {
         console.error(error)

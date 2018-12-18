@@ -10,7 +10,7 @@
           h4.text-black {{confirmAccount.accountName}}
       
     .row.justify-center
-      h6.text-weight-light.q-mb-md.text-grey-9(v-if="!confirmAccount") Login / Register
+      h6.text-weight-light.q-mb-md.text-grey-9(v-if="!confirmAccount") Login
     div(v-if="!emailForm")
       .row.justify-center(style="padding-top:30px")
         // .col-auto(v-for="login in socialLogins" :key="login.name")
@@ -30,7 +30,7 @@
           :error="$v.form.email.$error"
           stack-label="email"
           type="text"
-          @keyup.enter="join"
+          @keyup.enter="submit"
         )
         .q-ma-lg
         q-input(
@@ -40,7 +40,7 @@
           v-model="form.password"
           @blur="$v.form.password.$touch"
           :error="$v.form.password.$error"
-          @keyup.enter="join"
+          @keyup.enter="submit"
         )
         .col
           .row.justify-center.q-mt-sm(style="min-height:35px;")
@@ -54,7 +54,7 @@
           //-   q-icon.on-left(name="arrow_back")
           //-   | Back 
           
-          q-btn.text-center( v-if="!confirmAccount" big @click="join" style="margin-auto" :disabled="!loginRdy" invert color="green" size="lg") Go
+          q-btn.text-center( v-if="!confirmAccount" big @click="submit" style="margin-auto" :disabled="!loginRdy" invert color="green" size="lg") Go
             q-icon.on-right(name="arrow_forward")
           q-btn.text-center( v-else big @click="submit" style="margin-auto" :disabled="!loginRdy" invert color="green" size="lg") Confirm
             q-icon.on-right(name="arrow_forward")
