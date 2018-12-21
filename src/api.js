@@ -1,48 +1,44 @@
-import { GraphQLClient } from 'graphql-request'
 import EventEmitter from 'event-emitter'
 import m from 'gql/mutations.js'
 import q from 'gql/queries.js'
-import { error } from 'util';
+import Axios from 'axios' 
 
 var events = new EventEmitter()
 
-var gqlEndpoint = 'https://api.boid.com/simple/v1/cjjyr2gyf000i0192g53uoze3'
-var client = {}
+var baseURL = getEndpoint()
+var axios
 
-function setupClient (token) {
+function getEndpoint(){
+  if (process.env.NODE_ENV === 'development') return 'http://localhost:3000'
+  else return 'https://api.boid.com'
+}
+
+function setupAxios (token) {
   if (token) {
-    client = new GraphQLClient(gqlEndpoint, {
+    axios = Axios.create({
+      baseURL,
       headers: {
         Authorization: 'Bearer ' + token
       }
     })
-    // console.log(token)
   }
   else {
-    client = new GraphQLClient(gqlEndpoint)
+    axios = new Axios.create({baseURL})
   }
 }
-setupClient()
+setupAxios()
 
 var api = {
-  client,
+  axios,
   events,
   init () {
-    // if (window.local) {
-    //   console.log('need local token')
-    //   var token = window.local.ipcRenderer.sendSync('getTokenSync')
-    //   if (token) return true
-    //   else return false
-    // }
-    // else {
     if (JSON.parse(window.localStorage.getItem('rememberMe'))) {
-      setupClient(window.localStorage.getItem('token'))
+      setupAxios(window.localStorage.getItem('token'))
       return true
     }
     else {
       return false
     }
-    // }
   },
   auth: {
     validatePayoutAccountRequest: async function(requestId){
@@ -217,8 +213,10 @@ var api = {
     }
   },
   leaderboard: {
-    global: async function (teamId) {
-      return (await client.request(q.leaderboard.global(), { teamId }).catch(console.error)).allUsers
+    global: async function () {
+      const result = await axios.post('globalLeaderboard')
+      console.log(result)
+      return []
     },
     team: async function (teamId) {
       return (await client.request(q.leaderboard.team(), { teamId }).catch(console.error)).allUsers

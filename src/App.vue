@@ -195,8 +195,10 @@ export default {
       }
     },
     updateLeaderboards: async function() {
-      this.leaderboard = await this.api.leaderboard.global().catch(console.error)
-      this.teamLeaderboard = await this.api.leaderboard.teams().catch(console.error)
+      console.log("updateLeaderboards")
+      this.leaderboard = (await this.api.axios.post('/globalLeaderboard')).data
+      // this.teamLeaderboard = await this.api.leaderboard.teams().catch(console.error)
+      console.log(this.leaderboard)
       console.log('updateLeaderboard')
     },
     selectText(data) {
