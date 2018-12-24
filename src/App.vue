@@ -40,7 +40,11 @@
         q-route-tab(icon='list', :to='{name:"Leaderboards"}', exact='', slot='title')
         q-route-tab(v-if='thisUser.team' icon='fa-users', :to='{name:"Team",params:{teamname:thisUser.team.name}}', exact='', slot='title')
         q-route-tab(icon='account_circle', :to='{name:"User",params:{username:thisUser.username}}', exact='', slot='title')
-
+      div.text-grey-9() 
+        div.bg-orange-4(style="padding:20px;")
+          h5 Boid is currently under maintenance
+            h6 Boid Power ratings are frozen.
+            h6 Your contributions are still being tracked.
       .row.justify-center
         .col-12
           .row.justify-center
