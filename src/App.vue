@@ -21,12 +21,6 @@
           q-icon(name="home")
         q-btn(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
           | Login
-      
-      div.text-grey-8(style="padding:10px;") 
-        div.bg-orange-4(style="border-radius:30px; padding:20px;")
-          h5 Boid is currently under maintenance
-            h6 Boid Power ratings are frozen and new users/devices can not be added at this time.
-            h6 Your contributions are still being tracked.
       div.shadow-0(slot='left')
         q-list(no-border='', link='', inset-delimiter='')
           q-side-link(item='', to='/', exact='')
@@ -118,7 +112,6 @@ window.olark.identify('3844-769-10-6059')
 var coinhive = require('vue-coin-hive')
 import 'quasar-extras/animate'
 // import Chartist from "chartist"
-import api from './api'
 import { Loading, Toast } from 'quasar'
 import auth from '@/Auth.vue'
 import adBlocker from 'just-detect-adblock'
@@ -165,7 +158,7 @@ export default {
       thisUser: { team: { name: 'placeholder' } },
       thisTeam: {},
       thatUser: {},
-      api,
+      api:this.$api,
       userPoll: null,
       authenticated: false,
       showMenu: true,
@@ -195,11 +188,9 @@ export default {
       }
     },
     updateLeaderboards: async function() {
-      console.log("updateLeaderboards")
-      this.leaderboard = (await this.api.axios.post('/globalLeaderboard')).data
-      // this.teamLeaderboard = await this.api.leaderboard.teams().catch(console.error)
-      console.log(this.leaderboard)
-      console.log('updateLeaderboard')
+      this.leaderboard = await this.$api.globalLeaderboard().catch(console.error)
+      this.teamLeaderboard = await this.$api.teamsLeaderboard().catch(console.error)
+
     },
     selectText(data) {
       this.$refs.socialLink.select()
@@ -212,7 +203,6 @@ export default {
       this.showMenu = !event
     },
     handleLogin() {
-      // this.$e.$emit('openAuthModal',false)
       this.$refs.authModal.open()
     },
     // handleRegister(){
@@ -220,40 +210,39 @@ export default {
     // },
     handleLogout() {
       Loading.show({ delay: 0 })
-      api.auth.logout()
+      this.$api.logout()
       // if (!this.local) location.reload()
       this.authenticated = false
       this.thisUser = {}
       Loading.hide()
-      // this.$nextTick(function () {
-      //   this.$refs.authModal.open()
-      // })
+      if(this.local) {
+        this.$nextTick(function () {
+          this.$e.$emit('openAuthModal')
+        })
+      }
     },
     init: async function(id) {
-      // window.localStorage.clear()
       if (!id) {
-        if (this.api.init()) {
-          if (window.localStorage.getItem('id')) {
-            var userData = await this.api.user.get(window.localStorage.getItem('id'))
-            if (userData) (this.thisUser = userData), (this.authenticated = true)
-            this.pending = false
-          }
-        } else {
+        id = this.$api.localUser()
+        console.log('id here:',id)
+        if (id) return this.init(id)
+        else {
           this.pending = false
-        }
-      } else {
-        var userData = await this.api.user.get(id)
-        this.pending = false
-        if (userData) {
-          this.pending = false
-        } else {
-          this.pending = false
-        }
+          this.authenticated = false
+          if (this.local) this.handleLogin()
+          return}
       }
-    }
+      const userData = await this.$api.getUser({id})
+      console.log('userData from Init',userData)
+      if (!userData) return
+      this.thisUser = userData
+      this.pending = false
+      this.authenticated = true
+      Loading.hide()
+      }
   },
-  mounted: async function() {1
-    if (this.local && !this.authenticated) this.handleLogin()
+  mounted: async function() {
+    // if (this.local && !this.authenticated) this.handleLogin()
     if (this.local) this.ipcRenderer = window.local.ipcRenderer
     setTimeout(() => {
       this.pending = false
@@ -273,20 +262,6 @@ export default {
       // this.$refs.authModal.open()
     })
     var that = this
-
-    this.api.events.on('thisUser', data => {
-      if (this.$route.name === 'confirmPayoutAccount' ){
-        console.log('we should not be here',this.$route.name)
-        // this.handleLogout()
-        // this.handleLogin()
-        return
-      }
-      console.log('USERDATA')
-      this.thisUser = data
-      this.authenticated = true
-      // if (this.$refs.authModal) this.$refs.authModal.close()
-      Loading.hide()
-    })
     if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
   },
   created() {
@@ -296,8 +271,8 @@ export default {
       
       }
     if (!this.local) {
-      this.updateLeaderboards().catch(console.error)
-      setInterval(this.updateLeaderboards, 128000)
+        this.updateLeaderboards().catch(console.error)
+        setInterval(this.updateLeaderboards, 128000)
     }
     this.$root.$on('browserDeviceThrottle',(input)=>{
       if (miner){
@@ -364,19 +339,17 @@ export default {
       this.thatUser = value
       console.log(this.thatUser)
     })
-    this.$e.$on('refreshUser', () => {
-      // console.log('got Refreshuser')
+    this.$e.$on('refreshUser', (id) => {
+      console.log('got Refreshuser')
       this.updateLeaderboards()
-      this.init(this.thisUser.id).catch(err => {
-        console.log(err)
-      })
+      if (id) this.init(id)
+      else this.init(this.thisUser.id)
     })
     this.$e.$on('showInfoModal', data => {
       this.infoModal = data
       this.$refs.infoModal.open()
     })
     this.$e.$on('openAuthModal', () => {
-      console.log('hello')
       this.handleLogin()
     })
     this.$e.$on('thisTeam', data => {
@@ -431,7 +404,6 @@ export default {
   },
   watch: {
     '$route.path'(path) {
-      console.log(this.$route)
       if (path === '/device'){
         this.$router.push('/desktop')
       }
@@ -463,10 +435,10 @@ export default {
     authenticated(authed) {
       this.pending = false
       if (authed) {
-        // console.log('checking Local:', this.local)
-        if (this.local) this.$router.push({ name: 'Device' })
+        if (this.local) this.$router.push({ name: 'Desktop' })
+        console.log('close authModal')
+        this.$refs.authModal.close()
         this.menuBreakpoint = 1200
-        console.log('THIS USER',this.thisUser)
         if (window.olark) {
           window.olark('api.visitor.updateFullName', {
             fullName: this.thisUser.username
@@ -480,12 +452,13 @@ export default {
           this.userPoll = setInterval(() => {
             this.init(this.thisUser.id)
             if (!this.local){
-
             }
-          }, 60000)
+          }, 120000)
         }
       } else {
-        if (this.local) this.$router.push({ name: 'Auth' })
+
+        // if(this.local)this.$refs.authModal.open()
+        // if (this.local) this.$router.push({ name: 'Auth' })
         clearInterval(this.userPoll)
         this.userPoll = null
         this.menuBreakpoint = 0

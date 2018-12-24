@@ -121,7 +121,7 @@ export default {
       this.explainWebDevice = true
       this.slideShow()
       if (this.thisUser.devices.some((el)=>{return el.type==="BROWSER"})) return
-      var result = await this.api.device.add({name:"This Browser",type:"BROWSER"}).catch(console.log)
+      var result = await this.$api.addDevice({name:"This Browser",type:"BROWSER"}).catch(console.log)
       this.$e.$emit('refreshUser')
       // console.log(result)
     },

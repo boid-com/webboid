@@ -89,7 +89,7 @@ export default {
 
   },
   created(){
-    this.$e.$on('userUpdated',()=>{
+    this.$e.$once('userUpdated',()=>{
       console.log('userUpdated',this.myProfile,this.$route.params.username)
     })
   },

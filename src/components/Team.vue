@@ -21,7 +21,7 @@
       q-card.animate-scale(style="min-width:70px;")
         //- p.light-paragraph.text-center Members
         div.relative-position(style="margin:auto; margin-top:30px")
-          p.text-center(style="z-index:5;") {{parseInt(team._membersMeta.count)}}
+          p.text-center(style="z-index:5;") {{parseInt(team.activeUsers)}}
             q-icon.text-center.absolute-center(color="green-1" name='fa-users' style="font-size:50px; z-index:-4;")
           q-tooltip Team Members
       q-card(v-if="team.owner")
@@ -32,7 +32,7 @@
             q-item-tile(label) {{team.owner.username}}
             q-item-tile(sublabel) {{team.owner.tagline}}
           q-item-side(right icon="flash_on" stamp="") 
-            small.text-center {{parseInt(team.owner.powerRatings[0].power)}}
+            small.text-center {{parseInt(team.owner.tPower)}}
   .row.gutter.justify-center
     .col
       q-card.animate-scale
@@ -67,41 +67,26 @@ export default {
   name: 'index',
   data() {
     return {
-      team: {
-        id:null,
-        _membersMeta: {
-          count: 0
-        },
-        owner: {
-          image: '',
-          username: 'placeholder',
-          tagline: '',
-          powerRatings: [
-            {
-              power: 0
-            }
-          ]
-        }
-      },
+      team: {},
       leaderboard: []
     }
   },
   computed: {},
   methods: {
     setupLeaderboard: async function() {
-      this.leaderboard = await this.api.leaderboard.team(this.team.id)
-      console.log('Team Leaderboard:', this.leaderboard)
+      if (this.leaderboard.length > 0) console.log('found leaderboard already')
+      this.leaderboard = await this.$api.teamLeaderboard({id:this.team.id})
     }
   },
   watch: {
     team(val) {
-      console.log('gotTeam', val)
+      this.setupLeaderboard()
     }
   },
   created() {
-    this.$e.$on('team', team => {
+    console.log('team created')
+    this.$e.$once('team', team => {
       this.team = team
-      this.setupLeaderboard()
     })
   },
   props: ['thisUser', 'api', 'authenticated']

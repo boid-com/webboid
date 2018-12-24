@@ -35,7 +35,6 @@ export default {
               id
               name
               status
-              # powerRatings(last:1){power}
             }
             team {
               id
@@ -60,10 +59,6 @@ export default {
                 }
               }
             }
-            # powerRatings(last: 1) {
-            #   power
-            #   meta
-            # }
           }
         }
       `

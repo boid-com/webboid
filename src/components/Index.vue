@@ -31,11 +31,11 @@ div
                         //- p.text-center(v-if="!ch.toggle") Enable a device to generate Power
                         // q-icon.text-center( v-if="ch.toggle" color="yellow" name='flash_on' style="font-size:50px;")
                         // q-icon.text-center( v-else color="grey-4" name='flash_on' style="font-size:50px;")
-                      div(v-if="thisUser.powerRatings[0]")
+                      div
                         small.block.light-paragraph.small From Devices: 
-                        p.light-paragraph {{thisUser.powerRatings[0].meta.devices.toFixed(4)}}
+                        p.light-paragraph {{thisUser.dPower.toFixed(4)}}
                         small.block.light-paragraph From Social: 
-                        p.light-paragraph {{thisUser.powerRatings[0].meta.social.toFixed(4)}}
+                        p.light-paragraph {{thisUser.sPower.toFixed(4)}}
             .col-xs-12.col-sm-6.col-md-12
               q-card.animate-scale.relative-position
                 q-btn.absolute.infobtn(round small flat)
@@ -85,8 +85,8 @@ div
                   tbody(v-for="token in thisUser.wallet.tokens" :key="token.id")
                     tr.tokenlist.cursor-pointer()
                       td 
-                        img.tokenimg(:src="token.tokenType.image")
-                      td {{token.tokenType.name}}
+                        img.tokenimg(:src="token.type.image")
+                      td {{token.type.name}}
                       td 
                         small Pending 
                         p {{token.balance.toFixed(4)}} 
@@ -164,14 +164,14 @@ div
                 q-inner-loading(:visible="device.pending")
                   q-spinner(size="30px" color="blue")
                   //- | {{device.toggle}}
-                q-item-side.relative-position(right)
-                  q-btn.absolute-center(
-                    flat color="red-5" 
-                    style="right:-17px; padding:5px; margin-left:20px;"
-                    @click="$root.$emit('modal.removeDevice',true,device)"
-                    )
-                    q-tooltip Remove Device
-                    q-icon(name="close" color="grey-5")
+                //- q-item-side.relative-position(right)
+                //-   q-btn.absolute-center(
+                //-     flat color="red-5" 
+                //-     style="right:-17px; padding:5px; margin-left:20px;"
+                //-     @click="$root.$emit('modal.removeDevice',true,device)"
+                //-     )
+                //-     q-tooltip Remove Device
+                //-     q-icon(name="close" color="grey-5")
               q-item.relative-position.bg-red(v-else color="red" style="height:80px")
                 h5.text-white Disable AdBlock and refresh to continue
 

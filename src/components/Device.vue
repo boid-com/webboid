@@ -19,7 +19,7 @@ div()
             div.relative-position(style="width:70%")
               img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
               div(style="padding-left:20px; padding-top:5px;")
-                div(v-if="thisDevice.powerRatings[0]") {{thisDevice.powerRatings[0].power.toFixed(4)}}
+                div(v-if="thisDevice.power") {{thisDevice.power.toFixed(4)}}
                 div(v-else)
                   | 0.0
                 q-btn.absolute-right(flat @click="refreshDevice()")
@@ -153,14 +153,14 @@ export default {
       } else {
         if (localDevice.cpid) {
           try {
-            var result = await this.api.device.getByCpid(localDevice.cpid).catch(ec)
+            var result = await this.$api.getDevice({cpid:localDevice.cpid}).catch(ec)
             console.log('RESULT FROM CHECK',result)
             if (!result) return
             if (result === 'none'){
               console.log('device does not exist, User can claim device')
               try {
-                var newDevice = await this.api.device.add(setupDevice(localDevice)).catch(ec)
-                this.thisDevice = await this.api.device.get(newDevice.id).catch(ec)
+                var newDevice = await this.$api.addDevice(setupDevice(localDevice)).catch(ec)
+                this.thisDevice = await this.$api.getDevice({id:newDevice.id}).catch(ec)
                 console.log("INITIALIZED TRUE")
                 this.initialized = true
               } catch (error) {
@@ -170,9 +170,9 @@ export default {
               }
             } else {
               if (result.owner.id === this.thisUser.id) {
-                // console.log('this device is owned by this user')
+                console.log('this device is owned by this user')
                 try {
-                  this.thisDevice = await this.api.device.get(result.id)
+                  this.thisDevice = await this.$api.getDevice({id:result.id})
                 } catch (error) {
                   ec(error)
                   return
@@ -196,13 +196,13 @@ export default {
         }
         if (localDevice.wcgid) {
           if (localDevice.wcgid == 0) return
-           if (localDevice.wcgid == "0") return
+          if (localDevice.wcgid == "0") return
           if (this.thisDevice.wcgid === localDevice.wcgid) return
           else {
-            var result = await this.api.device.updateWcgid({
+            var result = await this.$api.updateDevice({
               deviceId: this.thisDevice.id,
               wcgid: localDevice.wcgid
-            })
+            }).catch(console.error)
             console.log(result)
           }
         }
@@ -244,7 +244,7 @@ export default {
         this.config = value
       })
       window.local.ipcRenderer.on('boinc.activeTasks', (event, activeTasks) => {
-        // console.log('got ACTIVETASKS',JSON.stringify(activeTasks))
+        console.log('got ACTIVETASKS',JSON.stringify(activeTasks))
         if (activeTasks) {
           this.activeTasks = activeTasks
         }
@@ -328,7 +328,7 @@ export default {
           this.deviceStatePoll = setInterval(() => {
             console.log('request device active tasks')
             window.local.ipcRenderer.send('boinc.activeTasks')
-          }, 15000)
+          }, 200000)
         } else {
           deviceStatus.status = 'ONLINE'
           this.actionbg.backgroundColor = 'white'
@@ -340,7 +340,7 @@ export default {
         ec(error)
 
       } finally {
-        this.thisDevice = await this.api.device.get(this.thisDevice.id).catch(ec)
+        this.thisDevice = await this.getDevice({id:this.thisDevice.id}).catch(ec)
         this.pending = false
       }
     }

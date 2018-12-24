@@ -85,9 +85,9 @@ export default {
           }
         },
         username: {     
-          checkUsername: async function(value){
-            if (value === '') return true
-            var result = (await this.api.user.checkValidUsername(value))
+          checkUsername: async function(username){
+            if (username === '') return true
+            var result = (await this.$api.checkUsername({username}))
             return !result
           }
         }
@@ -116,17 +116,17 @@ export default {
       
       var params = {}
 
-      params.userId = this.thisUser.id
+      params.id = this.thisUser.id
       
       if (this.form.username != '') params.username = this.form.username
-      if (this.form.imageURL != '') params.imageURL = this.form.imageURL 
+      if (this.form.imageURL != '') params.image = this.form.imageURL 
       if (this.form.tagline != '') params.tagline = this.form.tagline
-      
-      var result = (await this.api.user.updateProfile(params))
+      console.log('formParams',params)
+      var result = (await this.$api.updateUserProfile(params))
       console.log(result)
 
-      if (result.error){
-        Toast.create.negative(result.error)
+      if (result.invalid){
+        Toast.create.negative(result.invalid)
         setTimeout(()=>{
           this.pending=false
         },1500)

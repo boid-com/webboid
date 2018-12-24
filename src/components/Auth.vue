@@ -10,7 +10,7 @@
           h4.text-black {{confirmAccount.accountName}}
       
     .row.justify-center
-      h6.text-weight-light.q-mb-md.text-grey-9(v-if="!confirmAccount") Login
+      h6.text-weight-light.q-mb-md.text-grey-9(v-if="!confirmAccount") Login / Register
     div(v-if="!emailForm")
       .row.justify-center(style="padding-top:30px")
         // .col-auto(v-for="login in socialLogins" :key="login.name")
@@ -53,9 +53,11 @@
           //- q-btn.text-center( big @click="emailForm = false" flat style="margin-auto" invert color="blue")
           //-   q-icon.on-left(name="arrow_back")
           //-   | Back 
-          
-          q-btn.text-center( v-if="!confirmAccount" big @click="submit" style="margin-auto" :disabled="!loginRdy" invert color="green" size="lg") Go
+          q-btn.text-center.on-left( v-if="!confirmAccount" big @click="join" style="margin-auto" :disabled="!loginRdy" color="blue" size="lg") Register
+            q-icon.on-right(name="edit")  
+          q-btn.text-center( v-if="!confirmAccount" big @click="submit" style="margin-auto" :disabled="!loginRdy" invert color="green" size="lg") Login
             q-icon.on-right(name="arrow_forward")
+
           q-btn.text-center( v-else big @click="submit" style="margin-auto" :disabled="!loginRdy" invert color="green" size="lg") Confirm
             q-icon.on-right(name="arrow_forward")
     q-inner-loading(:visible="pending")
@@ -71,6 +73,12 @@ import { Toast } from 'quasar'
 Toast.setDefaults({
   timeout: 10000,
 })
+function loginUser(that,result){
+  that.$api.setupAxios(result.token)
+  window.localStorage.setItem('token',result.token)
+  window.localStorage.setItem('id',result.id)
+  that.$e.$emit('refreshUser',result.id)
+}
 export default {
   data() {
     return {
@@ -101,6 +109,7 @@ export default {
         }
       ],
       modal: false,
+      register:false,
       localAuth: false,
       form: {
         email: '',
@@ -135,20 +144,16 @@ export default {
         return
       }
       this.pending = true
-
-      // delete this.form.invitedById
-      var result = await this.api.auth.login(this.form)
-      if (result.error) {
-        Toast.create.negative(result.error)
+      var result = await this.$api.authenticateUser(this.form)
+      if (result.invalid) {
+        Toast.create.negative(result.invalid)
         setTimeout(() => {
           this.pending = false
         }, 1500)
       } else {
         if (this.confirmAccount) this.$router.push('/')
         console.log('loginResult', result)
-        var userData = await this.api.user.get(result.id).catch(console.log)
-        this.$emit('update:thisUser', userData)
-        this.$emit('update:authenticated', true)
+        loginUser(this,result)
         if (this.confirmAccount){
           var validateRequest = await this.api.auth.validatePayoutAccountRequest(this.confirmAccount.requestId).catch(console.log)
           console.log(validateRequest)
@@ -173,12 +178,11 @@ export default {
         }
         this.pending = false
         if (this.localAuth) {
-          window.local.ipcRenderer.sendToHost('token', result)
-          window.local.ipcRenderer.sendToHost('user', userData)
+          // window.local.ipcRenderer.sendToHost('token', result)
+          // window.local.ipcRenderer.sendToHost('user', userData)
           if (this.form.device) {
             console.log('ready to check user device!!!!!!', this.form.device)
           }
-          // $router.push({name:'Team',params:{teamname:thisUser.team.name}})
         } 
       }
     },
@@ -191,21 +195,15 @@ export default {
       this.pending = true
       if (this.invitedByUser) this.form.invitedById = this.invitedByUser.id
       console.log('this form', this.form)
-      var result = await this.api.auth.authenticateUser(this.form)
-      console.log(result)
-      if (result.error) {
-        if (result.error.search('already registered') > -1){
-          return this.submit()
-        }
-        Toast.create.negative(result.error)
+      const newUserData = await this.$api.signUpUser(this.form)
+      console.log('newUserData',newUserData)
+      if (newUserData.invalid) {
+        Toast.create.negative(newUserData.invalid)
         setTimeout(() => {
           this.pending = false
         }, 1500)
       } else {
-        console.log('we are here')
-        var userData = await this.api.user.get(result.id)
-        this.$emit('update:thisUser', userData)
-        this.$emit('update:authenticated', true)
+        loginUser(this,newUserData)
         this.pending = false
         this.thisModal.close()
         this.$nextTick(function() {
@@ -236,12 +234,13 @@ export default {
     if (window.local) {
       console.log("FOUND WINDOW.LOCAL")
       this.localAuth = true
+
     }
     if (window.localStorage.getItem('rememberMe') === null) window.localStorage.setItem('rememberMe', 'true')
-    else this.rememberMe = JSON.parse(window.localStorage.getItem('rememberMe'))
+    this.rememberMe = JSON.parse(window.localStorage.getItem('rememberMe'))
     var username = window.localStorage.getItem('invitedBy')
     if (username) {
-      var user = await this.api.user.getByUsername(username)
+      var user = await this.$api.getUser({username})
       if (!user) return localStorage.removeItem('invitedBy')
       if (this.thisUser.id === user.id) return
       this.form.invitedById = user.id
@@ -249,7 +248,7 @@ export default {
     }
 
     this.$e.$on('openAuthModal', val => {
-      console.log(val)
+      this.register = val
       this.pending = false
       this.form = {
         email: '',
@@ -277,7 +276,7 @@ export default {
     },
     '$route.params.username': async function(username) {
       if (!username) return
-      var user = await this.api.user.getByUsername(username)
+      var user = await this.$api.getUser({username})
       if (!user) return this.$router.push('/')
       this.$e.$emit('thatUser', user)
       console.log('on User Page', user.username)
@@ -289,9 +288,10 @@ export default {
     '$route.params.teamname': async function(teamname) {
       if (!teamname) return
       console.log('found Teamname', teamname)
-      var team = await this.api.team.getByName(teamname)
+      var team = await this.$api.getTeam({name:teamname})
+      console.log('TEAM DATA:',team)
       if (!team) return
-      console.log(team)
+      this.team = team
       this.$e.$emit('team', team)
       if (!team.owner) return
       this.invitedByUser = team.owner
