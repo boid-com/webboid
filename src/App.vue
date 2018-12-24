@@ -5,7 +5,7 @@
       q-toolbar.shadow-1(slot="header") 
         q-toolbar-title(v-bind:class="{'cursor-pointer':notLocal}" style="font-family: 'Comfortaa', cursive;")
           | boid
-          div(slot='subtitle') Alpha 0.0.3
+          div(slot='subtitle') Alpha 0.0.4
         q-btn.text-black(@click='' flat v-if="authenticated", color='light')
           .on-right
             | {{thisUser.username}}
@@ -40,10 +40,13 @@
         q-route-tab(icon='list', :to='{name:"Leaderboards"}', exact='', slot='title')
         q-route-tab(v-if='thisUser.team' icon='fa-users', :to='{name:"Team",params:{teamname:thisUser.team.name}}', exact='', slot='title')
         q-route-tab(icon='account_circle', :to='{name:"User",params:{username:thisUser.username}}', exact='', slot='title')
-      div.text-grey-9() 
+      div.text-grey-9(ref="warningBanner" v-if="showWarningBanner") 
         div.bg-orange-4(style="padding:20px;")
+          q-btn.infobtn.absolute-top-right( style="right:40px; top:20px;" size="30px" color='blue' flat round @click="showWarningBanner = false")
+            q-icon(color='grey-7' name="close")
           h5 Boid is currently under maintenance
             h6 Boid Power ratings are frozen.
+            h6 Token payouts and wallets are frozen.
             h6 Your contributions are still being tracked.
       .row.justify-center
         .col-12
@@ -150,6 +153,7 @@ export default {
         found:null,
         accepted:null
       },
+      showWarningBanner:true,
       boincConfigData: defaultConfig,
       thisDevice: null,
       leaderboard: null,

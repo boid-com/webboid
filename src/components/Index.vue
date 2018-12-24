@@ -77,7 +77,7 @@ div
                       td {{thisUser.team.name}}
           .row
             .col-xs-12.col-sm-6.col-md-12
-              q-card.animate-scale.relative-position
+              q-card.animate-scale.relative-position(v-if="false")
                 q-btn.absolute.infobtn(round small flat)
                   q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.wallet)")
                 p.light-paragraph.text-center Wallet
@@ -111,7 +111,7 @@ div
                  
             .col-xs-12.col-sm-6.col-md-12
               div
-                q-card.animate-scale.relative-position
+                q-card.animate-scale.relative-position(v-if="false")
                   q-btn.absolute.infobtn(round small flat)
                     q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.wallet)")
                   p.light-paragraph.text-center Inventory
