@@ -20,7 +20,7 @@
     "babel-runtime": "^6.25.0",
     "coin-hive": "^1.9.3",
     "crypto-js": "^3.1.9-1",
-    "eosjs": "^20.0.0-beta3",
+    "eosjs": "^20.0.0-beta2",
     "event-emitter": "^0.3.5",
     "eventlistener": "0.0.1",
     "express": "^4.16.0",
