@@ -203,7 +203,7 @@ import bHeader from '@/Header'
 var info = {
   wallet: {
     heading: 'Your Wallet',
-    body: `Tokens and coins that you earn will show up here, during the Alpha, only BOIDs are generated. Soon you will be able to earn other coins as well.`
+    body: `Earned Tokens show up here, during the Alpha, only BOIDs are generated. Soon you will be able to earn other coins as well.`
   },
   power: {
     heading: 'Boid Power',
@@ -216,7 +216,7 @@ var info = {
   },
   team: {
     heading: 'Your Team',
-    body: `Your power generated goes towards your team, in eachange, each team will distribute exclusive rewards. 
+    body: `Power you generate goes towards your team, in exchange, each team will distribute exclusive rewards. 
           You are automatically on the team of the user who has invited you.`
   },
   social: {
@@ -326,7 +326,7 @@ export default {
 p
   margin-bottom 0px
 
-h5
+h5     
   font-family: 'Comfortaa', cursive;  
   font-size: 20px 
   @media screen and (max-width 500px)
