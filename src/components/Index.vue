@@ -62,8 +62,18 @@ div
                 div(style="padding-left:5px")
                   p.light-paragraph.text-truncate(v-if="!thisUser.tagline") No tagline set...
                   p.text-truncate(v-else) {{thisUser.tagline}}
-                q-btn.full-width(outline color="blue" @click="$e.$emit('openProfileEditModal')")
-                  | Update profile
+                div
+                  .row.justify-between
+                    .col-9  
+                      div
+                        q-btn.full-width(outline color="blue" @click="$e.$emit('openProfileEditModal')")
+                          | Update profile
+                    .col-2
+                      div
+                        q-btn.full-width.on-right(outline color="grey-8" 
+                        @click="$e.$emit('openAccountEditModal')")
+                          q-icon(name="settings")
+                          q-tooltip Update Account
             .col-xs-12.col-sm-6.col-md-12
               q-card.animate-scale.relative-position(v-if='thisUser.team' )
                 q-btn.absolute.infobtn(round small flat)

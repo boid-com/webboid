@@ -84,7 +84,6 @@ export default {
     }
   },
   created() {
-    console.log('team created')
     this.$e.$once('team', team => {
       this.team = team
     })

@@ -21,7 +21,7 @@
           q-icon(name="home")
         q-btn(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
           | Login
-      div.shadow-0(slot='left')
+      div.shadow-0(slot='left' v-if="showSideMenu")
         q-list(no-border='', link='', inset-delimiter='')
           q-side-link(item='', to='/', exact='')
             q-item-side(icon='home')
@@ -80,8 +80,10 @@
             | done
       q-modal.shadow-3(ref="authModal" @close="showOlark(true)" @open="showOlark(false)")
         auth(:api='api' :authenticated.sync="authenticated" :thisUser.sync="thisUser" :thisModal="$refs.authModal" )
-      q-modal.shadow-3(ref="profileEditModal")
+      q-modal.shadow-3(ref="profileEditModal" @close="showOlark(true)" @open="showOlark(false)")
         profileEdit(:thisUser="thisUser" :api="api" :thisModal="$refs.profileEditModal")
+      q-modal.shadow-3(ref="accountEditModal" @close="showOlark(true)" @open="showOlark(false)")
+        accountEdit(:thisUser="thisUser" :thisModal="$refs.accountEditModal")
       q-modal.shadow-3(ref="boincConfigModal" @close="showOlark(true)" @open="showOlark(false)" )
         .layout-padding
           boincConfig(:config="boincConfigData" :thisModal="$refs.boincConfigModal")
@@ -126,6 +128,7 @@ import profileEdit from '@/ProfileEdit.vue'
 import boincConfig from '@/BoincConfig.vue'
 import addDeviceModal from '@/addDeviceModal.vue'
 import removeDeviceModal from '@/removeDeviceModal.vue'
+import accountEdit from '@/AccountEdit.vue'
 import nueModal from '@/nueModal.vue'
 import bFooter from '@/Footer.vue'
 import updatePayoutModal from '@/updatePayoutModal.vue'
@@ -145,6 +148,7 @@ var CPUCores = navigator.hardwareConcurrency
 export default {
   data() {
     return {
+      showSideMenu:true,
       ipcRenderer:null,
       ch:{
         toggle:false,
@@ -168,7 +172,7 @@ export default {
       thatUser: {},
       api:this.$api,
       userPoll: null,
-      authenticated: false,
+      authenticated: null,
       showMenu: true,
       menuBreakpoint: 0,
       menuStyle: {
@@ -247,6 +251,14 @@ export default {
       this.pending = false
       this.authenticated = true
       Loading.hide()
+      }, hideAllMenus(val){
+        if (val){
+          this.showMenu = false
+          this.showSideMenu = false
+        }else{
+          if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
+          this.showSideMenu = true
+        }
       }
   },
   mounted: async function() {
@@ -342,6 +354,9 @@ export default {
       }
 
     })
+    this.$root.$on('hideAllMenus',val =>{
+      this.hideAllMenus(val)
+    })
     this.$e.$on('thatUser', value => {
       console.log('thatUser', value)
       this.thatUser = value
@@ -365,6 +380,9 @@ export default {
     })
     this.$e.$on('openProfileEditModal', () => {
       this.$refs.profileEditModal.open()
+    })
+    this.$e.$on('openAccountEditModal', () => {
+      this.$refs.accountEditModal.open()
     })
     this.$e.$on('openSocialModal', () => {
       this.$refs.socialModal.open()
@@ -403,6 +421,7 @@ export default {
     auth,
     coinhive,
     profileEdit,
+    accountEdit,
     boincConfig,
     addDeviceModal,
     removeDeviceModal,
@@ -411,6 +430,10 @@ export default {
     updatePayoutModal
   },
   watch: {
+    '$route.name'(name){
+      if (name === "ChangeAccount") this.hideAllMenus(true)
+      else this.hideAllMenus(false)
+    },
     '$route.path'(path) {
       if (path === '/device'){
         this.$router.push('/desktop')
