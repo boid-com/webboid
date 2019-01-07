@@ -6,21 +6,22 @@
         q-toolbar-title(v-bind:class="{'cursor-pointer':notLocal}" style="font-family: 'Comfortaa', cursive;")
           | boid
           div(slot='subtitle') Alpha 0.0.4
-        q-btn.text-black(@click='' flat v-if="authenticated", color='light')
-          .on-right
-            | {{thisUser.username}}
-          q-icon.on-right(name="account_circle")
-          q-popover(ref='profileMenu' anchor="bottom right" self="top right")
-            q-item(link @click='handleLogout()')
-              | Logout
-            q-item(link v-if="!local" @click='$router.push({name:"User",params:{username:thisUser.username}}),$refs.profileMenu.close()')
-              | My Profile
-            q-item(link v-else @click="ipcRenderer.send('openURL','https://app.boid.com/u/'+thisUser.username)")
-              | My Profile
-        q-btn( v-if="local" flat style="margin-right:10px;" @click="ipcRenderer.send('openURL','https://app.boid.com')")
-          q-icon(name="home")
-        q-btn(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
-          | Login
+        div(v-if="loginVisible")
+          q-btn.text-black(@click='' flat v-if="authenticated", color='light')
+            .on-right
+              | {{thisUser.username}}
+            q-icon.on-right(name="account_circle")
+            q-popover(ref='profileMenu' anchor="bottom right" self="top right")
+              q-item(link @click='handleLogout()')
+                | Logout
+              q-item(link v-if="!local" @click='$router.push({name:"User",params:{username:thisUser.username}}),$refs.profileMenu.close()')
+                | My Profile
+              q-item(link v-else @click="ipcRenderer.send('openURL','https://app.boid.com/u/'+thisUser.username)")
+                | My Profile
+          q-btn( v-if="local" flat style="margin-right:10px;" @click="ipcRenderer.send('openURL','https://app.boid.com')")
+            q-icon(name="home")
+          q-btn(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
+            | Login
       div.shadow-0(slot='left' v-if="showSideMenu")
         q-list(no-border='', link='', inset-delimiter='')
           q-side-link(item='', to='/', exact='')
@@ -85,7 +86,7 @@
       q-modal.shadow-3(ref="accountEditModal" @close="showOlark(true)" @open="showOlark(false)")
         accountEdit(:thisUser="thisUser" :thisModal="$refs.accountEditModal")
       q-modal.shadow-3(ref="boincConfigModal" @close="showOlark(true)" @open="showOlark(false)" )
-        .layout-padding
+        .layout-padding1
           boincConfig(:config="boincConfigData" :thisModal="$refs.boincConfigModal")
       q-modal.position-relative(ref="socialModal")
         div(style="max-width: 800px;")
@@ -150,6 +151,7 @@ export default {
     return {
       showSideMenu:true,
       ipcRenderer:null,
+      loginVisible:true,
       ch:{
         toggle:false,
         hps: "loading",
@@ -255,9 +257,11 @@ export default {
         if (val){
           this.showMenu = false
           this.showSideMenu = false
+          this.loginVisible = false
         }else{
           if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
           this.showSideMenu = true
+          this.loginVisible = true
         }
       }
   },

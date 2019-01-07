@@ -2,15 +2,15 @@
   div(style="padding:30px; max-width: 550px; min-width:350px;").relative-position
     div
       
-      div(v-if="!authenticated")
+      div(v-if="false")
         h4.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:35px;") Update Account
         h4.text-center You need to login to proceed
         .row.justify-center
           q-btn(color="green" @click="$e.$emit('openAuthModal')") Login
-      //- div(v-else-if="finished")
-      //-   h5.text-center {{finishedMessage}}
-      //-   .row.justify-center
-      //-     q-btn(@click="$router.push('/')") Continue
+      div(v-else-if="finished")
+        h5.text-center {{finishedMessage}}
+        .row.justify-center
+          q-btn(@click="$router.replace('/')") Continue
       div(v-else-if="changeType ==='PASSWORD'")
         h4.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:25px;") Change Password
         //- .small.text-grey-9 Change Account Password
@@ -64,13 +64,13 @@ async function executeAccountChange(v,newData){
       if(!finished) return alert('there was a problem')
       else if (finished.invalid) {
         Toast.create.negative(finished.invalid)
-        v.$router.push('/')
+        v.$router.replace('/')
       }
-      else if (finished.success=== true){
+      else if (finished.success === true){
         v.finished = true
         v.finishedMessage = finished.message
-        Toast.create.positive(finished.message)
-        v.$router.push('/')
+        // Toast.create.positive(finished.message)
+        // v.$router.replace('/')
       }
     }
   } catch (error) {
@@ -87,7 +87,7 @@ export default {
     return {
       initialized:false,
       pending:false,
-      finished:true,
+      finished:false,
       finishedMessage:"h there dkdksl dkf dkd ",
       changeExecuted:false,
       requestId:null,
@@ -113,13 +113,11 @@ export default {
   },
   created(){
     this.$root.$emit('hideAllMenus',true)
-    console.log(this.$route)
+    this.requestId = this.$route.params.requestId
+
   },
   methods:{
     executeAccountChange,
-    init(){
-      this.requestId = this.$route.params.requestId
-    }
   },
   computed:{
     newPasswordBtn(){
@@ -154,19 +152,8 @@ export default {
         }
         this.changeType = accountChangeRequest.type
       } catch (error) {
-        this.$router.push('/')
+        this.$router.replace('/')
         alert(error.message)
-      }
-    },
-    authenticated:{
-      immediate: true,
-      handler(val){
-        console.log('hi')
-        if(val){
-          this.init()
-        }else{
-          console.log('need to authenticate')
-        }
       }
     }
   }

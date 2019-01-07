@@ -4,8 +4,7 @@
       h4.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:35px;") Update Account
       div(v-if="false")
       div(v-else-if="changeRequestSent")
-        h5  We just sent you an email to update your account. 
-        h5 Click the link in the email!
+        h5  {{finishedMessage}}
         div.text-center(style="padding-top:90px;")
           q-btn.text-center(@click="thisModal.close()" style="margin-auto" invert color="grey") done
       div.relative-position(v-else)
@@ -21,7 +20,8 @@
         )
         div(style="height:40px;")
           //- p.text-red.inline.text-center(v-if="$v.account.email.$error") Not a valid email
-          q-btn.full-width( :disabled="updateEmailBtn" color="blue") Change Email
+          q-btn.full-width( :disabled="updateEmailBtn" color="blue" 
+          @click="initiateChangeAccount(_self,'EMAIL')") Change Email
         div(style="height:130px; padding-top:30px;")
           .small(style="padding-bottom:20px;") Account password 
           q-btn( color="blue" @click="initiateChangeAccount(_self,'PASSWORD')").full-width Change Password
@@ -41,10 +41,11 @@
 import { email } from "vuelidate/lib/validators"
 import { Toast } from 'quasar'
 
+
 async function initiateChangeAccount(v,type){
   try {
     v.pending = true
-    const result = await v.$api.createAccountUpdateRequest({type})
+    const result = await v.$api.createAccountUpdateRequest({type,newEmail:v.account.email})
     if (result.invalid){
       Toast.create.negative(result.invalid)
       setTimeout(() => {
@@ -55,6 +56,8 @@ async function initiateChangeAccount(v,type){
     else {
       v.changeRequestSent = true
       v.pending = false
+      console.log(result)
+      this.finishedMessage = result.message
     }
   } catch (error) {
     v.pending = false
@@ -68,6 +71,7 @@ import {openURL} from 'quasar'
 export default {
   data(){
     return {
+      finishedMessage:"",
       initialized:false,
       pending:false,
       changeRequestSent:false,

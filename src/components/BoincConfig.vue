@@ -28,13 +28,11 @@ export default {
     'config.max_ncpus_pct'(val) {
       if (val) {
         var cpuPercent = valBetween(val * 1 + 15, 70, 100)
-        console.log('got CPU PERCENT CHANGE', cpuPercent)
         if (this.config) {
           this.config.cpu_usage_limit = cpuPercent
         }
       }else{
         var cpuPercent = valBetween(80 * 1 + 15, 70, 100)
-        console.log('got CPU PERCENT CHANGE', cpuPercent)
         if (this.config) {
           this.config.cpu_usage_limit = cpuPercent
         }
