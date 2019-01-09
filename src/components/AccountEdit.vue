@@ -17,6 +17,7 @@
           :error="$v.account.email.$error"
           type="email"
           :placeholder="thisUser.email"
+          @keyup.enter="initiateChangeAccount(_self,'EMAIL')"
         )
         div(style="height:40px;")
           //- p.text-red.inline.text-center(v-if="$v.account.email.$error") Not a valid email
@@ -27,8 +28,13 @@
           q-btn( color="blue" @click="initiateChangeAccount(_self,'PASSWORD')").full-width Change Password
         div(style="height:80px; padding-top:10px;")
           .small Linked EOS Account
-          h5.text-center(v-if="") {{thisUser.payoutAccount}}
-          q-btn( color="blue" @click="goToPayoutModal()").full-width change Payout Account
+          div(v-if="thisUser.payoutAccount")
+            h5.text-center {{thisUser.payoutAccount}}
+            q-btn( color="blue" @click="goToPayoutModal()").full-width change Payout Account
+          div(v-else)
+            h5.text-center.text-red No EOS Account Linked!
+            q-btn( color="green" @click="goToPayoutModal()").full-width Link Payout Account
+
         div.text-center(style="padding-top:90px;")
           q-btn.text-center.on-left(@click="goToProfileModal()" style="margin-auto" flat color="blue") < Go To Profile
           q-btn.text-center(@click="thisModal.close()" style="margin-auto" invert color="grey") cancel

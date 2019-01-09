@@ -13,6 +13,11 @@ import 'quasar-extras/material-icons'
 // import 'quasar-extras/ionicons'
 import 'quasar-extras/fontawesome'
 // import 'quasar-extras/animate'
+import ScatterJS, { Network } from "scatterjs-core";
+import ScatterEOS from "scatterjs-plugin-eosjs2";
+import { Api, JsonRpc } from "eosjs";
+ScatterJS.plugins(new ScatterEOS())
+
 
   async function init(){
     AddressbarColor.set('#089cfc')
@@ -34,7 +39,6 @@ import 'quasar-extras/fontawesome'
 
   Vue.prototype.$e = new Vue()
   Vue.prototype.$api = await api.init()
-
   if (__THEME === 'mat') {
     require('quasar-extras/roboto-font')
   }

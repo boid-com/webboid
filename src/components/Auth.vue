@@ -21,6 +21,9 @@
         q-btn.full-width( round big flat color="grey-10" @click="emailForm = true" style="max-width: 270px" :disable="disableBtns")
           q-icon.on-left(name="mail" color="grey-7")
           | Email/password
+        q-btn.full-width( round big flat color="grey-10" @click="$root.$emit('resetScatter'),thisModal.close()" style="max-width: 270px" :disable="disableBtns")
+          q-icon.on-left(name="mail" color="grey-7")
+          | Scatter
     div(v-if="emailForm" style="padding-left:20px; padding-right: 20px;")
       div
         q-input(

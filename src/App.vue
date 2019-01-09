@@ -22,6 +22,8 @@
             q-icon(name="home")
           q-btn(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
             | Login
+          //- q-btn(@click="$root.$emit('resetScatter')") externaltest
+        scatter
       div.shadow-0(slot='left' v-if="showSideMenu")
         q-list(no-border='', link='', inset-delimiter='')
           q-side-link(item='', to='/', exact='')
@@ -126,6 +128,7 @@ import { Loading, Toast } from 'quasar'
 import auth from '@/Auth.vue'
 import adBlocker from 'just-detect-adblock'
 import profileEdit from '@/ProfileEdit.vue'
+import scatter from '@/Scatter.vue'
 import boincConfig from '@/BoincConfig.vue'
 import addDeviceModal from '@/addDeviceModal.vue'
 import removeDeviceModal from '@/removeDeviceModal.vue'
@@ -431,7 +434,8 @@ export default {
     removeDeviceModal,
     nueModal,
     bFooter,
-    updatePayoutModal
+    updatePayoutModal,
+    scatter
   },
   watch: {
     '$route.name'(name){
