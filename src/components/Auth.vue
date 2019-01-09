@@ -1,6 +1,6 @@
 <template lang="pug">
-.relative-position(style="padding:20px; overflow:hidden;")
-  div.relative-position.q-pa-lg(style="min-height: 350px;")
+.relative-position(style="margin:20px; overflow:hidden;")
+  div.relative-position.q-pa-lg(style="min-height: 350px;" v-if="page == 0")
     div
       h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
       h6.text-weight-light.text-center(style="margin-bottom:30px;") The Social Supercomputer
@@ -50,8 +50,8 @@
             p.float-left.text-red(v-if="$v.form.password.$error" color="red") Password should be longer
           .row
             q-checkbox(v-if="!localAuth" v-model="rememberMe" label="remember me")
-      br
-      br
+        .row
+          q-btn(style="margin:10px;" color="grey-9" flat @click="page = 1") Forgot Password?
       div.text-center(style="margin-top:10px;")
           //- q-btn.text-center( big @click="emailForm = false" flat style="margin-auto" invert color="blue")
           //-   q-icon.on-left(name="arrow_back")
@@ -63,8 +63,38 @@
 
           q-btn.text-center( v-else big @click="submit" style="margin-auto" :disabled="!loginRdy" invert color="green" size="lg") Confirm
             q-icon.on-right(name="arrow_forward")
-    q-inner-loading(:visible="pending")
-      q-spinner-ball(size="90px" color="blue")
+  div(v-else-if="page == 1")
+    h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
+    h6.text-weight-light.text-center(style="margin-bottom:30px;") The Social Supercomputer
+    br
+    h6 Password Recovery
+    q-input(
+      style="font-size: 20px;"
+      v-model="form.email"
+      @keyup="$v.form.email.$touch"
+      :error="$v.form.email.$error"
+      stack-label="email"
+      type="text"
+      @keyup.enter="passwordRecovery()"
+    )
+    small.text-grey-8 Enter the email associated with your Boid account.
+    br
+    br
+    br
+    q-btn.on-left(@click="page = 0" flat) < Back
+    q-btn.absolute-bottom-right(@click="passwordRecovery()" color="blue" :disable="$v.form.email.$error") Recover Password
+  div(v-else-if="page == 2")
+    h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
+    h6.text-weight-light.text-center(style="margin-bottom:30px;") The Social Supercomputer
+    br
+    p {{finishedMessage}}
+    br
+    br
+    br
+    br
+    q-btn.absolute-bottom-right(@click="thisModal.close()" color="blue" :disable="$v.form.email.$error") Done
+  q-inner-loading(:visible="pending")
+    q-spinner-ball(size="90px" color="blue")
     //- q-btn.float-left.on-left(@click="submit" outline color="blue") Register
 
 
@@ -82,12 +112,39 @@ function loginUser(that,result){
   window.localStorage.setItem('id',result.id)
   that.$e.$emit('refreshUser',result.id)
 }
+
+async function initiateChangeAccount(v,type){
+  try {
+    v.pending = true
+    const result = await v.$api.createAccountUpdateRequest({type,email:v.form.email})
+    if (result.invalid){
+      Toast.create.negative(result.invalid)
+      setTimeout(() => {
+        v.pending = false
+      }, 1500)
+      return
+    }
+    else {
+      v.changeRequestSent = true
+      v.pending = false
+      console.log(result)
+      v.page = 2
+      v.finishedMessage = result.message
+    }
+  } catch (error) {
+    v.pending = false
+    alert(error.message)
+  }
+}
+
+
 export default {
   data() {
     return {
       confirmAccount:null,
       emailForm:false,
       disableBtns:false,
+      finishedMessage:"",
       socialLogins:[
         {
           name:'Google',
@@ -114,6 +171,7 @@ export default {
       modal: false,
       register:false,
       localAuth: false,
+      page:0,
       form: {
         email: '',
         password: '',
@@ -220,6 +278,10 @@ export default {
         })
       }
     },
+    passwordRecovery(){
+      if(this.$v.form.email.$error) return Toast.create.negative("Enter a valid email.")
+      const result = initiateChangeAccount(this,'PASSWORD')
+    },
     checkInvitedBy: async function() {
       console.log(this.$route)
 
@@ -253,6 +315,7 @@ export default {
     this.$e.$on('openAuthModal', val => {
       this.register = val
       this.pending = false
+      this.page = 0
       this.form = {
         email: '',
         password: '',
@@ -329,8 +392,8 @@ export default {
   background-color $grey-2
   box-shadow 0px 2px 1px $grey-5
 input.q-input-target
-  height: 40px;
-  padding-top 5px
+  height: 50px;
+  padding-top 15px
 
 .socialIcon
   height: 70px

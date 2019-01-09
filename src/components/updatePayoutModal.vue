@@ -19,13 +19,13 @@ div.relative-position(v-if="thisUser" style="padding:30px; min-height:300px; max
                 h2(style="margin:0px; padding-right:15px; padding-left:10px;") ! 
             .col 
               p You need to link an EOS account to redeem your earnings.
-        p.text-grey-8(style="padding-top:10px;") Don't have an EOS account?
+        p.text-grey-9(style="padding-top:10px;") Don't have an EOS account?
         .row.justify-center(style="padding:20px;")
           q-btn(color="blue") Buy EOS account with BOIDs
         div(v-if="!scatterId")
-          p Or you can link your existing EOS account using Scatter
+          p.text-grey-9 Link your existing EOS account using Scatter
           .row.justify-center
-            q-btn(style="margin:20px;" @click="$root.$emit('scatterLogin')") Scatter Login
+            q-btn(color="green" style="margin:20px;" @click="$root.$emit('scatterLogin')") Scatter Login
         div(v-else)
           p.text-grey-8 Scatter Identity:
             h4.text-center {{scatterId.name}}
@@ -33,7 +33,7 @@ div.relative-position(v-if="thisUser" style="padding:30px; min-height:300px; max
               q-btn(@click="$root.$emit('resetScatter')") Change Scatter Id
               q-btn(color="green" @click="linkAccount()" ) Link EOS Account
               
-        p This EOS account will receive tokens earned from this Boid account.
+        //- p This EOS account will receive tokens earned from this Boid account.
       
   div(v-if="page === 1" style="margin-bottom: 100px")
     h6 Great! We sent a confirmation email to you at:
@@ -91,7 +91,6 @@ export default {
       
     },
     async linkAccount(){
-      this.$root.$emit('requestScatterAuth','nonce','msg','key')
       const result = await this.$api.createAccountUpdateRequest({type:"EOS",newEos:this.scatterId.name})
       if(!result) alert('there was a problem with this request')
       if(result.success){
