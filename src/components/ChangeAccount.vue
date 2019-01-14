@@ -109,6 +109,7 @@ export default {
   data(){
     return {
       initialized:false,
+      startedVerification:false,
       pending:false,
       finished:false,
       finishedMessage:"h there dkdksl dkf dkd ",
@@ -172,6 +173,8 @@ export default {
       
     },
     async verifyEosAccount(){
+      if (this.startedVerification) return
+      this.startedVerification = true
       this.pending = true
       console.log('requestScatterAuth')
       this.$root.$emit('requestScatterAuth',this.requestId.substring(0,12),'boid',this.scatterId.publicKey)
@@ -205,7 +208,6 @@ export default {
     requestId: async function(){
       try {
         this.pending = true
-        console.log('we are here')
         const accountChangeRequest = await this.$api.getAccountUpdateRequest({requestId:this.requestId})
         this.pending = false
         console.log(accountChangeRequest)
@@ -228,6 +230,8 @@ export default {
                 this.$root.$emit('scatterLogin')
               }
             },2000)
+          } else{
+            if (this.scatterId.name === this.newEos) this.verifyEosAccount()
           }
         }
       } catch (error) {
