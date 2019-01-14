@@ -173,8 +173,11 @@ export default {
     },
     async verifyEosAccount(){
       this.pending = true
+      console.log('requestScatterAuth')
       this.$root.$emit('requestScatterAuth',this.requestId.substring(0,12),'boid',this.scatterId.publicKey)
+      console.log('we are here')
       this.$once('scatterAuthRdy',()=>{
+        console.log('execute')
         executeAccountChange(this,{scatterAuth:this.scatterAuth, pubKey:this.scatterId.publicKey})
       })
     }
