@@ -392,7 +392,7 @@ export default {
   background-color $grey-2
   box-shadow 0px 2px 1px $grey-5
 input.q-input-target
-  height: 50px;
+  height: 50px !important
   padding-top 15px
 
 .socialIcon
