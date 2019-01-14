@@ -20,18 +20,18 @@ div.relative-position(v-if="thisUser" style="padding:30px; min-height:300px; max
             .col 
               p You need to link an EOS account to redeem your earnings.
         p.text-grey-9(style="padding-top:10px;") Don't have an EOS account?
-        .row.justify-center(style="padding:20px;")
-          q-btn(color="blue") Buy EOS account with BOIDs
-        div(v-if="!scatterId")
-          p.text-grey-9 Link your existing EOS account using Scatter
-          .row.justify-center
-            q-btn(color="green" style="margin:20px;" @click="$root.$emit('scatterLogin')") Scatter Login
-        div(v-else)
-          p.text-grey-8 Scatter Identity:
-            h4.text-center {{scatterId.name}}
-            .row.justify-center(style="padding:20px; padding-top:0px;")
-              q-btn(@click="$root.$emit('resetScatter')") Change Scatter Id
-              q-btn(color="green" @click="linkAccount()" ) Link EOS Account
+        //- .row.justify-center(style="padding:20px;")
+        //-   q-btn(color="blue") Buy EOS account with BOIDs
+      div(v-if="!scatterId")
+        p.text-grey-9 Link your existing EOS account using Scatter
+        .row.justify-center
+          q-btn(color="green" style="margin:20px;" @click="$root.$emit('scatterLogin')") Scatter Login
+      div(v-else)
+        p.text-grey-8 Scatter Identity:
+          h4.text-center {{scatterId.name}}
+          .row.justify-center(style="padding:20px; padding-top:0px;")
+            q-btn(@click="$root.$emit('resetScatter')") Change Scatter Id
+            q-btn(color="green" @click="linkAccount()" ) Link EOS Account
               
         //- p This EOS account will receive tokens earned from this Boid account.
       
