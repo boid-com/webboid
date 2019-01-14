@@ -238,6 +238,7 @@ export default {
     scatterId: async function(){
       if (!this.scatterId) return
       console.log('got Scatterid')
+      console.log(this.changeType)
       if (this.changeType === 'EOS' && this.scatterId.name === this.newEos) this.verifyEosAccount()
     },
     scatterAuth(){
