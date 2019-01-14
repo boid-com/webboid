@@ -160,7 +160,10 @@ export default {
     },
     executeAccountChange,
     finishBtn(){
-      if (this.changeType === "EOS" ) this.$router.replace('/')
+      if (this.changeType === "EOS" ) {
+        this.$e.$emit('refreshUser')
+        this.$router.replace('/')
+      }
       else{
         this.$e.$emit('logout')
         setTimeout(()=>{
