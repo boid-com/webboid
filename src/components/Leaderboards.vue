@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   .row.justify-center
-    .col-xs-12.col-sm-8.col-xl-4
+    .col-xs-12.col-sm-8.col-xl-8
       q-card(v-if="globalStats") 
         p.light-paragraph.text-center Network Stats
         .row.justify-center
@@ -43,7 +43,7 @@ div
                     small.ellipsis.block.light-paragraph.absolute(
                       style="bottom:0px; max-width:100%;"
                       ) {{user.tagline}}
-              td(data-th="Power") {{user.tPower.toFixed(2)}}
+              td(data-th="Power") {{parseInt(user.tPower).toLocaleString()}}
     .col-md-12.col-lg-6
       q-card.animate-scale
         p.light-paragraph.text-center Top Teams
