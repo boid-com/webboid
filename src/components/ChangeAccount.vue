@@ -151,13 +151,6 @@ export default {
 
   },
   methods:{
-    async getScatterId(){
-      if (!window.scatter) return
-      const result = await window.scatter.getIdentity({ accounts: [window.network] })
-      this.scatterId = result
-      return result
-      console.log(result)
-    },
     executeAccountChange,
     finishBtn(){
       if (this.changeType === "EOS" ) {
@@ -179,11 +172,11 @@ export default {
       if (this.startedVerification) return
       this.startedVerification = true
       this.pending = true
-      console.log('requestScatterAuth')
+      console.log('requestScatterAuth',this.requestId.substring(0,12),this.scatterId.publicKey)
       this.$root.$emit('requestScatterAuth',this.requestId.substring(0,12),'boid',this.scatterId.publicKey)
       console.log('we are here')
       this.$once('scatterAuthRdy',()=>{
-        console.log('execute')
+        console.log('Scatter Auth Ready:',this.scatterAuth)
         executeAccountChange(this,{scatterAuth:this.scatterAuth, pubKey:this.scatterId.publicKey})
       })
     }
