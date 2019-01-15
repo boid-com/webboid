@@ -48,13 +48,14 @@
           q-btn.infobtn.absolute-top-right( style="right:40px; top:20px;" size="30px" color='blue' flat round @click="showWarningBanner = false")
             q-icon(color='grey-7' name="close")
           h5 Boid is currently under maintenance
-            h6 Boid Power ratings are frozen.
+            h6.strong.text-green Boid Power ratings are live.
             h6 Token payouts and wallets are frozen.
             h6 Your contributions are still being tracked.
       .row.justify-center
         .col-12
           .row.justify-center
             router-view(
+              :globalStats='globalStats'
               :leaderboard='leaderboard'
               :teamLeaderboard='teamLeaderboard'
               :thisUser='thisUser'
@@ -155,6 +156,7 @@ export default {
       showSideMenu:true,
       ipcRenderer:null,
       loginVisible:true,
+      globalStats:{},
       ch:{
         toggle:false,
         hps: "loading",
@@ -207,7 +209,8 @@ export default {
     updateLeaderboards: async function() {
       this.leaderboard = await this.$api.globalLeaderboard().catch(console.error)
       this.teamLeaderboard = await this.$api.teamsLeaderboard().catch(console.error)
-
+      this.globalStats = await this.$api.globalStats().catch(console.error)
+      // console.log('got globalStats',this.globalStats)
     },
     selectText(data) {
       this.$refs.socialLink.select()

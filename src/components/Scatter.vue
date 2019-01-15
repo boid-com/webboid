@@ -37,7 +37,7 @@ ScatterJS.plugins(new ScatterEOS());
 // MAINNET
 const network = Network.fromJson({
    blockchain:'eos',
-   host:'nodes.get-scatter.com',
+   host:'https://public.eosinfra.io',
    port:443,
    protocol:'https',
    chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'

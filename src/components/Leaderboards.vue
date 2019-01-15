@@ -1,48 +1,69 @@
 <template lang="pug">
-.row.justify-center.full-width(style="z-index:10000")
-  .col-md-12.col-lg-6
-    q-card.animate-scale.full-wi
-      p.light-paragraph.text-center Top Users
-      table.q-table.horizontal-separator(style="width:100%")
-        thead
-          tr
-            th 
-            th.relative-position(style="width:50px;") 
-              q-tooltip User Boid Power
-              img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px;")
-        tbody(v-for="(user,index) in leaderboard" :key="user.id")
-          tr.user(style="cursor: pointer;" @click="$router.push({name:'User',params:{username:user.username}})")
-            td.relative-position
-              .absolute-left.text-grey-7 {{index + 1}}
-              .row
-                .col-auto
-                  img.avatar(:src="user.image")
-                .col.relative-position(style="padding:15px; padding-bottom:30px;")
-                  .ellipsis(data-th="Username") {{user.username}}
-                  small.ellipsis.block.light-paragraph.absolute(
-                    style="bottom:0px; max-width:100%;"
-                    ) {{user.tagline}}
-            td(data-th="Power") {{user.tPower.toFixed(2)}}
-  .col-md-12.col-lg-6
-    q-card.animate-scale
-      p.light-paragraph.text-center Top Teams
-      table.q-table.horizontal-separator(style="width:100%")
-        thead
-          tr
-            th(style="width:0px;")
-            th.relative-position(style="width:50px;") 
-              q-tooltip Team Boid Power
-              img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px;")
-        tbody(v-for="(team,index) in teamLeaderboard" :key="team.id")
-          tr.user.cursor-pointer(@click="$router.push({name:'Team',params:{teamname:team.name}})")
-            td.relative-position
-              .absolute-left.text-grey-7 {{index + 1}}
-              .row
-                .col-auto
-                  img.tokenimg(:src="team.image")
-                .col(style="padding:15px;")
-                  .ellipsis(style="max-width:100%;") {{team.name | removeDash}}
-            td(data-th="Power") {{parseInt(team.power)}}
+div
+  .row.justify-center
+    .col-xs-12.col-sm-8.col-xl-4
+      q-card(v-if="globalStats") 
+        p.light-paragraph.text-center Network Stats
+        .row.justify-center
+          .col
+            div
+              .row.justify-center
+                h5 {{parseInt(globalStats.dPower).toLocaleString()}}
+              p.light-paragraph.text-center Total Power
+          .col
+            div
+              .row.justify-center
+                h5 {{globalStats.activeUsers}}
+              p.light-paragraph.text-center Active Users
+          .col
+            div
+              .row.justify-center
+                h5 {{parseInt(globalStats.averagePower).toLocaleString()}}
+              p.light-paragraph.text-center Average Power 
+  .row.justify-center.full-width
+    .col-md-12.col-lg-6
+      q-card.animate-scale
+        p.light-paragraph.text-center Top Users
+        table.q-table.horizontal-separator(style="width:100%")
+          thead
+            tr
+              th 
+              th.relative-position(style="width:50px;") 
+                q-tooltip User Boid Power
+                img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px;")
+          tbody(v-for="(user,index) in leaderboard" :key="user.id")
+            tr.user(style="cursor: pointer;" @click="$router.push({name:'User',params:{username:user.username}})")
+              td.relative-position
+                .absolute-left.text-grey-7 {{index + 1}}
+                .row
+                  .col-auto
+                    img.avatar(:src="user.image")
+                  .col.relative-position(style="padding:15px; padding-bottom:30px;")
+                    .ellipsis(data-th="Username") {{user.username}}
+                    small.ellipsis.block.light-paragraph.absolute(
+                      style="bottom:0px; max-width:100%;"
+                      ) {{user.tagline}}
+              td(data-th="Power") {{user.tPower.toFixed(2)}}
+    .col-md-12.col-lg-6
+      q-card.animate-scale
+        p.light-paragraph.text-center Top Teams
+        table.q-table.horizontal-separator(style="width:100%")
+          thead
+            tr
+              th(style="width:0px;")
+              th.relative-position(style="width:50px;") 
+                q-tooltip Team Boid Power
+                img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px;")
+          tbody(v-for="(team,index) in teamLeaderboard" :key="team.id")
+            tr.user.cursor-pointer(@click="$router.push({name:'Team',params:{teamname:team.name}})")
+              td.relative-position
+                .absolute-left.text-grey-7 {{index + 1}}
+                .row
+                  .col-auto
+                    img.tokenimg(:src="team.image")
+                  .col(style="padding:15px;")
+                    .ellipsis(style="max-width:100%;") {{team.name | removeDash}}
+              td(data-th="Power") {{parseInt(team.power)}}
 
 </template>
 
@@ -66,7 +87,7 @@ export default {
       this.team = team
     })
   },
-  props: ['thisUser', 'api', 'authenticated', 'leaderboard', 'teamLeaderboard']
+  props: ['thisUser', 'api', 'authenticated', 'leaderboard', 'teamLeaderboard','globalStats']
 }
 </script>
 
