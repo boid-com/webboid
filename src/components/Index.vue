@@ -147,7 +147,7 @@ div
                 q-item-main
                   q-item-tile(label style="user-select: none;") {{device.name}}
                   q-item-tile.relative-position(style="padding-left:15px;" sublabel) {{device.power.toLocaleString()}} 
-                    | ({{device.pending}})
+                    | {{displayPending(device)}}
                     div.absolute-top-left(style="width:100px; height:30px;")
                       q-tooltip Device Power (Pending)
                     img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
@@ -270,6 +270,10 @@ export default {
     }
   },
   methods: {
+    displayPending(device){
+      if (device.pending) return `(${device.pending})`
+      else return ""
+    },
     configDevice(deviceId) {
       this.currentDevice = deviceId
       this.$refs.deviceModal.open()
