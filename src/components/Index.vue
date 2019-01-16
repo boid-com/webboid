@@ -146,10 +146,12 @@ div
                   q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)")         
                 q-item-main
                   q-item-tile(label style="user-select: none;") {{device.name}}
-                  q-item-tile.relative-position(
-                    style="padding-left:15px;" sublabel v-if="device.powerRatings"
-                    ) {{device.powerRatings[0].power.toFixed(4)}}
+                  q-item-tile.relative-position(style="padding-left:15px;" sublabel) {{device.power.toLocaleString()}} 
+                    | ({{device.pending}})
+                    div.absolute-top-left(style="width:100px; height:30px;")
+                      q-tooltip Device Power (Pending)
                     img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+                    
                 div.absolute(style="width:190px; height:50px; left:180px; padding-top:8px;" v-show="browserDeviceToggle && device.type=='BROWSER'")
                   q-tooltip CPU Usage
                   div.relative-position.float-left
@@ -171,7 +173,6 @@ div
                 q-progress.absolute-bottom(v-if="browserDeviceToggle && device.type=='BROWSER'" :indeterminate="ch.found" color="yellow" style="bottom:10px;")
 
                 q-toggle(v-if="device.type==='BROWSER'" v-model="browserDeviceToggle" color="yellow")
-                q-inner-loading(:visible="device.pending")
                   q-spinner(size="30px" color="blue")
                   //- | {{device.toggle}}
                 //- q-item-side.relative-position(right)
@@ -255,7 +256,7 @@ export default {
     userPower() {
       // return 0
       try {
-        var total = this.thisUser.powerRatings[0].power.toFixed(4)
+        var total = this.thisUser.tPower.toFixed(4)
         return total
 
       } catch (err) {
