@@ -58,6 +58,7 @@
               :globalStats='globalStats'
               :leaderboard='leaderboard'
               :teamLeaderboard='teamLeaderboard'
+              :tiersLeaderboard='tiersLeaderboard'
               :thisUser='thisUser'
               :thatUser="thatUser"
               :thisDevice="thisDevice"
@@ -156,6 +157,7 @@ export default {
       showSideMenu:true,
       ipcRenderer:null,
       loginVisible:true,
+      tiersLeaderboard:null,
       globalStats:{},
       ch:{
         toggle:false,
@@ -210,6 +212,8 @@ export default {
       this.leaderboard = await this.$api.globalLeaderboard().catch(console.error)
       this.teamLeaderboard = await this.$api.teamsLeaderboard().catch(console.error)
       this.globalStats = await this.$api.globalStats().catch(console.error)
+      this.tiersLeaderboard = await this.$api.tiersLeaderboard().catch(console.error)
+
       // console.log('got globalStats',this.globalStats)
     },
     selectText(data) {

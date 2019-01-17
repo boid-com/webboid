@@ -193,7 +193,7 @@ div
               | add your first device
               q-icon.on-right(name="add")
           div.full-width
-            leaderboard.full-width(:globalStats='globalStats' :leaderboard='leaderboard' :teamLeaderboard="teamLeaderboard")
+            leaderboard.full-width(:tiersLeaderboard="tiersLeaderboard" :globalStats='globalStats' :leaderboard='leaderboard' :teamLeaderboard="teamLeaderboard")
       // q-modal(ref="deviceModal" @close="currentDevice = null")
       //   device(
       //     :deviceId="currentDevice"
@@ -326,7 +326,7 @@ export default {
       console.log('here we are')
     }
   },
-  props: ['globalStats','thisUser', 'thisDevice', 'authenticated', 'api', 'ch', 'adBlock', 'leaderboard', 'teamLeaderboard'],
+  props: ['globalStats','thisUser', 'thisDevice', 'authenticated', 'api', 'ch', 'adBlock', 'leaderboard', 'teamLeaderboard','tiersLeaderboard'],
   components: {
     device,
     leaderboard,

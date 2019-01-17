@@ -220,15 +220,17 @@ export default {
           executeAccountChange(this,{email:true})
         }
         if (accountChangeRequest.type === 'EOS'){
-          if (!this.scatterId){
-            setTimeout(()=>{
-              if (!this.scatterId){
-                this.$root.$emit('scatterLogin')
-              }
-            },2000)
-          } else{
-            if (this.scatterId.name === this.newEos) this.verifyEosAccount()
-          }
+          executeAccountChange(this,{newEos:true})
+
+          // if (!this.scatterId){
+          //   setTimeout(()=>{
+          //     if (!this.scatterId){
+          //       this.$root.$emit('scatterLogin')
+          //     }
+          //   },2000)
+          // } else{
+          //   if (this.scatterId.name === this.newEos) this.verifyEosAccount()
+          // }
         }
       } catch (error) {
         this.$router.replace('/')

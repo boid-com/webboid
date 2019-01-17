@@ -44,6 +44,27 @@ div
                       style="bottom:0px; max-width:100%;"
                       ) {{user.tagline}}
               td(data-th="Power") {{parseInt(user.tPower).toLocaleString()}}
+        p.light-paragraph.text-center Top Users
+        table.q-table.horizontal-separator(style="width:100%")
+          thead
+            tr
+              th 
+              th.relative-position(style="width:50px;") 
+                q-tooltip User Boid Power
+                img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px;")
+          tbody(v-for="(user,index) in leaderboard" :key="user.id")
+            tr.user(style="cursor: pointer;" @click="$router.push({name:'User',params:{username:user.username}})")
+              td.relative-position
+                .absolute-left.text-grey-7 {{index + 1}}
+                .row
+                  .col-auto
+                    img.avatar(:src="user.image")
+                  .col.relative-position(style="padding:15px; padding-bottom:30px;")
+                    .ellipsis(data-th="Username") {{user.username}}
+                    small.ellipsis.block.light-paragraph.absolute(
+                      style="bottom:0px; max-width:100%;"
+                      ) {{user.tagline}}
+              td(data-th="Power") {{parseInt(user.tPower).toLocaleString()}}
     .col-md-12.col-lg-6
       q-card.animate-scale
         p.light-paragraph.text-center Top Teams
@@ -87,7 +108,7 @@ export default {
       this.team = team
     })
   },
-  props: ['thisUser', 'api', 'authenticated', 'leaderboard', 'teamLeaderboard','globalStats']
+  props: ['thisUser', 'api', 'authenticated', 'leaderboard', 'teamLeaderboard','globalStats','tiersLeaderboard']
 }
 </script>
 
