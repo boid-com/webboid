@@ -115,7 +115,9 @@
       q-modal(ref="nueModal" no-esc-dismiss no-backdrop-dismiss)
         nueModal(:modal="$refs.nueModal" :api="api" :thisUser="thisUser" 	)
       q-modal(ref="updatePayoutAccount")
-        updatePayoutModal(:modal="$refs.updatePayoutAccount" :api="api" :thisUser="thisUser" 	)
+        updatePayoutModal(:modal="$refs.updatePayoutAccount" :api="api" :thisUser="thisUser")
+      q-modal(ref="modal" @close="showOlark(true),thisModal=null")
+        component(:is="thisModal" :thisUser="thisUser" :teamLeaderboard="teamLeaderboard")
       div.bg-white.fullscreen(v-if="pending")
         q-inner-loading(:visible="pending")
           q-spinner-ball(size="70px" color="blue")
@@ -138,6 +140,7 @@ import accountEdit from '@/AccountEdit.vue'
 import nueModal from '@/nueModal.vue'
 import bFooter from '@/Footer.vue'
 import updatePayoutModal from '@/updatePayoutModal.vue'
+import changeTeam from '@/changeTeam.vue'
 var hashInterval = null
 // var trackJs = window.trackJs
 var data = {
@@ -174,6 +177,7 @@ export default {
       adBlock: false,
       pending: true,
       local: false,
+      thisModal:null,
       auth: {},
       infoModal: {},
       thisUser: { team: { name: 'placeholder' } },
@@ -371,6 +375,11 @@ export default {
     this.$root.$on('hideAllMenus',val =>{
       this.hideAllMenus(val)
     })
+    this.$root.$on('modal',val =>{
+      this.thisModal = val
+      if (val) this.$refs.modal.open(), this.showOlark(false)
+      else this.$refs.modal.close(), this.showOlark(true)
+    })
     this.$e.$on('thatUser', value => {
       console.log('thatUser', value)
       this.thatUser = value
@@ -442,7 +451,8 @@ export default {
     nueModal,
     bFooter,
     updatePayoutModal,
-    scatter
+    scatter,
+    changeTeam
   },
   watch: {
     '$route.name'(name){

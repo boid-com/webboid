@@ -84,15 +84,16 @@ div
                     tr.cursor-pointer(@click="$router.push({name:'Team',params:{teamname:thisUser.team.name}})")
                       td 
                         img.tokenimg(:src="thisUser.team.image")
-                      td {{thisUser.team.name}}
+                      td {{thisUser.team.name | removeDash}}
+                q-btn.full-width(outline color="blue" @click="$root.$emit('modal','changeTeam')") Change Team
           .row
             .col-xs-12.col-sm-6.col-md-12
-              q-card.animate-scale.relative-position(v-if="false")
+              q-card.animate-scale.relative-position(v-if="thisUser.tokens")
                 q-btn.absolute.infobtn(round small flat)
                   q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.wallet)")
                 p.light-paragraph.text-center Wallet
                 table.q-table.reactive(style="width:100%")
-                  tbody(v-for="token in thisUser.wallet.tokens" :key="token.id")
+                  tbody(v-for="token in thisUser.tokens" :key="token.id")
                     tr.tokenlist.cursor-pointer()
                       td 
                         img.tokenimg(:src="token.type.image")
