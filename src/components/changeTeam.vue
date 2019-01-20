@@ -2,8 +2,8 @@
   div(style="padding:20px; max-width: 400px; min-width:350px; max-height:100%;").relative-position
     h4.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:35px;") Change Teams
     div(v-if="!canChangeTeams")
-      h4 You can only change teams once every 48 hours.
-      h4 You can next change teams at 
+      h6 You can only change teams once every 48 hours.
+      h6 You can next change teams at 
       h5 {{nextChangeDate}}
       br
       br
