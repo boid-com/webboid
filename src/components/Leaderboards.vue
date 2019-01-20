@@ -6,17 +6,17 @@ div
         p.light-paragraph.text-center Network Stats
         .row.justify-center
           .col-auto
-            div
+            div(style="width:200px;")
               .row.justify-center
                 h5 {{parseInt(globalStats.dPower).toLocaleString()}}
               p.light-paragraph.text-center Total Power
           .col-auto
-            div
+            div(style="width:200px;")
               .row.justify-center
                 h5 {{globalStats.activeUsers}}
               p.light-paragraph.text-center Active Users
           .col-auto
-            div
+            div(style="width:200px;")
               .row.justify-center
                 h5 {{parseInt(globalStats.averagePower).toLocaleString()}}
               p.light-paragraph.text-center Average Power 
