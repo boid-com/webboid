@@ -1,21 +1,21 @@
 <template lang="pug">
 div
   .row.justify-center
-    .col-xs-12.col-sm-8.col-xl-8
+    .col-xs-12
       q-card(v-if="globalStats") 
         p.light-paragraph.text-center Network Stats
         .row.justify-center
-          .col
+          .col-auto
             div
               .row.justify-center
                 h5 {{parseInt(globalStats.dPower).toLocaleString()}}
               p.light-paragraph.text-center Total Power
-          .col
+          .col-auto
             div
               .row.justify-center
                 h5 {{globalStats.activeUsers}}
               p.light-paragraph.text-center Active Users
-          .col
+          .col-auto
             div
               .row.justify-center
                 h5 {{parseInt(globalStats.averagePower).toLocaleString()}}
@@ -44,6 +44,7 @@ div
                       style="bottom:0px; max-width:100%;"
                       ) {{user.tagline}}
               td(data-th="Power") {{parseInt(user.tPower).toLocaleString()}}
+    .col-md-12.col-lg-6
       q-card.animate-scale
         p.light-paragraph.text-center Top Teams
         table.q-table.horizontal-separator(style="width:100%")
