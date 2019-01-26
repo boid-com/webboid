@@ -43,14 +43,14 @@
         q-route-tab(icon='list', :to='{name:"Leaderboards"}', exact='', slot='title')
         q-route-tab(v-if='thisUser.team' icon='fa-users', :to='{name:"Team",params:{teamname:thisUser.team.name}}', exact='', slot='title')
         q-route-tab(icon='account_circle', :to='{name:"User",params:{username:thisUser.username}}', exact='', slot='title')
-      div.text-grey-9(ref="warningBanner" v-if="showWarningBanner") 
-        div.bg-orange-4(style="padding:20px;")
-          q-btn.infobtn.absolute-top-right( style="right:40px; top:20px;" size="30px" color='blue' flat round @click="showWarningBanner = false")
-            q-icon(color='grey-7' name="close")
-          h5 Boid is currently under maintenance
-            h6.strong.text-green Boid Power ratings are live.
-            h6 Token payouts and wallets are frozen.
-            h6 Your contributions are still being tracked.
+      //- div.text-grey-9(ref="warningBanner" v-if="showWarningBanner") 
+      //-   div.bg-orange-4(style="padding:20px;")
+      //-     q-btn.infobtn.absolute-top-right( style="right:40px; top:20px;" size="30px" color='blue' flat round @click="showWarningBanner = false")
+      //-       q-icon(color='grey-7' name="close")
+          //- h5 Boid is currently under maintenance
+          //-   h6.strong.text-green Boid Power ratings are live.
+          //-   h6 Token payouts and wallets are frozen.
+          //-   h6 Your contributions are still being tracked.
       .row.justify-center
         .col-12
           .row.justify-center
@@ -117,7 +117,7 @@
       q-modal(ref="updatePayoutAccount")
         updatePayoutModal(:modal="$refs.updatePayoutAccount" :api="api" :thisUser="thisUser")
       q-modal(ref="modal" @close="showOlark(true),thisModal=null")
-        component(:is="thisModal" :thisUser="thisUser" :teamLeaderboard="teamLeaderboard")
+        component(:is="thisModal" :thisModal="$refs.modal" :thisUser="thisUser" :teamLeaderboard="teamLeaderboard")
       div.bg-white.fullscreen(v-if="pending")
         q-inner-loading(:visible="pending")
           q-spinner-ball(size="70px" color="blue")

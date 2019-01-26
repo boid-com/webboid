@@ -21,7 +21,7 @@ export default new VueRouter({
     { path: '/desktop/', component: load('Device'), name: 'Desktop' },
     { path: '/local', component: load('Bus'), name: 'Local' },
     { path: '/auth/', component: load('Auth'), name: 'Auth' },
-    { path: '/stake/', component: load('Stake'), name: 'Stake' },
+    { path: '/staking/', component: load('Stake'), name: 'Stake' },
     { path: '/changeaccount/:requestId', component: load('ChangeAccount'), name: 'ChangeAccount' },
     { path: '*', component: load('Index') }
   ]

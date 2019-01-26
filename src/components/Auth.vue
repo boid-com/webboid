@@ -269,7 +269,7 @@ export default {
         this.thisModal.close()
         this.$nextTick(function() {
           setTimeout(() => {
-            this.$router.push('/')
+            // this.$router.push('/')
           }, 1000)
           setTimeout(()=>{
             console.log('open nue modal')

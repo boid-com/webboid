@@ -17,6 +17,7 @@ import ScatterJS, { Network } from "scatterjs-core";
 import ScatterEOS from "scatterjs-plugin-eosjs2";
 import { Api, JsonRpc } from "eosjs";
 ScatterJS.plugins(new ScatterEOS())
+var format=require('format-number')()
 
 
   async function init(){
@@ -27,6 +28,22 @@ ScatterJS.plugins(new ScatterEOS())
   Vue.use(Quasar, {
     components: All,
     directives: All
+  })
+  Vue.filter('longNum', function (value) {
+    try {
+      if (!value) return ''
+      if (typeof value === 'string' || value instanceof String){
+        value = parseFloat(value.replace(/[^0-9.]/g, ""))
+      }
+      value = value.toFixed(2)
+      return format(value)
+
+    } catch (error) {
+      console.log(error)
+      return value
+    }
+
+
   })
   Vue.filter('removeDash', function (value) {
     if (!value) return ''

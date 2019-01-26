@@ -1,12 +1,8 @@
 <template lang="pug">
 div
   //- q-btn(@click='logout()') Logout
-  //- q-btn(@click='login()') Login
+  q-btn(@click='$router.push({name:"Stake"})' color="green") BOID Staking
   //- p(v-if="account") {{account.name}}
-
-//- section.example
-//- section.container
-//- section.contract
 //- h1 Boid Stake, Claim, Unstake
 //- h5
 //- | boid Scatter Example
@@ -67,7 +63,7 @@ export default {
   },
   mounted() {
     this.setEosInstance();
-    this.init()
+    // this.init()
     this.$root.$on('requestScatterAuth',this.authenticate)
     this.$root.$on('scatterLogin',this.login)
     this.$root.$on('scatterLogout',this.logout)
