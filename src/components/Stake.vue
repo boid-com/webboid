@@ -166,8 +166,11 @@ async function fillBalances(v){
         table: 'stakes', 
         limit:1,
         lower_bound:v.account.name              
-    })).rows[0].staked.replace(' BOID','')
+    })).rows[0]
     console.log(result)
+    if (result.stake_account != v.account.name) result = '0.00'
+    else result = result.staked.replace(' BOID','')
+    console.log('STAKE RESULT',result)
     if (result > 0) v.disableStake = true
     v.userStake = result
     setTimeout(()=>{
@@ -210,7 +213,12 @@ export default {
   computed: {
     liquidBalance(){
       try {
-        return format((parseFloat(this.userBalance.replace(/[^0-9.]/g, "")) - parseFloat(this.userStake.replace(/[^0-9.]/g, ""))).toFixed(4))
+        console.log(this.userBalance, this.userStake)
+        console.log(parseFloat(this.userBalance.replace(/[^0-9.]/g, "")), parseFloat(this.userStake.replace(/[^0-9.]/g, "")))
+
+        const result = format((parseFloat(this.userBalance.replace(/[^0-9.]/g, "")) - parseFloat(this.userStake.replace(/[^0-9.]/g, ""))))
+        console.log(result)
+        return result
 
       } catch (error) {
         console.log(error)
