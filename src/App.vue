@@ -20,7 +20,7 @@
                 | My Profile
           q-btn( v-if="local" flat style="margin-right:10px;" @click="ipcRenderer.send('openURL','https://app.boid.com')")
             q-icon(name="home")
-          q-btn(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
+          q-btn.on-left(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
             | Login
           //- q-btn(@click="$root.$emit('resetScatter')") externaltest
         scatter

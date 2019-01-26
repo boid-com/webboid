@@ -189,7 +189,6 @@ export default {
     return {
       mintD:0,
       stakeD:0,
-      stakeFAQ,
       disableStake:false,
       scatter: null,
       stakeAmount: null,
