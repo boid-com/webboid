@@ -527,14 +527,14 @@ export default {
 <style>
 @media (min-width: 768px) {
   .modal:not(.maximized) {
-    background: white;
+    background: white !important;
   }
 }
 .modal-content {
   box-shadow: 0 10px 30px -10px #089cfc;
 }
 h4 {
-  font-size: 1.58rem;
+  font-size: 1.58rem !important;
 
 }
 
@@ -546,9 +546,9 @@ h4 {
   /* Colour of your points */
   stroke: #ffeb3b !important;
   /* Size of your points */
-  stroke-width: 4px;
+  stroke-width: 4px !important;
   /* Make your points appear as squares */
-  stroke-linecap: square;
+  stroke-linecap: square !important;
 }
 
 .router-link-active .q-item-side {
@@ -556,7 +556,7 @@ h4 {
   color: black !important;
 }
 .layout-aside.fixed.on-layout {
-  box-shadow: 0 0 0;
+  box-shadow: 0 0 0 !important;
 }
 textarea:focus {
   border: 0px;

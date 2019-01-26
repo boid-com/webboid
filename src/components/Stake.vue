@@ -209,7 +209,13 @@ export default {
   },
   computed: {
     liquidBalance(){
-      return format((parseFloat(this.userBalance.replace(/[^0-9.]/g, "")) - parseFloat(this.userStake.replace(/[^0-9.]/g, ""))).toFixed(4))
+      try {
+        return format((parseFloat(this.userBalance.replace(/[^0-9.]/g, "")) - parseFloat(this.userStake.replace(/[^0-9.]/g, ""))).toFixed(4))
+
+      } catch (error) {
+        console.log(error)
+        return 0.00
+      }
     },
     account() {
       if (!this.scatter || !this.scatter.identity) return null
