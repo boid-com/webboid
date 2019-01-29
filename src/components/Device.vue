@@ -20,15 +20,17 @@ div()
               img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
               div(style="padding-left:20px; padding-top:5px;")
                 div(v-if="thisDevice.power") {{thisDevice.power.toFixed(4)}}
+                div 2000.000
+                small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
+                  q-tooltip Pending power can take 24 hours or more to be verified.
+
                 div(v-else)
                   | 0.0
                 q-btn.absolute-right(flat @click="refreshDevice()")
                   q-tooltip Refresh Device
                   q-icon(name="refresh")
-              
-              // q-icon.text-center(v-if="toggle" color="yellow" name='flash_on' style="font-size:20px;")
-              // q-icon.text-center(v-else color="grey-4" name='flash_off' style="font-size:20px;")
-            q-btn.absolute-bottom.light-paragraph( flat style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://www.worldcommunitygrid.org/research/mcm1/overview.do')") Mapping Cancer Markers
+            .row.justify-center
+              q-btn.light-paragraph( flat style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://www.worldcommunitygrid.org/research/mcm1/overview.do')") Mapping Cancer Markers
               q-tooltip Learn more about the current computational task
               // h6.absolute-bottom-right.text-grey-7(style="margin-right:10px;") Mapping Cancer Makers
       q-card-main(v-if="toggle")
@@ -52,7 +54,7 @@ div()
           q-icon.on-right(v-if="toggle" :name="boincStatusIcon")
         h6.text-grey-8.on-right(v-if="toggle" style="padding-top:5px;") {{boincStatus}}
         q-spinner-grid.inline.on-right.absolute-right(:size="20" color="grey-4" v-if="toggle" style="right:70px; top:20px;")
-        q-toggle.absolute-right(color="green" :disable="pending" style="padding:20px;" v-model="toggle")
+        q-toggle.absolute-right(color="green" style="padding:20px;" v-model="toggle")
   .layout-padding.relative-position(v-else)
     .text-center {{initStatus}}
     div(style="padding-top:70px;")

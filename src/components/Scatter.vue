@@ -1,7 +1,6 @@
 <template lang="pug">
 div
   //- q-btn(@click='logout()') Logout
-  q-btn(@click='$router.push({name:"Stake"})'  color="green") BOID Staking
   //- p(v-if="account") {{account.name}}
 //- h1 Boid Stake, Claim, Unstake
 //- h5
