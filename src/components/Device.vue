@@ -20,12 +20,10 @@ div()
               img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
               div(style="padding-left:20px; padding-top:5px;")
                 div(v-if="thisDevice.power") {{thisDevice.power.toFixed(4)}}
-                div 2000.000
-                small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
-                  q-tooltip Pending power can take 24 hours or more to be verified.
-
                 div(v-else)
                   | 0.0
+                small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
+                  q-tooltip Pending power can take 24 hours or more to be verified.
                 q-btn.absolute-right(flat @click="refreshDevice()")
                   q-tooltip Refresh Device
                   q-icon(name="refresh")
