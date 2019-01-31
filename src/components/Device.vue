@@ -5,7 +5,7 @@ div()
       q-icon.float-lefth.on-right.inline( style="padding-bottom:3px;" :name='parseDevice.icon(thisDevice)' :color="parseDevice.color(thisDevice)")
       q-tooltip Your Device Name
   
-    q-card(style='width:90vw; max-height:400px;')
+    q-card(style='width:90vw; max-height:410px;')
       q-card-media.relative-position
         q-btn.infobtn.absolute-top-right(color='blue' flat round @click="openConfigModal()")
           q-icon(color='grey-7' name="settings")
@@ -31,13 +31,14 @@ div()
               q-btn.light-paragraph( flat style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://www.worldcommunitygrid.org/research/mcm1/overview.do')") Mapping Cancer Markers
               q-tooltip Learn more about the current computational task
               // h6.absolute-bottom-right.text-grey-7(style="margin-right:10px;") Mapping Cancer Makers
-      q-card-main(v-if="toggle")
-        p(v-if="activeTasks.length > 0") Work Units
-          q-tooltip Work Units are small tasks that help solve huge problems.
-        p(v-else) Downloading Work Units....
-        div(v-if="activeTasks.length > 0" v-for="(task,index) in activeTasks" :key='task.slot[0]' style="margin-bottom:5px;")
+        div(style="padding-left:10px;" v-if="toggle")
+          p.on-right(v-if="activeTasks.length > 0") Work Units ({{activeTasks.length}})
+            q-tooltip Work Units are small tasks that help solve huge problems.
+          p(v-else) Downloading Work Units....
+      q-card-main(v-if="toggle" style="max-height:195px; overflow:scroll; padding-top:0px;")
+        div(v-if="activetestTasks.length > 0" v-for="(task,index) in activetestTasks" :key='task.slot[0]' style="margin-bottom:5px;")
           
-          q-progress( style="height:10px;" v-if="task.active_task_state[0] == 1 && !onBatteries" :buffer="0" height="40px" stripe animate :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
+          q-progress( style="height:10px;" v-if="task.active_task_state[0] == 1 && !onBatteries" :buffer="0" height="40px" stripe :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
           q-progress(v-else :buffer="0" height="40px" stripe :percentage="task.checkpoint_fraction_done[0]*100" color="grey-4")
           q-tooltip 
             p(style="margin:0px;") Task:
@@ -89,6 +90,21 @@ function setupDevice(device) {
 export default {
   data() {
     return {
+      activetestTasks:[
+        {"active_task_state":["1"],"app_version_num":["744"],"bytes_received":["0.000000"],"bytes_sent":["0.000000"],"checkpoint_cpu_time":["0.000000"],"checkpoint_elapsed_time":["0.000000"],"checkpoint_fraction_done":["0.000000"],"checkpoint_fraction_done_elapsed_time":["0.000000"],"current_cpu_time":["2.693359"],"once_ran_edf":["0"],"page_fault_rate":["0.000000"],"project_master_url":["http://www.worldcommunitygrid.org/"],"result_name":["MCM1_0148316_8858_1"],"slot":["0"],"swap_size":["0.000000"],"working_set_size":["0.000000"],"working_set_size_smoothed":["0.000000"]},
+        {"active_task_state":["1"],"app_version_num":["744"],"bytes_received":["0.000000"],"bytes_sent":["0.000000"],"checkpoint_cpu_time":["0.000000"],"checkpoint_elapsed_time":["0.000000"],"checkpoint_fraction_done":["0.000000"],"checkpoint_fraction_done_elapsed_time":["0.000000"],"current_cpu_time":["2.693359"],"once_ran_edf":["0"],"page_fault_rate":["0.000000"],"project_master_url":["http://www.worldcommunitygrid.org/"],"result_name":["MCM1_0148316_8858_1"],"slot":["0"],"swap_size":["0.000000"],"working_set_size":["0.000000"],"working_set_size_smoothed":["0.000000"]},
+        {"active_task_state":["1"],"app_version_num":["744"],"bytes_received":["0.000000"],"bytes_sent":["0.000000"],"checkpoint_cpu_time":["0.000000"],"checkpoint_elapsed_time":["0.000000"],"checkpoint_fraction_done":["0.000000"],"checkpoint_fraction_done_elapsed_time":["0.000000"],"current_cpu_time":["2.693359"],"once_ran_edf":["0"],"page_fault_rate":["0.000000"],"project_master_url":["http://www.worldcommunitygrid.org/"],"result_name":["MCM1_0148316_8858_1"],"slot":["0"],"swap_size":["0.000000"],"working_set_size":["0.000000"],"working_set_size_smoothed":["0.000000"]},
+        {"active_task_state":["1"],"app_version_num":["744"],"bytes_received":["0.000000"],"bytes_sent":["0.000000"],"checkpoint_cpu_time":["0.000000"],"checkpoint_elapsed_time":["0.000000"],"checkpoint_fraction_done":["0.000000"],"checkpoint_fraction_done_elapsed_time":["0.000000"],"current_cpu_time":["2.693359"],"once_ran_edf":["0"],"page_fault_rate":["0.000000"],"project_master_url":["http://www.worldcommunitygrid.org/"],"result_name":["MCM1_0148316_8858_1"],"slot":["0"],"swap_size":["0.000000"],"working_set_size":["0.000000"],"working_set_size_smoothed":["0.000000"]},
+        {"active_task_state":["1"],"app_version_num":["744"],"bytes_received":["0.000000"],"bytes_sent":["0.000000"],"checkpoint_cpu_time":["0.000000"],"checkpoint_elapsed_time":["0.000000"],"checkpoint_fraction_done":["0.000000"],"checkpoint_fraction_done_elapsed_time":["0.000000"],"current_cpu_time":["2.693359"],"once_ran_edf":["0"],"page_fault_rate":["0.000000"],"project_master_url":["http://www.worldcommunitygrid.org/"],"result_name":["MCM1_0148316_8858_1"],"slot":["0"],"swap_size":["0.000000"],"working_set_size":["0.000000"],"working_set_size_smoothed":["0.000000"]},
+        {"active_task_state":["1"],"app_version_num":["744"],"bytes_received":["0.000000"],"bytes_sent":["0.000000"],"checkpoint_cpu_time":["0.000000"],"checkpoint_elapsed_time":["0.000000"],"checkpoint_fraction_done":["0.000000"],"checkpoint_fraction_done_elapsed_time":["0.000000"],"current_cpu_time":["2.693359"],"once_ran_edf":["0"],"page_fault_rate":["0.000000"],"project_master_url":["http://www.worldcommunitygrid.org/"],"result_name":["MCM1_0148316_8858_1"],"slot":["0"],"swap_size":["0.000000"],"working_set_size":["0.000000"],"working_set_size_smoothed":["0.000000"]},
+        {"active_task_state":["1"],"app_version_num":["744"],"bytes_received":["0.000000"],"bytes_sent":["0.000000"],"checkpoint_cpu_time":["0.000000"],"checkpoint_elapsed_time":["0.000000"],"checkpoint_fraction_done":["0.000000"],"checkpoint_fraction_done_elapsed_time":["0.000000"],"current_cpu_time":["2.693359"],"once_ran_edf":["0"],"page_fault_rate":["0.000000"],"project_master_url":["http://www.worldcommunitygrid.org/"],"result_name":["MCM1_0148316_8858_1"],"slot":["0"],"swap_size":["0.000000"],"working_set_size":["0.000000"],"working_set_size_smoothed":["0.000000"]},
+        {"active_task_state":["1"],"app_version_num":["744"],"bytes_received":["0.000000"],"bytes_sent":["0.000000"],"checkpoint_cpu_time":["0.000000"],"checkpoint_elapsed_time":["0.000000"],"checkpoint_fraction_done":["0.000000"],"checkpoint_fraction_done_elapsed_time":["0.000000"],"current_cpu_time":["2.693359"],"once_ran_edf":["0"],"page_fault_rate":["0.000000"],"project_master_url":["http://www.worldcommunitygrid.org/"],"result_name":["MCM1_0148316_8858_1"],"slot":["0"],"swap_size":["0.000000"],"working_set_size":["0.000000"],"working_set_size_smoothed":["0.000000"]},
+        {"active_task_state":["1"],"app_version_num":["744"],"bytes_received":["0.000000"],"bytes_sent":["0.000000"],"checkpoint_cpu_time":["0.000000"],"checkpoint_elapsed_time":["0.000000"],"checkpoint_fraction_done":["0.000000"],"checkpoint_fraction_done_elapsed_time":["0.000000"],"current_cpu_time":["2.693359"],"once_ran_edf":["0"],"page_fault_rate":["0.000000"],"project_master_url":["http://www.worldcommunitygrid.org/"],"result_name":["MCM1_0148316_8858_1"],"slot":["0"],"swap_size":["0.000000"],"working_set_size":["0.000000"],"working_set_size_smoothed":["0.000000"]},
+        {"active_task_state":["1"],"app_version_num":["744"],"bytes_received":["0.000000"],"bytes_sent":["0.000000"],"checkpoint_cpu_time":["0.000000"],"checkpoint_elapsed_time":["0.000000"],"checkpoint_fraction_done":["0.000000"],"checkpoint_fraction_done_elapsed_time":["0.000000"],"current_cpu_time":["2.693359"],"once_ran_edf":["0"],"page_fault_rate":["0.000000"],"project_master_url":["http://www.worldcommunitygrid.org/"],"result_name":["MCM1_0148316_8858_1"],"slot":["0"],"swap_size":["0.000000"],"working_set_size":["0.000000"],"working_set_size_smoothed":["0.000000"]},
+        {"active_task_state":["1"],"app_version_num":["744"],"bytes_received":["0.000000"],"bytes_sent":["0.000000"],"checkpoint_cpu_time":["0.000000"],"checkpoint_elapsed_time":["0.000000"],"checkpoint_fraction_done":["0.000000"],"checkpoint_fraction_done_elapsed_time":["0.000000"],"current_cpu_time":["2.693359"],"once_ran_edf":["0"],"page_fault_rate":["0.000000"],"project_master_url":["http://www.worldcommunitygrid.org/"],"result_name":["MCM1_0148316_8858_1"],"slot":["0"],"swap_size":["0.000000"],"working_set_size":["0.000000"],"working_set_size_smoothed":["0.000000"]},
+        {"active_task_state":["1"],"app_version_num":["744"],"bytes_received":["0.000000"],"bytes_sent":["0.000000"],"checkpoint_cpu_time":["0.000000"],"checkpoint_elapsed_time":["0.000000"],"checkpoint_fraction_done":["0.000000"],"checkpoint_fraction_done_elapsed_time":["0.000000"],"current_cpu_time":["2.693359"],"once_ran_edf":["0"],"page_fault_rate":["0.000000"],"project_master_url":["http://www.worldcommunitygrid.org/"],"result_name":["MCM1_0148316_8858_1"],"slot":["0"],"swap_size":["0.000000"],"working_set_size":["0.000000"],"working_set_size_smoothed":["0.000000"]}
+
+      ],
       ipcRenderer:null,
       loading: true,
       initialized:false,
@@ -340,7 +356,7 @@ export default {
         ec(error)
 
       } finally {
-        this.thisDevice = await this.getDevice({id:this.thisDevice.id}).catch(ec)
+        this.thisDevice = await this.$api.getDevice({id:this.thisDevice.id}).catch(ec)
         this.pending = false
       }
     }

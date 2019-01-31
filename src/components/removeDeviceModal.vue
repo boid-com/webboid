@@ -9,7 +9,7 @@
           q-icon.absolute-center(:name="parseDevice.icon(device)" :color="parseDevice.color(device)" size="25px;")         
         .col
           h6 {{device.name}}
-          h6.relative-position(v-if="device.power" style="padding-left:15px; padding-top:3px;") {{device.power.toFixed(4)}}
+          h6.relative-position(style="padding-left:15px; padding-top:3px;") {{device.power.toFixed(4)}}
             img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
     q-card(color="red-4" v-if="device.type != 'BROWSER' ")
       h6 Important!
@@ -54,6 +54,7 @@ export default {
     init(){
       this.$root.$on('modal.removeDevice',(toggle,device) =>{
         if (device) this.device = device
+        console.log(device)
         if (toggle){
           this.modal.open()
         } else{
@@ -64,6 +65,7 @@ export default {
     removeDevice: async function(deviceId){
       this.pending = true
       var result = await this.$api.removeDevice({id:deviceId}).catch(alert)
+      console.log(result)
       this.$e.$emit('refreshUser')
       this.$e.$emit('userUpdated')
       setTimeout(()=>{

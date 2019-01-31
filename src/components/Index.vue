@@ -163,27 +163,27 @@ div
                   q-tooltip Hashes Per Second
                   h5.inline.float-right.text-green-4(style="margin-top:0px; margin-bottom: 0px" v-if="browserDeviceToggle && device.type=='BROWSER'") {{ch.hps}}
                 div(v-if="device.type=='BROWSER'")
-                q-spinner-grid.inline.on-right( :size="30" color="grey-4" v-if="browserDeviceToggle && !ch.accepted" style="margin-right:10px;")
-                q-spinner-cube.inline.on-right( :size="30" color="yellow" v-if="browserDeviceToggle && ch.accepted" style="margin-right:10px;")
+                q-spinner-grid.inline.on-right( :size="30" color="grey-4" v-if="browserDeviceToggle && !ch.accepted && device.type==='BROWSER'" style="margin-right:10px;")
+                q-spinner-cube.inline.on-right( :size="30" color="yellow" v-if="browserDeviceToggle && ch.accepted && device.type==='BROWSER'" style="margin-right:10px;")
                 q-item-side(right v-if="device.toggle" )
                   //- q-btn.on-left.hovericon(  round flat @click="configDevice(device.id)")
                     q-icon(name='settings' color="")
                 // q-item-side.text-green(right v-else-if="userPower < 1" )
                 //   div.inline Start Here
                 //     q-icon(name="arrow_forward" size="30px")
-                q-progress.absolute-bottom(v-if="browserDeviceToggle && device.type=='BROWSER'" :indeterminate="ch.found" color="yellow" style="bottom:10px;")
+                //- q-progress.absolute-bottom(v-if="browserDeviceToggle && device.type=='BROWSER'" :indeterminate="ch.found" color="yellow" style="bottom:10px;")
 
                 q-toggle(v-if="device.type==='BROWSER'" v-model="browserDeviceToggle" color="yellow")
-                  q-spinner(size="30px" color="blue")
+                  //- q-spinner(size="30px" color="blue")
                   //- | {{device.toggle}}
-                //- q-item-side.relative-position(right)
-                //-   q-btn.absolute-center(
-                //-     flat color="red-5" 
-                //-     style="right:-17px; padding:5px; margin-left:20px;"
-                //-     @click="$root.$emit('modal.removeDevice',true,device)"
-                //-     )
-                //-     q-tooltip Remove Device
-                //-     q-icon(name="close" color="grey-5")
+                q-item-side.relative-position(right)
+                  q-btn.absolute-center(
+                    flat color="red-5" 
+                    style="right:-17px; padding:5px; margin-left:20px;"
+                    @click="$root.$emit('modal.removeDevice',true,device)"
+                    )
+                    q-tooltip Remove Device
+                    q-icon(name="close" color="grey-5")
               q-item.relative-position.bg-red(v-else color="red" style="height:80px")
                 h5.text-white Disable AdBlock and refresh to continue
 
