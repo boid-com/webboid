@@ -532,7 +532,7 @@ export default {
   }
 }
 .modal-content {
-  box-shadow: 0 10px 30px -10px #089cfc;
+  box-shadow: 0 10px 30px -10px #089cfc !important;
 }
 h4 {
   font-size: 1.58rem !important;
@@ -541,7 +541,7 @@ h4 {
 
 .ct-series-a .ct-line {
   stroke: #ffeb3b !important;
-  stroke-width: 2px;
+  stroke-width: 2px !important;
 }
 .ct-series-a .ct-point {
   /* Colour of your points */

@@ -15,14 +15,14 @@
         .row
           .col-auto
             img(:src="thisUser.team.image")
-          .col.relative-position
-            p.absolute-center {{thisUser.team.name | removeDash}}
+          .col
+            p.on-right {{thisUser.team.name | removeDash}}
           .col-3.relative-position
             p.absolute-center.text-green-8 {{percent(thisUser.team.bonus)}}
       br
       .small.text-grey-8.relative-position Joinable Teams
         .small.text-grey-8.absolute-right earnings bonus
-      q-card(style="min-height:100px; max-height:300px; overflow:scroll;")
+      q-card(style="min-height:300px; max-height:300px; overflow:scroll;")
         q-card.teamCard.selectable.cursor-pointer(
           v-for="team of teamsList" :key="team.id" @click="selectedTeam = team"
           :class="{selected:team.selected}"
@@ -31,7 +31,7 @@
             .col-auto
               img(:src="team.image")
             .col.relative-position
-              .small.absolute-center {{team.name | removeDash}}
+              .small.on-right(style="padding-top:5px;") {{team.name | removeDash}}
             .col-3.relative-position
               p.absolute-center.text-green-8 {{percent(team.bonus)}}
       div(style="height:50px;")
@@ -131,10 +131,14 @@ export default {
     return {
     pending:false,
     selectedTeam:null,
-    page:0
+    page:0,
+    teams:null
     }
   },
-  created(){
+  async created(){
+
+    this.teams = await this.$api.getTeams()
+    console.log(this.teams)
   },
   methods:{
     executeTeamChange,
@@ -145,8 +149,8 @@ export default {
   },
   computed:{
     teamsList(){
-      if (!this.teamLeaderboard) return null
-      return this.teamLeaderboard
+      if (!this.teams) return null
+      return this.teams
       .filter( team => { return (team.id != this.thisUser.team.id && team.locked != true)})
       .sort((b,a) => a.bonus - b.bonus)
       .map(el => {
@@ -167,7 +171,9 @@ export default {
   },
   props:['api','thisUser','authenticated','teamLeaderboard'],
   watch:{
-  
+    teams(data){
+      this.pending = !data
+    }
   }
 }
 </script>

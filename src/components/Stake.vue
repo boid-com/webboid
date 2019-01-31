@@ -114,9 +114,9 @@ div(style="padding:20px;")
 </template>
 <style lang="stylus" scoped>
   .q-card
-    padding 20px
+    padding 20px !important
   .scheduleCard
-    height 114px
+    height 114px !important
 </style>
 
 
