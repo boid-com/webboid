@@ -212,6 +212,7 @@ export default {
     init() {
       if (window.local && this.authenticated) {
         setTimeout(() => {
+          window.olark('api.box.hide')
           console.log("INIT")
           console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) 
           if (this.initialized){
