@@ -1,6 +1,6 @@
 <template lang="pug">
-div(style="padding:20px;")
-  .row.justify-center
+div(style="padding:20px; max-width: 1600px;")
+  .row.justify-center(style="margin-bottom:20px;")
     .col-auto
       h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") BOID Staking
       p You can now stake BOID tokens to amplify the profitability of your generated Boid Power. 
@@ -19,7 +19,7 @@ div(style="padding:20px;")
           p You can only earn staking rewards if your EOS account is linked to your Boid account.
       .row.justify-center
         q-btn(color="green" @click="$root.$emit('modal','updatePayoutModal')") Link EOS Account
-  div(v-else-if="!account")
+  div(v-else-if="!account" )
     .row.justify-center 
       .col-auto
         p you need to login to Scatter to proceed.
@@ -40,7 +40,7 @@ div(style="padding:20px;")
 
   div(v-else)
     .row.justify-center
-      .col-md-4
+      .col-md-3
         q-card
           .light-paragraph.text-center Stake Actions
           .row.relative-position
@@ -57,11 +57,11 @@ div(style="padding:20px;")
           .light-paragraph.text-center EOS Wallet
           p.text-center {{account.name}}
           p Total Balance
-            h6 {{userBalance}} BOIDs
+            h6 {{userBalance}} BOID
           p Liquid Balance
-            h6 {{liquidBalance}} BOIDs
+            h6 {{liquidBalance}} BOID
           p Staked
-            h6 {{userStake}} BOIDs
+            h6 {{userStake}} BOID
           //- q-btn(@click='reset()' color="blue") Change Account
           q-btn.absolute-top-right(
             round
@@ -107,6 +107,8 @@ div(style="padding:20px;")
                 p.text-center 4/21 - 6/21
         interactivePanel(:thisUser="thisUser" :userStake="userStake")
       .col-4
+  interactivePanel(v-if="!account | !authenticated" :thisUser="thisUser" userStake="0.00" style="margin-top:40px;")
+
 
 
   h6.text-orange-8(v-if="error") {{error}}
