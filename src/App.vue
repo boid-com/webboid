@@ -3,7 +3,7 @@
  #q-app
     q-layout(color="" ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
       q-toolbar.shadow-1(slot="header") 
-        q-toolbar-title(v-bind:class="{'cursor-pointer':notLocal}" style="font-family: 'Comfortaa', cursive;")
+        q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
           | boid
           div(slot='subtitle') Alpha 0.0.4
         div(v-if="loginVisible")
@@ -19,6 +19,8 @@
               q-item(link v-else @click="ipcRenderer.send('openURL','https://app.boid.com/u/'+thisUser.username)")
                 | My Profile
           q-btn( v-if="local" flat style="margin-right:10px;" @click="ipcRenderer.send('openURL','https://app.boid.com')")
+            q-icon(name="home")
+          q-btn( v-else flat style="margin-right:10px;" @click="$router.push('/')")
             q-icon(name="home")
           q-btn.on-left(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
             | Login
