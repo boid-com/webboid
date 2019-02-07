@@ -75,11 +75,14 @@ export default {
 
   },
   watch:{
-    'thatUser'(){
+    'thatUser'(val){
+      if (!val) return
+      window.localStorage.setItem('invitedById',val.id)
           console.log('thatUser',this.thatUser)
 
     },
     "thisUser":function(val,oldVal){
+      
       if ((val.username != oldVal.username) && this.myProfile && this.$route.params.username){
         setTimeout(()=>{
           this.$router.push({name:"User",params:{username:this.thisUser.username}})
