@@ -12,7 +12,7 @@
         h6.light-paragraph.text-center {{team.tagline}}
         br
       .row
-        .col(v-for="stat of teamStats" :key="stat.label")
+        .col-4(v-for="stat of teamStats" :key="stat.label")
           q-card.animate-scale(style="min-width:70px; padding:15px; height:110px;")
             div.relative-position(style="margin:auto; margin-top:30px")
               h5.text-center(style="z-index:5;") {{stat.data}}
@@ -199,7 +199,7 @@ export default {
           label:"Active Users"
         },
         {
-          data:this.team.bonus * 100 + '%',
+          data:(this.team.bonus * 100).toFixed(2) + '%',
           icon:'add',
           label:"Team Bonus"
         }
