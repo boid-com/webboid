@@ -31,10 +31,10 @@ div
                     .row.justify-center
                       .col-12
                         .row.justify-center.relative-position
-                          .col-5
+                          .col-12
                             .row.justify-center
                               small.light-paragraph Tier Bonus
-                            h5.text-center {{thisUser.tier}}
+                            h5.text-center {{(tierBonus[thisUser.tier]*100).toFixed(2)}} %
                     //- img.float-right(v-if="userPower > 0" src="/statics/images/BoidPower.svg" style=" margin-top: 10px; fill:white; width:100%; max-height:140px; padding:20px;")
                     //- img.float-right(v-else src="/statics/images/BoidPower-Off.svg" style="fill:white; width:100%; max-height:140px; padding:20px;")
                   .col-5
@@ -236,6 +236,8 @@ export default {
   name: 'index',
   data() {
     return {
+      tierBonus:[],
+      globalVars:null,
       browserDeviceId:null,
       chThrottleDisplay:null,
       browserDeviceToggle:false,
@@ -275,7 +277,7 @@ export default {
     },
     toggleDevice: async function(device) {
     },
-    init() {
+    async init() {
       if (!this.thisUser) return
       this.devices = this.thisUser.devices
       if (!this.devices) return
@@ -284,6 +286,7 @@ export default {
           this.browserDeviceId = el.id
         }
       })
+      this.globalVars = await this.$api.globalVars()
       // this.devices = this.thisUser.devices.map((el,i)=>{
       //   if (el.type === "BROWSER"){
       //     if (this.devices[i]){
@@ -306,6 +309,10 @@ export default {
     this.init()
   },
   watch: {
+    async globalVars(data){
+      this.tierBonus = JSON.parse(data.tierBonus)
+      console.log('TIER BONUS',this.tierBonus)
+    },
     ch(){
       this.chThrottleDisplay = this.ch.throttle
     },
