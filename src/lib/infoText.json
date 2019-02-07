@@ -1,0 +1,27 @@
+{
+  "wallet": {
+    "heading": "Your Wallet",
+    "body": "Earned Tokens show up here, during the Alpha, only BOIDs are generated. Soon you will be able to earn other coins as well.",
+    "link":""
+  },
+  "power": {
+    "heading": "Boid Power",
+    "body": "Boid Power increases when you run Boid on devices. Your Power will also decrease when devices are turned off. The higher your Power, the more you will earn and the higher you will climb in the leaderboards.",
+    "link":""
+  },
+  "devices": {
+    "heading": "Your Devices",
+    "body": "When you install the Boid application on multiple devices (desktops, laptops, phones), you will be able to manage your devices here.",
+    "link":""
+  },
+  "team": {
+    "heading": "Your Team",
+    "body": "Power you generate goes towards your team, in exchange, each team will distribute exclusive rewards. You are automatically on the team of the user who has invited you.",
+    "link":""
+  },
+  "social": {
+    "heading": "Social",
+    "body": "When users join Boid using your invite link you will receive a small percentage of bonus power based on their contributions. Your invite link changes if you change your username.",
+    "link":""
+  }
+}

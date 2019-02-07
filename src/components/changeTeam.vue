@@ -162,6 +162,7 @@ export default {
       
     },
     canChangeTeams(){
+      return true
       if (!this.thisUser.lastTeamChange) return true
       else return (Date.now() - Date.parse(this.thisUser.lastTeamChange)) > 172800000
     },

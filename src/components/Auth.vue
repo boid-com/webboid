@@ -4,7 +4,7 @@
     div
       h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
       h6.text-weight-light.text-center(style="margin-bottom:30px;") The Social Supercomputer
-      h6.text-weight-light.text-center(style="margin-bottom:30px;" v-if="invitedByUser && registering") You were invited by 
+      h6.text-weight-light.text-center(style="margin-bottom:30px;" v-if="invitedByUser") You were invited by 
       div(v-if="confirmAccount")
         h6.text-weight-light.text-center(style="margin-bottom:30px;" ) You are linking your EOS account
           h4.text-black {{confirmAccount.accountName}}
@@ -254,7 +254,9 @@ export default {
         return
       }
       this.pending = true
-      if (this.invitedByUser) this.form.invitedById = this.invitedByUser.id
+      console.log('invitedById',window.localStorage.getItem('invitedById'))
+      this.form.invitedById = window.localStorage.getItem('invitedById')
+      // if (this.invitedByUser) this.form.invitedById = this.invitedByUser.id
       console.log('this form', this.form)
       const newUserData = await this.$api.signUpUser(this.form)
       console.log('newUserData',newUserData)
@@ -321,6 +323,8 @@ export default {
         password: '',
         invitedById: null
       }
+      this.invitedById = window.localStorage.getItem('invitedById')
+
       this.$v.form.$reset()
       // this.registering = val
     })
@@ -351,19 +355,19 @@ export default {
       this.form.invitedById = user.id
       this.invitedByUser = user
     },
-    '$route.params.teamname': async function(teamname) {
-      if (!teamname) return
-      console.log('found Teamname', teamname)
-      var team = await this.$api.getTeam({name:teamname})
-      console.log('TEAM DATA:',team)
-      if (!team) return
-      this.team = team
-      this.$e.$emit('team', team)
-      if (!team.owner) return
-      this.invitedByUser = team.owner
-      this.form.invitedById = team.owner.id
-      window.localStorage.setItem('invitedBy', team.owner.username)
-    },
+    // '$route.params.teamname': async function(teamname) {
+    //   if (!teamname) return
+    //   console.log('found Teamname', teamname)
+    //   var team = await this.$api.getTeam({name:teamname})
+    //   console.log('TEAM DATA:',team)
+    //   if (!team) return
+    //   this.team = team
+    //   this.$e.$emit('team', team)
+    //   if (!team.owner) return
+    //   this.invitedByUser = team.owner
+    //   this.form.invitedById = team.owner.id
+    //   window.localStorage.setItem('invitedBy', team.owner.username)
+    // },
     'form.email'(val) {
       // console.log(this.$v.form.email.$error)
       // // if()

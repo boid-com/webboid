@@ -17,13 +17,26 @@ div
           .row
             .col-xs-12.col-sm-6.col-md-12
               q-card.relative-position.animate-scale
-                q-btn.absolute.infobtn(round small flat)
-                  q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.power)")
+                .absolute-top-right
+                  q-btn.infobtn(round small flat)
+                    q-icon(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.power)")
                 p.light-paragraph.text-center My Boid Power
                 .row.justify-center
-                  .col-7
-                    img.float-right(v-if="userPower > 0" src="/statics/images/BoidPower.svg" style=" margin-top: 10px; fill:white; width:100%; max-height:140px; padding:20px;")
-                    img.float-right(v-else src="/statics/images/BoidPower-Off.svg" style="fill:white; width:100%; max-height:140px; padding:20px;")
+                  .col-7(style="padding-top:10px;")
+                    .row.justify-center.relative-position
+                      .col-12
+                        .row.justify-center
+                          small.light-paragraph Power Tier
+                        h5.text-center {{thisUser.tier}}
+                    .row.justify-center
+                      .col-12
+                        .row.justify-center.relative-position
+                          .col-5
+                            .row.justify-center
+                              small.light-paragraph Tier Bonus
+                            h5.text-center {{thisUser.tier}}
+                    //- img.float-right(v-if="userPower > 0" src="/statics/images/BoidPower.svg" style=" margin-top: 10px; fill:white; width:100%; max-height:140px; padding:20px;")
+                    //- img.float-right(v-else src="/statics/images/BoidPower-Off.svg" style="fill:white; width:100%; max-height:140px; padding:20px;")
                   .col-5
                     div.relative-position(style="padding-top: 10px;")
                       small.block.light-paragraph.small Total: 
@@ -38,8 +51,9 @@ div
                         p.light-paragraph {{thisUser.sPower.toFixed(4)}}
             .col-xs-12.col-sm-6.col-md-12
               q-card.animate-scale.relative-position
-                q-btn.absolute.infobtn(round small flat)
-                  q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.social)")
+                .absolute-top-right
+                  q-btn.infobtn(round small flat)
+                    q-icon(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.social)")
                 p.light-paragraph.text-center Social
                 div.relative-position(style="margin:auto; margin-top:30px")
                   q-tooltip Invited Users
@@ -76,8 +90,9 @@ div
                           q-tooltip Update Account
             .col-xs-12.col-sm-6.col-md-12
               q-card.animate-scale.relative-position(v-if='thisUser.team' )
-                q-btn.absolute.infobtn(round small flat)
-                  q-icon(name="help_outline" @click="$e.$emit('showInfoModal',info.team)")
+                .absolute-top-right
+                  q-btn.absolute.infobtn(round small flat)
+                    q-icon(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.team)")
                 div.light-paragraph.text-center Team
                 table.q-table.reactive( style="width:100%; margin-top:10px")
                   tbody()
@@ -89,8 +104,9 @@ div
           .row
             .col-xs-12.col-sm-6.col-md-12
               q-card.animate-scale.relative-position(v-if="thisUser.tokens")
-                q-btn.absolute.infobtn(round small flat)
-                  q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.wallet)")
+                .absolute-top-right
+                  q-btn.absolute.infobtn(round small flat)
+                    q-icon.infobtn(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
                 p.light-paragraph.text-center Wallet
                 table.q-table.reactive(style="width:100%")
                   tbody(v-for="token in thisUser.tokens" :key="token.id")
@@ -123,8 +139,9 @@ div
             .col-xs-12.col-sm-6.col-md-12
               div
                 q-card.animate-scale.relative-position(v-if="false")
-                  q-btn.absolute.infobtn(round small flat)
-                    q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.wallet)")
+                  .absolute-top-right
+                    q-btn.absolute.infobtn(round small flat)
+                      q-icon.infobtn(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
                   p.light-paragraph.text-center Inventory
                   table.q-table.reactive(style="width:100%")
                     tbody
@@ -139,8 +156,9 @@ div
         .col-12
           q-card.animate-scale.relative-position(v-if="authenticated")
             p.light-paragraph.text-center My Devices
-              q-btn.absolute.infobtn(round small flat)
-                q-icon.infobtn(name="help_outline" @click="$e.$emit('showInfoModal',info.devices)")
+              .absolute-top-right  
+                q-btn.absolute.infobtn(round small flat)
+                  q-icon.infobtn(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.devices)")
             q-list( v-for="(device,index) in devices" :key="device.id")
               q-item.relative-position(v-if="!adBlock" style="padding-bottom:30px;")
                 q-item-side()
@@ -212,31 +230,7 @@ import { openURL } from 'quasar'
 import leaderboard from '@/Leaderboards'
 import bHeader from '@/Header'
 
-var info = {
-  wallet: {
-    heading: 'Your Wallet',
-    body: `Earned Tokens show up here, during the Alpha, only BOIDs are generated. Soon you will be able to earn other coins as well.`
-  },
-  power: {
-    heading: 'Boid Power',
-    body: `Boid Power increases when you run Boid on devices. Your Power will also decrease when devices are turned off. The higher your Power, the more you will earn and the higher you will climb in the leaderboards.`
-  },
-  devices: {
-    heading: 'Your Devices',
-    body: `When you install the Boid application on multiple devices (desktops, laptops, phones), 
-          you will be able to manage your devices here.`
-  },
-  team: {
-    heading: 'Your Team',
-    body: `Power you generate goes towards your team, in exchange, each team will distribute exclusive rewards. 
-          You are automatically on the team of the user who has invited you.`
-  },
-  social: {
-    heading: 'Social',
-    body: `When users join Boid using your invite link you will receive a small percentage of bonus power based
-          on their contributions. Your invite link changes if you change your username.`
-  }
-}
+var info = require('src/lib/infoText.json')
 
 export default {
   name: 'index',
@@ -383,13 +377,13 @@ h6
 }
 
 .infobtn {
-  color: $grey-6;
-  font-size: 15px;
-  right: 10px;
+  right: 15px;
+  top: 15px;
+  color: $blue;
 }
 
 .infobtn:hover {
-  color: $green;
+  color: $green-8;
 }
 
 .q-btn-round.q-btn-small {
