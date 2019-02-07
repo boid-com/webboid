@@ -49,10 +49,11 @@ div(style="padding:20px; max-width: 1600px;")
             .col
               q-btn.absolute-bottom-right(
                 @click="formattedStake = liquidBalance"
-                style="margin-bottom:10px;" small flat color="blue" :disabled="disableStake") all
-          q-btn.full-width(color="green" :disabled="disableStake" @click="stake()") Stake
+                style="margin-bottom:10px;" small flat color="blue" :disabled="true") all
+          q-btn.full-width(color="green" :disabled="true" @click="stake()") Stake
           div(style="height:1 0px;")
-          q-btn.full-width(:disabled="!disableStake" flat @click="unstake()") Unstake
+          q-btn.full-width(:disabled="true" flat @click="unstake()") Unstake
+          p Season 0 has started and Staking is frozen for the duration of the season
         q-card.relative-position
           .light-paragraph.text-center EOS Wallet
           p.text-center {{account.name}}
@@ -89,12 +90,12 @@ div(style="padding:20px; max-width: 1600px;")
           .row.relative-position
             .col-11
               div.absolute-center.gt-sm(style="height:5px; width:80%; background-color:grey; z-index:-1;")
-            .col.scheduleCard
-              q-card.scheduleCard(color="green")
+            .col.scheduleCard.text-grey
+              q-card.bg-grey-2.scheduleCard
                 p.text-center Break
                 p.text-center 1/1 - 2/7
             .col
-              q-card.bg-white.scheduleCard
+              q-card.scheduleCard(color="green")
                 p.text-center Season 0
                 p.text-center 2/7 - 4/7
             .col
@@ -194,7 +195,7 @@ export default {
     return {
       mintD:0,
       stakeD:0,
-      disableStake:false,
+      disableStake:true,
       scatter: null,
       stakeAmount: null,
       stakeTime: null,
@@ -209,8 +210,8 @@ export default {
   components:{interactivePanel},
   props:['thisUser','authenticated'],
   mounted() {
-    this.setEosInstance();
-    this.init()
+    // this.setEosInstance()
+    // this.init()
   },
   computed: {
     liquidBalance(){
