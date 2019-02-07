@@ -26,7 +26,7 @@
             | Login
           //- q-btn(@click="$root.$emit('resetScatter')") externaltest
         scatter
-        q-btn( v-if="!local" @click='$router.push({name:"Stake"})'  color="green") BOID Staking
+        //- q-btn( v-if="!local" @click='$router.push({name:"Stake"})'  color="green") BOID Staking
       div.shadow-0(slot='left' v-if="showSideMenu")
         q-list(no-border='', link='', inset-delimiter='')
           q-side-link(item='', to='/', exact='')
