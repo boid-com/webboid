@@ -125,36 +125,36 @@ export default {
       chartData:null,
       selectedPromo:"",
       promotions:[
-        {
-          id:23223434,
-          startDate: new Date(Date.now() - 243000000).toLocaleDateString().replace('/2019',''),
-          endDate: new Date(Date.now() + 1430000).toLocaleDateString().replace('/2019',''),
-          validTiers:[1,2,3,4],
-          minRank: 20,
-          reward:{
-            type:"COIN",
-            amount:30000000,
-            coin:{
-              image:"https://assets.boid.com/images/boidviplogonew2.png",
-              name:"BOID"
-            }
-          }
-        },
-        {
-          id:983983939483,
-          startDate: new Date(Date.now() - 243000000).toLocaleDateString().replace('/2019',''),
-          endDate: new Date(Date.now() + 1430000).toLocaleDateString().replace('/2019',''),
-          validTiers:[1,2,3,4],
-          minRank: 20,
-          reward:{
-            type:"COIN",
-            amount:30,
-            coin:{
-              image:"https://assets.boid.com/images/boidviplogonew2.png",
-              name:"BOID"
-            }
-          }
-        }
+        // {
+        //   id:23223434,
+        //   startDate: new Date(Date.now() - 243000000).toLocaleDateString().replace('/2019',''),
+        //   endDate: new Date(Date.now() + 1430000).toLocaleDateString().replace('/2019',''),
+        //   validTiers:[1,2,3,4],
+        //   minRank: 20,
+        //   reward:{
+        //     type:"COIN",
+        //     amount:30000000,
+        //     coin:{
+        //       image:"https://assets.boid.com/images/boidviplogonew2.png",
+        //       name:"BOID"
+        //     }
+        //   }
+        // },
+        // {
+        //   id:983983939483,
+        //   startDate: new Date(Date.now() - 243000000).toLocaleDateString().replace('/2019',''),
+        //   endDate: new Date(Date.now() + 1430000).toLocaleDateString().replace('/2019',''),
+        //   validTiers:[1,2,3,4],
+        //   minRank: 20,
+        //   reward:{
+        //     type:"COIN",
+        //     amount:30,
+        //     coin:{
+        //       image:"https://assets.boid.com/images/boidviplogonew2.png",
+        //       name:"BOID"
+        //     }
+        //   }
+        // }
       ]
     }
   },
