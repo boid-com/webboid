@@ -19,7 +19,7 @@ div
               q-card.relative-position.animate-scale
                 .absolute-top-right
                   q-btn.infobtn(round small flat)
-                    q-icon(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.power)")
+                    q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.power)")
                 p.light-paragraph.text-center My Boid Power
                 .row.justify-center
                   .col-7(style="padding-top:10px;")
@@ -53,7 +53,7 @@ div
               q-card.animate-scale.relative-position
                 .absolute-top-right
                   q-btn.infobtn(round small flat)
-                    q-icon(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.social)")
+                    q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.social)")
                 p.light-paragraph.text-center Social
                 div.relative-position(style="margin:auto; margin-top:30px")
                   q-tooltip Invited Users
@@ -92,7 +92,7 @@ div
               q-card.animate-scale.relative-position(v-if='thisUser.team' )
                 .absolute-top-right
                   q-btn.absolute.infobtn(round small flat)
-                    q-icon(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.team)")
+                    q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.team)")
                 div.light-paragraph.text-center Team
                 table.q-table.reactive( style="width:100%; margin-top:10px")
                   tbody()
@@ -106,7 +106,7 @@ div
               q-card.animate-scale.relative-position(v-if="thisUser.tokens")
                 .absolute-top-right
                   q-btn.absolute.infobtn(round small flat)
-                    q-icon.infobtn(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
+                    q-icon.infobtn(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
                 p.light-paragraph.text-center Wallet
                 table.q-table.reactive(style="width:100%")
                   tbody(v-for="token in thisUser.tokens" :key="token.id")
@@ -141,7 +141,7 @@ div
                 q-card.animate-scale.relative-position(v-if="false")
                   .absolute-top-right
                     q-btn.absolute.infobtn(round small flat)
-                      q-icon.infobtn(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
+                      q-icon.infobtn(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
                   p.light-paragraph.text-center Inventory
                   table.q-table.reactive(style="width:100%")
                     tbody
@@ -158,7 +158,7 @@ div
             p.light-paragraph.text-center My Devices
               .absolute-top-right  
                 q-btn.absolute.infobtn(round small flat)
-                  q-icon.infobtn(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.devices)")
+                  q-icon.infobtn(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.devices)")
             q-list( v-for="(device,index) in devices" :key="device.id")
               q-item.relative-position(v-if="!adBlock" style="padding-bottom:30px;")
                 q-item-side()
@@ -357,7 +357,7 @@ h6
 
 .q-card {
   padding: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12) !important;
 }
 
 .tokenimg {
@@ -384,13 +384,14 @@ h6
 }
 
 .infobtn {
-  right: 15px;
-  top: 15px;
-  color: $blue;
+  right: 15px !important;
+  top: 15px !important;
+  color: $blue !important;
+  visibility: hidden;
 }
 
 .infobtn:hover {
-  color: $green-8;
+  color: $green-8 !important;
 }
 
 .q-btn-round.q-btn-small {

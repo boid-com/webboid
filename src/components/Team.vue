@@ -5,43 +5,47 @@
       q-btn( big color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join US
   .row.justify-center
     .col-sm-12.col-lg-4
-      div.relative-position(style="min-width:300px; padding-bottom:30px;")
+      div.relative-position(style="min-width:300px; padding-bottom:30px; height:325px;")
         .layout-padding.full-width.relative-position(style="height:140px;")
           img.absolute-center.block(style="width:120px; height:120px;" :src="team.image")
         h5.text-center {{team.name | removeDash}}
-        h6.light-paragraph.text-center {{team.tagline}}
+        q-card(style="padding:20px; height:125px;")
+          p.light-paragraph(style=" height:70px; overflow:auto;") {{team.tagline}}
         br
       .row
         .col-4(v-for="stat of teamStats" :key="stat.label")
-          q-card.animate-scale(style="min-width:70px; padding:15px; height:110px;")
-            div.relative-position(style="margin:auto; margin-top:30px")
+          q-card.animate-scale(style="min-width:70px; padding:10px; height:70px;")
+            div.relative-position(style="margin:auto; margin-top:00px")
               h5.text-center(style="z-index:5;") {{stat.data}}
-                img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:70px; filter: opacity(.4); z-index:-4") 
-                q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-1" :name='stat.icon' style="font-size:55px; z-index:-4;")
-                q-icon.text-center.absolute-center(v-else color="green-1" :name='stat.icon' style="font-size:100px; z-index:-4;")
+                img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.4); z-index:-4") 
+                q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-1" :name='stat.icon' style="font-size:45px; z-index:-4;")
+                q-icon.text-center.absolute-center(v-else color="green-1" :name='stat.icon' style="font-size:80px; z-index:-4;")
                 q-tooltip {{stat.label}}
       .row
         .col-12
-          q-card(v-if="team.owner" style="min-height:135px;")
+          q-card(v-if="team.owner" style="height:124px;")
             p.light-paragraph.text-center Leader
-            q-item(highlight :to="{name:'User',params:{username:team.owner.username}}")
+            q-item( style="padding-top:6px;"
+              highlight :to="{name:'User',params:{username:team.owner.username}}")
               q-item-side(:avatar="team.owner.image")
               q-item-main
                 q-item-tile(label) {{team.owner.username}}
-                q-item-tile(sublabel) {{team.owner.tagline}}
+                q-item-tile(sublabel) 
+                  small {{team.owner.tagline}}
               q-item-side(right icon="flash_on" stamp="") 
                 small.text-center {{parseInt(team.owner.tPower)}}
 
     .col-sm-12.col-lg-8
-      q-card.relative-position(ref="chartDiv" style="height:374px; padding: 40px;")
-        .light-paragraph.text-center Team Stats
-        teamChart(v-if="powerChart" :chartData="powerChart" :height="295" v-on:legend-clicked="alert('data')")
+      q-card.relative-position(ref="chartDiv" style="height:395px; padding: 10px; padding-top: 15px;")
+        .light-paragraph.text-center(style="margin-bottom:30px;") Team Graphs (7d)
+        teamChart( style="margin-top:20"
+          v-if="powerChart" :chartData="powerChart" :height="295")
         q-inner-loading(:visible="!powerChart")
           q-spinner-ball(size="60px" color="blue")
       div
-        q-card(v-if="parseSocial" style="margin-top:15px; min-height:125px;")
+        q-card(v-if="parseSocial" style="margin-top:16px; min-height:124px;")
           p.light-paragraph.text-center Social
-          .row.justify-center(style="padding:10px")
+          .row.justify-center(style="padding:0px")
             .col(v-for="(social,index) in parseSocial" :key="index")
               .row.justify-center
                 q-btn.socialbtn(flat round @click="openURL(social.url)")
@@ -121,36 +125,36 @@ export default {
       chartData:null,
       selectedPromo:"",
       promotions:[
-        // {
-        //   id:23223434,
-        //   startDate: new Date(Date.now() - 243000000).toLocaleDateString().replace('/2019',''),
-        //   endDate: new Date(Date.now() + 1430000).toLocaleDateString().replace('/2019',''),
-        //   validTiers:[1,2,3,4],
-        //   minRank: 20,
-        //   reward:{
-        //     type:"COIN",
-        //     amount:30000000,
-        //     coin:{
-        //       image:"https://assets.boid.com/images/boidviplogonew2.png",
-        //       name:"BOID"
-        //     }
-        //   }
-        // },
-        // {
-        //   id:983983939483,
-        //   startDate: new Date(Date.now() - 243000000).toLocaleDateString().replace('/2019',''),
-        //   endDate: new Date(Date.now() + 1430000).toLocaleDateString().replace('/2019',''),
-        //   validTiers:[1,2,3,4],
-        //   minRank: 20,
-        //   reward:{
-        //     type:"COIN",
-        //     amount:30,
-        //     coin:{
-        //       image:"https://assets.boid.com/images/boidviplogonew2.png",
-        //       name:"BOID"
-        //     }
-        //   }
-        // }
+        {
+          id:23223434,
+          startDate: new Date(Date.now() - 243000000).toLocaleDateString().replace('/2019',''),
+          endDate: new Date(Date.now() + 1430000).toLocaleDateString().replace('/2019',''),
+          validTiers:[1,2,3,4],
+          minRank: 20,
+          reward:{
+            type:"COIN",
+            amount:30000000,
+            coin:{
+              image:"https://assets.boid.com/images/boidviplogonew2.png",
+              name:"BOID"
+            }
+          }
+        },
+        {
+          id:983983939483,
+          startDate: new Date(Date.now() - 243000000).toLocaleDateString().replace('/2019',''),
+          endDate: new Date(Date.now() + 1430000).toLocaleDateString().replace('/2019',''),
+          validTiers:[1,2,3,4],
+          minRank: 20,
+          reward:{
+            type:"COIN",
+            amount:30,
+            coin:{
+              image:"https://assets.boid.com/images/boidviplogonew2.png",
+              name:"BOID"
+            }
+          }
+        }
       ]
     }
   },
@@ -168,17 +172,16 @@ export default {
         if (!el.createdAt) return null
         const created = new Date(el.createdAt)
         labels.push(created.getMonth() + 1 + '/' + created.getDate())
-        data.push(parseInt(el.power))
-
-        // labels.push(created.getMonth() + 1 + '/' + created.getDate())
-        data2.push(parseInt(el.power*1.01))
+        data.push(parseInt(el.teamPower))
+        data2.push(parseInt(el.activeUsers))
       })
-      console.log(data)
+      // console.log(data)
+      console.log(data2)
       return {
         labels,
         datasets:[
         {
-          data
+          data:data
         },
         {
           data:data2
@@ -230,7 +233,7 @@ export default {
   watch: {
     async team(val) {
       if (!val) return
-      this.promotions = this.team.promotions
+      // this.promotions = this.team.promotions
       this.setupLeaderboard()
       window.localStorage.setItem('invitedById', this.team.owner.id)
       this.chartData = await this.$api.getTeamChart({teamId:this.team.id})
