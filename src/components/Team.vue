@@ -37,7 +37,7 @@
 
     .col-sm-12.col-lg-8
       q-card.relative-position(ref="chartDiv" style="height:395px; padding: 10px; padding-top: 15px;")
-        .light-paragraph.text-center(style="margin-bottom:30px;") Team Graphs (7d)
+        .light-paragraph.text-center(style="margin-bottom:30px;") Team Graphs (14d)
         teamChart( style="margin-top:20"
           v-if="powerChart" :chartData="powerChart" :height="295")
         q-inner-loading(:visible="!powerChart")
