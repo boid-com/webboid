@@ -98,7 +98,7 @@ export default {
       yAxisID:'y-axis-2',
       data:data2
     }
-    console.log(data2)
+    // console.log(data2)
     this.renderChart(this.chartData, this.options)
 
   },

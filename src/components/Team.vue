@@ -1,6 +1,6 @@
 <template lang="pug">
 .div(style="padding:30px; max-width:1200px;")
-  .layout-padding.full-width(v-if=("!authenticated") style="min-height=300px;")
+  .layout-padding.full-width(v-if="!authenticated" style="min-height=300px;")
     .row.justify-center.gutter
       q-btn( big color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join US
   .row.justify-center
@@ -9,18 +9,18 @@
         .layout-padding.full-width.relative-position(style="height:140px;")
           img.absolute-center.block(style="width:120px; height:120px;" :src="team.image")
         h5.text-center {{team.name | removeDash}}
-        q-card(style="padding:20px; height:125px;")
-          p.light-paragraph(style=" height:70px; overflow:auto;") {{team.tagline}}
+        div(style="padding:20px; height:125px;")
+          p.light-paragraph {{team.tagline}}
         br
       .row
         .col-4(v-for="stat of teamStats" :key="stat.label")
           q-card.animate-scale(style="min-width:70px; padding:10px; height:70px;")
             div.relative-position(style="margin:auto; margin-top:00px")
-              h5.text-center(style="z-index:5;") {{stat.data}}
-                img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.4); z-index:-4") 
-                q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-1" :name='stat.icon' style="font-size:45px; z-index:-4;")
-                q-icon.text-center.absolute-center(v-else color="green-1" :name='stat.icon' style="font-size:80px; z-index:-4;")
-                q-tooltip {{stat.label}}
+              h5.text-center(style="z-index:5; margin-top:15px; font-size:18px;") {{stat.data}}
+              img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.6); z-index:-4") 
+              q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
+              q-icon.text-center.absolute-center(v-else color="green-2" :name='stat.icon' style="font-size:80px; z-index:-4;")
+              q-tooltip {{stat.label}}
       .row
         .col-12
           q-card(v-if="team.owner" style="height:124px;")
@@ -43,7 +43,7 @@
         q-inner-loading(:visible="!powerChart")
           q-spinner-ball(size="60px" color="blue")
       div
-        q-card(v-if="parseSocial" style="margin-top:16px; min-height:124px;")
+        q-card(v-if="parseSocial" style="margin-top:16px; height:124px;")
           p.light-paragraph.text-center Social
           .row.justify-center(style="padding:0px")
             .col(v-for="(social,index) in parseSocial" :key="index")
@@ -57,9 +57,9 @@
 
   .row.gutter.justify-center
     .col
-      q-card
+      q-card()
         p.light-paragraph.text-center {{leaderboardTitle}}
-        teamLeaderboard(:leaderboard="leaderboard" :thisUser="thisUser")
+        teamLeaderboard(:leaderboard="leaderboard" :thisUser="thisUser" :type="leaderboardType")
     .col
       q-card
         p.light-paragraph.text-center Team Promotions
@@ -68,7 +68,7 @@
           div(v-if="teamPromotions.physical.length > 0")
             promoCard.cursor-pointer.clickable(
             v-for="promo of teamPromotions.physical" 
-            :key="promo.id" :promo="promo" :userid="thisUser.id" @click.native="alert('hi')" )
+            :key="promo.id" :promo="promo" userid="cjpyo02zw0txs07583jvj5gx9" @click.native="alert('hi')" )
           div(v-else)
             q-card.relative-position(style="padding:20px;")
               div.light-paragraph.text-center No physical rewards available...
@@ -124,37 +124,8 @@ export default {
       leaderboardTitle:"",
       chartData:null,
       selectedPromo:"",
+      leaderboardType:'LIVE',
       promotions:[
-        // {
-        //   id:23223434,
-        //   startDate: new Date(Date.now() - 243000000).toLocaleDateString().replace('/2019',''),
-        //   endDate: new Date(Date.now() + 1430000).toLocaleDateString().replace('/2019',''),
-        //   validTiers:[1,2,3,4],
-        //   minRank: 20,
-        //   reward:{
-        //     type:"COIN",
-        //     amount:30000000,
-        //     coin:{
-        //       image:"https://assets.boid.com/images/boidviplogonew2.png",
-        //       name:"BOID"
-        //     }
-        //   }
-        // },
-        // {
-        //   id:983983939483,
-        //   startDate: new Date(Date.now() - 243000000).toLocaleDateString().replace('/2019',''),
-        //   endDate: new Date(Date.now() + 1430000).toLocaleDateString().replace('/2019',''),
-        //   validTiers:[1,2,3,4],
-        //   minRank: 20,
-        //   reward:{
-        //     type:"COIN",
-        //     amount:30,
-        //     coin:{
-        //       image:"https://assets.boid.com/images/boidviplogonew2.png",
-        //       name:"BOID"
-        //     }
-        //   }
-        // }
       ]
     }
   },
@@ -175,20 +146,7 @@ export default {
         data.push(parseInt(el.teamPower))
         data2.push(parseInt(el.activeUsers))
       })
-      // console.log(data)
-      console.log(data2)
-      return {
-        labels,
-        datasets:[
-        {
-          data:data
-        },
-        {
-          data:data2
-        }
-        ]
-      }
-    },
+      return {labels,datasets:[{data:data},{data:data2}]}},
     teamStats(){
       return [
         {
@@ -211,33 +169,68 @@ export default {
     teamPromotions(){
       if (!this.promotions) return null
       var promotions = {}
+      const now = Date.now()
+      this.promotions.map((el,i,arr)=>{
+        if (Date.parse(el.startDate) > now ){
+          arr[i].active = false
+        }else{
+          arr[i].active = true
+        }
+        if (el.leaderboardType === 'AVERAGE'){
+          arr[i].leaderboard.sort((a, b) => b.averagePower - a.averagePower)
+        }else{
+          arr[i].leaderboard.sort((a, b) => b.cumulativeMined - a.cumulativeMined)
+        }
+      })
       promotions.physical = this.promotions.filter(el => el.reward.type === 'PHYSICAL')
+      .sort((a,b) => new Date(a.startDate) - new Date(b.startDate))
       promotions.coin = this.promotions.filter(el => el.reward.type === 'COIN')
+      .sort((a,b) => new Date(a.startDate) - new Date(b.startDate))
       promotions.nft = this.promotions.filter(el => el.reward.type === 'NFT')
+      .sort((a,b) => new Date(a.startDate) - new Date(b.startDate))
+
       return promotions
     }
   },
   methods: {
     openURL,
     showPromoLeaderboard(promo){
+      if (!promo.active) this.leaderboardTitle = "The selected promotion has not started yet."
+      else this.leaderboardTitle = "leaderboard for the selected team promotion"
       this.selectedPromo = promo.id
-      this.leaderboardTitle = "Showing leaderboard for selected team promotion"
-      // this.$nextTick(()=> this.deselectPromos = true)
+      this.leaderboardType = promo.leaderboardType
+      const promoLeaderboard =  promo.leaderboard.map(el =>{
+        // console.log(el)
+        var result = Object.assign({},el.user)
+        if (promo.type ==="AVERAGE") result.tPower = el.averagePower
+        else result.tPower = el.cumulativeMined 
+        // console.log(result)
+        return result
+      })
+      this.leaderboard = promoLeaderboard
     },
     setupLeaderboard: async function() {
+      this.leaderboardType = 'LIVE'
       this.leaderboardTitle = "Top Users on " + this.team.name.replace(/-/g, ' ')
       if (this.leaderboard.length > 0) console.log('found leaderboard already')
       this.leaderboard = await this.$api.teamLeaderboard({id:this.team.id})
+    },
+    async populateTeamPromotions(){
+      this.promotions = await this.$api.getTeamPromotions({teamId:this.team.id})
+
+    },
+    async getTeamChart(){
+      this.chartData = await this.$api.getTeamChart({teamId:this.team.id})
+
     }
   },
   watch: {
     async team(val) {
       if (!val) return
-      // this.promotions = this.team.promotions
       this.setupLeaderboard()
+      this.populateTeamPromotions()
+      this.getTeamChart()
       window.localStorage.setItem('invitedById', this.team.owner.id)
-      this.chartData = await this.$api.getTeamChart({teamId:this.team.id})
-      // console.log(this.powerChart)
     }
   },
   async created() {
@@ -251,6 +244,9 @@ export default {
 </script>
 <style lang="stylus">
 @import '~variables'
+.hover:hover{
+  background-color: $grey-2;
+}
 .q-card {
   padding: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
