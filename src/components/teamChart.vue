@@ -52,7 +52,7 @@ export default {
               }
             }, {
               ticks: {
-                stepSize: 1,
+                stepSize: 5,
                 padding: 10,
                 fontSize:16,
                 fontColor:"#089cfc"
