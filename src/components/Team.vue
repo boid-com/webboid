@@ -74,7 +74,7 @@
               div.light-paragraph.text-center No physical rewards available...
               q-tooltip You can ask the team leader to add some additional rewards.
           h6.light-paragraph Coin Rewards 
-          div(v-if="teamPromotions.coin.length > 0")
+          div(v-if="teamPromotions.coin.length > 0" style="max-height:600px; overflow:auto;")
             promoCard.cursor-pointer.clickable(
             v-for="promo of teamPromotions.coin" 
             :key="promo.id" :promo="promo" :userid="thisUser.id" @selected="showPromoLeaderboard(promo)" @deselected="setupLeaderboard()" :deselect="selectedPromo" )

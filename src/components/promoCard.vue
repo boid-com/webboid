@@ -11,7 +11,7 @@
                 img(:src="parsedPromo.reward.image" style="height:80px; padding:10px;")
               .col.relative-position
                 .absolute-center.text-center(style="padding-top:10px;") {{parsedPromo.reward.amount}} {{parsedPromo.reward.name}}
-                q-tooltip This prize pool will be distributed proportionally among all elligible accounts.
+                q-tooltip This prize pool will be distributed proportionally among all eligible accounts
                 .row.justify-center(style="padding-top:10px;")
                   small Prize Pool
               .col
@@ -136,6 +136,9 @@ export default {
       parsed.status = {}
       if (Date.now() > startDate){
         parsed.status.message = "Ending"
+        console.log(endDate)
+        console.log(Date.parse(endDate))
+        console.log(Date.now())
         parsed.status.days = parseInt((endDate - Date.now()) / 86400000)
         console.log(parsed.status.days)
       } else {
