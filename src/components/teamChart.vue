@@ -47,12 +47,12 @@ export default {
               ticks: {
                 fontColor:"rgb(244, 178, 56)",
                 fontSize:16,
-                stepSize: 50000,
+                // stepSize: 50000,
                 padding: 10
               }
             }, {
               ticks: {
-                stepSize: 5,
+                // stepSize: 5,
                 padding: 10,
                 fontSize:16,
                 fontColor:"#089cfc"
