@@ -3,31 +3,31 @@
     .row
       .col(@click="cardClicked()")
         q-card(v-if="parsedPromo").bg-white
-          div.hover
+          div.hover(style="height:50px; padding:5px;")
             .row
               .col-auto
                 div(style="width:5px; height:100%" :class="{highlight:selected === true}")
               .col-2
-                img(:src="parsedPromo.reward.image" style="height:80px; padding:10px;")
+                img(:src="parsedPromo.reward.image" style="height:60px; margin-top:-5px;")
               .col.relative-position
-                .absolute-center.text-center(style="padding-top:10px;") {{parsedPromo.reward.amount}} {{parsedPromo.reward.name}}
+                .absolute-center.text-center(style="padding-top:0px;") {{parsedPromo.reward.amount}} {{parsedPromo.reward.name}}
                 q-tooltip This prize pool will be distributed proportionally among all eligible accounts
-                .row.justify-center(style="padding-top:10px;")
+                .row.justify-center(style="padding-top:0px;")
                   small Prize Pool
               .col
                 .row.justify-end(style="height:100%;")
-                  .col.on-right.relative-position(style="padding-top:10px; height:100%;")
+                  .col.on-right.relative-position(style="padding-top:0px; height:100%;")
                     .row.justify-center
                       small.text-center 
                         | {{parsedPromo.status.message}}
                     .row.justify-center
-                      small.absolute-center.text-center(style="padding-top:5px;") 
+                      small.absolute-center.text-center(style="margin-top:0px;") 
                         | {{parsedPromo.status.days}} d
 
-                  .col.on-right.relative-position(style="padding-top:10px;" v-if="promo.active && userid")
+                  .col.on-right.relative-position(style="padding-top:0px;" v-if="promo.active && userid")
                     .row.justify-center
                       small.text-center My Status
-                    .row.justify-center(style="margin-top:10px;")
+                    .row.justify-center(style="margin-top:5px;")
                       div(v-if="userEligible")
                         q-icon(name="check" size="30px" color="green")
                       div(v-else)

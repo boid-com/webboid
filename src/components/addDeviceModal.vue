@@ -151,18 +151,22 @@ export default {
   computed:{
     downloadButton(){
       if (this.$q.platform.is.win){
-        // console.log('Detected windows platform')
         return {
           label:"Download for Windows",
           icon:'fa-windows',
           url:'https://github.com/Boid-John/BoidDesktop/releases/download/0.0.3/Boid-windows-installer-0.0.3.exe.zip'
         }
       }else if (this.$q.platform.is.mac){
-        // console.log('detected mac platform')
         return {
           label:"Download for Mac",
           icon:'fa-apple',
           url:'https://github.com/Boid-John/BoidDesktop/releases/download/0.0.3/Boid-0.0.03.dmg'
+        }
+      }else if (this.$q.platform.is.linux){
+        return {
+          label:"Install the Linux CLI Tool",
+          icon:'fa-linux',
+          url:'https://github.com/Boid-John/boidcmd'
         }
       }else{
         this.phone = true
@@ -179,8 +183,8 @@ export default {
   watch:{
     modal(modal){
       if (modal){
-        this.modal.$on('close',this.modalClosed)
-        this.modal.$on('open',this.modalOpened)
+        // this.modal.$on('close',this.modalClosed)
+        // this.modal.$on('open',this.modalOpened)
       }
     },
     thisUser(){
