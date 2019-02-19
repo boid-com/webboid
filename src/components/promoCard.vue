@@ -2,7 +2,7 @@
   div
     .row
       .col(@click="cardClicked()")
-        q-card(v-if="parsedPromo").bg-white
+        q-card(v-if="parsedPromo" :class="{live:parsedPromo.status.live === true, selected: selected}" ).bg-white
           div.hover(style="height:50px; padding:5px;")
             .row
               .col-auto
@@ -90,6 +90,12 @@
   background-color $grey-4
 .hover:hover
   background-color $grey-2
+.live
+  box-shadow: 0 5px 10px 0px rgba(8, 156, 252,0.4)
+.selected
+  box-shadow: 0 5px 10px 0px $green-2 !important
+  // background-color $blue-1
+
 </style>
 
 <script>
@@ -143,9 +149,11 @@ export default {
       parsed.status = {}
       if (Date.now() > startDate){
         parsed.status.message = "Ending"
+        parsed.status.live = true
         parsed.status.days = parseInt((endDate - Date.now()) / 86400000)
       } else {
         parsed.status.message = "Starting"
+        parsed.status.live = false
         parsed.status.days = parseInt((startDate - Date.now()) / 86400000)
       }
       console.log(Date.now() < startDate)
