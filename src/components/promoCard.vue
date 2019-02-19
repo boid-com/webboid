@@ -73,7 +73,7 @@
                       p.text-center(style="padding-top:10px;") {{parsedPromo.startDate}} - {{parsedPromo.endDate}}
                     q-tooltip You need to be on this team during this time to be eligible.
             .row(v-if="parsedPromo.reward.type==='PHYSICAL'" @click="openURL(parsedPromo.reward.details)")
-              q-btn.full-width(small color="blue") Details
+              q-btn.full-width(color="blue" flat) Details
 
 
 
