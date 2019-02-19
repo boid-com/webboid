@@ -311,7 +311,7 @@ export default {
   watch: {
     async globalVars(data){
       this.tierBonus = JSON.parse(data.tierBonus)
-      console.log('TIER BONUS',this.tierBonus)
+      // console.log('TIER BONUS',this.tierBonus)
     },
     ch(){
       this.chThrottleDisplay = this.ch.throttle
