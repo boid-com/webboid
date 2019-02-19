@@ -119,7 +119,6 @@ export default {
     parsedPromo(){
       if (!this.promo) return null
       var parsed = Object.assign({},this.promo)
-      console.log('PARSED',parsed)
       if (parsed.validTiers){
         if (parsed.validTiers.constructor === Array){}
         else{
@@ -127,20 +126,14 @@ export default {
         }
       } else parsed.validTiers = [0,1,2,3,4,5]
       var startDate = new Date(parsed.startDate)
-      console.log(startDate)
       var endDate = new Date(parsed.endDate)
-      console.log(endDate)
       parsed.startDate = startDate.getMonth() + 1 + '/' + startDate.getDate()
       parsed.endDate = endDate.getMonth() + 1 + '/' + endDate.getDate()
       
       parsed.status = {}
       if (Date.now() > startDate){
         parsed.status.message = "Ending"
-        console.log(endDate)
-        console.log(Date.parse(endDate))
-        console.log(Date.now())
         parsed.status.days = parseInt((endDate - Date.now()) / 86400000)
-        console.log(parsed.status.days)
       } else {
         parsed.status.message = "Starting"
         parsed.status.days = parseInt((startDate - Date.now()) / 86400000)

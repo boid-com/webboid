@@ -199,14 +199,15 @@ export default {
       else this.leaderboardTitle = "leaderboard for the selected team promotion"
       this.selectedPromo = promo.id
       this.leaderboardType = promo.leaderboardType
-      const promoLeaderboard =  promo.leaderboard.map(el =>{
-        // console.log(el)
+      // console.log(promo.leaderboard)
+      const promoLeaderboard = promo.leaderboard.map(el =>{
         var result = Object.assign({},el.user)
-        if (promo.type ==="AVERAGE") result.tPower = el.averagePower
+        if (promo.leaderboardType == "AVERAGE") result.tPower = el.averagePower
         else result.tPower = el.cumulativeMined 
-        // console.log(result)
         return result
       })
+      console.log('hi',promo.leaderboard)
+      // console.log('PROMOLEADERBOARD',promoLeaderboard)
       this.leaderboard = promoLeaderboard
     },
     setupLeaderboard: async function() {
