@@ -65,10 +65,13 @@
         p.light-paragraph.text-center Team Promotions
         div(v-if="teamPromotions")
           h6.light-paragraph Physical Rewards 
-          div(v-if="teamPromotions.physical.length > 0")
+          div(v-if="teamPromotions.physical.length > 0" style="max-height:600px; overflow:auto;")
             promoCard.cursor-pointer.clickable(
             v-for="promo of teamPromotions.physical" 
-            :key="promo.id" :promo="promo" userid="cjpyo02zw0txs07583jvj5gx9" @click.native="alert('hi')" )
+            :key="promo.id" :promo="promo" :userid="thisUser.id"
+            @selected="showPromoLeaderboard(promo)" 
+            @deselected="setupLeaderboard()" 
+            :deselect="selectedPromo")
           div(v-else)
             q-card.relative-position(style="padding:20px;")
               div.light-paragraph.text-center No physical rewards available...
@@ -77,20 +80,24 @@
           div(v-if="teamPromotions.coin.length > 0" style="max-height:600px; overflow:auto;")
             promoCard.cursor-pointer.clickable(
             v-for="promo of teamPromotions.coin" 
-            :key="promo.id" :promo="promo" :userid="thisUser.id" @selected="showPromoLeaderboard(promo)" @deselected="setupLeaderboard()" :deselect="selectedPromo" )
+            :key="promo.id" :promo="promo" :userid="thisUser.id" 
+            @selected="showPromoLeaderboard(promo)" 
+            @deselected="setupLeaderboard()" 
+            :deselect="selectedPromo")
           div(v-else)
             q-card.relative-position(style="padding:20px;")
               div.light-paragraph.text-center No coin rewards available...
               q-tooltip You can ask the team leader to add some additional rewards.
           h6.light-paragraph Boid NFT Collectibles 
-          div(v-if="teamPromotions.nft.length > 0")
+          div(v-if="teamPromotions.nft.length > 0" style="max-height:600px; overflow:auto;")
             .row
-              .col-1
-                q-btn(round @click="" name="check")
               .col
                 promoCard.cursor-pointer.clickable(
                 v-for="promo of teamPromotions.nft" 
-                :key="promo.id" :promo="promo" :userid="thisUser.id" @click.native="alert('hi')" )
+                :key="promo.id" :promo="promo" :userid="thisUser.id"
+                @selected="showPromoLeaderboard(promo)" 
+                @deselected="setupLeaderboard()" 
+                :deselect="selectedPromo")
           div(v-else)
             q-card.relative-position(style="padding:20px;")
               div.light-paragraph.text-center No collectible rewards available...

@@ -6,14 +6,17 @@
           div.hover(style="height:50px; padding:5px;")
             .row
               .col-auto
-                div(style="width:5px; height:100%" :class="{highlight:selected === true,unselected:selected ===false}")
+                div(style="width:5px; height:100%; margin-right:15px;" :class="{highlight:selected === true,unselected:selected ===false}")
               .col-2
                 img(:src="parsedPromo.reward.image" style="height:40px; margin-top:0px;")
-              .col.relative-position
+              .col.relative-position(v-if="parsedPromo.reward.type === 'COIN' ")
                 .absolute-center.text-center(style="padding-top:10px; width:300px;") {{parsedPromo.reward.amount}} {{parsedPromo.reward.name}}
                 q-tooltip This prize pool will be distributed proportionally among all eligible accounts
                 .row.justify-center(style="padding-top:0px;")
                   small Prize Pool
+              .col.relative-position(v-else)
+                .absolute-center.text-center(style="padding-top:0px; width:300px;") {{parsedPromo.reward.name}}
+                q-tooltip This prize pool will be distributed proportionally among all eligible accounts
               .col
                 .row.justify-end(style="height:100%;")
                   .col.on-right.relative-position(style="padding-top:0px; height:100%;")
@@ -33,42 +36,44 @@
                       div(v-else)
                         q-icon(name="close" size="30px" color="grey")
                   .col.on-right(v-else style="width:100px;")
-              
-          .row.justify-center(
-            v-if="expand != 'grey-5'" style="margin-top:0px; padding-top:25px; z-index:-1" ).bg-white
-            .col.on-right
-              .row
-                .col
-                  .row.justify-center
-                    small.text-center(style="padding-bottom:10px;") Distribution Type
-                  .row.justify-center
-                    p {{parsedPromo.distributionType.toLowerCase()}}
-                q-tooltip {{explainDistributionType}}
-            .col
-              .row
-                .col
-                  .row.justify-center
-                    small.text-center Leaderboard Type
-                  .row.justify-center(style="padding-top:10px;")
-                    p {{parsedPromo.leaderboardType.toLowerCase()}}
-                  q-tooltip(v-if="promo.leaderboardType === 'AVERAGE'") {{averageMsg}}
-                  q-tooltip(v-else) {{cumulativeMsg}}
-            .col
-              .row
-                .col
-                  .row.justify-center
-                    small.text-center Eligible Rank
-                  .row.justify-center
-                    p Top {{parsedPromo.minRank}}
-                q-tooltip The minimum rank you need to hold when the promotion ends.
-            .col.on-right.relative-position
-              .row
-                .col
-                  div
+          div(v-if="expand != 'grey-5'")   
+            .row.justify-center(
+              style="margin-top:0px; padding-top:25px; z-index:-1" ).bg-white
+              .col.on-right
+                .row
+                  .col
                     .row.justify-center
-                      small.text-center Timeframe
-                    p.text-center {{parsedPromo.startDate}} - {{parsedPromo.endDate}}
-                  q-tooltip You need to be on this team during this time to be eligible.
+                      small.text-center(style="padding-bottom:10px;") Distribution Type
+                    .row.justify-center
+                      p {{parsedPromo.distributionType.toLowerCase()}}
+                  q-tooltip {{explainDistributionType}}
+              .col
+                .row
+                  .col
+                    .row.justify-center
+                      small.text-center Leaderboard Type
+                    .row.justify-center(style="padding-top:10px;")
+                      p {{parsedPromo.leaderboardType.toLowerCase()}}
+                    q-tooltip(v-if="promo.leaderboardType === 'AVERAGE'") {{averageMsg}}
+                    q-tooltip(v-else) {{cumulativeMsg}}
+              .col
+                .row
+                  .col
+                    .row.justify-center
+                      small.text-center Eligible Rank
+                    .row.justify-center(style="padding-top:10px;")
+                      p Top {{parsedPromo.minRank}}
+                  q-tooltip The minimum rank you need to hold when the promotion ends.
+              .col.on-right.relative-position
+                .row
+                  .col
+                    div
+                      .row.justify-center
+                        small.text-center Timeframe
+                      p.text-center(style="padding-top:10px;") {{parsedPromo.startDate}} - {{parsedPromo.endDate}}
+                    q-tooltip You need to be on this team during this time to be eligible.
+            .row(v-if="parsedPromo.reward.type==='PHYSICAL'" @click="openURL(parsedPromo.reward.details)")
+              q-btn.full-width(small color="blue") Details
 
 
 
@@ -88,6 +93,8 @@
 </style>
 
 <script>
+import { openURL } from 'quasar'
+
 export default {
   data(){
     return{
@@ -100,6 +107,7 @@ export default {
   props:['promo','userid','deselect'],
   computed:{
     explainDistributionType(){
+      console.log('found dist',this.promo.distributionType)
       if (!this.promo.distributionType) return ""
       if (this.promo.distributionType === "PROPORTIONAL") return `
       The prize pool is distributed among the winning users proportional to their relative contribution.
@@ -146,6 +154,7 @@ export default {
     }
   },
   methods:{
+    openURL,
     setSelected(val){
       // if (this.promo.leaderboard.length === 0) return
       if (!val){
