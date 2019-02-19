@@ -186,11 +186,22 @@ export default {
     }
   },
   watch:{
-    deselect(val){
-      if (val) {
-        if (val != this.promo.id) this.selected = false
-      }
+    deselect:{
+      handler: function(val){
+        console.log('indeselect')
+        if (val) {
+          if (val != this.promo.id) this.selected = false
+          else {
+            this.setSelected(true)
+            this.expander(true)
+            // setTimeout(el =>{this.cardClicked()},500)
+            // this.$nextTick(this.cardClicked())
+            }
+        }
+      },
+      immediate:true
     }
+
   }
 }
 </script>

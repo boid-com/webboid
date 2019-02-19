@@ -9,7 +9,10 @@ function load (component) {
 
 export default new VueRouter({
   mode: 'history',
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: (to,from) => {
+    if (to.path === from.path) return
+    else return { y: 0 }
+  },
 
   routes: [
     { path: '/', component: load('Index'), name: 'Index' },

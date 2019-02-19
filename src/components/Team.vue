@@ -202,6 +202,7 @@ export default {
   methods: {
     openURL,
     showPromoLeaderboard(promo){
+      this.$router.push({ query: Object.assign({}, this.$route.query, { promo: promo.id }) })
       if (!promo.active) this.leaderboardTitle = "The selected promotion has not started yet."
       else this.leaderboardTitle = "leaderboard for the selected team promotion"
       this.selectedPromo = promo.id
@@ -218,6 +219,9 @@ export default {
       this.leaderboard = promoLeaderboard
     },
     setupLeaderboard: async function() {
+      let query = Object.assign({}, this.$route.query)
+      delete query.promo
+      this.$router.replace({ query })
       this.leaderboardType = 'LIVE'
       this.leaderboardTitle = "Top Users on " + this.team.name.replace(/-/g, ' ')
       if (this.leaderboard.length > 0) console.log('found leaderboard already')
@@ -225,6 +229,15 @@ export default {
     },
     async populateTeamPromotions(){
       this.promotions = await this.$api.getTeamPromotions({teamId:this.team.id})
+      const promoId = this.$route.query.promo
+      if (promoId){
+        const foundPromo = this.promotions.find(el=>el.id === promoId)
+        if (foundPromo){
+          this.showPromoLeaderboard(foundPromo)
+        }else {
+          this.setupLeaderboard()
+        }
+      }
 
     },
     async getTeamChart(){
@@ -235,13 +248,14 @@ export default {
   watch: {
     async team(val) {
       if (!val) return
-      this.setupLeaderboard()
+      if (!this.$route.query.promo) this.setupLeaderboard()
       this.populateTeamPromotions()
       this.getTeamChart()
       window.localStorage.setItem('invitedById', this.team.owner.id)
     }
   },
   async created() {
+    console.log(this.$route)
     this.team = await this.$api.getTeam({name:this.$route.params.teamname})
   },
   destroyed(){
