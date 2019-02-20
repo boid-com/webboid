@@ -132,7 +132,18 @@ div
                 div(v-else)
                   p.light-paragraph.text-center You have not linked an EOS account yet
                   q-btn.full-width(color="green" @click="$root.$emit('modal.updatePayout',true)") Link EOS Account  
-
+              q-card.no-padding(style="height:510px; overflow:hidden;")
+                iframe(
+                  src="https://tgwidget.com/widget/?id=5c6c9bb583ba8859728b4567"
+                  style="margin:0px;"
+                  id="tgw_5c6c9bb583ba8859728b4567" 
+                  frameborder="0" 
+                  scrolling="no" 
+                  horizontalscrolling="no" 
+                  verticalscrolling="no" 
+                  width="100%" 
+                  height="540px"
+                )
                
 
                  
@@ -213,6 +224,8 @@ div
               q-icon.on-right(name="add")
           div.full-width
             leaderboard.full-width(:tiersLeaderboard="tiersLeaderboard" :globalStats='globalStats' :leaderboard='leaderboard' :teamLeaderboard="teamLeaderboard")
+      //- iframe(src="https://discordapp.com/widget?id=467640777187655700&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0")
+    
       // q-modal(ref="deviceModal" @close="currentDevice = null")
       //   device(
       //     :deviceId="currentDevice"
@@ -305,7 +318,6 @@ export default {
     }
   },
   mounted() {
-    
     this.init()
   },
   watch: {
