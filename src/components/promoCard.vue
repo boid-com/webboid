@@ -5,7 +5,7 @@
         q-card(v-if="parsedPromo" :class="{live:parsedPromo.status.live === true, selected: selected}" ).bg-white
           div.hover(style="height:50px; padding:5px;")
             .row
-              .col-auto
+              .col-auto(v-if="!basic")
                 div(style="width:5px; height:100%; margin-right:15px;" :class="{highlight:selected === true,unselected:selected ===false}")
               .col-2
                 img(:src="parsedPromo.reward.image" style="height:40px; margin-top:0px;")
@@ -15,7 +15,7 @@
                 .row.justify-center(style="padding-top:0px;")
                   small Prize Pool
               .col.relative-position(v-else)
-                .absolute-center.text-center(style="padding-top:0px; width:300px;") {{parsedPromo.reward.name}}
+                .absolute-center.text-center(style="padding-top:0px; width:150px;") {{parsedPromo.reward.name}}
                 q-tooltip This prize pool will be distributed proportionally among all eligible accounts
               .col
                 .row.justify-end(style="height:100%;")
@@ -26,7 +26,7 @@
                     .row.justify-center
                       small.absolute-center.text-center(style="margin-top:5px;") 
                         | {{parsedPromo.status.days}} d
-                  .col.on-right.relative-position(style="padding-top:-3px;" v-if="promo.active && userid")
+                  .col.on-right.relative-position.gt-xs(style="padding-top:-3px;" v-if="!basic && promo.active && userid")
                     .row.justify-center(style="padding-top:0px;")
                       small.text-center My Status
                     .row.justify-center(style="margin-top:0px;")
@@ -34,7 +34,10 @@
                         q-icon(name="check" size="30px" color="green")
                       div(v-else)
                         q-icon(name="close" size="30px" color="grey")
-                  .col.on-right(v-else style="width:100px;")
+                  .col-3.on-right(v-else style="width:100px;")
+                    div(v-if="basic")
+                      .row
+                        img(:src="parsedPromo.team.image" style="height:40px; margin-top:0px;")
           div(v-if="expand != 'grey-5'")   
             .row.justify-center(
               style="margin-top:0px; padding-top:25px; z-index:-1" ).bg-white
@@ -103,9 +106,9 @@
 .hover:hover
   background-color $grey-2
 .live
-  box-shadow: 0 5px 10px 0px rgba(8, 156, 252,0.35) !important
+  box-shadow: 0 5px 15px -1px rgba(8, 156, 252,0.55) !important
 .selected
-  box-shadow: 0 5px 10px 0px $green-3 !important
+  box-shadow: 0 5px 15px 1px $green-5 !important
   // background-color $blue-1
 
 </style>
@@ -122,7 +125,7 @@ export default {
       cumulativeMsg: "This promotion is based on the number of BOIDs that you earn during the timeframe."
     }
   },
-  props:['promo','userid','deselect'],
+  props:['promo','userid','deselect','basic'],
   computed:{
     explainDistributionType(){
       console.log('found dist',this.promo.distributionType)
@@ -196,6 +199,7 @@ export default {
       else this.expand = 'blue-4'
     },
     cardClicked(){
+      if (this.basic) return
       if (this.selected && this.expand == 'blue-4'){
         this.setSelected()
         this.expander()

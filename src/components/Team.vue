@@ -1,5 +1,5 @@
 <template lang="pug">
-.div(style="padding:30px; max-width:1200px;")
+.div(style="padding:10px; max-width:1200px;")
   .layout-padding.full-width(v-if="!authenticated" style="min-height=300px;")
     .row.justify-center.gutter
       q-btn( big color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join US
@@ -60,7 +60,7 @@
       q-card()
         p.light-paragraph.text-center {{leaderboardTitle}}
         teamLeaderboard(:leaderboard="leaderboard" :thisUser="thisUser" :type="leaderboardType")
-    .col
+    .col-md-12.col-lg-6
       q-card
         p.light-paragraph.text-center Team Promotions
         div(v-if="teamPromotions")
@@ -265,6 +265,16 @@ export default {
   async created() {
     console.log(this.$route)
     this.team = await this.$api.getTeam({name:this.$route.params.teamname})
+  },
+  async mounted(){
+    setTimeout(()=>{
+      if(!this.$route.query.promo | !this.$q.platform.is.desktop) return
+      window.scrollTo({
+        top: 500,
+        left: 0,
+        behavior: 'smooth'
+      })
+    },500)
   },
   destroyed(){
     this.$e.$off('team')
