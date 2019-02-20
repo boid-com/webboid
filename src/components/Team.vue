@@ -114,10 +114,6 @@
           width="100%" 
           height="540px"
         )
-
-
-
-
 </template>
 
 <style lang="stylus" scoped>

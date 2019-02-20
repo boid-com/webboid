@@ -35,9 +35,9 @@ div
             tr.user(style="cursor: pointer;" @click="$router.push({name:'User',params:{username:user.username}})")
               td.relative-position
                 .absolute-left.text-grey-7
-                  .bg-white.puck.text-center {{index + 1}}
+                  .puck.text-center {{index + 1}}
                 .absolute-left.text-grey-7(style="left:45px; top:45px;")
-                  .bg-white.puck-lg.text-center
+                  .puck-lg.text-center
                     .row.justify-center
                       img(:src="user.team.image" style="width:20px; height:20px; margin-top:1px;")
                 .row
@@ -98,20 +98,7 @@ export default {
 
 <style lang="stylus">
 @import '~variables'
-.puck{
-  border-radius: 50% 50% 50% 50%
-  width:20px
-  height:20px
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
 
-}
-.puck-lg{
-  border-radius: 50% 50% 50% 50%
-  width:20px
-  height:20px
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
-
-}
 .q-card {
   padding: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
