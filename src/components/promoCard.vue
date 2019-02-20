@@ -26,7 +26,6 @@
                     .row.justify-center
                       small.absolute-center.text-center(style="margin-top:5px;") 
                         | {{parsedPromo.status.days}} d
-
                   .col.on-right.relative-position(style="padding-top:-3px;" v-if="promo.active && userid")
                     .row.justify-center(style="padding-top:0px;")
                       small.text-center My Status
@@ -64,7 +63,16 @@
                     .row.justify-center(style="padding-top:10px;")
                       p Top {{parsedPromo.minRank}}
                   q-tooltip The minimum rank you need to hold when the promotion ends.
-              .col.on-right.relative-position
+              .col
+                .row
+                  .col
+                    .row.justify-center
+                      small.text-center Eligible Tiers
+                    .row.justify-center(style="padding-top:10px;")
+                      small(v-for="tier of parsedPromo.validTiers" :key="tier")
+                        p {{tier + "&nbsp;"}}
+                  q-tooltip Your account must be one of these tiers to be eligible for the promotion.
+              .col.relative-position
                 .row
                   .col
                     div
@@ -72,6 +80,10 @@
                         small.text-center Timeframe
                       p.text-center(style="padding-top:10px;") {{parsedPromo.startDate}} - {{parsedPromo.endDate}}
                     q-tooltip You need to be on this team during this time to be eligible.
+            q-card(v-if="parsedPromo.reward.description")
+              .row.justify-center
+                small Information
+              small {{parsedPromo.reward.description}}
             .row(v-if="parsedPromo.reward.type==='PHYSICAL'" @click="openURL(parsedPromo.reward.details)")
               q-btn.full-width(color="blue" flat) Details
 
