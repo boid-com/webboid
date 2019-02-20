@@ -91,7 +91,7 @@
 .hover:hover
   background-color $grey-2
 .live
-  box-shadow: 0 5px 10px 0px rgba(8, 156, 252,0.35)
+  box-shadow: 0 5px 10px 0px rgba(8, 156, 252,0.35) !important
 .selected
   box-shadow: 0 5px 10px 0px $green-3 !important
   // background-color $blue-1

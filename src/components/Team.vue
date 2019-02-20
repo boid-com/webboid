@@ -102,6 +102,18 @@
             q-card.relative-position(style="padding:20px;")
               div.light-paragraph.text-center No collectible rewards available...
               q-tooltip You can ask the team leader to add some additional rewards.
+      q-card(v-if="team.tWidget" style="padding:0px; height:510px; overflow:hidden;" )
+        iframe(
+          :src="team.tWidget"
+          style="margin:0px;"
+          id="tgw_5c6ca24c83ba88d8738b456d" 
+          frameborder="0" 
+          scrolling="no" 
+          horizontalscrolling="no" 
+          verticalscrolling="no" 
+          width="100%" 
+          height="540px"
+        )
 
 
 

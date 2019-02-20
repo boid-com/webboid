@@ -1,4 +1,3 @@
-require(`quasar/dist/quasar.${__THEME}.css`)
 
 import Vue from 'vue'
 import Quasar, * as All from 'quasar'
@@ -60,6 +59,7 @@ var format=require('format-number')()
     require('quasar-extras/roboto-font')
   }
 
+require(`quasar/dist/quasar.${__THEME}.css`)
 
   Quasar.start(() => {
     /* eslint-disable no-new */
