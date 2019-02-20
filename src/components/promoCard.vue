@@ -84,7 +84,7 @@
               .row.justify-center
                 small Information
               small {{parsedPromo.reward.description}}
-            .row(v-if="parsedPromo.reward.type==='PHYSICAL'" @click="openURL(parsedPromo.reward.details)")
+            .row(v-if="parsedPromo.reward.details" @click="openURL(parsedPromo.reward.details)")
               q-btn.full-width(color="blue" flat) Details
 
 
@@ -208,7 +208,6 @@ export default {
   watch:{
     deselect:{
       handler: function(val){
-        console.log('indeselect')
         if (val) {
           if (val != this.promo.id) this.selected = false
           else {

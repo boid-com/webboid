@@ -222,7 +222,7 @@ export default {
         else result.tPower = el.cumulativeMined 
         return result
       })
-      console.log('hi',promo.leaderboard)
+      // console.log('hi',promo.leaderboard)
       // console.log('PROMOLEADERBOARD',promoLeaderboard)
       this.leaderboard = promoLeaderboard
     },
@@ -232,7 +232,7 @@ export default {
       this.$router.replace({ query })
       this.leaderboardType = 'LIVE'
       this.leaderboardTitle = "Top Users on " + this.team.name.replace(/-/g, ' ')
-      if (this.leaderboard.length > 0) console.log('found leaderboard already')
+      // if (this.leaderboard.length > 0) console.log('found leaderboard already')
       this.leaderboard = await this.$api.teamLeaderboard({id:this.team.id})
     },
     async populateTeamPromotions(){
