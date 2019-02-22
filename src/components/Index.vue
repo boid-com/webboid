@@ -132,18 +132,18 @@ div
                 div(v-else)
                   p.light-paragraph.text-center You have not linked an EOS account yet
                   q-btn.full-width(color="green" @click="$root.$emit('modal.updatePayout',true)") Link EOS Account  
-              q-card.no-padding(style="height:510px; overflow:hidden;")
-                iframe(
-                  src="https://tgwidget.com/widget/?id=5c6c9bb583ba8859728b4567"
-                  style="margin:0px;"
-                  id="tgw_5c6c9bb583ba8859728b4567" 
-                  frameborder="0" 
-                  scrolling="no" 
-                  horizontalscrolling="no" 
-                  verticalscrolling="no" 
-                  width="100%" 
-                  height="540px"
-                )
+            q-card.no-padding.gt-sm(style="height:510px; overflow:hidden; width:100%;")
+              iframe(
+                src="https://tgwidget.com/widget/?id=5c6c9bb583ba8859728b4567"
+                style="margin:0px;"
+                id="tgw_5c6c9bb583ba8859728b4567" 
+                frameborder="0" 
+                scrolling="no" 
+                horizontalscrolling="no" 
+                verticalscrolling="no" 
+                width="100%" 
+                height="540px"
+              )
                
 
                  

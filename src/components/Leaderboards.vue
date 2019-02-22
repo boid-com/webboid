@@ -20,8 +20,8 @@ div
               .row.justify-center
                 h5 {{parseInt(globalStats.averagePower).toLocaleString()}}
               p.light-paragraph.text-center Average Power 
-  .row(style="padding-bottom:15px;")
-    .col-6
+  .row
+    .col-md-12.col-lg-6(style="padding-bottom:15px;")
       q-card(style="height:100%;")
         p.light-paragraph.text-center Top Movers (48hrs)
         table.q-table.horizontal-separator(style="width:100%")
@@ -51,7 +51,7 @@ div
                       ) {{user.tagline}}
               td(data-th="Power" style="width:80px;").text-green-5.text-bold + {{parseInt(user.percentageChange).toLocaleString()}}%
               //- td(data-th="Power") {{parseInt(user.tPower).toLocaleString()}}
-    .col-6
+    .col(style="padding-bottom:15px;")
       q-card(style="height:100%;")
         p.light-paragraph.text-center Recently Added Team Promotions
         promoCard.cursor-pointer.clickable(
