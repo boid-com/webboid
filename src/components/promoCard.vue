@@ -11,12 +11,12 @@
                 img(:src="parsedPromo.reward.image" style="height:40px; margin-top:0px;")
               .col.relative-position(v-if="parsedPromo.reward.type === 'COIN' ")
                 .absolute-center.text-center(style="padding-top:10px; width:300px;") {{parsedPromo.reward.amount}} {{parsedPromo.reward.name}}
-                q-tooltip This prize pool will be distributed proportionally among all eligible accounts
+                q-tooltip This prize pool will be distributed among all eligible accounts
                 .row.justify-center(style="padding-top:0px;")
                   small Prize Pool
               .col.relative-position(v-else)
                 .absolute-center.text-center(style="padding-top:0px; width:150px;") {{parsedPromo.reward.name}}
-                q-tooltip This prize pool will be distributed proportionally among all eligible accounts
+                q-tooltip This prize pool will be distributed among all eligible accounts
               .col
                 .row.justify-end(style="height:100%;")
                   .col.on-right.relative-position(style="padding-top:0px; height:100%;")
@@ -25,7 +25,7 @@
                         | {{parsedPromo.status.message}}
                     .row.justify-center
                       small.absolute-center.text-center(style="margin-top:5px;") 
-                        | {{parsedPromo.status.days}} d
+                        | {{parsedPromo.endDate}}
                   .col.on-right.relative-position.gt-xs(style="padding-top:-3px;" v-if="!basic && promo.active && userid")
                     .row.justify-center(style="padding-top:0px;")
                       small.text-center My Status
@@ -163,15 +163,20 @@ export default {
       
       parsed.status = {}
       if (Date.now() > startDate){
-        parsed.status.message = "Ending"
-        parsed.status.live = true
-        parsed.status.days = parseInt((endDate - Date.now()) / 86400000)
+        if (Date.now() > endDate){
+          parsed.status.message = "Ended"
+          parsed.status.live = true
+          // parsed.status.days = parseInt((endDate - Date.now()) / 86400000)
+        }else{
+          parsed.status.message = "Ending"
+          parsed.status.live = true
+          parsed.status.days = parseInt((endDate - Date.now()) / 86400000)
+        }
       } else {
         parsed.status.message = "Starting"
         parsed.status.live = false
         parsed.status.days = parseInt((startDate - Date.now()) / 86400000)
       }
-      console.log(Date.now() < startDate)
 
       return parsed
     }

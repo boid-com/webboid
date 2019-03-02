@@ -31,6 +31,14 @@ div
                       style="bottom:0px; max-width:100%;"
                       ) {{user.tagline}}
               td(data-th="Power") {{parseInt(user.tPower).toLocaleString()}}
+            .row.full-width(v-if="user.tokenTransaction" style="padding:10px;").bg-green-1
+              .row
+                .col
+                  small.on-left Paid:
+              .row {{user.tokenTransaction.amount.toFixed(4)}} {{user.tokenTransaction.token.type.name}}
+              a.on-right(v-if="user.tokenTransaction.tokenPayout" :href="blokstx(user.tokenTransaction.tokenPayout.txid)") txid
+            .full-width.bg-grey-4(style="height:1px; margin-bottom:15px;")
+                
 
 </template>
 
@@ -43,7 +51,11 @@ export default {
     }
   },
   computed: {},
-  methods: {},
+  methods: {
+    blokstx(txid){
+      return 'https://www.bloks.io/transaction/' + txid
+    }
+  },
   watch: {
     type(val){
     }

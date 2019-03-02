@@ -1,5 +1,5 @@
 <template lang="pug">
-div
+.row.justify-center
   div
     div.thin-paragraph(v-if="authenticated")
     div(v-else) 
@@ -10,8 +10,8 @@ div
         q-btn.on-left(big style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join Us
         q-btn.on-left(big style="font-size:20px" color="blue" @click="openURL('https://www.boid.com')") Learn More
     br
-  .row.justify-center
-    .col-md-4.col-lg-3.col-xl-3(v-if="authenticated")
+  .row.justify-center(style="max-width:1300px; padding-top:20px;")
+    .col-md-4.col-lg-3.col-xl-3(:v-if="authenticated" )
       .row.justify-center
         .col-12
           .row
@@ -37,10 +37,10 @@ div
                             h5.text-center {{(tierBonus[thisUser.tier]*100).toFixed(2)}} %
                     //- img.float-right(v-if="userPower > 0" src="/statics/images/BoidPower.svg" style=" margin-top: 10px; fill:white; width:100%; max-height:140px; padding:20px;")
                     //- img.float-right(v-else src="/statics/images/BoidPower-Off.svg" style="fill:white; width:100%; max-height:140px; padding:20px;")
-                  .col-5
+                  .col-5(v-if="thisUser")
                     div.relative-position(style="padding-top: 10px;")
                       small.block.light-paragraph.small Total: 
-                      h5 {{thisUser.tPower.toFixed(4)}}
+                      h5(v-if="thisUser.tPower") {{thisUser.tPower.toFixed(4)}}
                         //- p.text-center(v-if="!ch.toggle") Enable a device to generate Power
                         // q-icon.text-center( v-if="ch.toggle" color="yellow" name='flash_on' style="font-size:50px;")
                         // q-icon.text-center( v-else color="grey-4" name='flash_on' style="font-size:50px;")

@@ -64,6 +64,12 @@
       q-card
         p.light-paragraph.text-center Team Promotions
         div(v-if="teamPromotions")
+          .row.justify-center(style="padding-bottom:5px;")
+            small filter
+          .row.justify-center
+            q-btn(flat :class="{activeTab:ended === false}" @click="ended = false")
+              | live & upcoming
+            q-btn(flat :class="{activeTab:ended === true}" @click="ended = true") Ended
           h6.light-paragraph Physical Rewards 
           div(v-if="teamPromotions.physical.length > 0" style="max-height:600px; overflow:auto;")
             promoCard.cursor-pointer.clickable(
@@ -116,12 +122,6 @@
         )
 </template>
 
-<style lang="stylus" scoped>
-  .socialbtn:hover
-    filter: opacity(1.0)
-</style>
-
-
 <script>
 import teamChart from '@/teamChart.vue'
 import promoCard from '@/promoCard.vue'
@@ -140,6 +140,8 @@ export default {
       chartData:null,
       selectedPromo:"",
       leaderboardType:'LIVE',
+      ended:false,
+      endedPromotions:[],
       promotions:[
       ]
     }
@@ -183,25 +185,32 @@ export default {
     },
     teamPromotions(){
       if (!this.promotions) return null
+      var tempPromo = this.promotions
       var promotions = {}
       const now = Date.now()
-      this.promotions.map((el,i,arr)=>{
-        if (Date.parse(el.startDate) > now ){
-          arr[i].active = false
+      tempPromo = tempPromo.map((el,i,arr)=>{
+        if (Date.parse(el.startDate) > now && Date.parse(el.endDate) > now ){
+          el.active = false
         }else{
-          arr[i].active = true
+          el.active = true
         }
         if (el.leaderboardType === 'AVERAGE'){
-          arr[i].leaderboard.sort((a, b) => b.averagePower - a.averagePower)
+          el.leaderboard.sort((a, b) => b.averagePower - a.averagePower)
         }else{
-          arr[i].leaderboard.sort((a, b) => b.cumulativeMined - a.cumulativeMined)
+          el.leaderboard.sort((a, b) => b.cumulativeMined - a.cumulativeMined)
         }
+        return el
       })
-      promotions.physical = this.promotions.filter(el => el.reward.type === 'PHYSICAL')
+      this.endedPromotions = tempPromo.filter(el=> now > Date.parse(el.endDate))
+
+      if (this.ended) tempPromo = this.endedPromotions
+      else tempPromo = tempPromo.filter(el=> now < Date.parse(el.endDate))
+      // if (this.active) tempPromo = tempPromo.filter(()=>false)
+      promotions.physical = tempPromo.filter(el => el.reward.type === 'PHYSICAL')
       .sort((a,b) => new Date(a.startDate) - new Date(b.startDate))
-      promotions.coin = this.promotions.filter(el => el.reward.type === 'COIN')
+      promotions.coin = tempPromo.filter(el => el.reward.type === 'COIN')
       .sort((a,b) => new Date(a.startDate) - new Date(b.startDate))
-      promotions.nft = this.promotions.filter(el => el.reward.type === 'NFT')
+      promotions.nft = tempPromo.filter(el => el.reward.type === 'NFT')
       .sort((a,b) => new Date(a.startDate) - new Date(b.startDate))
 
       return promotions
@@ -211,15 +220,16 @@ export default {
     openURL,
     showPromoLeaderboard(promo){
       this.$router.push({ query: Object.assign({}, this.$route.query, { promo: promo.id }) })
-      if (!promo.active) this.leaderboardTitle = "The selected promotion has not started yet."
+      if (Date.parse(promo.endDate) < Date.now()) this.leaderboardTitle = "The selected promotion has ended."
+      else if (!promo.active) this.leaderboardTitle = "The selected promotion has not started yet."
       else this.leaderboardTitle = "leaderboard for the selected team promotion"
       this.selectedPromo = promo.id
       this.leaderboardType = promo.leaderboardType
-      // console.log(promo.leaderboard)
       const promoLeaderboard = promo.leaderboard.map(el =>{
         var result = Object.assign({},el.user)
         if (promo.leaderboardType == "AVERAGE") result.tPower = el.averagePower
         else result.tPower = el.cumulativeMined 
+        result.tokenTransaction = el.tokenTransaction
         return result
       })
       // console.log('hi',promo.leaderboard)
@@ -241,6 +251,7 @@ export default {
       if (promoId){
         const foundPromo = this.promotions.find(el=>el.id === promoId)
         if (foundPromo){
+          if (Date.parse(foundPromo.endDate) < Date.now()) this.ended = true
           this.showPromoLeaderboard(foundPromo)
         }else {
           this.setupLeaderboard()
@@ -254,6 +265,9 @@ export default {
     }
   },
   watch: {
+    async ended(val){
+      // console.log(val)
+    },
     async team(val) {
       if (!val) return
       if (!this.$route.query.promo) this.setupLeaderboard()
@@ -297,4 +311,9 @@ export default {
 .user:hover {
   background-color: $grey-2;
 }
+.socialbtn:hover
+  filter: opacity(1.0)
+.activeTab
+  background-color: $green-7
+  color: white
 </style>
