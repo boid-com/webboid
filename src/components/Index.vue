@@ -1,17 +1,17 @@
 <template lang="pug">
 .row.justify-center
-  div
+  div.full-width
     div.thin-paragraph(v-if="authenticated")
     div(v-else) 
-      bHeader(style="drop-shadow: 0px 4px 10px grey").shadow-3
+      bHeader(style="drop-shadow: 0px 4px 10px grey").shadow-3.full-width
     br
     .row.justify-center(v-if="!authenticated")
       div
         q-btn.on-left(big style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join Us
         q-btn.on-left(big style="font-size:20px" color="blue" @click="openURL('https://www.boid.com')") Learn More
     br
-  .row.justify-center(style="max-width:1300px; padding-top:20px;")
-    .col-md-4.col-lg-3.col-xl-3(:v-if="authenticated" )
+  .row.justify-center(style="max-width:1300px; padding-top:20px;" v-if="true").full-width
+    .col-md-4.col-lg-3.col-xl-3(v-if="authenticated")
       .row.justify-center
         .col-12
           .row
