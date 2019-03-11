@@ -4,7 +4,7 @@ div(style="padding:20px; max-width: 1200px;")
   .row.justify-center(style="padding:30px;")
     .row
       div
-       p.inline The Boid voter proxy grades other proxies on a scale from 1-3. We generate a list of Block Producers weighted by the grade of votes received from our rated proxies. The #[a.inline(href="https://bloks.io/account/boidcomproxy") boidcomproxy] then votes for the top 30 BPs in this weighted list. Read more about our grading technique #[a(href="https://medium.com/@boidcom/boid-eos-proxy-voting-review-march-2019-81661dd1224") here].
+       p.inline The Boid voter proxy grades other proxies on a scale from 1-3. We generate a list of block producers weighted by the grade of votes received from our rated proxies. The #[a.inline(href="https://bloks.io/account/boidcomproxy") boidcomproxy] then votes for the top 30 BPs in this weighted list. Read more about our grading technique #[a(href="https://medium.com/@boidcom/boid-eos-proxy-voting-review-march-2019-81661dd1224") here].
   .row.justify-center
     q-btn(color="blue" large  :disabled="!userLoggedIn"
     @click="proxyVote()"
