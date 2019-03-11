@@ -26,6 +26,8 @@ export default new VueRouter({
     { path: '/auth/', component: load('Auth'), name: 'Auth' },
     { path: '/staking/', component: load('Stake'), name: 'Stake' },
     { path: '/changeaccount/:requestId', component: load('ChangeAccount'), name: 'ChangeAccount' },
+    // { path: '/tx/:requestId', component: load('ChangeAccount'), name: 'ChangeAccount' },
+    { path: '/vote/', component: load('vote'), name: 'Vote' },
     { path: '*', component: load('Index') }
   ]
 })

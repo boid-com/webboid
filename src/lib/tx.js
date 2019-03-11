@@ -47,4 +47,4 @@ function unstakeTx(data){
   }
 }
 
-module.exports ={unstakeTx,stakeTx,taposData}
+export default {unstakeTx,stakeTx,taposData}

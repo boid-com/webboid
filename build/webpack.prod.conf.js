@@ -25,7 +25,14 @@ module.exports = merge(baseWebpackConfig, {
       analyzerPort: 9999
     }),
     new UglifyJsPlugin({
-      parallel: true
+      sourceMap: false,
+      uglifyOptions: {
+        ecma:8,  
+        parallel:true,
+        compress: {
+          warnings: true
+        }
+      }
     }),
     new OptimizeCSSPlugin({
       cssProcessorOptions: {

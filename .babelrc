@@ -1,5 +1,16 @@
 {
-  "presets": [["es2015", {"modules": false}], "stage-2"],
-  "plugins": ["transform-runtime"],
-  "comments": false
+  "presets": [
+    ["@babel/preset-env",{"modules":"commonjs"}],
+    ["@vue/app", {
+      "polyfills": [
+        "es6.promise",
+        "es6.symbol"
+      ]
+    }]
+  ],
+  "plugins": [
+    ["add-module-exports"],
+    ["@babel/plugin-transform-runtime", { "regenerator": true }]
+  ],
+ "comments": false
 }

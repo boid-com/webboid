@@ -7,6 +7,11 @@
           | boid
           div(slot='subtitle') Alpha 0.0.4
         div(v-if="loginVisible")
+
+          q-btn.gt-xs( flat style="margin-right:10px;" @click="$router.push('/vote')") vote
+            q-icon.on-right(name="create")
+          q-btn.gt-xs( flat style="margin-right:10px;" @click="$router.push('/staking')") stake
+            q-icon.on-right(name="show_chart")
           q-btn.text-black(@click='' flat v-if="authenticated", color='light')
             .on-right
               | {{thisUser.username}}

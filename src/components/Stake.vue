@@ -128,7 +128,7 @@ import ScatterJS, { Network } from "scatterjs-core"
 import ScatterEOS from "scatterjs-plugin-eosjs2"
 import { Api, JsonRpc } from "eosjs"
 ScatterJS.plugins(new ScatterEOS())
-import {stakeTx,taposData,unstakeTx} from "lib/tx"
+import {stakeTx,taposData,unstakeTx} from "../lib/tx.js"
 var format=require('format-number')()
 import interactivePanel from "components/interactivePanel.vue"
 // MAINNET

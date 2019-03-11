@@ -50,13 +50,13 @@
           .col-3.relative-position
             p.absolute-center.text-green-8 {{percent(selectedTeam.bonus)}}
       br
-      q-card(color="red-4")
-        .row
-          .col-auto
-            div
-              h2(style="margin:0px; padding-right:15px; padding-left:10px;") ! 
-          .col 
-            p You can only change teams once every 48 hours. Changing teams during a season break does not impact your Boid Power.
+      //- q-card(color="red-4")
+      //-   .row
+      //-     .col-auto
+      //-       div
+      //-         h2(style="margin:0px; padding-right:15px; padding-left:10px;") ! 
+          //- .col 
+          //-   p You can only change teams once every 48 hours. Changing teams during a season break does not impact your Boid Power.
       //- h6 Currently Boid Season 0 has not started, there is no Boid Power penalty for changing teams.
       //- h6 The next time you will be able to change teams again is
       h6 Some teams have ongoing promotions for long-running contributors.

@@ -36,7 +36,7 @@ div
                 .col
                   small.on-left Paid:
               .row {{user.tokenTransaction.amount.toFixed(4)}} {{user.tokenTransaction.token.type.name}}
-              a.on-right(v-if="user.tokenTransaction.tokenPayout" :href="blokstx(user.tokenTransaction.tokenPayout.txid)") txid
+              a.on-right(v-if="user.tokenTransaction.tokenPayout && user.tokenTransaction.tokenPayout.txid" :href="blokstx(user.tokenTransaction.tokenPayout.txid)") txid
             .full-width.bg-grey-4(style="height:1px; margin-bottom:15px;")
                 
 
