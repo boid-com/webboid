@@ -13,9 +13,7 @@ div(style="padding:20px; max-width: 1200px;")
   .row.justify-center
     p.justify-center.text-amber-10.bg-grey-7(v-if="errormsg" style="padding:10px;") {{errormsg}}
     p.justify-center.text-blue-6(v-if="statusmsg") {{statusmsg}}
-
   .row.justify-center(v-if="userLoggedIn")
-    
     p Scatter Login: {{wallet.accountInfo.account_name}}
   .row.justify-center
     q-card

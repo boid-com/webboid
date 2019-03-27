@@ -60,13 +60,16 @@ div()
     q-btn.absolute-center(flat @click="refreshDevice()" big)
       q-tooltip Refresh Device
       q-icon(name="refresh")
+    .row.justify-center
+      q-btn(color="warning" @click="openURL('https://www.youtube.com/watch?v=VVlGjVDek_M')") Problems?
 
 
   </template>
 
 <script>
 import parseDevice from 'src/lib/parseDevice'
-import { Alert } from 'quasar'
+import { Alert,openURL } from 'quasar'
+
 var masterInterval = null
 function ec(err){
   console.error(err)
@@ -123,6 +126,7 @@ export default {
   },
   computed: {},
   methods: {
+    openURL,
     refreshDevice: async function(){
         try {
           this.init()
