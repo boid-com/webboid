@@ -61,7 +61,7 @@ div()
       q-tooltip Refresh Device
       q-icon(name="refresh")
     .row.justify-center
-      q-btn(color="warning" @click="openURL('https://www.youtube.com/watch?v=VVlGjVDek_M')") Problems?
+      a(href="" target="_blank" @click.native="ipcRenderer.send('openURL','https://www.youtube.com/watch?v=VVlGjVDek_M')" ) Problems?
 
 
   </template>
