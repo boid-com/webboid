@@ -3,6 +3,8 @@ div.relative-position(v-if="thisUser" style="padding:30px; min-height:300px; max
   h4(style="margin-bottom:0px;").text-blue Update your EOS Account
   h6(style="margin-top:6px;" v-if="page===0") Tokens earned in Boid are automatically sent to your EOS account.
   br
+  .row.justify-center
+    q-btn(color="amber-8" flat @click="openURL('https://www.youtube.com/watch?v=VVlGjVDek_M')") I need help!
   div(v-if="page === 0" style="margin-bottom: 100px")
     .row
       div
@@ -19,6 +21,7 @@ div.relative-position(v-if="thisUser" style="padding:30px; min-height:300px; max
                 h2(style="margin:0px; padding-right:15px; padding-left:10px;") ! 
             .col 
               p You need to link an EOS account to redeem your earnings.
+
         p.text-grey-9(style="padding-top:10px;") Don't have an EOS account?
         //- .row.justify-center(style="padding:20px;")
         //-   q-btn(color="blue") Buy EOS account with BOIDs
@@ -56,6 +59,7 @@ div.relative-position(v-if="thisUser" style="padding:30px; min-height:300px; max
 
 </style>
 <script>
+import {openURL} from 'quasar'
 export default {
   data(){
     return {
@@ -70,6 +74,7 @@ export default {
     this.init()
   },
   methods:{
+    openURL,
     reset(){
       this.page = 0
       this.newPayoutAccount = ""

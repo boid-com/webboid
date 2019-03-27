@@ -17,6 +17,9 @@
           .row
             .col-xs-12.col-sm-6.col-md-12
               q-card.relative-position.animate-scale
+                .absolute-top-left(style="left:25px;")
+                  q-btn.infobtn(round small flat)
+                    q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.powerTier)")
                 .absolute-top-right
                   q-btn.infobtn(round small flat)
                     q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.power)")
@@ -56,7 +59,7 @@
                     q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.social)")
                 p.light-paragraph.text-center Social
                 div.relative-position(style="margin:auto; margin-top:30px")
-                  q-tooltip Invited Users
+                  q-tooltip The number of users that have signed up for Boid using your referral link.
                   h3.text-center(style="z-index:5;") {{parseInt(thisUser.invited.length)}}
                     q-icon.text-center.absolute-center(color="blue-1" name='fa-users' style="font-size:50px; z-index:-4;")
                 div(style="height:15px;")
@@ -143,10 +146,7 @@
                 verticalscrolling="no" 
                 width="100%" 
                 height="540px"
-              )
-               
-
-                 
+              )  
             .col-xs-12.col-sm-6.col-md-12
               div
                 q-card.animate-scale.relative-position(v-if="false")
@@ -399,7 +399,6 @@ h6
   right: 15px !important;
   top: 15px !important;
   color: $blue !important;
-  visibility: hidden;
 }
 
 .infobtn:hover {

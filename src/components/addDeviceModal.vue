@@ -3,8 +3,10 @@
     .relative-position
       h4 Add Device
       p Devices generate ⚡️Boid Power.
+      a(href="https://github.com/Boid-John") Boid is open source #[q-icon(name="fa-heart")]
         q-btn.absolute-right(big flat round color="red-5" style="top:-10px;" @click="modal.close()" v-if="!explainWebDevice")
           q-icon(name="close")
+      div(style="padding-top:20px;")
     .row.justify-center.md-gutter(v-if="!explainWebDevice")
       .col-12(v-if="!phone")
         .deviceCard.shadow-4.bg-green
@@ -45,7 +47,8 @@
             .row.justify-center
               q-btn.text-grey-3(big color="grey-7" @click="initUserWebDevice()") activate
           .row.justify-center(v-if="webMinerHidden")
-            q-btn.text-grey-3( flat color="grey-7" @click="webMinerHidden = false" ) Learn More
+            q-btn.text-grey-3( flat color="grey-7" @click="webMinerHidden = false" disabled ) Learn More
+          p.text-red-9.text-center Browser Mining is currently offline, sorry!
     .row(v-if="explainWebDevice").md-gutter
       .col-6
         h4 You activated the Web Device

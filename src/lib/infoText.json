@@ -1,27 +1,31 @@
 {
   "wallet": {
     "heading": "Your Wallet",
-    "body": "Earned Tokens show up here, during the Alpha, only BOIDs are generated. Soon you will be able to earn other coins as well.",
+    "body": "In the wallet area you can view your accounts pending and paid balances of any tokens you've earned using the Boid app. The Pending Balance represents Boid tokens that have been earned but not yet paid to you. Tokens are paid out every 24-48 hours to users with a pending balance of over 10,000 Boid Tokens. Paid Out represents the total number of tokens that have been transferred to your EOS account. This does NOT reflect your EOS account’s Boid Balance, only the sum of historical transfers.",
     "link":""
   },
   "power": {
     "heading": "Boid Power",
-    "body": "Boid Power increases when you run Boid on devices. Your Power will also decrease when devices are turned off. The higher your Power, the more you will earn and the higher you will climb in the leaderboards.",
+    "body": "Device power is a score given to each attached device in your account It is calculated based on the rate at which that device has completed work units in the Boid app over the most recent 3 weeks. ",
     "link":""
+  },
+  "powerTier":{
+    "heading":"Power Tier",
+    "body":"Power Tier is a ranking assigned to your account based on your Boid power in comparison to all other network participants. The power tiers separate Boid users based on their rate of production into 6 Tier levels. Each level has a Tier Bonus that increases your profitability (except tier 0). Tier 0 is the bottom 5% of users, tiers 1-4 are ~22% each while tier 5 is the top 5%."
   },
   "devices": {
     "heading": "Your Devices",
-    "body": "When you install the Boid application on multiple devices (desktops, laptops, phones), you will be able to manage your devices here.",
+    "body": "When you install the Boid application on multiple devices (desktops, laptops, phones), you will be able to manage your devices here. Remember it can take up to 24 hours running the applicaiton on a new device before Boid Power will start to be displayed",
     "link":""
   },
   "team": {
     "heading": "Your Team",
-    "body": "Power you generate goes towards your team, in exchange, each team will distribute exclusive rewards. You are automatically on the team of the user who has invited you.",
+    "body": "Teams are groups of Boid users that have decided to align based on the team’s stated goal or the profitability of participating in that team. Factors to consider when selecting a team... Team Goals: What is the scientific impact of the research being conducted by this team? Do you want to work on a specific project? Team Earning Bonus: This is a variable rate based on the size of the team and how much Boid the team leader has staked to amplify users profitability. Team Promotions: Each team leader has a variety of ways to incentivize users to join their team. Large Boid payouts, other crypto assets or even physical rewards are up for grabs. Team Leader: Some team leaders will proactively help you get setup with Boid and give you tips for optimization. Some aren’t as active. Are open and active team communication channels important to you? Team Brand: Does your favorite EOS project have a Boid team that you want to support?",
     "link":""
   },
   "social": {
     "heading": "Social",
-    "body": "When users join Boid using your invite link you will receive a small percentage of bonus power based on their contributions. Your invite link changes if you change your username.",
+    "body": "When someone joins Boid using your referral link, you will get a bonus that is equal to 5% of their Boid Power. (The referred user must achieve a minimum Boid Power score of 1,000 before you are eligible for this bonus.)",
     "link":""
   }
 }
