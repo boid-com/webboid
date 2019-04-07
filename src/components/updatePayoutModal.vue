@@ -44,9 +44,9 @@ div.relative-position(v-if="thisUser" style="padding:30px; min-height:300px; max
     h6 You need to click the button in the email.
   div.absolute-bottom(v-if="page === 0" style="height:70px;")
     //- q-btn(big style="margin:30px; margin-bottom:30px;" color="green" @click="createRequest()").absolute-bottom-right Link
-    q-btn(big outline style="margin:30px; margin-bottom:30px;" color="grey" @click="modal.close()").absolute-bottom-right Cancel
+    q-btn(big outline style="margin:30px; margin-bottom:30px;" color="grey" @click="thisModal.close()").absolute-bottom-right Cancel
   div.absolute-bottom(v-if="page === 1" style="height:70px;")
-    q-btn(big style="margin:30px; margin-bottom:30px;" color="blue" @click="modal.close()").absolute-bottom-right Confirm by Email
+    q-btn(big style="margin:30px; margin-bottom:30px;" color="blue" @click="thisModal.close()").absolute-bottom-right Confirm by Email
   q-inner-loading(:visible="pending")
     q-spinner-ball(size="90px" color="blue")
 
@@ -88,9 +88,9 @@ export default {
       })
       this.$root.$on('modal.updatePayout',(toggle) =>{
         if (toggle){
-          this.modal.open()
+          this.thisModal.open()
         } else{
-          this.modal.close()
+          this.thisModal.close()
         }
       })
       
@@ -117,12 +117,12 @@ export default {
   },
   computed:{
   },
-  props:['modal','api','thisUser'],
+  props:['thisModal','api','thisUser'],
   watch:{
-    modal(modal){
+    thisModal(modal){
       if (modal){
-        this.modal.$on('close',this.modalClosed)
-        this.modal.$on('open',this.modalOpened)
+        this.thisModal.$on('close',this.modalClosed)
+        this.thisModal.$on('open',this.modalOpened)
       }
     },
     thisUser(){

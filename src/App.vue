@@ -5,13 +5,14 @@
       q-toolbar.shadow-1(slot="header") 
         q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
           | boid
-          div(slot='subtitle') Alpha 0.0.4
+          div(slot='subtitle') Season Break - Alpha 0.0.4
         div(v-if="loginVisible")
 
           q-btn.gt-xs( flat style="margin-right:10px;" @click="$router.push('/vote')") vote
             q-icon.on-right(name="create")
-          q-btn.gt-xs( flat style="margin-right:10px;" @click="$router.push('/staking')") stake
+          q-btn.gt-xs( style="margin-right:10px;" :loading="true" color="green" @click="$router.push('/staking')") stake
             q-icon.on-right(name="show_chart")
+            q-progress(:indeterminate="true" :animate="true")
           q-btn.text-black(@click='' flat v-if="authenticated", color='light')
             .on-right
               | {{thisUser.username}}
@@ -51,14 +52,14 @@
         q-route-tab(icon='list', :to='{name:"Leaderboards"}', exact='', slot='title')
         q-route-tab(v-if='thisUser.team' icon='fa-users', :to='{name:"Team",params:{teamname:thisUser.team.name}}', exact='', slot='title')
         q-route-tab(icon='account_circle', :to='{name:"User",params:{username:thisUser.username}}', exact='', slot='title')
-      //- div.text-grey-9(ref="warningBanner" v-if="showWarningBanner") 
-      //-   div.bg-orange-4(style="padding:20px;")
-      //-     q-btn.infobtn.absolute-top-right( style="right:40px; top:20px;" size="30px" color='blue' flat round @click="showWarningBanner = false")
-      //-       q-icon(color='grey-7' name="close")
-          //- h5 Boid is currently under maintenance
-          //-   h6.strong.text-green Boid Power ratings are live.
-          //-   h6 Token payouts and wallets are frozen.
-          //-   h6 Your contributions are still being tracked.
+      div.text-grey-9(ref="warningBanner" v-if="showWarningBanner") 
+        div.bg-grey-4(style="padding:20px;")
+          q-btn.infobtn.absolute-top-right( style="right:40px; top:20px;" size="30px" color='blue' flat round @click="showWarningBanner = false")
+            q-icon(color='grey-9' name="close")
+          h5 Boid Season 0 has ended
+            h6.strong.text-black Season 1 starts April 21st
+            h6 Token staking for Season 1 is now unlocked.
+            h6 Token staking will be locked when Season 1 starts.
       .row.justify-center
         .col-12
           .row.justify-center

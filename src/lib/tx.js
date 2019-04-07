@@ -40,7 +40,8 @@ function unstakeTx(data){
           }
         ],
         data: {
-          _stake_account: data.account.name
+          _stake_account: data.account.name,
+          quantity: data.unStakeAmount.toFixed(4) + " BOID"
         }
       }
     ]

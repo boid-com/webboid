@@ -4,57 +4,64 @@ div(style="padding:20px; max-width: 1600px;")
     .col-auto
       h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") BOID Staking
       p You can now stake BOID tokens to amplify the profitability of your generated Boid Power. 
-  div(v-if="!authenticated")
-    p.text-center you need to register/login to a Boid account to proceed.
-    .row.justify-center
-      .col-auto
-        q-btn(@click="$root.$emit('modal','auth')" color="green") Register/Login 
-  div(v-else-if="!thisUser.payoutAccount")  
-    q-card(color="red-4" style="padding:10px;")
-      .row
-        .col-auto
-          div
-            h2(style="margin:0px; padding-right:15px; padding-left:10px;") ! 
-        .col 
-          p You can only earn staking rewards if your EOS account is linked to your Boid account.
-      .row.justify-center
-        q-btn(color="green" @click="$root.$emit('modal','updatePayoutModal')") Link EOS Account
-  div(v-else-if="!account" )
-    .row.justify-center 
-      .col-auto
-        p you need to login to Scatter to proceed.
-    .row.justify-center 
-      .col-auto
-        q-btn(@click='login()' color="green") Scatter Login
-  div(v-else-if="account.name != thisUser.payoutAccount")
-    .row.justify-center
-      .col-auto
-        h6 You are logged into Scatter using 
-        h5 {{account.name}}
-        h6 But your Boid account is linked to 
-        h5 {{thisUser.payoutAccount}}
-    .row.justify-center
-      .col-auto
-        q-btn.on-left( color="blue" @click="$root.$emit('modal','updatePayoutModal')") Link different EOS Account
-        q-btn(@click='reset()' color="green") Scatter Login
-
-  div(v-else)
+  div
     .row.justify-center
       .col-md-3
         q-card
           .light-paragraph.text-center Stake Actions
           .row.relative-position
             .col-7
-              q-input(v-model="formattedStake" :disabled="disableStake" placeholder="BOIDs to stake")
+              q-input(v-model="formattedStake" :disabled="!account" placeholder="BOID to stake")
             .col
               q-btn.absolute-bottom-right(
                 @click="formattedStake = liquidBalance"
-                style="margin-bottom:10px;" small flat color="blue" :disabled="true") all
-          q-btn.full-width(color="green" :disabled="true" @click="stake()") Stake
+                style="margin-bottom:10px;" flat color="blue" :disabled="!account") 100%
+          q-btn.full-width(color="green" :disabled="!account" @click="stake()") Stake
           div(style="height:1 0px;")
-          q-btn.full-width(:disabled="true" flat @click="unstake()") Unstake
-          p Season 0 has started and Staking is frozen for the duration of the season
-        q-card.relative-position
+          .row.relative-position
+            .col-7
+              q-input(v-model="formattedUnstake" :disabled="!account" placeholder="BOID to unstake")
+            .col
+              q-btn.absolute-bottom-right(
+                @click="formattedUnstake = userStake"
+                style="margin-bottom:10px;" flat color="blue" :disabled="!account") 100%
+          q-btn.full-width(:disabled="!account" flat @click="unstake()") Unstake
+          div(style="padding-top:20px;")
+            q-btn.full-width(v-if="account" flat small @click='reset()').full-width.text-blue-9 change account
+            div(v-if="!authenticated" )
+              p.strong You need to register/login to a Boid account to proceed.
+              .row.justify-center
+                .col-auto
+                  q-btn(@click="$root.$emit('modal','auth')" color="green") Register/Login 
+            div(v-else-if="!thisUser.payoutAccount")  
+              q-card(color="red-4" style="padding:10px;")
+                .row
+                  .col-auto
+                    div
+                      h2(style="margin:0px; padding-right:15px; padding-left:10px;") ! 
+                  .col 
+                    p You can only earn staking rewards if your EOS account is linked to your Boid account.
+                .row.justify-center
+                  q-btn(color="green" @click="$root.$emit('modal','updatePayoutModal')") Link EOS Account
+            div(v-else-if="!account" )
+              .row.justify-center 
+                .col
+                  p.strong.text-center You need to login to Scatter to proceed.
+              .row.justify-center 
+                .col
+                  q-btn.full-width(@click='login()' color="green") Scatter Login
+            div(v-else-if="account.name != thisUser.payoutAccount")
+              .row.justify-center
+                .col
+                  h6 You are logged into Scatter using 
+                  h5 {{account.name}}
+                  h6 But your Boid account is linked to 
+                  h5 {{thisUser.payoutAccount}}
+              .row.justify-center
+                q-btn.full-width( color="blue" @click="$root.$emit('modal','updatePayoutModal')") Link different EOS Account
+              .row.justify-center    
+                // q-btn.full-width(@click='reset()' color="green") Change Scatter Login
+        q-card.relative-position(v-if="account")
           .light-paragraph.text-center EOS Wallet
           p.text-center {{account.name}}
           p Total Balance
@@ -85,30 +92,10 @@ div(style="padding:20px; max-width: 1600px;")
         //-         small.text-center Stake Difficulty
         //-         h6.text-center {{stakeD}}
       .col-md-8.col-xl-7
-        q-card
-          p.light-paragraph.text-center 2019 Q1 - Q2 Season Schedule
-          .row.relative-position
-            .col-11
-              div.absolute-center.gt-sm(style="height:5px; width:80%; background-color:grey; z-index:-1;")
-            .col.scheduleCard.text-grey
-              q-card.bg-grey-2.scheduleCard
-                p.text-center Break
-                p.text-center 1/1 - 2/7
-            .col
-              q-card.scheduleCard(color="green")
-                p.text-center Season 0
-                p.text-center 2/7 - 4/7
-            .col
-              q-card.bg-white.scheduleCard
-                p.text-center Break
-                p.text-center 4/7 - 4/21
-            .col
-              q-card.bg-white.scheduleCard
-                p.text-center Season 1
-                p.text-center 4/21 - 6/21
+
         interactivePanel(:thisUser="thisUser" :userStake="userStake")
       .col-4
-  interactivePanel(v-if="!account | !authenticated" :thisUser="thisUser" userStake="0.00" style="margin-top:40px;")
+  // interactivePanel(v-if="!account | !authenticated" :thisUser="thisUser" userStake="0.00" style="margin-top:40px;")
 
 
 
@@ -198,6 +185,7 @@ export default {
       disableStake:true,
       scatter: null,
       stakeAmount: null,
+      unStakeAmount:null,
       stakeTime: null,
       scatterAuth:null,
       scatterId:null,
@@ -240,6 +228,16 @@ export default {
       get(data){
         if (!this.stakeAmount) return null
         return format(this.stakeAmount)
+      }
+    },
+    formattedUnstake: {
+      set(newData){
+        if (!newData) return this.unStakeAmount = null
+        this.unStakeAmount = parseFloat(newData.replace(/[^0-9.]/g, ""))
+      },
+      get(data){
+        if (!this.unStakeAmount) return null
+        return format(this.unStakeAmount)
       }
     }
   },
