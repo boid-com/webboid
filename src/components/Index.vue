@@ -131,10 +131,10 @@
                       h5(style="margin:5px;") {{thisUser.payoutAccount}}
                     .col-4
                       div
-                        q-btn.full-width(color="green" @click="$root.$emit('modal.updatePayout',true)") Change  
+                        q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Change  
                 div(v-else)
                   p.light-paragraph.text-center You have not linked an EOS account yet
-                  q-btn.full-width(color="green" @click="$root.$emit('modal.updatePayout',true)") Link EOS Account  
+                  q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Link EOS Account  
             q-card.no-padding.gt-sm(style="height:510px; overflow:hidden; width:100%;")
               iframe(
                 src="https://tgwidget.com/widget/?id=5c6c9bb583ba8859728b4567"
@@ -216,10 +216,10 @@
               q-item.relative-position.bg-red(v-else color="red" style="height:80px")
                 h5.text-white Disable AdBlock and refresh to continue
 
-            q-btn.full-width(v-if="thisUser.devices.length > 0 " style="margin-top:20px;" color="green" @click="$root.$emit('modal.addDevice',true)")
+            q-btn.full-width(v-if="thisUser.devices.length > 0 " style="margin-top:20px;" color="green" @click="$root.$emit('modal','addDeviceModal')")
               | add more Devices
               q-icon.on-right(name="add")
-            q-btn.full-width(v-else style="margin-top:20px;" color="green"           @click="$root.$emit('modal.addDevice',true)")
+            q-btn.full-width(v-else style="margin-top:20px;" color="green" @click="$root.$emit('modal','addDeviceModal')")
               | add your first device
               q-icon.on-right(name="add")
           div.full-width
