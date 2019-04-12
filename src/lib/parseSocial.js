@@ -29,6 +29,9 @@ export default (social)=>{
     else if (el[0] === "website"){
       social.img = "/statics/social/wwwicon.png"
     }
+    else if (el[0] === "website2"){
+      social.img = "https://i.imgur.com/Maqnjme.png"
+    }
     else if (el[0] === "youtube"){
       social.img = "/statics/social/youtubeicon.png"
     }

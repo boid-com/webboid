@@ -5,55 +5,54 @@
       q-btn( big color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join US
   .row.justify-center
     .col-sm-12.col-lg-4
-      div.relative-position(style="min-width:300px; padding-bottom:30px; height:325px;")
+      div.relative-position(style="min-width:300px; padding-bottom:30px; height:383px;")
         .layout-padding.full-width.relative-position(style="height:140px;")
           img.absolute-center.block(style="width:120px; height:120px;" :src="team.image")
         h5.text-center {{team.name | removeDash}}
         div(style="padding:20px; height:125px;")
           p.light-paragraph {{team.tagline}}
         br
-      .row
-        .col-4(v-for="stat of teamStats" :key="stat.label")
-          q-card.animate-scale(style="min-width:70px; padding:10px; height:70px;")
-            div.relative-position(style="margin:auto; margin-top:00px")
-              h5.text-center(style="z-index:5; margin-top:15px; font-size:18px;") {{stat.data}}
-              img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.6); z-index:-4") 
-              q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
-              q-icon.text-center.absolute-center(v-else color="green-2" :name='stat.icon' style="font-size:80px; z-index:-4;")
-              q-tooltip {{stat.label}}
-      .row
-        .col-12
-          q-card(v-if="team.owner" style="height:124px;")
-            p.light-paragraph.text-center Leader
-            q-item( style="padding-top:6px;"
-              highlight :to="{name:'User',params:{username:team.owner.username}}")
-              q-item-side(:avatar="team.owner.image")
-              q-item-main
-                q-item-tile(label) {{team.owner.username}}
-                q-item-tile(sublabel) 
-                  small {{team.owner.tagline}}
-              q-item-side(right icon="flash_on" stamp="") 
-                small.text-center {{parseInt(team.owner.tPower)}}
-
-    .col-sm-12.col-lg-8
-      q-card.relative-position(ref="chartDiv" style="height:395px; padding: 10px; padding-top: 15px;")
-        .light-paragraph.text-center(style="margin-bottom:30px;") Team Graphs (14d)
-        teamChart( style="margin-top:20"
-          v-if="powerChart" :chartData="powerChart" :height="295")
-        q-inner-loading(:visible="!powerChart")
-          q-spinner-ball(size="60px" color="blue")
       div
-        q-card(v-if="parseSocial" style="margin-top:16px; height:124px;")
+        q-card(v-if="parseSocial" style="margin-top:16px;")
           p.light-paragraph.text-center Social
-          .row.justify-center(style="padding:0px")
+          .row.justify-center(style="padding-top:0px")
             .col(v-for="(social,index) in parseSocial" :key="index")
               .row.justify-center
                 q-btn.socialbtn(flat round @click="openURL(social.url)")
                   img.socialbtn(:src="social.img" style="max-width:30px; filter:opacity(.8)")
                   q-tooltip {{social.url}}
 
-              //- a(:href="social[1]") {{social[0]}}
-
+    .col-sm-12.col-lg-8
+      q-card.relative-position(ref="chartDiv" style="height:375px; padding: 10px; padding-top: 15px;")
+        .light-paragraph.text-center(style="margin-bottom:30px;") Team Graphs (14d)
+        teamChart( style="margin-top:20"
+          v-if="powerChart" :chartData="powerChart" :height="295")
+        q-inner-loading(:visible="!powerChart")
+          q-spinner-ball(size="60px" color="blue")
+      .row(v-if="team")
+        .col-sm-12.col-xl-4
+          .row
+            .col-12.relative-position
+              q-card(v-if="team.owner" style="bottom:0; top: 0; right:0; left:0;")
+                p.light-paragraph.text-center Leader
+                q-item( style="padding-top:6px;"
+                  highlight :to="{name:'User',params:{username:team.owner.username}}")
+                  q-item-side(:avatar="team.owner.image")
+                  q-item-main
+                    q-item-tile(label) {{team.owner.username}}
+                    q-item-tile.ellipsis(sublabel) 
+                      small {{team.owner.tagline}}
+                  q-item-side(right icon="flash_on" stamp="") 
+                    small.text-center {{parseInt(team.owner.tPower)}}
+        .col(v-if="team" v-for="stat of teamStats" :key="stat.label")
+          q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
+            p.light-paragraph.text-center {{stat.label}}
+            div.relative-position(style="margin:auto; margin-top:0px")
+              h5.text-center(style="z-index:5; margin-top:33px; margin-bottom:20px; font-size:18px;") {{stat.data}}
+              img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.6); z-index:-4") 
+              q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
+              q-icon.text-center.absolute-center(v-else color="green-2" :name='stat.icon' style="font-size:80px; z-index:-4;")
+              q-tooltip {{stat.label}}
 
   .row.gutter.justify-center
     .col
@@ -165,6 +164,9 @@ export default {
       })
       return {labels,datasets:[{data:data},{data:data2}]}},
     teamStats(){
+      if (!this.team.owner) return null
+      var ownerStake = this.team.owner.stake.toFixed(0).toLocaleString()
+      if (!ownerStake) return null
       return [
         {
           data:parseInt(this.team.power).toLocaleString(),
@@ -180,6 +182,11 @@ export default {
           data:(this.team.bonus * 100).toFixed(2) + '%',
           icon:'add',
           label:"Team Bonus"
+        },
+        {
+          data:ownerStake + ' BOID',
+          icon:'lock',
+          label:"Team Stake"
         }
       ]
     },
@@ -277,8 +284,9 @@ export default {
     }
   },
   async created() {
-    console.log(this.$route)
+    // console.log(this.$route)
     this.team = await this.$api.getTeam({name:this.$route.params.teamname})
+    // console.log(this.team.owner.stake)
   },
   async mounted(){
     setTimeout(()=>{
