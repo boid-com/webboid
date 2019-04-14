@@ -176,11 +176,14 @@
                   q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)")         
                 q-item-main
                   q-item-tile(label style="user-select: none;") {{device.name}}
-                  q-item-tile.relative-position(style="padding-left:15px;" sublabel) {{device.power.toLocaleString()}} 
+                  q-item-tile.relative-position(style="padding-left:15px;" sublabel) CPU: {{device.boincPower.toLocaleString()}} 
                     | {{displayPending(device)}}
+                    img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+                  q-item-tile.relative-position(style="padding-left:15px;" sublabel v-if="device.rvnPower && device.rvnPower > 0") GPU: {{device.rvnPower.toLocaleString()}} 
                     div.absolute-top-left(style="width:100px; height:30px;")
                       q-tooltip Device Power (Pending)
                     img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+                  // p(v-if="device.powerRatings[0]") {{device.powerRatings[0]}}
                     
                 div.absolute(style="width:190px; height:50px; left:180px; padding-top:8px;" v-show="browserDeviceToggle && device.type=='BROWSER'")
                   q-tooltip CPU Usage

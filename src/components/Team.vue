@@ -1,25 +1,25 @@
 <template lang="pug">
-.div(style="padding:10px; max-width:1200px;")
+.div(style="padding:10px; max-width:1300px;")
   .layout-padding.full-width(v-if="!authenticated" style="min-height=300px;")
     .row.justify-center.gutter
       q-btn( big color="green" style="font-size:35px;" @click="$e.$emit('openAuthModal',true)") Join US
   .row.justify-center
-    .col-sm-12.col-lg-4
-      div.relative-position(style="min-width:300px; padding-bottom:30px; height:383px;")
-        .layout-padding.full-width.relative-position(style="height:140px;")
+    .col-sm-12.col-lg-4.relative-position
+      div.relative-position(style="min-width:300px; padding-bottom:0px;")
+        .layout-padding.full-width.relative-position(style="height:120px;")
           img.absolute-center.block(style="width:120px; height:120px;" :src="team.image")
         h5.text-center {{team.name | removeDash}}
-        div(style="padding:20px; height:125px;")
+        div(style="padding:10px;")
           p.light-paragraph {{team.tagline}}
         br
-      div
-        q-card(v-if="parseSocial" style="margin-top:16px;")
-          p.light-paragraph.text-center Social
+      div.absolute-bottom(style="bottom:15px;")
+        div(v-if="parseSocial" style="margin-top:16px;")
+          p.light-paragraph.text-center
           .row.justify-center(style="padding-top:0px")
             .col(v-for="(social,index) in parseSocial" :key="index")
               .row.justify-center
-                q-btn.socialbtn(flat round @click="openURL(social.url)")
-                  img.socialbtn(:src="social.img" style="max-width:30px; filter:opacity(.8)")
+                q-btn.socialbtn(flat small round @click="openURL(social.url)")
+                  img.socialbtn(:src="social.img" style="max-width:20px; filter:opacity(.8)")
                   q-tooltip {{social.url}}
 
     .col-sm-12.col-lg-8
@@ -29,30 +29,30 @@
           v-if="powerChart" :chartData="powerChart" :height="295")
         q-inner-loading(:visible="!powerChart")
           q-spinner-ball(size="60px" color="blue")
-      .row(v-if="team")
-        .col-sm-12.col-xl-4
-          .row
-            .col-12.relative-position
-              q-card(v-if="team.owner" style="bottom:0; top: 0; right:0; left:0;")
-                p.light-paragraph.text-center Leader
-                q-item( style="padding-top:6px;"
-                  highlight :to="{name:'User',params:{username:team.owner.username}}")
-                  q-item-side(:avatar="team.owner.image")
-                  q-item-main
-                    q-item-tile(label) {{team.owner.username}}
-                    q-item-tile.ellipsis(sublabel) 
-                      small {{team.owner.tagline}}
-                  q-item-side(right icon="flash_on" stamp="") 
-                    small.text-center {{parseInt(team.owner.tPower)}}
-        .col(v-if="team" v-for="stat of teamStats" :key="stat.label")
-          q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
-            p.light-paragraph.text-center {{stat.label}}
-            div.relative-position(style="margin:auto; margin-top:0px")
-              h5.text-center(style="z-index:5; margin-top:33px; margin-bottom:20px; font-size:18px;") {{stat.data}}
-              img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.6); z-index:-4") 
-              q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
-              q-icon.text-center.absolute-center(v-else color="green-2" :name='stat.icon' style="font-size:80px; z-index:-4;")
-              q-tooltip {{stat.label}}
+    .row.full-width(v-if="team")
+      .col-xs-12.col-sm-12.col-md-4.col-xl-4
+        .row
+          .col-12.relative-position
+            q-card(v-if="team.owner")
+              p.light-paragraph.text-center Leader
+              q-item( style="padding-top:6px;"
+                highlight :to="{name:'User',params:{username:team.owner.username}}")
+                q-item-side(:avatar="team.owner.image")
+                q-item-main
+                  q-item-tile(label) {{team.owner.username}}
+                  q-item-tile.ellipsis(sublabel) 
+                    small {{team.owner.tagline}}
+                q-item-side(right icon="flash_on" stamp="") 
+                  small.text-center {{parseInt(team.owner.tPower)}}
+      .col(v-if="team" v-for="stat of teamStats" :key="stat.label").col-xs-6.col-sm-3.col-md-2.col-lg-2        
+        q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
+          p.light-paragraph.text-center {{stat.label}}
+          div.relative-position(style="margin:auto; margin-top:0px")
+            h5.text-center(style="z-index:5; margin-top:33px; margin-bottom:20px; font-size:18px;") {{stat.data}}
+            img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.6); z-index:-4") 
+            q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
+            q-icon.text-center.absolute-center(v-else color="green-2" :name='stat.icon' style="font-size:80px; z-index:-4;")
+            q-tooltip {{stat.label}}
 
   .row.gutter.justify-center
     .col
@@ -304,8 +304,11 @@ export default {
   props: ['thisUser', 'api', 'authenticated']
 }
 </script>
-<style lang="stylus">
+<style lang="stylus" scoped>
 @import '~variables'
+p
+  margin-bottom 15px
+
 .hover:hover{
   background-color: $grey-2;
 }

@@ -139,7 +139,7 @@ import 'quasar-extras/animate'
 // import Chartist from "chartist"
 import { Loading, Toast } from 'quasar'
 import auth from '@/Auth.vue'
-import adBlocker from 'just-detect-adblock'
+// import adBlocker from 'just-detect-adblock'
 import profileEdit from '@/ProfileEdit.vue'
 import scatter from '@/Scatter.vue'
 import boincConfig from '@/BoincConfig.vue'
@@ -296,10 +296,10 @@ export default {
       // this.$root.$emit('modal.nue',true)
     }, 1000)
     setTimeout(() => {
-      if (adBlocker.isDetected()) {
-        this.adBlock = true
-        console.log('adblock detected2')
-      }
+      // if (adBlocker.isDetected()) {
+      //   this.adBlock = true
+      //   console.log('adblock detected2')
+      // }
     }, 500)
     if (window.olark) {
      window.olark.configure('system.hb_position', 'right') 
