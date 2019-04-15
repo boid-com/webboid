@@ -121,9 +121,9 @@ div
 
           
           div(v-else-if="page==='exchange'")
-            .row.justify-center
-              q-card.cursor-pointer.clickable(@click="openURL('https://eosdaq.com/exchange/BOID_EOS')" style="width:50%")
-                img.full-width(src="https://cdn-images-1.medium.com/max/1600/1*4e5Md1hVCq-eM48DkVBhfw.png")
+            .row.justify-center.relative-position
+              exchanges(:showHeading="false")
+ 
 
           
       
@@ -148,8 +148,10 @@ div
 import { Toast } from 'quasar'
 var format=require('format-number')()
 import { openURL } from 'quasar'
+import exchanges from '@/exchange.vue'
 
 export default {
+  components:{exchanges},
   data() {
     return {
       stakeFAQ,

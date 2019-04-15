@@ -150,6 +150,7 @@ import nueModal from '@/nueModal.vue'
 import bFooter from '@/Footer.vue'
 import updatePayoutModal from '@/updatePayoutModal.vue'
 import changeTeam from '@/changeTeam.vue'
+import exchangeModal from '@/exchange.vue'
 var hashInterval = null
 // var trackJs = window.trackJs
 var data = {
@@ -461,7 +462,8 @@ export default {
     bFooter,
     updatePayoutModal,
     scatter,
-    changeTeam
+    changeTeam,
+    exchangeModal
   },
   watch: {
     '$route.name'(name){
