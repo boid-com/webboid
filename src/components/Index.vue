@@ -177,7 +177,7 @@
                 q-item-main
                   q-item-tile(label style="user-select: none;") {{device.name}}
                   q-item-tile.relative-position(style="padding-left:15px;" sublabel) CPU: {{device.boincPower.toLocaleString()}} 
-                    | {{displayPending(device)}}
+                    | pending: {{displayPending(device)}}
                     img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
                   q-item-tile.relative-position(style="padding-left:15px;" sublabel v-if="device.rvnPower && device.rvnPower > 0") GPU: {{device.rvnPower.toLocaleString()}} 
                     div.absolute-top-left(style="width:100px; height:30px;")
