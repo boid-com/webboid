@@ -178,7 +178,7 @@
                   q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)")         
                 q-item-main
                   q-item-tile(label style="user-select: none;") {{device.name}}
-                  q-item-tile.relative-position(style="padding-left:15px;" sublabel) CPU: {{device.boincPower.toLocaleString()}} 
+                  q-item-tile.relative-position(style="padding-left:15px;" sublabel  v-if="device.boincPower") CPU: {{device.boincPower.toLocaleString()}} 
                     | {{displayPending(device)}}
                     q-tooltip Device Power (Pending)
                     img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
