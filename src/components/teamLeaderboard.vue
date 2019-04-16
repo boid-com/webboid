@@ -1,7 +1,8 @@
 <template lang="pug">
 div
+  .row.justify-center
+    div(style="padding-bottom:10px;").full-width.text-center {{type}}
   .row.justify-center(style="margin:20px; margin-bottom:0px; margin-top:0px;")
-    small(style="padding-bottom:10px;") {{type}}
     small.light-paragraph(v-if="type === 'AVERAGE' ") This Leaderboard is based on the average Boid Power of users during the promotion timeframe. Users are only eligible for this type of promotion if they are on the team when the promotion starts, and remain on the team until the end of the promotion timeframe.
     small.light-paragraph(v-if="type === 'CUMULATIVE' ") This leaderboard is based on the cumulative BOID Tokens earned by users on this team during the promotion timeframe. Users who change teams will remain on the cumulative promotional leaderboards for each team where they make contributions.
     small.light-paragraph(v-if="type === 'LIVE' ") This leaderboard is a live reading of the Boid Power of users who are currently on this team.

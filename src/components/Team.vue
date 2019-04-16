@@ -18,8 +18,8 @@
           .row.justify-center(style="padding-top:0px")
             .col(v-for="(social,index) in parseSocial" :key="index")
               .row.justify-center
-                q-btn.socialbtn(flat small round @click="openURL(social.url)")
-                  img.socialbtn(:src="social.img" style="max-width:20px; filter:opacity(.8)")
+                q-btn.socialbtn(flat round @click="openURL(social.url)")
+                  img.socialbtn(:src="social.img" style="max-width:35px; filter:opacity(.8)")
                   q-tooltip {{social.url}}
 
     .col-sm-12.col-lg-8
