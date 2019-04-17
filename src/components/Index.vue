@@ -134,7 +134,7 @@
                         q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Change  
                 div(v-else)
                   p.light-paragraph.text-center You have not linked an EOS account yet
-                  q-btn.full-width(color="green" @click="$root.$emit('modal','exchangeModal')") Link EOS Account  
+                  q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Link EOS Account  
                 br
                 q-btn.full-width(color="blue" flat @click="$root.$emit('modal','exchangeModal')") Get BOID
             q-card.no-padding.gt-sm(style="height:510px; overflow:hidden; width:100%;")
