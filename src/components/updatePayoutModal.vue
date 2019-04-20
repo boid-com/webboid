@@ -6,7 +6,7 @@ div.relative-position(v-if="thisUser" style="padding:30px; min-height:300px; max
   .row.justify-center
     q-btn(color="amber-8" flat @click="openURL('https://www.youtube.com/watch?v=VVlGjVDek_M')") I need help!
   div(v-if="page === 0" style="margin-bottom: 100px")
-    .row
+    .row.justify-center
       div
         p.text-center(v-if="!thisUser.payoutAccount") 
         div(v-else)
@@ -21,11 +21,11 @@ div.relative-position(v-if="thisUser" style="padding:30px; min-height:300px; max
                 h2(style="margin:0px; padding-right:15px; padding-left:10px;") ! 
             .col 
               p You need to link an EOS account to redeem your earnings.
-
-        p.text-grey-9(style="padding-top:10px;") Don't have an EOS account?
-        //- .row.justify-center(style="padding:20px;")
-        //-   q-btn(color="blue") Buy EOS account with BOIDs
-      div(v-if="!scatterId")
+      .row.justify-center(style="padding:20px;")
+        p.text-grey-9(style="padding-top:10px;" v-if="!thisUser.payoutAccount") Don't have an EOS account?
+        p.text-grey-9(style="padding-top:10px;" v-else) Need a new EOS account?
+        p Quickly get an EOS account at #[a(href="https://www.eosnameservice.io/?ref=boidcombonus") EOSNameService.io]
+      .row.justify-center(v-if="!scatterId")
         p.text-grey-9 Link your existing EOS account using Scatter
         .row.justify-center
           q-btn(color="green" style="margin:20px;" @click="$root.$emit('scatterLogin')") Scatter Login
