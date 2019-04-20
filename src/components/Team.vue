@@ -7,7 +7,7 @@
     .col-sm-12.col-lg-4.relative-position
       div.relative-position(style="min-width:300px; padding-bottom:0px;")
         .layout-padding.full-width.relative-position(style="height:120px;")
-          img.absolute-center.block(style="width:120px; height:120px;" :src="team.image")
+          img.absolute-center.block(style="max-width:120px; max-height:120px; height: auto;" :src="team.image")
         h5.text-center {{team.name | removeDash}}
         div(style="padding:10px;")
           p.light-paragraph {{team.tagline}}
