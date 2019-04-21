@@ -186,7 +186,7 @@ export default {
         {
           data:ownerStake + ' BOID',
           icon:'lock',
-          label:"Team Stake"
+          label:"Leader Stake"
         }
       ]
     },
