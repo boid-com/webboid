@@ -16,11 +16,11 @@ div
               p.text-center Season 0
               p.text-center 2/7 - 4/7
           .col
-            q-card.bg-white.scheduleCard(color="green")
+            q-card.bg-white.text-grey
               p.text-center Break
               p.text-center 4/7 - 4/21
           .col
-            q-card.bg-white.scheduleCard
+            q-card.bg-whitescheduleCard(color="green")
               p.text-center Season 1
               p.text-center 4/21 - 6/21
   .row
