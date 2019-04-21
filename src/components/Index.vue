@@ -229,7 +229,7 @@
               | add your first device
               q-icon.on-right(name="add")
           div.full-width
-            leaderboard.full-width(:tiersLeaderboard="tiersLeaderboard" :globalStats='globalStats' :leaderboard='leaderboard' :teamLeaderboard="teamLeaderboard")
+            leaderboard.full-width(:thisUser="thisUser" :tiersLeaderboard="tiersLeaderboard" :globalStats='globalStats' :leaderboard='leaderboard' :teamLeaderboard="teamLeaderboard")
       //- iframe(src="https://discordapp.com/widget?id=467640777187655700&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0")
     
       // q-modal(ref="deviceModal" @close="currentDevice = null")
