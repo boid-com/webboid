@@ -25,7 +25,8 @@
                         | {{parsedPromo.status.message}}
                     .row.justify-center
                       small.absolute-center.text-center(style="margin-top:5px;") 
-                        | {{parsedPromo.endDate}}
+                        div(v-if="promo.active") {{parsedPromo.endDate}}
+                        div(v-else) {{parsedPromo.startDate}}
                   .col.on-right.relative-position.gt-xs(style="padding-top:-3px;" v-if="!basic && promo.active && userid")
                     .row.justify-center(style="padding-top:0px;")
                       small.text-center My Status

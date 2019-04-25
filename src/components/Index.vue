@@ -229,7 +229,7 @@
               | add your first device
               q-icon.on-right(name="add")
           div.full-width
-            leaderboard.full-width(:thisUser="thisUser" :tiersLeaderboard="tiersLeaderboard" :globalStats='globalStats' :leaderboard='leaderboard' :teamLeaderboard="teamLeaderboard")
+            leaderboard.full-width(:thisUser="thisUser" :globalStats='globalStats')
       //- iframe(src="https://discordapp.com/widget?id=467640777187655700&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0")
     
       // q-modal(ref="deviceModal" @close="currentDevice = null")
@@ -347,7 +347,7 @@ export default {
       console.log('here we are')
     }
   },
-  props: ['globalStats','thisUser', 'thisDevice', 'authenticated', 'api', 'ch', 'adBlock', 'leaderboard', 'teamLeaderboard','tiersLeaderboard'],
+  props: ['globalStats','thisUser', 'thisDevice', 'authenticated', 'api', 'ch', 'adBlock', 'leaderboard', 'teamLeaderboard'],
   components: {
     device,
     leaderboard,

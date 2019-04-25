@@ -62,8 +62,10 @@ div
         )
   .row
     .col-md-12.col-lg-6(style="padding-bottom:15px;")
-      q-card(style="height:100%;" v-if="tiersLeaderboard").animate-scale
+      q-card(style="height:100%;" v-if="tiersLeaderboard").animate-scale.relative-position
         p.light-paragraph.text-center Users
+        // q-btn.absolute-top-right(flat ground color="green" @click="refreshLeaderboard()")
+        //   q-icon(name="refresh")
         .row.justify-between
           .col-auto
             .row.justify-center
@@ -156,7 +158,7 @@ div
                     img.tokenimg(:src="team.image")
                   .col(style="padding:15px;")
                     .ellipsis(style="max-width:100%;") {{team.name | removeDash}}
-              td(data-th="Power") {{parseInt(team.power)}}
+              td(data-th="Power") {{parseInt(team.power).toLocaleString()}}
 
 </template>
 
@@ -174,7 +176,9 @@ export default {
       selectedTier:null,
       showSocial:false,
       selectedLeaderboard:null,
-      socialLeaderboard:null
+      socialLeaderboard:null,
+      tiersLeaderboard:null,
+      teamLeaderboard:null
     }
   },
   components:{promoCard},
@@ -189,7 +193,17 @@ export default {
     }
   },
   methods: {
-
+    async refreshLeaderboard(){
+      // console.log('refresh')
+      this.$api.tiersLeaderboard().then(el =>{
+        this.tiersLeaderboard = el
+      })
+      this.promotions = await this.$api.recentPromotions()
+      this.topMovers = await this.$api.topGainers()
+      this.socialLeaderboard = await this.$api.socialLeaderboard()
+      this.teamLeaderboard = await this.$api.teamsLeaderboard()
+      if (!this.selectedTier && this.showSocial != true ) this.selectedTier = this.thisUser.tier
+    }
   },
   watch: {
     team(val) {
@@ -211,21 +225,16 @@ export default {
     tiersLeaderboard(val){
       console.log(val)
       if(!val) return
-      if (this.selectedTier) this.selectedLeaderboard = val[this.selectedTier]
+      if (this.showSocial === false) this.selectedLeaderboard = val[this.selectedTier]
     }
   },
   async mounted() {
-    this.$e.$on('team', team => {
-      this.team = team
-    })
-    this.promotions = await this.$api.recentPromotions()
-    this.topMovers = await this.$api.topGainers()
-    this.socialLeaderboard = await this.$api.socialLeaderboard()
-    if (!this.selectedTier && this.showSocial != true ) this.selectedTier = this.thisUser.tier
+    console.log('MOUNTED LEADERBOARDS')
+    this.refreshLeaderboard()
 
     // console.log(this.socialLeaderboard)
   },
-  props: ['thisUser', 'api', 'authenticated', 'leaderboard', 'teamLeaderboard','globalStats','tiersLeaderboard']
+  props: ['thisUser', 'api', 'authenticated','globalStats']
 }
 </script>
 

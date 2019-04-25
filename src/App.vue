@@ -65,8 +65,6 @@
             router-view(
               :globalStats='globalStats'
               :leaderboard='leaderboard'
-              :teamLeaderboard='teamLeaderboard'
-              :tiersLeaderboard='tiersLeaderboard'
               :thisUser='thisUser'
               :thatUser="thatUser"
               :thisDevice="thisDevice"
@@ -222,11 +220,7 @@ export default {
       }
     },
     updateLeaderboards: async function() {
-      this.leaderboard = await this.$api.globalLeaderboard().catch(console.error)
-      this.teamLeaderboard = await this.$api.teamsLeaderboard().catch(console.error)
       this.globalStats = await this.$api.globalStats().catch(console.error)
-      this.tiersLeaderboard = await this.$api.tiersLeaderboard().catch(console.error)
-
       // console.log('got globalStats',this.globalStats)
     },
     selectText(data) {
