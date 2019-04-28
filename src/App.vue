@@ -6,12 +6,19 @@
         q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
           | boid
           div(slot='subtitle') Season 1 - Alpha 0.0.4
+        .row.justify-center(v-if="local" style="width:70%;")
+          div.relative-position {{localDeviceName}}
+            q-btn.absolute-right(round flat small style="right:-40px; top: -5px; height:20px; width:30px;") 
+              q-icon(name="edit" size="15px;")
         div(v-if="loginVisible")
-
-          q-btn.gt-xs( flat style="margin-right:10px;" @click="$router.push('/vote')") vote
+          q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
             q-icon.on-right(name="create")
-          q-btn.gt-xs( flat style="margin-right:10px;" @click="$router.push('/staking')") stake
+          q-btn.gt-xs( v-if="!local" flat style="margin-right:10px;" @click="$router.push('/staking')") stake
             q-icon.on-right(name="show_chart")
+          q-btn( v-if="local" flat style="margin-right:10px;" @click="ipcRenderer.send('openURL','https://app.boid.com')")
+            q-icon(name="home")
+          q-btn( v-else flat style="margin-right:10px;" @click="$router.push('/')")
+            q-icon(name="home")
           q-btn.text-black(@click='' flat v-if="authenticated", color='light')
             .on-right
               | {{thisUser.username}}
@@ -23,11 +30,8 @@
                 | My Profile
               q-item(link v-else @click="ipcRenderer.send('openURL','https://app.boid.com/u/'+thisUser.username)")
                 | My Profile
-          q-btn( v-if="local" flat style="margin-right:10px;" @click="ipcRenderer.send('openURL','https://app.boid.com')")
-            q-icon(name="home")
-          q-btn( v-else flat style="margin-right:10px;" @click="$router.push('/')")
-            q-icon(name="home")
-          q-btn.on-left(v-if="!authenticated" @click='$e.$emit("openAuthModal",false)', color='green')
+
+          q-btn.on-left(v-if="!authenticated" @click='$root.$emit("modal","auth")', color='green')
             | Login
           //- q-btn(@click="$root.$emit('resetScatter')") externaltest
         scatter
@@ -169,6 +173,7 @@ export default {
       loginVisible:true,
       tiersLeaderboard:null,
       globalStats:{},
+      localDeviceName:null,
       ch:{
         toggle:false,
         hps: "loading",
@@ -248,7 +253,8 @@ export default {
       Loading.hide()
       if(this.local) {
         this.$nextTick(function () {
-          this.$e.$emit('openAuthModal')
+          window.olark('api.box.hide')
+          this.$root.$emit("modal","auth")
         })
       }
     },
@@ -260,7 +266,7 @@ export default {
         else {
           this.pending = false
           this.authenticated = false
-          if (this.local) this.handleLogin()
+          if (this.local) this.$root.$emit("modal","auth")
           return}
       }
       const userData = await this.$api.getUser({id})
@@ -375,6 +381,9 @@ export default {
       }
 
     })
+    this.$root.$on('localDeviceName',val =>{
+      this.localDeviceName = val
+    })
     this.$root.$on('hideAllMenus',val =>{
       this.hideAllMenus(val)
     })
@@ -485,11 +494,6 @@ export default {
       else if (this.$route.name === 'confirmPayoutAccount' ){
         // this.handleLogout()
         this.handleLogin()
-      }
-      if (window.olark) {
-        if (path === '/auth') {
-          window.olark('api.box.hide')
-        } else window.olark('api.box.show')
       }
     },
     authenticated(authed) {

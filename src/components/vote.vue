@@ -16,7 +16,7 @@ div(style="padding:20px; max-width: 1200px;")
   .row.justify-center(v-if="userLoggedIn")
     p Scatter Login: {{wallet.accountInfo.account_name}}
   .row.justify-center
-    q-card
+    q-card.relative-position
       p.light-paragraph.text-center Whitelisted Proxy Ratings
       div(v-if="proxies")
         .row
@@ -33,8 +33,9 @@ div(style="padding:20px; max-width: 1200px;")
                   tr.user
                     td.relative-position
                       h6 {{proxy.name}}
-        q-btn.full-width(large flat color="green" style="margin-top:10px;" @click="openURL('https://trello.com/b/oosshNqk/proxy')") FULL LIST
-    q-card
+        div(style="height:40px;")
+        q-btn.full-width.absolute-bottom(color="green" @click="openURL('https://trello.com/b/oosshNqk/proxy')") FULL LIST
+    q-card.relative-position
       p.light-paragraph.text-center Weighted BP list
       div(v-if="weightedList")
         .row
@@ -56,7 +57,9 @@ div(style="padding:20px; max-width: 1200px;")
                       h6 {{bp[1]}}
                     td.relative-position
                       q-icon(:name="bpVoted(bp[0])")
-        q-btn.full-width(large flat color="green" style="margin-top:10px;" @click="openURL('https://medium.com/@boidcom/boid-eos-proxy-voting-review-march-2019-81661dd1224')") Learn More
+        div(style="height:40px;")
+        q-btn.full-width.absolute-bottom(color="green"
+        @click="openURL('https://medium.com/@boidcom/boid-eos-proxy-voting-review-march-2019-81661dd1224')") Learn More
 </template>
 <style lang="stylus" scoped>
   @import '~variables'
