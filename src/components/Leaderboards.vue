@@ -21,8 +21,8 @@ div
                 h5 {{parseInt(globalStats.averagePower).toLocaleString()}}
               p.light-paragraph.text-center Average Power 
   .row
-    .col-md-12.col-lg-6(style="padding-bottom:15px;")
-      q-card(style="height:100%;")
+    .col-md-12.col-lg-6(style="padding-bottom:15px; max-height:520px;")
+      q-card(style="height:100%; overflow:auto;")
         p.light-paragraph.text-center Top Movers (48hrs)
         table.q-table.horizontal-separator(style="width:100%")
           thead
@@ -51,15 +51,16 @@ div
                       ) {{user.tagline}}
               td(data-th="Power" style="width:80px;").text-green-5.text-bold + {{parseInt(user.percentageChange).toLocaleString()}}%
               //- td(data-th="Power") {{parseInt(user.tPower).toLocaleString()}}
-    .col(style="padding-bottom:15px;")
-      q-card(style="height:100%;")
+    .col(style="padding-bottom:15px; ")
+      q-card(style="height:100%; max-height:520px;")
         p.light-paragraph.text-center Recently Added Team Promotions
-        promoCard.cursor-pointer.clickable(
-        v-for="promo of recentPromotions" 
-        :key="promo.id" :promo="promo"
-        :basic="true"
-        @click.native="$router.push({name:'Team',params:{teamname:promo.team.name},query:{promo:promo.id}})"
-        )
+        div(style="height:430px; overflow:auto;")
+          promoCard.cursor-pointer.clickable(
+          v-for="promo of recentPromotions" 
+          :key="promo.id" :promo="promo"
+          :basic="true"
+          @click.native="$router.push({name:'Team',params:{teamname:promo.team.name},query:{promo:promo.id}})"
+          )
   .row
     .col-md-12.col-lg-6(style="padding-bottom:15px;")
       q-card(style="height:100%;" v-if="tiersLeaderboard").animate-scale.relative-position
