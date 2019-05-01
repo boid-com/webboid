@@ -232,6 +232,10 @@ export default {
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
   mounted() {
+    setTimeout(this.refreshDevice,1000)
+    setTimeout(this.refreshDevice,3000)
+    setTimeout(this.refreshDevice,5000)
+    setTimeout(this.refreshDevice,13000)
     console.log('this.route',this.$route.name)
     if (!this.$route.name === 'Desktop') return
     if (masterInterval) clearInterval(masterInterval)
