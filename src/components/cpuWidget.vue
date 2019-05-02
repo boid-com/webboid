@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  q-card.bg-white(style='max-height:480px;' v-if="thisDevice")
+  q-card.bg-white(style='max-height:470px;' v-if="thisDevice")
     q-card-media.relative-position
       //- q-btn(@click="modifyDevice()") {{thisDevice.name}}
       q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="$emit('openConfigModal')")
@@ -34,7 +34,7 @@ div
         p.on-right(v-if="activeTasks.length > 0") Work Units ({{activeTasks.length}})
           q-tooltip Work Units are small tasks that help solve huge problems.
         p(v-else) Downloading Work Units....
-    q-card-main(v-if="selected" style="height:265px; overflow:scroll; padding-top:0px;")
+    q-card-main(v-if="selected" style="height:260px; overflow:auto; padding-top:0px;")
       div(v-if="activeTasks.length > 0" v-for="(task,index) in activeTasks" :key='task.slot[0]' style="margin-bottom:5px;")
         q-progress( style="height:10px;" v-if="task.active_task_state[0] == 1 && !onBatteries" :buffer="0" height="40px" stripe :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
         q-progress(v-else :buffer="0" height="40px" stripe :percentage="task.checkpoint_fraction_done[0]*100" color="grey-4")
@@ -54,6 +54,7 @@ div
       q-toggle.absolute-right(color="green" style="padding:20px;" v-model="cpuToggle")  
 </template>
 <script>
+import { setTimeout } from 'timers';
 export default {
   props:['deviceState','selected','ipcRenderer','toggle','activeTasks','boincStatus','onBatteries','boincStatusIcon'],
   data(){
@@ -61,6 +62,11 @@ export default {
       cpuToggle:false,
       thisDevice:this.$parent.thisDevice
     }
+  },
+  mounted(){
+    setTimeout(el =>{
+      if (window.localStorage.getItem('cpuToggle') === 'true') this.cpuToggle = true
+},1000)
   },
   methods:{
     modifyDevice(){
@@ -77,6 +83,7 @@ export default {
   },
   watch:{
     cpuToggle(val){
+      window.localStorage.setItem('cpuToggle',val)
       this.$emit('toggle',val)
     },
     toggle(val){

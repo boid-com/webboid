@@ -3,7 +3,7 @@ div
   div(v-if="!loading && thisDevice.name").bg-grey-3
     .row.justify-center
       div(style="padding:13px;").text-black {{thisDevice.name}}
-    .row.justify-center
+    .row.justify-center.no-wrap
       div(v-for="nav in navigation")
         q-btn( flat :class="{selected:page===nav.name}" @click="page = nav.name" :disabled="nav.disabled")
           q-icon.on-left(:name="nav.icon")
@@ -12,15 +12,15 @@ div
             q-tooltip Coming soon
   .row.justify-center.relative-position(v-if="!loading && thisDevice.name" style="padding:5px;")
     .full-width
-      cpuWidget(v-show="page === 'CPU' || page === 'Dashboard' "
+      cpuWidget(v-show="page === 'CPU' || page === 'Dash' "
         :selected="page === 'CPU'" :activeTasks="activeTasks"
         :boincStatusIcon="boincStatusIcon" :onBatteries="onBatteries" :boincStatus="boincStatus" 
-        @deselected="page = 'Dashboard'" @openConfigModal="openConfigModal" @selected="page = 'CPU'" @toggle="toggleCPU")
+        @deselected="page = 'Dash'" @openConfigModal="openConfigModal" @selected="page = 'CPU'" @toggle="toggleCPU")
     .full-width
-      gpuWidget(v-show="page === 'GPU' || page === 'Dashboard' "
+      gpuWidget(v-show="page === 'GPU' || page === 'Dash' "
         :thisDevice="thisDevice")
     .full-width.relative-position
-      hddWidget(:disabled="true" v-show="page === 'HDD' || page === 'Dashboard' " :thisDevice="thisDevice")
+      hddWidget(:disabled="true" v-show="page === 'HDD' || page === 'Dash' " :thisDevice="thisDevice")
   .layout-padding.relative-position(v-else)
     .text-center {{initStatus}}
     div(style="padding-top:70px;")
@@ -70,7 +70,7 @@ export default {
     return {
       thisModal:null,
       navigation:[{
-        name:"Dashboard",
+        name:"Dash",
         icon:"dashboard"
       },
       {
@@ -86,7 +86,7 @@ export default {
         icon:"storage",
         disabled:true
       }],
-      page:"Dashboard",
+      page:"Dash",
       ipcRenderer:null,
       loading: true,
       initialized:false,
