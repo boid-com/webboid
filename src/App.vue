@@ -6,10 +6,10 @@
         q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
           | boid
           div(slot='subtitle') Season 1 - Alpha 0.0.4
-        .row.justify-center(v-if="local" style="width:70%;")
+        .row.justify-center(v-if="false" style="width:70%;")
           div.relative-position {{localDeviceName}}
             q-btn.absolute-right(round flat small style="right:-40px; top: -5px; height:20px; width:30px;") 
-              q-icon(name="edit" size="15px;")
+              q-icon(name="edit" size="15px;" color="grey-4")
         div(v-if="loginVisible")
           q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
             q-icon.on-right(name="create")
@@ -99,7 +99,7 @@
         profileEdit(:thisUser="thisUser" :api="api" :thisModal="$refs.profileEditModal")
       q-modal.shadow-3(ref="accountEditModal" @close="showOlark(true)" @open="showOlark(false)")
         accountEdit(:thisUser="thisUser" :thisModal="$refs.accountEditModal")
-      q-modal.shadow-3(ref="boincConfigModal" @close="showOlark(true)" @open="showOlark(false)" )
+      q-modal.shadow-3(ref="boincConfigModal" @close="showOlark(false)" @open="showOlark(false)" )
         .layout-padding1
           boincConfig(:config="boincConfigData" :thisModal="$refs.boincConfigModal")
       q-modal.position-relative(ref="socialModal")
@@ -218,6 +218,7 @@ export default {
     showOlark(val) {
       try {
         if (val) {
+          if (this.local) return
           window.olark('api.box.show')
         } else window.olark('api.box.hide')
       } catch (error) {
