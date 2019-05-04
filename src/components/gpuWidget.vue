@@ -7,7 +7,7 @@ div
       q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="$parent.$emit('modal','gpuConfig')")
         q-icon(color='grey-7' name="settings")
         q-tooltip Settings
-      q-btn.infobtn.absolute-top-right(v-if="!selected" color='blue' flat round small @click="updateActiveTasks()" style="top:40px;")
+      q-btn.infobtn.absolute-top-right(v-if="!selected" color='blue' flat round small @click="selected = true" style="top:40px;")
         q-icon(color='green-7' name="info_outline")
         q-tooltip Details
       q-btn.infobtn.absolute-top-right(v-else color='blue' flat round small @click="$emit('deselected')" style="top:40px;")
@@ -35,11 +35,12 @@ div
         p.on-right(v-if="activeTasks.length > 0") Work Units ({{activeTasks.length}})
           q-tooltip Work Units are small tasks that help solve huge problems.
         p(v-else) Downloading Work Units....
-    q-card-main(v-if="selected" style="height:265px; overflow:scroll; padding-top:0px;")
-      h5 selected!
+    q-card-main(v-if="selected" style="height:265px; overflow:auto; padding-top:0px;")
+      q-btn(@click="ipc.send('gpu.trex.getStats')")
+      p {{rvnStats}}
     q-card-separator
     q-card-actions.relative-position(style="height:50px;")
-      q-icon.on-right(v-if="toggle" :name="boincStatusIcon" size="30px")
+      q-icon.on-right(v-if="toggle" name="check" size="30px")
       h6.text-grey-8.on-right(style="padding-top:0px;") {{status}}
       q-spinner-grid.inline.on-right.absolute-right(:size="20" color="grey-4" v-if="toggle" style="right:70px; top:15px;")
       q-toggle.absolute-right(color="green" style="padding:20px;" v-model="toggle")  
@@ -49,7 +50,7 @@ div
 import gpu from '../lib/gpu.js'
 import { log } from 'util'
 export default {
-  props:['deviceState','selected','boincStatus','onBatteries','boincStatusIcon'],
+  props:[],
   data(){
     return {
       toggle:false,
@@ -57,20 +58,20 @@ export default {
       thisDevice: this.$parent.thisDevice,
       activeTasks: this.$parent.activeTasks,
       disabled:false,
-      thisGPU:null,
-      status:"status message"
+      status:"status message",
+      selected:false,
+      gpuInfo: null,
+      rvnStats:null
     }
   },
   mounted(){
     window.gpuConfig = {gpuConfig:true}
     this.ipc = window.local.ipcRenderer
-    // this.ipc.on('gpu.getGPU',(el,data) => this.thisGPU = data)
-    // this.ipc.send('getGPU')
-    this.ipc.on('gpu.getGPU',(even,response)=>{
-      gpu.parse(response)
-    })
-    this.ipc.on('gpu.status',(even,response)=>this.status = response)
+    this.ipc.on('gpu.getGPU',(event,response)=>{ this.gpuInfo = gpu.parse(response)})
+    this.ipc.on('gpu.status',(event,response)=>this.status = response)
+    this.ipc.on('gpu.trex.getStats',(event,response)=>this.rvnStats = response)
     this.ipc.send('gpu.getGPU')
+    this.ipc.send('gpu.trex.getStats')
   },
   methods:{
     modulateTaskProgress(progress) {
@@ -85,11 +86,23 @@ export default {
   watch:{
     toggle(val){
       if (val){
-        this.ipc.send('gpu.startTrex')
+        console.log(this.gpuInfo.type)
+        if (!this.gpuInfo) return
+        if (this.gpuInfo.type === "Nvidia") this.ipc.send('gpu.trex.start')
+        else this.ipc.send('gpu.startWildrig')
+      } else {
+        this.ipc.send('gpu.trex.stop')
       }
     },
     '$parent.thisDevice'(val){
       this.thisDevice = val
+    },
+    '$parent.page'(val){
+      if (val === 'GPU') this.selected = true
+      else this.selected = false
+    },
+    selected(val){
+      if (val) this.$parent.page = "GPU"
     }
   }
 }
