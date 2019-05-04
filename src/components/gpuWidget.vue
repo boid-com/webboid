@@ -4,7 +4,6 @@ div
     //- div.absolute(v-if="thisDevice.type === 'MAC'" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.7);")
     //-   h4.absolute-center.no-margin.text-white MacOS not supported
     q-card-media.relative-position
-      q-btn(@click="ipc.send('gpu.trex.getStats')") stats
       q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="$parent.$emit('modal','gpuConfig')")
         q-icon(color='grey-7' name="settings")
         q-tooltip Settings
@@ -46,6 +45,10 @@ div
       q-toggle.absolute-right(color="green" style="padding:20px;" v-model="toggle")  
 </template>
 <script>
+
+var gpu = import('../lib/gpuController.js')
+
+
 import { log } from 'util';
 export default {
   props:['deviceState','selected','boincStatus','onBatteries','boincStatusIcon'],
@@ -65,11 +68,8 @@ export default {
     this.ipc = window.local.ipcRenderer
     // this.ipc.on('gpu.getGPU',(el,data) => this.thisGPU = data)
     // this.ipc.send('getGPU')
-    this.ipc.on('gpu.getGPU',(event,response)=>this.thisGPU = response)
-    this.ipc.on('gpu.status',(event,response)=>this.status = response)
-    this.ipc.on('gpu.message',(event,response)=>console.log(response))
-    this.ipc.on('gpu.trex.getStats',(event,response) => alert(JSON.stringify(response,null,2)))
-    
+    this.ipc.on('gpu.getGPU',(even,response)=>this.thisGPU = response)
+    this.ipc.on('gpu.status',(even,response)=>this.status = response)
     this.ipc.send('gpu.getGPU')
   },
   methods:{
@@ -85,8 +85,8 @@ export default {
   watch:{
     toggle(val){
       if (val){
-        this.ipc.send('gpu.trex.start')
-      } else this.ipc.send('gpu.trex.stop')
+        this.ipc.send('gpu.startTrex')
+      }
     },
     '$parent.thisDevice'(val){
       this.thisDevice = val
