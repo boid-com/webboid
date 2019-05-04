@@ -1,8 +1,8 @@
 <template lang="pug">
 div
   q-card(style='max-height:480px;' v-if="thisDevice").relative-position
-    div.absolute(v-if="disabled" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.7);")
-      h4.absolute-center.no-margin.text-white Coming soon...
+    div.absolute(v-if="disabled" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.6);")
+      h6.absolute-center.no-margin.text-white HDD Coming soon...
     q-card-media.relative-position
       q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="$parent.$emit('modal','gpuConfig')")
         q-icon(color='grey-7' name="settings")

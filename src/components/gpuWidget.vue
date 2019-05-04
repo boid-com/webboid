@@ -46,10 +46,8 @@ div
 </template>
 <script>
 
-var gpu = import('../lib/gpuController.js')
-
-
-import { log } from 'util';
+import gpu from '../lib/gpu.js'
+import { log } from 'util'
 export default {
   props:['deviceState','selected','boincStatus','onBatteries','boincStatusIcon'],
   data(){
@@ -68,7 +66,9 @@ export default {
     this.ipc = window.local.ipcRenderer
     // this.ipc.on('gpu.getGPU',(el,data) => this.thisGPU = data)
     // this.ipc.send('getGPU')
-    this.ipc.on('gpu.getGPU',(even,response)=>this.thisGPU = response)
+    this.ipc.on('gpu.getGPU',(even,response)=>{
+      gpu.parse(response)
+    })
     this.ipc.on('gpu.status',(even,response)=>this.status = response)
     this.ipc.send('gpu.getGPU')
   },
