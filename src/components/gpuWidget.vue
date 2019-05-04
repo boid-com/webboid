@@ -1,8 +1,8 @@
 <template lang="pug">
 div
   q-card.bg-white(style='max-height:480px;' v-if="thisDevice").relative-position
-    div.absolute(v-if="thisDevice.type === 'MAC'" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.7);")
-      h4.absolute-center.no-margin.text-white MacOS not supported
+    //- div.absolute(v-if="thisDevice.type === 'MAC'" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.7);")
+    //-   h4.absolute-center.no-margin.text-white MacOS not supported
     q-card-media.relative-position
       q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="$parent.$emit('modal','gpuConfig')")
         q-icon(color='grey-7' name="settings")
@@ -28,7 +28,7 @@ div
               small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
                 q-tooltip Pending power can take 24 hours or more to be verified.
           .row
-            q-btn.light-paragraph.no-margin( flat small style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://rvn.boid.com')") rvn.boid.com
+            q-btn.light-paragraph.no-margin( flat small style="margin-bottom: 5px;" @click="ipc.send('openURL','https://rvn.boid.com')") rvn.boid.com
             q-tooltip Learn more about the current computational task
             // h6.absolute-bottom-right.text-grey-7(style="margin-right:10px;") Mapping Cancer Makers
       div(style="padding-left:10px;" v-if="selected")
@@ -36,38 +36,37 @@ div
           q-tooltip Work Units are small tasks that help solve huge problems.
         p(v-else) Downloading Work Units....
     q-card-main(v-if="selected" style="height:265px; overflow:scroll; padding-top:0px;")
-      div(v-if="activeTasks.length > 0" v-for="(task,index) in activeTasks" :key='task.slot[0]' style="margin-bottom:5px;")
-        q-progress( style="height:10px;" v-if="task.active_task_state[0] == 1 && !onBatteries" :buffer="0" height="40px" stripe :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
-        q-progress(v-else :buffer="0" height="40px" stripe :percentage="task.checkpoint_fraction_done[0]*100" color="grey-4")
-        q-tooltip 
-          p(style="margin:0px;") Task:
-          | {{task.result_name[0]}} 
-          div(style="height:10px;")
-          p(style="margin:0px;") Progress:
-          | {{(task.checkpoint_fraction_done[0]*100).toFixed(0)}}%
-
-
+      h5 selected!
     q-card-separator
     q-card-actions.relative-position(style="height:50px;")
-      q-icon.on-right(v-if="cpuToggle" :name="boincStatusIcon" size="30px")
-      h6.text-grey-8.on-right(v-if="cpuToggle" style="padding-top:0px;") {{boincStatus}}
-      q-spinner-grid.inline.on-right.absolute-right(:size="20" color="grey-4" v-if="cpuToggle" style="right:70px; top:15px;")
-      q-toggle.absolute-right(color="green" style="padding:20px;" v-model="cpuToggle")  
+      q-icon.on-right(v-if="toggle" :name="boincStatusIcon" size="30px")
+      h6.text-grey-8.on-right(style="padding-top:0px;") {{status}}
+      q-spinner-grid.inline.on-right.absolute-right(:size="20" color="grey-4" v-if="toggle" style="right:70px; top:15px;")
+      q-toggle.absolute-right(color="green" style="padding:20px;" v-model="toggle")  
 </template>
 <script>
+import { log } from 'util';
 export default {
-  props:['deviceState','selected','toggle','boincStatus','onBatteries','boincStatusIcon'],
+  props:['deviceState','selected','boincStatus','onBatteries','boincStatusIcon'],
   data(){
     return {
-      cpuToggle:false,
-      ipcRenderer: this.$parent.ipcRenderer,
+      toggle:false,
+      ipc: null,
       thisDevice: this.$parent.thisDevice,
       activeTasks: this.$parent.activeTasks,
-      disabled:false
+      disabled:false,
+      thisGPU:null,
+      status:"status message"
     }
   },
   mounted(){
     window.gpuConfig = {gpuConfig:true}
+    this.ipc = window.local.ipcRenderer
+    // this.ipc.on('gpu.getGPU',(el,data) => this.thisGPU = data)
+    // this.ipc.send('getGPU')
+    this.ipc.on('gpu.getGPU',(even,response)=>this.thisGPU = response)
+    this.ipc.on('gpu.status',(even,response)=>this.status = response)
+    this.ipc.send('gpu.getGPU')
   },
   methods:{
     modulateTaskProgress(progress) {
@@ -80,11 +79,10 @@ export default {
     },
   },
   watch:{
-    cpuToggle(val){
-      this.$emit('toggle',val)
-    },
     toggle(val){
-      this.cpuToggle = val
+      if (val){
+        this.ipc.send('gpu.startTrex')
+      }
     },
     '$parent.thisDevice'(val){
       this.thisDevice = val
