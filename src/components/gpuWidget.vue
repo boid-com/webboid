@@ -67,13 +67,14 @@ export default {
   mounted(){
     window.gpuConfig = {gpuConfig:true}
     this.ipc = window.local.ipcRenderer
-    console.info('Found IPC',this.ipc)
+    // console.info('Found IPC',this.ipc)
     
-    this.ipc.on('gpu.getGPU',(event,response)=>{ this.gpuInfo = gpu.parse(response)})
-    this.ipc.on('gpu.status',(event,response)=>this.status = response)
-    this.ipc.on('gpu.trex.getStats',(event,response)=>this.rvnStats = response)
-    this.ipc.send('gpu.getGPU')
+    // this.ipc.on('gpu.getGPU',(event,response)=>{ this.gpuInfo = gpu.parse(response)})
+    // this.ipc.on('gpu.status',(event,response)=>this.status = response)
+    // this.ipc.on('gpu.trex.getStats',(event,response)=>this.rvnStats = response)
+    // this.ipc.send('gpu.getGPU')
     // this.ipc.send('gpu.trex.getStats')
+    gpu.init
   },
   methods:{
     modulateTaskProgress(progress) {
