@@ -4,7 +4,7 @@ div
     //- div.absolute(v-if="thisDevice.type === 'MAC'" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.7);")
     //-   h4.absolute-center.no-margin.text-white MacOS not supported
     q-card-media.relative-position
-      q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="$parent.$emit('modal','gpuConfig')")
+      q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="ipc.send('gpu.trex.config')")
         q-icon(color='grey-7' name="settings")
         q-tooltip Settings
       q-btn.infobtn.absolute-top-right(v-if="!selected" color='blue' flat round small @click="selected = true" style="top:40px;")
@@ -67,11 +67,13 @@ export default {
   mounted(){
     window.gpuConfig = {gpuConfig:true}
     this.ipc = window.local.ipcRenderer
+    console.info('Found IPC',this.ipc)
+    
     this.ipc.on('gpu.getGPU',(event,response)=>{ this.gpuInfo = gpu.parse(response)})
     this.ipc.on('gpu.status',(event,response)=>this.status = response)
     this.ipc.on('gpu.trex.getStats',(event,response)=>this.rvnStats = response)
     this.ipc.send('gpu.getGPU')
-    this.ipc.send('gpu.trex.getStats')
+    // this.ipc.send('gpu.trex.getStats')
   },
   methods:{
     modulateTaskProgress(progress) {
@@ -82,16 +84,25 @@ export default {
       if (progress < .02) progress += .01
       return progress * 100 + getRandomInt(2)
     },
+    startMining(){
+      if (this.gpuInfo[0].type === 'Nvidia') this.ipc.send('gpu.trex.start')
+      else this.ipc.send('gpu.wildrig.start')
+    },
+    stopMining(){
+      this.ipc.send('gpu.trex.stop')
+    }
   },
   watch:{
     toggle(val){
       if (val){
-        console.log(this.gpuInfo.type)
-        if (!this.gpuInfo) return
+        console.log(this.gpuInfo)
+        if (!this.gpuInfo) return this.toggle = false
+        this.startMining()
+
         if (this.gpuInfo.type === "Nvidia") this.ipc.send('gpu.trex.start')
         else this.ipc.send('gpu.startWildrig')
       } else {
-        this.ipc.send('gpu.trex.stop')
+        this.stopMining()
       }
     },
     '$parent.thisDevice'(val){

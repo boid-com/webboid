@@ -28,15 +28,18 @@ function findGPU(query){
 var gpu = {
   info:null,
   parse(gpuData){
-    var gpuID = (gpuData[0].DisplayDevice[0].DeviceID[0])
-    console.log('got GPU NAME', gpuID)
-    gpuID = gpuID.split('0x')[1].toLowerCase()
-    console.log(gpuID)
-    gpu.info = findGPU(gpuID)
-    if (gpu.info) {
-      console.log(gpu.info)
-      return gpu.info
-    } else return null
+    console.log('got GPU Data', gpuData)
+
+    var gpus = []
+    for (var gpu of gpuData){
+      const gpuID = gpu.id.split('0x')[1].toLowerCase()
+      console.log(gpuID)
+      const parsedGPU = findGPU(gpuID)
+      if (parsedGPU) {
+        gpus.push(parsedGPU)
+      }
+    }
+    return gpus
   }
 }
 
