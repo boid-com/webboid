@@ -27,9 +27,27 @@ function findGPU(query){
 
 var gpu = {
   info:null,
+  trex:{
+    defaultPool:"stratum+tcp://rvn.boid.com:3636",
+    defaultConfig: {
+      pools: [],
+      "api-bind-http": "0.0.0.0:4067",
+      "json-response": true,
+      "algo": "x16r",
+      "intensity": 18,
+      "autoupdate": false
+    },
+    config:{
+      init(deviceId){
+        return Object.assign(gpu.trex.defaultConfig, { pools: [{ url:gpu.trex.defaultPool, user:"RHoQhptpZRHdL2he2FEEXwW1wrxmYJsYsC.cjv74fygjupf109942wo0j9qf"}]})
+      },
+      updateIntensity(existingConfig,intensity){
+        return Object.assign(existingConfig,{intensity})
+      }
+    }
+  },
   parse(gpuData){
     console.log('got GPU Data', gpuData)
-
     var gpus = []
     for (var gpu of gpuData){
       const gpuID = gpu.id.split('0x')[1].toLowerCase()

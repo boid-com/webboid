@@ -4,7 +4,7 @@ div
     //- div.absolute(v-if="thisDevice.type === 'MAC'" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.7);")
     //-   h4.absolute-center.no-margin.text-white MacOS not supported
     q-card-media.relative-position
-      q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="ipc.send('gpu.trex.config')")
+      q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="ipc.send('debug')")
         q-icon(color='grey-7' name="settings")
         q-tooltip Settings
       q-btn.infobtn.absolute-top-right(v-if="!selected" color='blue' flat round small @click="selected = true" style="top:40px;")
@@ -38,15 +38,21 @@ div
     q-card-main(v-if="selected" style="height:265px; overflow:auto; padding-top:0px;")
       q-btn(@click="ipc.send('gpu.trex.getStats')")
       p {{rvnStats}}
+      p {{gpuInfo}}
     q-card-separator
     q-card-actions.relative-position(style="height:50px;")
       q-icon.on-right(v-if="toggle" name="check" size="30px")
       h6.text-grey-8.on-right(style="padding-top:0px;") {{status}}
       q-spinner-grid.inline.on-right.absolute-right(:size="20" color="grey-4" v-if="toggle" style="right:70px; top:15px;")
-      q-toggle.absolute-right(color="green" style="padding:20px;" v-model="toggle")  
+      q-toggle.absolute-right(:disabled="!gpuInfo" color="green" style="padding:20px;" v-model="toggle")  
 </template>
 <script>
-
+const ipc = {
+  send(){},
+  async on(channel,func){
+    return await window.local.ipcRenderer.on('gpu.' + channel,async(event,data)=>{return await func(data)})
+  }
+}
 import gpu from '../lib/gpu.js'
 import { log } from 'util'
 export default {
@@ -58,23 +64,25 @@ export default {
       thisDevice: this.$parent.thisDevice,
       activeTasks: this.$parent.activeTasks,
       disabled:false,
-      status:"status message",
+      status:"initializing...",
       selected:false,
       gpuInfo: null,
-      rvnStats:null
+      rvnStats:null,
+      gpu
     }
   },
   mounted(){
     window.gpuConfig = {gpuConfig:true}
     this.ipc = window.local.ipcRenderer
-    // console.info('Found IPC',this.ipc)
-    
-    // this.ipc.on('gpu.getGPU',(event,response)=>{ this.gpuInfo = gpu.parse(response)})
-    // this.ipc.on('gpu.status',(event,response)=>this.status = response)
-    // this.ipc.on('gpu.trex.getStats',(event,response)=>this.rvnStats = response)
-    // this.ipc.send('gpu.getGPU')
+    // ipc.on('gpu.error',alert)
+    this.ipc.send('gpu.init',this.thisDevice.id)
+    this.ipc.send('gpu.trex.config.init',gpu.trex.config.init(this.thisDevice.id))
+    this.ipc.on('gpu.getGPU',(event,response) => this.gpuInfo = gpu.parse(response))
+    this.ipc.send('gpu.getGPU')
+    // ipc.on('trex.config.init',(data)=>{console.log(data)})
+    ipc.on('status',(data) => this.status = data)
+    this.ipc.on('gpu.trex.getStats',(event,response)=>this.rvnStats = response)
     // this.ipc.send('gpu.trex.getStats')
-    gpu.init
   },
   methods:{
     modulateTaskProgress(progress) {
@@ -94,6 +102,9 @@ export default {
     }
   },
   watch:{
+    gpuInfo(val){
+      if (val && !this.toggle) this.status = "Ready to start"
+    },
     toggle(val){
       if (val){
         console.log(this.gpuInfo)
