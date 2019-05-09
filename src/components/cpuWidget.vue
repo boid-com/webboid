@@ -21,7 +21,7 @@ div
           div.relative-position(style="width:70%")
             img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
             div(style="padding-left:20px; padding-top:5px;")
-              div(v-if="thisDevice.power") {{thisDevice.power.toFixed(4)}}
+              div(v-if="thisDevice.power") {{thisDevice.boincPower.toFixed(2)}}
               div(v-else)
                 | 0.0
               small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 

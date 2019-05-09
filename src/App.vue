@@ -2,7 +2,7 @@
 
  #q-app
     q-layout(color="" ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
-      q-toolbar.shadow-1(slot="header") 
+      q-toolbar.shadow-1(slot="header" style="webkit-app-region: drag;") 
         q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
           | boid
           div(slot='subtitle') Season 1 - Alpha 0.0.4
@@ -36,7 +36,7 @@
           //- q-btn(@click="$root.$emit('resetScatter')") externaltest
         scatter
         //- q-btn( v-if="!local" @click='$router.push({name:"Stake"})'  color="green") BOID Staking
-      div.shadow-0(slot='left' v-if="showSideMenu")
+      div.shadow-0(slot='left' v-if="showSideMenu && !local")
         q-list(no-border='', link='', inset-delimiter='')
           q-side-link(item='', to='/', exact='')
             q-item-side(icon='home')
