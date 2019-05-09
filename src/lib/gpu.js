@@ -39,10 +39,7 @@ var gpu = {
     },
     config: {
       init( deviceId ) {
-        return Object.assign( gpu.trex.defaultConfig, { pools: [ { url: gpu.trex.defaultPool, user: "RHoQhptpZRHdL2he2FEEXwW1wrxmYJsYsC.cjv74fygjupf109942wo0j9qf" } ] } )
-      },
-      updateIntensity( existingConfig, intensity ) {
-        return Object.assign( existingConfig, { intensity } )
+        return Object.assign( gpu.trex.defaultConfig, { pools: [ { url: gpu.trex.defaultPool, user: "RHoQhptpZRHdL2he2FEEXwW1wrxmYJsYsC." + deviceId } ] } )
       }
     }
   },
@@ -52,8 +49,26 @@ var gpu = {
       '--opencl-threads=2',
       '--opencl-launch=15x0',
       '--url=stratum+tcp://rvn.boid.com:3636',
-      '--user=',(await gpu.wildrig.config.read()).deviceID,
-      '--watchdog','--api-port=4068']
+      '--watchdog','--api-port=4068'
+    ],
+    config:{
+      init(deviceId){
+        var config = gpu.wildrig.defaultConfig
+        config.push('--user=RHoQhptpZRHdL2he2FEEXwW1wrxmYJsYsC.' + deviceId)
+        return config
+      },
+      parse(configArray){
+        var config = {}
+        configArray.forEach(el => {
+          el = el.split('=')
+          el[0] = el[0].replace('--','')
+          config[el[0]] = el[1] || true
+          if (el[0] === 'opencl-launch')  config.intensity = parseFloat(el[1])
+        })
+        console.log(config)
+        return config
+      }
+    },
   },
   parse( gpuData ) {
     console.log( 'got GPU Data', gpuData )
