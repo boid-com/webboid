@@ -47,7 +47,8 @@ var gpu = {
     defaultConfig:[ 
       '--algo=x16r',
       '--opencl-threads=2',
-      '--opencl-launch=15x0',
+      '--opencl-launch=16x0',
+      '--donate-level=1',
       '--url=stratum+tcp://rvn.boid.com:3636',
       '--watchdog','--api-port=4068'
     ],

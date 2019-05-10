@@ -2,7 +2,7 @@
 div
   q-card.bg-white(style='max-height:480px;' v-if="thisDevice && ipcRenderer").relative-position
     q-card-media.relative-position
-      q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="")
+      q-btn.infobtn.absolute-top-right(color='blue' disabled flat round small @click="")
         q-icon(color='grey-7' name="settings")
         q-tooltip Settings
       q-btn.infobtn.absolute-top-right(v-if="!selected" color='blue' flat round small @click="$parent.page = 'GPU'" style="top:40px;")
@@ -16,7 +16,7 @@ div
           img(style="opacity:.9; width:100px; height:80px; width:auto; padding:10px;" src="https://i.imgur.com/LXWW8MS.png")
         .col-auto.relative-position
           h6.light-paragraph GPU
-            q-tooltip Boid Power is updated as each Work Unit is finished. You only receive Boid Power after you have completed at least one Work Unit first. Work Units can take 6-12 hours to process, so be patient when starting.
+            q-tooltip Boid helps secure POW blockchains using your GPU hashing power.
           div.relative-position(style="width:70%")
             img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
             div(style="padding-left:20px; padding-top:5px;")
@@ -24,7 +24,7 @@ div
               div(v-else)
                 | 0.0
               small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
-                q-tooltip Pending power can take 24 hours or more to be verified.
+              q-tooltip Boid Power is displayed at a 1-2 hour delay.
           .row
             q-btn.light-paragraph.no-margin( flat small style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://rvn.boid.com')") rvn.boid.com
             q-tooltip Learn more about the current computational task
@@ -38,11 +38,11 @@ div
                   .col-10.ellipsis(style=" max-width:170px;")
                     small {{gpu.name}}
     q-card-main.relative-position(v-if="selected" style="height:305px; overflow:hidden; width:100%; padding:0px;")
-      p {{wildrigConfig.intensity}}
       div(style="overflow:auto; height:270px;")
-        div(v-for="log of reverseLog" :key="log.time" style="padding:10px; margin:10px; overflow:hidden;")
+        div(v-for="log of reverseLog" style="padding:0px; margin:10px; overflow:hidden;")
           small.block {{new Date(log.time).toLocaleString()}}
-          small(style="padding:10px;") {{log.text}}
+          pre(style="margin:0px;")
+            small(style="padding:0px;") {{log.text}}
       div(style="height:50px;")
       .row.absolute-bottom(v-if="trexActive && toggle")
         p.light-paragraph(style="margin:5px;") trex miner
@@ -84,9 +84,9 @@ const ipc = {
   }
 }
 const convertRange = ( value, r1, r2 ) => ( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ]
-function convertHashrate(number) {return (number / 1000000).toFixed(2) + ' MH/s '}
-function convertIntensity(intensity) { return  Math.round(convertRange(intensity, [8, 20], [1, 100]) / 5) * 5}
-async function sleep(ms){return new Promise((resolve) => setTimeout(resolve, ms))}
+const convertHashrate = (number) => (number / 1000000).toFixed(0) + ' MH/s '
+const convertIntensity = (intensity) => Math.round(convertRange(intensity, [10, 20], [1, 100]) / 5) * 5
+const sleep = async(ms) => new Promise((resolve) => setTimeout(resolve, ms))
 import gpu from '../lib/gpu.js'
 export default {
   props: [],
@@ -128,7 +128,7 @@ export default {
     ipc.on('wildrig.getStats', data => this.wildrigStats = data)
     ipc.on('log', data => this.statusLog.push({
       time: new Date().getTime(),
-      text: data
+      text: data.replace(/\[.*?\]/g,'')
     }))
     // this.ipc.send('gpu.trex.getStats')
   },
@@ -140,11 +140,12 @@ export default {
       alert(JSON.stringify(this.trexStats, null, 2))
     },
     adjustIntensity(percent) {
-      console.log(percent)
-      if (!this.trexActive || !this.wildrigActive) return
-      var intensity = convertRange(percent, [1, 100], [8, 20])
-      if (intensity > 25) intensity = 20
-      else if (intensity < 8) intensity = 8
+      if (!this.trexActive && !this.wildrigActive) return
+      console.log('percent', percent)
+      var intensity = convertRange(percent, [1, 100], [10, 20])
+      console.log('New Intensity:', intensity)
+      if (intensity > 20) intensity = 20
+      else if (intensity < 10) intensity = 10
       if (this.trexActive) ipc.send('trex.config.setIntensity', intensity)
       if (this.wildrigActive) ipc.send('wildrig.config.setIntensity', intensity)
 
@@ -178,7 +179,6 @@ export default {
       clearInterval(this.trexInterval)
       clearInterval(this.wildrigInterval)
       this.status = ""
-      this.statusLog = []
     }
   },
   computed: {
@@ -259,5 +259,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
+  pre
+    word-wrap: break-word
 </style>
