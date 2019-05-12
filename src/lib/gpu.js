@@ -27,6 +27,14 @@ function findGPU( query ) {
 
 var gpu = {
   info: null,
+  config:{
+    defaultConfig:{
+      rememberLast:true,
+      autoStart:false,
+      pauseOnUserActive:false,
+      resumeTimeout:120000
+    }
+  },
   trex: {
     defaultPool: "stratum+tcp://rvn.boid.com:3636",
     defaultConfig: {
@@ -79,7 +87,7 @@ var gpu = {
       console.log( gpuID )
       var parsedGPU = findGPU( gpuID )
       if ( parsedGPU ) parsedGPU.valid = true, parsedGPU.name = gpu.name
-      else parsedGPU = gpu
+      else parsedGPU = gpu, parsedGPU.valid = false
       gpus.push( parsedGPU )
     }
     return gpus

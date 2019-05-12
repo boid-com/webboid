@@ -1,11 +1,25 @@
 <template lang="pug">
-div
+div(style="height:100%; overflow:hidden;")
   div(v-if="!loading && thisDevice.name").bg-grey-3
-    .row.justify-center
-      div(style="padding:13px;").text-black {{thisDevice.name}}
+    .row.justify-center(style="height:45px; overflow:hidden")
+      q-icon(:name="thisDevice.icon")
+      div( v-if="!editName" style="padding:13px;").text-black {{thisDevice.name}}
+      div(v-else)
+        q-input( @keyup.enter="editDeviceName(newDeviceName)" style="width:210px; height:10px; padding:5px; margin:5px; padding-bottom:15px; " placeholder="new device name" v-model="newDeviceName")
+      div(v-if="!editName")
+        q-btn.infobtn(small round flat @click="editName = true" style="height:25px; width:30px; margin-top:3px" )
+          q-icon(name="edit" size="20px")
+          q-tooltip Edit device name
+      div(v-else).on-right
+        q-btn.infobtn(small round color="green" @click="editDeviceName(newDeviceName)" style="height:25px; width:30px; margin-top:0px")
+          q-icon(name="check" color="white" size="20px")
+          q-tooltip Confirm name edit
+        q-btn.infobtn.on-right(small round flat color="amber" @click="newDeviceName = '', editName = false" style="height:25px; width:30px; margin-top:5px")
+          q-icon(name="close" color="red-5" size="20px")
+          q-tooltip Cancel name edit
     .row.justify-center.no-wrap
       div(v-for="nav in navigation")
-        q-btn( flat :class="{selected:page===nav.name}" @click="page = nav.name" :disabled="nav.disabled")
+        q-btn( flat :class="{selected:page===nav.name}" @click="page = nav.name" :disable="nav.disabled")
           q-icon.on-left(:name="nav.icon")
           | {{nav.name}}
           div(v-if="nav.disabled")
@@ -18,7 +32,9 @@ div
         @deselected="page = 'Dash'" @openConfigModal="openConfigModal" @selected="page = 'CPU'" @toggle="toggleCPU")
     .full-width
       gpuWidget(v-show="page === 'GPU' || page === 'Dash' "
-        :thisDevice="thisDevice")
+        :thisDevice="thisDevice"
+        ref="gpuWidget"
+        )
     .full-width.relative-position
       hddWidget(:disabled="true" v-show="page === 'HDD' || page === 'Dash' " :thisDevice="thisDevice")
   .layout-padding.relative-position(v-else)
@@ -30,8 +46,9 @@ div
     .row.justify-center
       q-btn( flat @click="ipcRenderer.send('openURL','https://www.youtube.com/watch?v=VVlGjVDek_M')" ) Problems?
   //- div(style="height:20px").full-width.bg-grey-8.absolute-bottom
-  q-modal(ref="modal" @close="thisModal=null")
-    component(:is="thisModal" :thisModal="$refs.modal")
+  q-modal(ref="modal" @close="thisModal=null, modalData=null" )
+    component(:is="thisModal" :thisModal="$refs.modal" :data="modalData" v-if="thisModal")
+  textarea(v-show="false" ref="copyText" value="")
 
 
   </template>
@@ -68,6 +85,8 @@ export default {
   components:{cpuWidget,gpuWidget,gpuConfig,hddWidget},
   data() {
     return {
+      editName:false,
+      newDeviceName:"",
       thisModal:null,
       navigation:[{
         name:"Dash",
@@ -123,6 +142,31 @@ export default {
     openURL,
     toggleCPU(val){
       this.cpuToggle = val
+    },
+    refreshDevice: async function(){
+        try {
+          this.init()
+          window.local.ipcRenderer.send('boinc.activeTasks')
+        } catch (error) {
+          alert(error.message)
+          ec(error)
+          return
+        }
+    },
+    editDeviceName: async function(name){
+      try {
+        this.newDeviceName = ""
+        this.editName = false
+        this.thisDevice.name = name
+        const result = await this.api.modifyDevice({id:this.thisDevice.id,newName:name})
+        console.log(result)
+        if (!result) alert('problem updating device name')
+        if (result.error) alert(result.error)
+        this.thisDevice = await this.$api.getDevice({id:this.thisDevice.id}).catch(ec)
+      }
+      catch(error){
+        alert(error)
+      }
     },
     refreshDevice: async function(){
         try {
@@ -210,7 +254,7 @@ export default {
           console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) 
           if (this.initialized){
             if (masterInterval) clearInterval(masterInterval)
-            masterInterval = setInterval(this.init, 180000)
+            masterInterval = setInterval(this.init, 1800)
           }
           this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
         }, 600)
@@ -221,11 +265,10 @@ export default {
   },
   props: ['thisUser', 'authenticated', 'api', 'ch'],
   mounted() {
-    this.$on('modal',val =>{
-      console.log(val)
+    this.$on('modal',(val,data) =>{
+      console.log(val,data)
       this.thisModal = val
-      if (val) this.$refs.modal.open()
-      else this.$refs.modal.close()
+      this.modalData = data
     })
     console.log('this.route',this.$route.name)
     if (!this.$route.name === 'Desktop') return
@@ -280,6 +323,12 @@ export default {
     }
   }, 
   watch: {
+    thisModal(val){
+      this.$nextTick(el =>{
+        if (val) this.$refs.modal.open()
+        else this.$refs.modal.close()
+      })
+    },
     activeTasks(value) {
       if (value.length > 0) {
         if (
@@ -356,17 +405,9 @@ export default {
 
 <style lang="stylus">
 @import '~variables'
-
-.disabled:before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(0, 0, 0, .3);
-}
+  .infobtn
+    height:10px
+    width: 30px
 
 .devicebg
   background-color $green-5

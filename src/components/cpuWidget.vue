@@ -24,8 +24,8 @@ div
               div(v-if="thisDevice.power") {{thisDevice.boincPower.toFixed(2)}}
               div(v-else)
                 | 0.0
-              small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
-                q-tooltip Pending power can take 24 hours or more to be verified.
+              //- small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
+              //-   q-tooltip Pending power can take 24 hours or more to be verified.
           .row
             q-btn.light-paragraph.no-margin( small flat style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://www.worldcommunitygrid.org/research/mcm1/overview.do')") Mapping Cancer Markers
             q-tooltip Learn more about the current computational task

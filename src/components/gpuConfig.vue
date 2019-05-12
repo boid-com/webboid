@@ -1,17 +1,26 @@
 <template lang="pug">
-  div(v-if="config" style="padding-left:20px; padding-right:20px; height:100%;").relative-position
-    p {{config}}
-    h6.text-centered GPU Settings:
-    //- q-field(icon="fa-tachometer" label="GPU Utilization" helper="Maximum GPU usage")
-    //-   big {{config.max_ncpus_pct}}%
-    //-   q-slider( v-if="config.max_ncpus_pct" v-model="config.max_ncpus_pct" :step="5" :min="5" :max="100" snap markers fill-handle-always )
-    //- q-field(icon="fa-pause" label="Pause when user activity detected" helper="If Enabled, Boid will pause computing while mouse/keyboard is being used.")
-    //-   q-toggle(v-model="config.run_if_user_active")
-    //- br
-    //- br
-    .row.gutter.justify-center.absolute-bottom(style="bottom:20px;")
-      q-btn( outline @click="$parent.close()") < Back
-      q-btn.on-right(color="green" @click="updateGpuConfig(),$parent.close()") Confirm
+  div(style="overflow:hidden;")
+    div(v-if="config" style="padding-left:20px; padding-right:20px; height:600px; overflow:hidden;").relative-position
+      h4.text-blue.text-center(style="padding:20px;") GPU Settings
+      q-field(icon="refresh"  helper="Start GPU automatically when Boid is launched.")
+        q-checkbox(v-model="config.autoStart" label="Start on Launch")
+      q-card(style="padding:10px;").shadow-1
+        p.text-center ADVANCED
+        div(style="padding:10px;")
+          .row.items-center
+            .col-4
+              q-btn(color="blue" style="padding:5px;" small outline @click="ipc.send('openDirectory',directories.GPUPATH)") open GPU Directory
+            .col
+              small(style="padding:10px;").block You can manually edit config files for the GPU Miner apps. look for config.json files in the /trex or /wildrig folder.
+          .row.items-center
+            .col-4
+              .flex.flex-center
+                q-btn(color="red" small @click="ipc.send('gpu.reset')") Reset
+            .col
+              small(style="padding:10px;").block Removes all Boid GPU files and restarts Boid. Files will be reinstalled on startup.
+      .row.gutter.justify-center.absolute-bottom(style="bottom:20px;")
+        q-btn( outline @click="$parent.close()") < Back
+        q-btn.on-right(color="green" @click="updateGpuConfig()") Confirm
 
 </template>
 
@@ -19,16 +28,31 @@
 export default {
   data(){
     return {
-      config:null
+      config:null,
+      directories:null,
+      ipc:window.local.ipcRenderer
     }
   },
+  props:['data','thisModal'],
   methods:{
     updateGpuConfig(){
+      try {
       console.log('update GPU settings here')
+      this.$root.$emit('updateGPUConfig',this.config)
+      this.$parent.close()
+      } catch (error) {
+        console.log(error)
+      }
     }
   },
+  computed:{
+  },
   mounted(){
-    this.config = window.gpuConfig
+    this.config = Object.assign({},this.data.config)
+    this.directories = Object.assign({},this.data.directories)
+  },
+  watch:{
+    // data(val){this.config = val}
   }
 }
 </script>
