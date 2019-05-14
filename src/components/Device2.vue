@@ -1,59 +1,42 @@
 <template lang="pug">
-div
+div(style="height:100%; overflow:hidden;")
+  div(v-if="!loading && thisDevice.name").bg-grey-3
+    .row.justify-center(style="height:45px; overflow:hidden")
+      q-icon(:name="thisDevice.icon")
+      div( v-if="!editName" style="padding:13px;").text-black {{thisDevice.name}}
+      div(v-else)
+        q-input( @keyup.enter="editDeviceName(newDeviceName)" style="width:210px; height:10px; padding:5px; margin:5px; padding-bottom:15px; " placeholder="new device name" v-model="newDeviceName")
+      div(v-if="!editName")
+        q-btn.infobtn(small round flat @click="editName = true" style="height:25px; width:30px; margin-top:3px" )
+          q-icon(name="edit" size="20px")
+          q-tooltip Edit device name
+      div(v-else).on-right
+        q-btn.infobtn(small round color="green" @click="editDeviceName(newDeviceName)" style="height:25px; width:30px; margin-top:0px")
+          q-icon(name="check" color="white" size="20px")
+          q-tooltip Confirm name edit
+        q-btn.infobtn.on-right(small round flat color="amber" @click="newDeviceName = '', editName = false" style="height:25px; width:30px; margin-top:5px")
+          q-icon(name="close" color="red-5" size="20px")
+          q-tooltip Cancel name edit
+    .row.justify-center.no-wrap
+      div(v-for="nav in navigation")
+        q-btn( flat :class="{selected:page===nav.name}" @click="page = nav.name" :disable="nav.disabled")
+          q-icon.on-left(:name="nav.icon")
+          | {{nav.name}}
+          div(v-if="nav.disabled")
+            q-tooltip Coming soon
   .row.justify-center.relative-position(v-if="!loading && thisDevice.name" style="padding:5px;")
-    .col
-      q-card(style='max-height:410px;')
-        q-card-media.relative-position
-          q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="openConfigModal()")
-            q-icon(color='grey-7' name="settings")
-            q-tooltip Settings
-          q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="openConfigModal()" style="top:40px;")
-            q-icon(color='grey-7' name="refresh")
-            q-tooltip Refresh
-          .row
-            .col-auto
-              img(style="opacity:.9; width:100px; height:100px; padding:15px;" src="statics/images/magnifyingglass.svg")
-            .col-7.relative-position
-              h6.light-paragraph Device Boid Power
-                q-tooltip Boid Power is updated as each Work Unit is finished. You only receive Boid Power after you have completed at least one Work Unit first. Work Units can take 6-12 hours to process, so be patient when starting.
-              div.relative-position(style="width:70%")
-                img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
-                div(style="padding-left:20px; padding-top:5px;")
-                  div(v-if="thisDevice.power") {{thisDevice.power.toFixed(4)}}
-                  div(v-else)
-                    | 0.0
-                  small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
-                    q-tooltip Pending power can take 24 hours or more to be verified.
-              .row.justify-center
-                q-btn.light-paragraph( flat style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://www.worldcommunitygrid.org/research/mcm1/overview.do')") Mapping Cancer Markers
-                q-tooltip Learn more about the current computational task
-                // h6.absolute-bottom-right.text-grey-7(style="margin-right:10px;") Mapping Cancer Makers
-          div(style="padding-left:10px;" v-if="toggle")
-            p.on-right(v-if="activeTasks.length > 0") Work Units ({{activeTasks.length}})
-              q-tooltip Work Units are small tasks that help solve huge problems.
-            p(v-else) Downloading Work Units....
-        q-card-main(v-if="toggle" style="max-height:195px; overflow:scroll; padding-top:0px;")
-          div(v-if="activeTasks.length > 0" v-for="(task,index) in activeTasks" :key='task.slot[0]' style="margin-bottom:5px;")
-            
-            q-progress( style="height:10px;" v-if="task.active_task_state[0] == 1 && !onBatteries" :buffer="0" height="40px" stripe :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
-            q-progress(v-else :buffer="0" height="40px" stripe :percentage="task.checkpoint_fraction_done[0]*100" color="grey-4")
-            q-tooltip 
-              p(style="margin:0px;") Task:
-              | {{task.result_name[0]}} 
-              div(style="height:10px;")
-              p(style="margin:0px;") Progress:
-              | {{(task.checkpoint_fraction_done[0]*100).toFixed(0)}}%
-            
-        q-card-separator
-        q-card-actions.taller.relative-position()
-          q-btn(small round flat)
-            q-icon.on-right(v-if="toggle" :name="boincStatusIcon")
-          h6.text-grey-8.on-right(v-if="toggle" style="padding-top:5px;") {{boincStatus}}
-          q-spinner-grid.inline.on-right.absolute-right(:size="20" color="grey-4" v-if="toggle" style="right:70px; top:20px;")
-          q-toggle.absolute-right(color="green" style="padding:20px;" v-model="toggle")
-    .col
-      q-card(style='max-width:440px; max-height:410px;')
-        h4 GPU
+    .full-width
+      cpuWidget(v-show="page === 'CPU' || page === 'Dash' "
+        :selected="page === 'CPU'" :activeTasks="activeTasks"
+        :boincStatusIcon="boincStatusIcon" :onBatteries="onBatteries" :boincStatus="boincStatus" 
+        @deselected="page = 'Dash'" @openConfigModal="openConfigModal" @selected="page = 'CPU'" @toggle="toggleCPU")
+    .full-width
+      gpuWidget(v-show="page === 'GPU' || page === 'Dash' "
+        :thisDevice="thisDevice"
+        ref="gpuWidget"
+        )
+    .full-width.relative-position
+      hddWidget(:disabled="true" v-show="page === 'HDD' || page === 'Dash' " :thisDevice="thisDevice")
   .layout-padding.relative-position(v-else)
     .text-center {{initStatus}}
     div(style="padding-top:70px;")
@@ -62,6 +45,10 @@ div
       q-icon(name="refresh")
     .row.justify-center
       q-btn( flat @click="ipcRenderer.send('openURL','https://www.youtube.com/watch?v=VVlGjVDek_M')" ) Problems?
+  //- div(style="height:20px").full-width.bg-grey-8.absolute-bottom
+  q-modal(ref="modal" @close="thisModal=null, modalData=null" )
+    component(:is="thisModal" :thisModal="$refs.modal" :data="modalData" v-if="thisModal")
+  textarea(v-show="false" ref="copyText" value="")
 
 
   </template>
@@ -69,7 +56,10 @@ div
 <script>
 import parseDevice from 'src/lib/parseDevice'
 import { Alert,openURL } from 'quasar'
-
+import cpuWidget from '@/cpuWidget.vue'
+import gpuWidget from '@/gpuWidget.vue'
+import hddWidget from '@/hddWidget.vue'
+import gpuConfig from '@/gpuConfig.vue'
 var masterInterval = null
 function ec(err){
   console.error(err)
@@ -91,8 +81,30 @@ function setupDevice(device) {
 }
 
 export default {
+  components:{cpuWidget,gpuWidget,gpuConfig,hddWidget},
   data() {
     return {
+      editName:false,
+      newDeviceName:"",
+      thisModal:null,
+      navigation:[{
+        name:"Dash",
+        icon:"dashboard"
+      },
+      {
+        name:"CPU",
+        icon:"memory"
+      },
+      {
+        name:"GPU",
+        icon:"apps"
+      },
+      {
+        name:"HDD",
+        icon:"storage",
+        disabled:true
+      }],
+      page:"Dash",
       ipcRenderer:null,
       loading: true,
       initialized:false,
@@ -121,12 +133,40 @@ export default {
       },
       deviceId: null,
       pending: false,
-      toggle: false
+      cpuToggle: false
     }
   },
   computed: {},
   methods: {
     openURL,
+    toggleCPU(val){
+      this.cpuToggle = val
+    },
+    refreshDevice: async function(){
+        try {
+          this.init()
+          window.local.ipcRenderer.send('boinc.activeTasks')
+        } catch (error) {
+          alert(error.message)
+          ec(error)
+          return
+        }
+    },
+    editDeviceName: async function(name){
+      try {
+        this.newDeviceName = ""
+        this.editName = false
+        this.thisDevice.name = name
+        const result = await this.$api.modifyDevice({id:this.thisDevice.id,newName:name})
+        console.log(result)
+        if (!result) alert('problem updating device name')
+        if (result.error) alert(result.error)
+        this.thisDevice = await this.$api.getDevice({id:this.thisDevice.id}).catch(ec)
+      }
+      catch(error){
+        alert(error)
+      }
+    },
     refreshDevice: async function(){
         try {
           this.init()
@@ -139,14 +179,6 @@ export default {
     },
     openConfigModal() {
       this.$e.$emit('openBoincConfigModal', this.config)
-    },
-    modulateTaskProgress(progress) {
-      progress = parseFloat(progress)
-      function getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max))
-      }
-      if (progress < .02) progress += .01
-      return progress * 100 + getRandomInt(2)
     },
     handleLocalDevice: async function(localDevice) {
       if (!localDevice) {
@@ -221,7 +253,7 @@ export default {
           console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) 
           if (this.initialized){
             if (masterInterval) clearInterval(masterInterval)
-            masterInterval = setInterval(this.init, 180000)
+            masterInterval = setInterval(this.init, 1800)
           }
           this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
         }, 600)
@@ -230,8 +262,13 @@ export default {
       }
     }
   },
-  props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
+  props: ['thisUser', 'authenticated', 'api', 'ch'],
   mounted() {
+    this.$on('modal',(val,data) =>{
+      console.log(val,data)
+      this.thisModal = val
+      this.modalData = data
+    })
     console.log('this.route',this.$route.name)
     if (!this.$route.name === 'Desktop') return
     if (masterInterval) clearInterval(masterInterval)
@@ -243,14 +280,14 @@ export default {
       window.local.ipcRenderer.send('boinc.config.get')
       window.local.ipcRenderer.on('boinc.toggle', (event, toggle) => {
         console.log('GOT TOGGLE:', toggle)
-        if (!this.loading) this.toggle = toggle
+        if (!this.loading) this.cpuToggle = toggle
       })
       window.local.ipcRenderer.on('boinc.config', (event, value) => {
         console.log('GOT CONFIG', value)
         this.config = value
       })
       window.local.ipcRenderer.on('boinc.activeTasks', (event, activeTasks) => {
-        console.log('got ACTIVETASKS',JSON.stringify(activeTasks))
+        //- console.log('got ACTIVETASKS',JSON.stringify(activeTasks))
         if (activeTasks) {
           this.activeTasks = activeTasks
         }
@@ -271,20 +308,17 @@ export default {
         console.log('GOT DEVICE:', device)
       })
       window.local.ipcRenderer.on('boinc.error', (event, error) => { 
-
-        console.error('boinc.error', error)
-        // if (typeof error == "string") alert(error)
-        // else{
-        //   try{
-        //     alert(JSON.stringify(error))
-        //   } catch (error) {
-        //     console.error('unable to display error to user')
-        //   }
-        // }
+      console.error('boinc.error', error)
       })
     }
   }, 
   watch: {
+    thisModal(val){
+      this.$nextTick(el =>{
+        if (val) this.$refs.modal.open()
+        else this.$refs.modal.close()
+      })
+    },
     activeTasks(value) {
       if (value.length > 0) {
         if (
@@ -311,15 +345,10 @@ export default {
         this.loading = false
         console.log(JSON.stringify(this.thisDevice))
         this.$root.$emit('localDeviceName',value.name)
-        // if (this.thisDevice.status == 'ACTIVE') this.toggle = true
-        // else {
-          // this.toggle = false
-          // window.local.ipcRenderer.send('boinc.cmd', 'quit')
-        // }
         this.thisDevice.icon = parseDevice.icon(this.thisDevice)
       }
     },
-    toggle: async function(value) {
+    cpuToggle: async function(value) {
       // console.log('TOGGLE STATE', value)
       this.pending = true
       try {
@@ -329,8 +358,8 @@ export default {
         if (value) {
           deviceStatus.status = 'ACTIVE'
           this.actionbg.backgroundColor = 'li'
-          window.local.ipcRenderer.send('startBoinc')
-          window.local.ipcRenderer.send('boinc.activeTasks')
+          this.ipcRenderer.send('startBoinc')
+          this.ipcRenderer.send('boinc.activeTasks')
           clearInterval(this.deviceStatePoll)
           this.deviceStatePoll = setInterval(() => {
             console.log('request device active tasks')
@@ -339,7 +368,7 @@ export default {
         } else {
           deviceStatus.status = 'ONLINE'
           this.actionbg.backgroundColor = 'white'
-          window.local.ipcRenderer.send('boinc.cmd', 'quit')
+          this.ipcRenderer.send('boinc.cmd', 'quit')
           clearInterval(this.deviceStatePoll)
         } 
         // var result = await this.api.device.updateStatus(deviceStatus)
@@ -353,13 +382,29 @@ export default {
     },
     authenticated(val) {
       console.log(val)
-      if (val) setTimeout(this.refreshDevice,1000)
+      if (val) {
+        setTimeout(this.refreshDevice,1000)
+        setTimeout(this.refreshDevice,3000)
+        setTimeout(this.refreshDevice,6000)
+        }
     }
   }
 }
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus">
+@import '~variables'
+  .infobtn
+    height:10px
+    width: 30px
+
+.devicebg
+  background-color $green-5
+
+.selected
+  background-color $green-5
+  color: white
+
 .layout-padding {
   max-width: 700px;
 }

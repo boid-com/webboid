@@ -174,11 +174,6 @@ export default {
       time: new Date().toLocaleString(),
       text: data.replace(/\[.*?\]/g,'')
     }))
-    // this.ipc.send('gpu.trex.getStats')
-    while (this.gpuInfo && this.shouldAutoStart) {
-      this.toggle = true
-      this.shouldAutoStart = false
-    }
   },
   methods: {
     selectText(data) {
@@ -276,13 +271,13 @@ export default {
       setTimeout(() => {
         this.disableToggle = false
         if (val && !this.toggle) this.status = "Ready to start"
-      }, 500)
+      }, 1500)
     },
     trexConfig(val){
       setTimeout(() => {
         this.disableToggle = false
         if (val && !this.toggle) this.status = "Ready to start"
-      }, 500)
+      }, 1500)
     },
     trexStats(val) {
       if (!val || val.hashrate_minute < 1) return

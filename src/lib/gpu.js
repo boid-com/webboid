@@ -42,7 +42,7 @@ var gpu = {
       "api-bind-http": "0.0.0.0:4067",
       "json-response": true,
       "algo": "x16r",
-      "intensity": 20,
+      "intensity": 15,           
       "autoupdate": false
     },
     config: {
@@ -55,15 +55,16 @@ var gpu = {
     defaultConfig:[ 
       '--algo=x16r',
       '--opencl-threads=2',
-      '--opencl-launch=16x0',
+      '--opencl-launch=14x0',
       '--donate-level=1',
       '--url=stratum+tcp://rvn.boid.com:3636',
-      '--watchdog','--api-port=4068'
+      '--watchdog','--api-port=4068',
+      '--user=RHoQhptpZRHdL2he2FEEXwW1wrxmYJsYsC'
     ],
     config:{
       init(deviceId){
         var config = gpu.wildrig.defaultConfig
-        config.push('--user=RHoQhptpZRHdL2he2FEEXwW1wrxmYJsYsC.' + deviceId)
+        config.unshift('--pass=' + deviceId)
         return config
       },
       parse(configArray){
@@ -87,7 +88,7 @@ var gpu = {
       console.log( gpuID )
       var parsedGPU = findGPU( gpuID )
       if ( parsedGPU ) parsedGPU.valid = true, parsedGPU.name = gpu.name
-      else parsedGPU = gpu, parsedGPU.valid = false
+      else parsedGPU = gpu, parsedGPU.valid = Z
       gpus.push( parsedGPU )
     }
     return gpus
