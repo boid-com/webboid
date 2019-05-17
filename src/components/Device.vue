@@ -1,15 +1,16 @@
 <template lang="pug">
 div(style="height:100%; overflow:hidden;")
-  div(v-if="!loading && thisDevice.name" ref="navigation").bg-grey-3
+  p.text-center(style="padding:40px;") {{config.device.uid}}
+  div(v-if="!loading && thisDevice" ref="navigation").bg-grey-3
     deviceName(:thisDevice="thisDevice")
     .row.justify-center.no-wrap
       div(v-for="nav in navigation")
-        q-btn( flat :class="{selected:page===nav.name}" @click="page = nav.name" :disable="nav.disabled")
+        q-btn( flat :class="{selected: page === nav.name}" @click="page = nav.name" :disable="nav.disabled")
           q-icon.on-left(:name="nav.icon")
           | {{nav.name}}
           div(v-if="nav.disabled")
             q-tooltip Coming soon
-  .row.justify-center.relative-position(v-if="!loading && thisDevice.name" style="padding:5px;")
+  .row.justify-center.relative-position(v-if="!loading && thisDevice" style="padding:5px;")
     .full-width
       //- cpuWidget(v-show="page === 'CPU' || page === 'Dash'"
         //- :thisDevice="thisDevice" ref="cpuWidget")
@@ -19,9 +20,8 @@ div(style="height:100%; overflow:hidden;")
     .full-width.relative-position
       hddWidget(:disabled="true" v-show="page === 'HDD' || page === 'Dash' " :thisDevice="thisDevice")
   .layout-padding.relative-position(v-else)
-    .text-center {{initStatus}}
     div(style="padding-top:70px;")
-    q-btn.absolute-center(flat @click="refreshDevice()" big)
+    q-btn.absolute-center(flat @click="init()" big)
       q-tooltip Refresh Device
       q-icon(name="refresh")
     .row.justify-center
@@ -33,13 +33,25 @@ div(style="height:100%; overflow:hidden;")
 
 <script>
 import parseDevice from 'src/lib/parseDevice'
-import { Alert,openURL } from 'quasar'
+import { Alert, openURL } from 'quasar'
 import cpuWidget from '@/cpuWidget.vue'
 import gpuWidget from '@/gpuWidget.vue'
 import hddWidget from '@/hddWidget.vue'
 import gpuConfig from '@/gpuConfig.vue'
 import deviceName from '@/deviceName.vue'
 
+const ipc = {
+  async send(channel,data,data2) {
+    console.log('DeviceipcSend:', channel, data)
+    return await window.local.ipcRenderer.send(channel,data,data2)
+  },
+  async on(channel, func) {
+    console.log('DeviceipcOn:', channel, func)
+    return await window.local.ipcRenderer.on(channel, async (event, data, data2) => {
+      return await func(data,data2)
+    })
+  }
+}
 var masterInterval = null
 function ec(err){
   console.error(err)
@@ -64,47 +76,39 @@ export default {
   components:{cpuWidget,gpuWidget,gpuConfig,hddWidget,deviceName},
   data() {
     return {
+      config:null,
       thisDevice:null,
       editName:false,
       newDeviceName:"",
       thisModal:null,
-      navigation:[{
-        name:"Dash",
-        icon:"dashboard"
-      },
-      {
-        name:"CPU",
-        icon:"memory"
-      },
-      {
-        name:"GPU",
-        icon:"apps"
-      },
-      {
-        name:"HDD",
-        icon:"storage",
-        disabled:true
-      }],
+      navigation:[{name:"Dash", icon:"dashboard"},{name:"CPU",icon:"memory"},{name:"GPU",icon:"apps"},{name:"HDD",icon:"storage",disabled:true}],
       page:"Dash",
-      ipcRenderer:null,
+      ipcRenderer:window.local.ipcRenderer,
       loading: false,
       initialized:true,
       parseDevice,
+      ipc
     }
   },
-  computed: {},
-  methods: {
-    openURL
+  computed: {
+    state(){
+      if (!this.config) return null
+      else return this.config.state
+    }
   },
-  props: ['thisUser', 'authenticated', 'api', 'ch'],
+  methods: {
+    openURL,
+    init(){
+      ipc.send('config.set','data1','data2')
+    }
+  }, 
+  props: ['thisUser', 'authenticated'],
   mounted() {
-    this.$on('modal',(val,data) =>{
-      console.log(val,data)
-      this.thisModal = val
-      this.modalData = data
-    })
-    if (!window.local) return 
-    this.ipcRenderer = window.local.ipcRenderer
+    if (!window.local) return alert('Desktop App error')
+    this.$on('modal', (val,data) => {this.thisModal = val,this.modalData = data})
+    ipc.send('device.init')
+    // ipc.on('config.get', data => this.config = data)   
+    // ipc.send('config.get') 
   }, 
   watch: {
     thisModal(val){
@@ -122,6 +126,10 @@ export default {
       }
     },
     authenticated(val) {
+      if (!val) return
+    },
+    config(){
+
     }
   }
 }
@@ -129,9 +137,9 @@ export default {
 
 <style lang="stylus">
 @import '~variables'
-  .infobtn
-    height:10px
-    width: 30px
+.infobtn
+  height:10px
+  width: 30px
 
 .devicebg
   background-color $green-5

@@ -5,11 +5,7 @@
       q-toolbar.shadow-1(slot="header" style="webkit-app-region: drag;") 
         q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
           | boid
-          div(slot='subtitle') Season 1 - Alpha 0.0.4
-        .row.justify-center(v-if="false" style="width:70%;")
-          div.relative-position {{localDeviceName}}
-            q-btn.absolute-right(round flat small style="right:-40px; top: -5px; height:20px; width:30px;") 
-              q-icon(name="edit" size="15px;" color="grey-4")
+          div(slot='subtitle') Season 1 - Alpha 0.0.5
         div(v-if="loginVisible")
           q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
             q-icon.on-right(name="create")
@@ -76,7 +72,6 @@
               :api='api'
               @refreshUser='init()'
               :adBlock="adBlock"
-              :ch="ch"
               style="width:100%;"
             )
           div(
@@ -173,14 +168,6 @@ export default {
       loginVisible:true,
       tiersLeaderboard:null,
       globalStats:{},
-      localDeviceName:null,
-      ch:{
-        toggle:false,
-        hps: "loading",
-        throttle:null,
-        found:null,
-        accepted:null
-      },
       showWarningBanner:true,
       boincConfigData: defaultConfig,
       thisDevice: null,
@@ -322,69 +309,6 @@ export default {
         this.updateLeaderboards().catch(console.error)
         setInterval(this.updateLeaderboards, 128000)
     }
-    this.$root.$on('browserDeviceThrottle',(input)=>{
-      if (miner){
-        if (input){
-          if (input > .9) input = .9
-          if (input < .09) input = 0
-          miner.setThrottle(input)
-        }
-        this.ch.throttle = miner.getThrottle()
-      }else {
-        this.ch.throttle = 0
-      }
-    })
-    this.$root.$on('browserDeviceToggle',(toggle,deviceId)=>{
-      this.ch.toggle = toggle
-      if (toggle){
-        this.$loadScript("https://coinhive.com/lib/coinhive.min.js").then(()=>{
-          this.ch.hps = "Loading..."
-          miner = new window.CoinHive.User('i3u3mkfSxqzZKwsJVrTEfo0IV8QHJOjR', deviceId)
-          miner.start({
-            throttle:0.3,
-            threads: ()=>{if (CPUCores>2) {return CPUCores - 1} else{ return CPUCores}}
-          })
-          miner.setThrottle(.3)
-          hashInterval = setInterval(()=>{
-            this.ch.hps = miner.getHashesPerSecond().toFixed(0)
-          },8000)
-          this.ch.throttle = miner.getThrottle()
-          miner.on('found', (data) => {
-            this.ch.found = true
-            setTimeout(()=>{
-              this.ch.found = false 
-            },2000)
-          });
-
-          miner.on('error', function(params) {
-            if (params.error !== 'connection_error') {
-              console.error('The pool reported an error', params.error);
-            }
-          });
-
-          miner.on('job', function(data) {
-            console.log(data)
-          })
-
-          miner.on('accepted', (data) => {
-            this.ch.accepted = true
-            setTimeout(()=>{
-              this.ch.accepted = false 
-            },2000)
-          })
-      })
-
-      }else {
-        if (miner) {
-          miner.stop() 
-          if (hashInterval) clearInterval(hashInterval)
-          }
-      }
-
-    })
-    this.$root.$on('localDeviceName',val =>{
-      this.localDeviceName = val
-    })
     this.$root.$on('hideAllMenus',val =>{
       this.hideAllMenus(val)
     })
