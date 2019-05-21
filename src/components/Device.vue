@@ -1,6 +1,6 @@
 <template lang="pug">
 div(style="height:100%; overflow:hidden;")
-  p.text-center(style="padding:40px;") {{config.device.uid}}
+  p.text-center(style="padding:40px;" v-if="config") {{config.device.uid}}
   div(v-if="!loading && thisDevice" ref="navigation").bg-grey-3
     deviceName(:thisDevice="thisDevice")
     .row.justify-center.no-wrap
@@ -25,7 +25,7 @@ div(style="height:100%; overflow:hidden;")
       q-tooltip Refresh Device
       q-icon(name="refresh")
     .row.justify-center
-      q-btn( flat @click="ipcRenderer.send('openURL','https://www.youtube.com/watch?v=VVlGjVDek_M')" ) Problems?
+      q-btn( flat @click="ipcMain.send('openURL','https://www.youtube.com/watch?v=VVlGjVDek_M')" ) Problems?
   //- div(style="height:20px").full-width.bg-grey-8.absolute-bottom
   q-modal(ref="modal" @close="thisModal=null, modalData=null" )
     component(:is="thisModal" :thisModal="$refs.modal" :data="modalData" v-if="thisModal")
@@ -40,7 +40,7 @@ import hddWidget from '@/hddWidget.vue'
 import gpuConfig from '@/gpuConfig.vue'
 import deviceName from '@/deviceName.vue'
 
-const ipc = {
+const ipcMain = {
   async send(channel,data,data2) {
     console.log('DeviceipcSend:', channel, data)
     return await window.local.ipcRenderer.send(channel,data,data2)
@@ -50,7 +50,13 @@ const ipc = {
     return await window.local.ipcRenderer.on(channel, async (event, data, data2) => {
       return await func(data,data2)
     })
-  }
+  },
+  async once(channel, func) {
+    console.log('DeviceipcOnce:', channel, func)
+    return await window.local.ipcRenderer.once(channel, async (event, data, data2) => {
+      return await func(data,data2)
+    })
+  },
 }
 var masterInterval = null
 function ec(err){
@@ -72,6 +78,17 @@ function setupDevice(device) {
   }
 }
 
+async function handleLocalDevice(v){
+  ipcMain.on('config.getDevice',async device => {
+    console.log('got device datas',device)
+    if (device.os === 'darwin') device.os = 'MAC'
+    else if (device.os === 'win32') device.os = 'WINDOWS'
+    else device.os = 'LINUX'
+    const result = await v.$api.registerDevice(device)
+  })
+  ipcMain.send('config.getDevice')
+}
+
 export default {
   components:{cpuWidget,gpuWidget,gpuConfig,hddWidget,deviceName},
   data() {
@@ -87,7 +104,8 @@ export default {
       loading: false,
       initialized:true,
       parseDevice,
-      ipc
+      ipcMain,
+      localDevice:null
     }
   },
   computed: {
@@ -99,14 +117,18 @@ export default {
   methods: {
     openURL,
     init(){
-      ipc.send('config.set','data1','data2')
+      ipcMain.once('config.getState',(data,data2) => alert(JSON.stringify(data)))
+      ipcMain.send('config.getState')
     }
   }, 
   props: ['thisUser', 'authenticated'],
+  created(){
+    ipcMain.send('config.initIPC')
+  },
   mounted() {
     if (!window.local) return alert('Desktop App error')
-    this.$on('modal', (val,data) => {this.thisModal = val,this.modalData = data})
-    ipc.send('device.init')
+    this.$on('modal', (val,data) => { this.thisModal = val,this.modalData = data })
+    handleLocalDevice(this)
     // ipc.on('config.get', data => this.config = data)   
     // ipc.send('config.get') 
   }, 
