@@ -6,10 +6,6 @@
         q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
           | boid
           div(slot='subtitle') Season 1 - Alpha 0.0.4
-        .row.justify-center(v-if="local" style="width:70%;")
-          div.relative-position {{localDeviceName}}
-            q-btn.absolute-right(round flat small style="right:-40px; top: -5px; height:20px; width:30px;") 
-              q-icon(name="edit" size="15px;")
         div(v-if="loginVisible")
           q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
             q-icon.on-right(name="create")
