@@ -1,18 +1,18 @@
 <template lang="pug">
 .row.justify-center(style="height:45px; overflow:hidden")
   q-icon(:name="thisDevice.icon")
-  div( v-if="!editName" style="padding:13px;").text-black {{thisDevice.name}}
+  div( v-if="!$parent.editName" style="padding:13px;").text-black {{thisDevice.name}}
   div(v-else)
     q-input( @keyup.enter="editDeviceName(newDeviceName)" style="width:210px; height:10px; padding:5px; margin:5px; padding-bottom:15px; " placeholder="new device name" v-model="newDeviceName")
-  div(v-if="!editName")
-    q-btn.infobtn(small round flat @click="editName = true" style="height:25px; width:30px; margin-top:3px" )
+  div(v-if="!$parent.editName")
+    q-btn.infobtn(small round flat @click="$parent.editName = true" style="height:25px; width:30px; margin-top:3px" )
       q-icon(name="edit" size="20px")
       q-tooltip Edit device name
   div(v-else).on-right
     q-btn.infobtn(small round color="green" @click="editDeviceName(newDeviceName)" style="height:25px; width:30px; margin-top:0px")
       q-icon(name="check" color="white" size="20px")
       q-tooltip Confirm name edit
-    q-btn.infobtn.on-right(small round flat color="amber" @click="newDeviceName = '', editName = false" style="height:25px; width:30px; margin-top:5px")
+    q-btn.infobtn.on-right(small round flat color="amber" @click="newDeviceName = '', $parent.editName = false" style="height:25px; width:30px; margin-top:5px")
       q-icon(name="close" color="red-5" size="20px")
       q-tooltip Cancel name edit 
 </template>
@@ -34,7 +34,7 @@ export default {
         console.log(result)
         if (!result) alert('problem updating device name')
         if (result.error) alert(result.error)
-        this.$parent.thisDevice = await this.$api.getDevice({id:this.thisDevice.id}).catch(ec)
+        this.$parent.thisDevice = await this.$api.getDevice({id:this.thisDevice.id})
       }
       catch(error){
         alert(error)

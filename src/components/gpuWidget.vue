@@ -1,6 +1,8 @@
 <template lang="pug">
 div
   q-card(style='max-height:480px;' v-if="thisDevice && ipcRenderer").relative-position
+    div.absolute(v-if="disabled" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.6);")
+      h6.absolute-center.no-margin.text-white Not compatible with this OS
     q-card-media.relative-position
       q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="$parent.$emit('modal','gpuConfig',{config,directories})")
         q-icon(color='grey-7' name="settings")
@@ -290,7 +292,7 @@ export default {
       this.toggle = true
     },
     gpuInfo(val) {
-      if (!val) return
+      if (!val) return this.disabled = true
       if (val && !this.toggle) this.status = "Ready to start"
       if (val.some(el => el.type === 'Nvidia' && el.valid === true)) {
         this.trexActive = true

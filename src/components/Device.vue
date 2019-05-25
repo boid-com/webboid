@@ -12,8 +12,8 @@ div(style="height:100%; overflow:hidden;")
             q-tooltip Coming soon
   .row.justify-center.relative-position(v-if="!loading && thisDevice" style="padding:5px;")
     .full-width
-      //- cpuWidget(v-show="page === 'CPU' || page === 'Dash'"
-        //- :thisDevice="thisDevice" ref="cpuWidget")
+      cpuWidget(v-show="page === 'CPU' || page === 'Dash'"
+        :thisDevice="thisDevice" ref="cpuWidget")
     .full-width
       gpuWidget(v-show="page === 'GPU' || page === 'Dash' "
         :thisDevice="thisDevice" ref="gpuWidget")
@@ -64,27 +64,27 @@ function ec(err){
   // alert(err)
 }
 
-function setupDevice(device) {
-  if (!device) return null
-  var type
-  if (device.os.name === 'Darwin') type = 'MAC'
-  else type = 'WINDOWS'
-  return {
-    status:'ACTIVE',
-    cpid: device.cpid,
-    name: device.name,
-    type,
-    meta: device
-  }
-}
+var deviceInterval = null
 
-async function handleLocalDevice(v){
-  ipcMain.on('config.getDevice',async device => {
+
+async function initLocalDevice(v){
+  ipcMain.once('config.getDevice',async device => {
     console.log('got device datas',device)
+    console.log(device.os)
     if (device.os === 'darwin') device.os = 'MAC'
     else if (device.os === 'win32') device.os = 'WINDOWS'
     else device.os = 'LINUX'
-    const result = await v.$api.registerDevice(device)
+    var deviceExists = false
+    var newDevice = false
+    deviceExists = await v.$api.findDevice(device)
+    if(!deviceExists) newDevice = await v.$api.registerDevice(device) 
+    var id = deviceExists.id || newDevice.id
+    if (!id) return alert('There was a problem registering this device')
+    if (deviceInterval) clearInterval(deviceInterval)
+      v.thisDevice = await v.$api.getDevice({id})
+      deviceInterval = setInterval( async () => {
+        v.thisDevice = await v.$api.getDevice({id})
+      }, 10000)
   })
   ipcMain.send('config.getDevice')
 }
@@ -105,7 +105,8 @@ export default {
       initialized:true,
       parseDevice,
       ipcMain,
-      localDevice:null
+      localDevice:null,
+      deviceInterval:null
     }
   },
   computed: {
@@ -128,7 +129,6 @@ export default {
   mounted() {
     if (!window.local) return alert('Desktop App error')
     this.$on('modal', (val,data) => { this.thisModal = val,this.modalData = data })
-    handleLocalDevice(this)
     // ipc.on('config.get', data => this.config = data)   
     // ipc.send('config.get') 
   }, 
@@ -141,14 +141,15 @@ export default {
     },
     thisDevice: async function(value) {
       if (value) {
-        console.log("INITIALIZED TRUE")
+        console.log("thisDevice:",this.thisDevice)
         this.initialized = true
         this.loading = false
         this.thisDevice.icon = parseDevice.icon(this.thisDevice)
       }
     },
     authenticated(val) {
-      if (!val) return
+      if (!val) this.$root.$emit('reload')
+      initLocalDevice(this)
     },
     config(){
 

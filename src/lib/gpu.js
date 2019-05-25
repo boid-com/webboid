@@ -82,6 +82,7 @@ var gpu = {
   },
   parse( gpuData ) {
     console.log( 'got GPU Data', gpuData )
+    if (!gpuData) return false
     var gpus = []
     for ( var gpu of gpuData ) {
       const gpuID = gpu.id.split( '0x' )[ 1 ].toLowerCase()

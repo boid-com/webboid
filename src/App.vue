@@ -63,6 +63,7 @@
         .col-12
           .row.justify-center
             router-view(
+              v-if="show"
               :globalStats='globalStats'
               :leaderboard='leaderboard'
               :thisUser='thisUser'
@@ -163,6 +164,7 @@ var CPUCores = navigator.hardwareConcurrency
 export default {
   data() {
     return {
+      show:true,
       showSideMenu:true,
       ipcRenderer:null,
       loginVisible:true,
@@ -199,6 +201,12 @@ export default {
     }
   },
   methods: {
+    reload(){
+      this.show = false
+      setTimeout(() => {
+        this.show = true
+      }, 500)
+    },
     openWebsite(url){
 
     },
@@ -309,6 +317,7 @@ export default {
         this.updateLeaderboards().catch(console.error)
         setInterval(this.updateLeaderboards, 128000)
     }
+    this.$root.$on('reload',this.reload)
     this.$root.$on('hideAllMenus',val =>{
       this.hideAllMenus(val)
     })
