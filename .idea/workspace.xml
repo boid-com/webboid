@@ -193,7 +193,7 @@
       <path value="$PROJECT_DIR$/src/lib/vue-coin-hive/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="1026" />
     <option name="width" value="901" />
     <option name="height" value="1047" />
