@@ -1,11 +1,10 @@
 import { mount, createLocalVue } from '@vue/test-utils'
-import App from '../../src/components/Header.vue'
-describe('Render, build and wire up a quasar component', () => {
+import Header from '../../src/components/Header.vue'
+describe('Render, build and wire up a Header Component', () => {
   const localVue = createLocalVue();
-  const wrapper = mount(App, {
+  const wrapper = mount(Header, {
     localVue
   });
-
   it('passes the sanity check and creates a wrapper', () => {
     expect(wrapper.isVueInstance()).toBe(true)
   });

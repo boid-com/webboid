@@ -40,8 +40,8 @@ module.exports = {
   ],
   'moduleFileExtensions': ['js', 'json', 'vue'],
   'moduleNameMapper': {
-    '^vue$': 'vue/dist/vue.common.js',
-    'quasar': 'quasar-framework/dist/umd/quasar.mat.umd.js',
+    '^vue$': '<rootDir>/node_modules/vue/dist/vue.common.js',
+    'quasar': '<rootDir>/node_modules/quasar-framework/dist/umd/quasar.mat.umd.min.js',
     '^src/(.*)$': '<rootDir>/src/$1',
     '^assets/(.*)$': '<rootDir>/src/assets/$1',
     '^@/(.*)$': '<rootDir>/src/components/$1',
