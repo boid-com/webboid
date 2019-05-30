@@ -22,10 +22,6 @@ module.exports = {
       'lines': 50,
       'statements': 50
     },
-    './src/components/': {
-      'branches': 40,
-      'statements': 40
-    },
   },
   'testMatch': [
     '<rootDir>/test/*/*.*.js?(x)',
