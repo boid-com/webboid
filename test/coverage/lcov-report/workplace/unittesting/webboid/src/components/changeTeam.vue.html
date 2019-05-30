@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for workplace/unittesting/webboid/src/components/changeTeam.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\..\..\index.html">All files</a> / <a href="index.html">workplace/unittesting/webboid/src/components</a> changeTeam.vue
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/36</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/3</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/35</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template lang="pug"&gt;
+  div(style="padding:20px; max-width: 400px; min-width:350px; max-height:100%;").relative-position
+    h4.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:35px;") Change Teams
+    div(v-if="!canChangeTeams")
+      h6 You can only change teams once every 48 hours.
+      h6 You can next change teams at 
+      h5 {{nextChangeDate}}
+      br
+      br
+      q-btn.on-right(outline color="grey-8" @click="$root.$emit('modal')") Back
+    div(v-else-if="page==0")
+      .small.text-grey-8.relative-position Your Current Team
+        .small.text-grey-8.absolute-right earnings bonus
+      q-card.teamCard
+        .row
+          .col-auto
+            img(:src="thisUser.team.image")
+          .col
+            p.on-right {{thisUser.team.name | removeDash}}
+          .col-3.relative-position
+            p.absolute-center.text-green-8 {{percent(thisUser.team.bonus)}}
+      br
+      .small.text-grey-8.relative-position Joinable Teams
+        .small.text-grey-8.absolute-right earnings bonus
+      q-card(style="min-height:300px; max-height:300px; overflow:scroll;")
+        q-card.teamCard.selectable.cursor-pointer(
+          v-for="team of teamsList" :key="team.id" @click="selectedTeam = team"
+          :class="{selected:team.selected}"
+          )
+          .row.no-pointer-events
+            .col-auto
+              img(:src="team.image")
+            .col.relative-position
+              .small.on-right(style="padding-top:5px;") {{team.name | removeDash}}
+            .col-3.relative-position
+              p.absolute-center.text-green-8 {{percent(team.bonus)}}
+      div(style="height:50px;")
+      div.absolute-bottom.relative-position(style="padding:20px;")
+        q-btn.float-right(:disabled="!selectedTeam" color="blue" @click="page=1") Continue
+        q-btn(outline color="grey-8" @click="$root.$emit('modal')") Cancel
+    div(v-else)
+      .small.text-grey-8.relative-position Your Selected Team
+        .small.text-grey-8.absolute-right earnings bonus
+      q-card.teamCard
+        .row
+          .col-auto
+            img(:src="selectedTeam.image")
+          .col.relative-position
+            p.absolute-center {{selectedTeam.name | removeDash}}
+          .col-3.relative-position
+            p.absolute-center.text-green-8 {{percent(selectedTeam.bonus)}}
+      br
+      //- q-card(color="red-4")
+      //-   .row
+      //-     .col-auto
+      //-       div
+      //-         h2(style="margin:0px; padding-right:15px; padding-left:10px;") ! 
+          //- .col 
+          //-   p You can only change teams once every 48 hours. Changing teams during a season break does not impact your Boid Power.
+      //- h6 Currently Boid Season 0 has not started, there is no Boid Power penalty for changing teams.
+      //- h6 The next time you will be able to change teams again is
+      h6 Some teams have ongoing promotions for long-running contributors.
+&nbsp;
+      h6 Are you sure you want to change your team?
+      .row.justify-center
+        q-btn(color="green" @click="executeTeamChange(_self,selectedTeam)") Change Team     
+&nbsp;
+      div(style="padding-top:40px;")
+        q-btn(outline @click="page=0") &lt; back
+        q-btn.on-right(outline color="grey-8" @click="$root.$emit('modal')") Cancel
+&nbsp;
+    
+    q-inner-loading(:visible="pending")
+      q-spinner-ball(size="70px" color="blue")
+      
+&nbsp;
+&lt;/template&gt;
+&lt;style scoped lang="stylus"&gt;
+@import '~variables'
+.teamCard
+  max-height 70px
+img
+  height 30px
+.selectable:hover
+  background-color $grey-3
+.selected
+  background-color $blue-2
+.selected:hover
+  background-color $blue-2
+&nbsp;
+&nbsp;
+&lt;/style&gt;
+&nbsp;
+&lt;script&gt;
+<span class="cstat-no" title="statement not covered" >import { email,required, sameAs, minLength } from "vuelidate/lib/validators"</span>
+<span class="cstat-no" title="statement not covered" >import { Toast } from 'quasar'</span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >async function executeTeamChange(v,newTeam){</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    console.log('execute team change')</span>
+<span class="cstat-no" title="statement not covered" >      v.pending = true</span>
+<span class="cstat-no" title="statement not covered" >      const finished = await v.$api.changeUserTeam(newTeam)</span>
+<span class="cstat-no" title="statement not covered" >      v.pending = false</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >      if(!finished) return alert('there was a problem')</span></span>
+      else if (finished.invalid) {
+<span class="cstat-no" title="statement not covered" >        Toast.create.negative(finished.invalid)</span>
+<span class="cstat-no" title="statement not covered" >        v.$router.replace('/')</span>
+<span class="cstat-no" title="statement not covered" >        v.$e.$emit('refreshUser')</span>
+<span class="cstat-no" title="statement not covered" >        v.$root.$emit('modal')</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+      else if (finished.success === true){
+<span class="cstat-no" title="statement not covered" >        v.finished = true</span>
+<span class="cstat-no" title="statement not covered" >        v.finishedMessage = finished.message</span>
+<span class="cstat-no" title="statement not covered" >        Toast.create.positive(finished.message)</span>
+<span class="cstat-no" title="statement not covered" >        v.$e.$emit('refreshUser')</span>
+<span class="cstat-no" title="statement not covered" >        v.$root.$emit('modal')</span>
+        // v.$router.replace('/')
+      }
+    
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    v.pending = false</span>
+<span class="cstat-no" title="statement not covered" >    alert(error.message)</span>
+  }
+&nbsp;
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >var slideshowInterval = null</span>
+import {openURL} from 'quasar'
+export default {
+  data(){
+<span class="cstat-no" title="statement not covered" >    return {</span>
+    pending:false,
+    selectedTeam:null,
+    page:0,
+    teams:null
+    }
+  },
+  async created(){
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    this.teams = await this.$api.getTeams()</span>
+<span class="cstat-no" title="statement not covered" >    console.log(this.teams)</span>
+  },
+  methods:{
+    executeTeamChange,
+    percent(dec){
+<span class="cstat-no" title="statement not covered" >      if (!dec) return 0.0</span>
+      else return "+"+ (dec*100).toFixed(2) +"%" 
+    }
+  },
+  computed:{
+    teamsList(){
+<span class="cstat-no" title="statement not covered" >      if (!this.teams) return null</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      return this.teams</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      .filter( team =&gt; { return (team.id != this.thisUser.team.id &amp;&amp; team.locked != true)})</span></span>
+      .sort((b,a) =&gt; a.bonus - b.bonus)
+      .map(el =&gt; {
+<span class="cstat-no" title="statement not covered" >        if (this.selectedTeam &amp;&amp; this.selectedTeam.id === el.id) el.selected = true</span>
+        else el.selected = false
+<span class="cstat-no" title="statement not covered" >        el.bonusDisplay = (el.bonus * 10).toFixed(2)</span>
+<span class="cstat-no" title="statement not covered" >        return el</span>
+       })
+      
+    },
+    canChangeTeams(){
+<span class="cstat-no" title="statement not covered" >      return true</span>
+<span class="cstat-no" title="statement not covered" >      if (!this.thisUser.lastTeamChange) return true</span>
+      else return (Date.now() - Date.parse(this.thisUser.lastTeamChange)) &gt; 172800000
+    },
+    nextChangeDate(){
+<span class="cstat-no" title="statement not covered" >      return new Date(Date.parse(this.thisUser.lastTeamChange) + 172800000).toLocaleString()</span>
+    }
+  },
+  props:['api','thisUser','authenticated','teamLeaderboard'],
+  watch:{
+    teams(data){
+<span class="cstat-no" title="statement not covered" >      this.pending = !data</span>
+    }
+  }
+}
+&lt;/script&gt;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 30 2019 22:05:39 GMT+0300 (Moscow Standard Time)
+</div>
+</div>
+<script src="..\..\..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\..\..\sorter.js"></script>
+</body>
+</html>
