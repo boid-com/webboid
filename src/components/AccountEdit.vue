@@ -111,7 +111,6 @@ export default {
           this.$root.$emit('modal.updatePayout',true)
         })
       },5)
-   
     },
     goToProfileModal(){
       this.thisModal.close()
@@ -125,9 +124,8 @@ export default {
   },
   computed:{
     updateEmailBtn(){
-      if (!this.$v.account.email.$error && this.account.email != "" &&this.account.email != this.thisUser.email) return false
-      else return true
-    }
+      return !(!this.$v.account.email.$error && this.account.email !== "" && this.account.email !== this.thisUser.email);
+}
   },
   props:['thisModal','api','thisUser'],
   watch:{
