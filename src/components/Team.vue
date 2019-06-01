@@ -146,7 +146,6 @@ export default {
   },
   computed: {
     parseSocial(){
-      console.log("TEAM START>>>>>>");//fix_me
       if (!this.team.social) return null
       return parseSocials(this.team.social)
     },

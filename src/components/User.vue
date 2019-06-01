@@ -183,12 +183,9 @@
         }else return false
       },
       getTeamInfo: async function(){
-        console.log("USERSTART>>>>>");//fix_me
-        console.log('TEAMNAME>>>>>>>>', this.thatUser.team.name);//fix_me
         this.team = await this.$api.getTeam({name:this.thatUser.team.name});
       },
       parseSocial(){
-        console.log("TEAM START>>>>>>");//fix_me
         if (!this.team.social) return null
         return parseSocials(this.team.social)
       },
@@ -285,7 +282,6 @@
         // console.log(val)
       },
       async team(val) {
-        console.log('VAL>>>>', val);//fix_me
         if (!val) return
         if (!this.$route.query.promo) this.setupLeaderboard()
         this.populateTeamPromotions()
@@ -293,7 +289,6 @@
         window.localStorage.setItem('invitedById', this.team.owner.id)
       },
       'thatUser'(val){
-        console.log('VAL>>>>', val);//fix_me
         if (!val) return
         window.localStorage.setItem('invitedById',val.id)
         console.log('thatUser',this.thatUser)
