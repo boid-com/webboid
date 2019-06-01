@@ -204,6 +204,8 @@ export default {
       this.socialLeaderboard = await this.$api.socialLeaderboard()
       this.teamLeaderboard = await this.$api.teamsLeaderboard()
       if (!this.selectedTier && this.showSocial != true ) this.selectedTier = this.thisUser.tier
+      console.log("USER tEST?>>>>>>>");//fix_me
+      console.log(this.thisUser());
     }
   },
   watch: {

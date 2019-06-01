@@ -51,7 +51,8 @@ export default {
       team: {}
     }
   },
-  computed: {},
+  computed: {
+  },
   methods: {
     blokstx(txid){
       return 'https://www.bloks.io/transaction/' + txid

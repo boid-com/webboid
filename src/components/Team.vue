@@ -40,16 +40,16 @@
                 q-item-side(:avatar="team.owner.image")
                 q-item-main
                   q-item-tile(label) {{team.owner.username}}
-                  q-item-tile.ellipsis(sublabel) 
+                  q-item-tile.ellipsis(sublabel)
                     small {{team.owner.tagline}}
-                q-item-side(right icon="flash_on" stamp="") 
+                q-item-side(right icon="flash_on" stamp="")
                   small.text-center {{parseInt(team.owner.tPower)}}
-      .col(v-if="team" v-for="stat of teamStats" :key="stat.label").col-xs-6.col-sm-3.col-md-2.col-lg-2        
+      .col(v-if="team" v-for="stat of teamStats" :key="stat.label").col-xs-6.col-sm-3.col-md-2.col-lg-2
         q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
           p.light-paragraph.text-center {{stat.label}}
           div.relative-position(style="margin:auto; margin-top:0px")
             h5.text-center(style="z-index:5; margin-top:33px; margin-bottom:20px; font-size:18px;") {{stat.data}}
-            img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.6); z-index:-4") 
+            img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.6); z-index:-4")
             q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
             q-icon.text-center.absolute-center(v-else color="green-2" :name='stat.icon' style="font-size:80px; z-index:-4;")
             q-tooltip {{stat.label}}
@@ -141,12 +141,12 @@ export default {
       leaderboardType:'LIVE',
       ended:false,
       endedPromotions:[],
-      promotions:[
-      ]
+      promotions:[]
     }
   },
   computed: {
     parseSocial(){
+      console.log("TEAM START>>>>>>");//fix_me
       if (!this.team.social) return null
       return parseSocials(this.team.social)
     },
@@ -268,7 +268,6 @@ export default {
     },
     async getTeamChart(){
       this.chartData = await this.$api.getTeamChart({teamId:this.team.id})
-
     }
   },
   watch: {
