@@ -25,12 +25,20 @@
           div(v-if="myProfile" style="margin:8px; margin-bottom:0px;")
             q-btn.full-width(color='blue' @click="$e.$emit('openProfileEditModal')") Update Profile
           .row
+            q-card.animate-scale.relative-position(v-if="thatUser.team" class="teamRange")
+              div.light-paragraph.text-center NFT/Medals earned
+              table.q-table(style="width:100%")
+                tbody()
+                  tr
+                    td
+                      img.tokenimg( :src="thatUser.image")
+                    td 0/0
+          .row
             q-card.animate-scale.relative-position(v-if="thatUser.powerRatings")
               p.light-paragraph.text-center Power Rating
               div(style="margin:auto;")
                 p.text-center {{parseInt(thatUser.powerRatings[0].power)}}
                   q-icon.text-center(color="yellow" name='flash_on' style="font-size:50px;")
-
             q-card.animate-scale.relative-position(v-if="thatUser.powerRatings")
               p.light-paragraph.text-center Social
               div(style="margin:auto;")
@@ -38,134 +46,190 @@
                 p.text-center Invited Users
               q-btn.full-width(v-if="myProfile" color="green" @click="$e.$emit('openSocialModal')")
                 | Get Invite Link
-            q-card.animate-scale.relative-position(v-if="thatUser.team")
-              div.light-paragraph.text-center My Team
+            q-card.animate-scale.relative-position(v-if="thatUser.team" class="teamRange")
+              div.light-paragraph.text-center User Team
               table.q-table(style="width:100%")
                 tbody()
                   tr
                     td
                       img.tokenimg( :src="thatUser.team.image")
                     td {{thatUser.team.name}}
-              // q-btn.full-width(v-if="thatUser.team.meta.social.telegram" color="blue" outline @click="openURL(thatUser.team.meta.social.telegram)")
-                | Telegram Chat
-              // q-btn.full-width( v-if="thatUser.team.meta.social.facebook" color="blue" outline @click="openURL(thatUser.team.meta.social.facebook)")
-                | Facebook Group
-        .col-sm-12.col-lg-8
-          div(v-if="getTeamInfo")
-            q-card.relative-position(ref="chartDiv" style="height:375px; padding: 10px; padding-top: 15px;")
-              .light-paragraph.text-center(style="margin-bottom:30px;") Team Graphs (14d)
-              teamChart( style="margin-top:20"
-              v-if="powerChart" :chartData="powerChart" :height="295")
-              q-inner-loading(:visible="!powerChart")
-                q-spinner-ball(size="60px" color="blue")
-        .row.full-width(v-if="team")
+          .col-xs-12.col-sm-6.col-md-12
+            q-card.animate-scale.relative-position
+              .absolute-top-right
+                q-btn.infobtn(round small flat)
+                  q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.social)")
+              p.light-paragraph.text-center Social
+              div.relative-position(style="margin:auto; margin-top:30px")
+                q-tooltip The number of users that have signed up for Boid using your referral link.
+                h3.text-center(style="z-index:5;") {{parseInt(thatUser.invited.length)}}
+                  q-icon.text-center.absolute-center(color="blue-1" name='fa-users' style="font-size:50px; z-index:-4;")
+              div(style="height:15px;")
+              q-btn.full-width( outline color="green" @click="$e.$emit('openSocialModal')")
+                | Get Invite Link
+          .col-xs-12.col-sm-6.col-md-12
+            q-card.animate-scale.relative-position(v-if="thisUser.tokens")
+              .absolute-top-right
+                q-btn.absolute.infobtn(round small flat)
+                  q-icon.infobtn(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
+              p.light-paragraph.text-center Wallet
+              table.q-table.reactive(style="width:100%")
+                tbody(v-for="token in thisUser.tokens" :key="token.id")
+                  tr.tokenlist.cursor-pointer()
+                    td
+                      img.tokenimg(:src="token.type.image")
+                    td {{token.type.name}}
+                    td
+                      small Pending
+                      p {{token.balance.toFixed(4)}}
+                      small Paid Out
+                      p {{token.paid.toFixed(4)}}
+                    td
+                  //- q-tooltip View Transactions
+              div(v-if="thisUser.payoutAccount")
+                p.light-paragraph.text-center EOS Payout Account
+                .row.gutter-md(style="padding-top:10px")
+                  .col-8
+                    h5(style="margin:5px;") {{thisUser.payoutAccount}}
+                  .col-4
+                    div
+                      q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Change
+              div(v-else)
+                p.light-paragraph.text-center You have not linked an EOS account yet
+                  q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Link EOS Account
+                  br
+                  q-btn.full-width(color="blue" flat @click="$root.$emit('modal','exchangeModal')") Get BOID
           .col-xs-12.col-sm-12.col-md-4.col-xl-4
-            .row
+            .row.full-width(v-if="thatUser")
               .col-12.relative-position
-                q-card(v-if="team.owner")
+                q-card.animate-scale.relative-position(v-if="thatUser.team")
                   p.light-paragraph.text-center Leader
-                  q-item( style="padding-top:6px;"
-                  highlight :to="{name:'User',params:{username:team.owner.username}}")
-                    q-item-side(:avatar="team.owner.image")
+                    q-item( style="padding-top:6px;"
+                    highlight :to="{name:'User',params:{username:thatUser.team.owner.username}}")
+                      q-item-side(:avatar="thatUser.team.owner.image")
+                      q-item-main
+                        q-item-tile(label) {{thatUser.team.owner.username}}
+                        q-item-tile.ellipsis(sublabel)
+                          small {{thatUser.team.owner.tagline}}
+                      q-item-side(right icon="flash_on" stamp="")
+                        small.text-center {{parseInt(thatUser.team.owner.tPower)}}
+        .col-sm-12.col-lg-8
+          div(v-if="myProfile")
+            div( v-if="thisUser.username")
+              q-card.relative-position(ref="chartDiv" style="height:375px; padding: 10px; padding-top: 15px;")
+                .light-paragraph.text-center(style="margin-bottom:30px;") My Graphs (14d)
+                userChart( style="margin-top:20"
+                v-if="powerChart" :chartData="powerChart" :height="295")
+                q-inner-loading(:visible="!powerChart")
+                  q-spinner-ball(size="60px" color="blue")
+          div(v-else)
+            div(v-if="thatUser.username")
+              q-card.relative-position(ref="chartDiv" style="height:375px; padding: 10px; padding-top: 15px;")
+                .light-paragraph.text-center(style="margin-bottom:30px;") {{thatUser.username}}`s Graphs (14d)
+                userChart( style="margin-top:20"
+                v-if="powerChart" :chartData="powerChart" :height="295")
+                q-inner-loading(:visible="!powerChart")
+                  q-spinner-ball(size="60px" color="blue")
+          .row.full-width(v-if="thatUser")
+            .col(v-if="thatUser" v-for="stat of userStats" :key="stat.label")
+                      .col-xs-6.col-sm-3.col-md-2.col-lg-2
+                        q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
+                          p.light-paragraph.text-center {{stat.label}}
+                          div.relative-position(style="margin:auto; margin-top:0px")
+                            h5.text-center(style="z-index:5; margin-top:33px; margin-bottom:20px; font-size:18px;") {{stat.data}}
+                            img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.6); z-index:-4")
+                            q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
+                            q-icon.text-center.absolute-center(v-else color="green-2" :name='stat.icon' style="font-size:80px; z-index:-4;")
+                            q-tooltip {{stat.label}}
+          .row.justify-center
+            .col-xs-12.col-sm-6.col-md-12
+              q-card.animate-scale.relative-position(v-if="authenticated")
+                p.light-paragraph.text-center User Devices
+                  .absolute-top-right
+                    q-btn.absolute.infobtn(round small flat)
+                      q-icon.infobtn(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.devices)")
+                q-list( v-for="(device,index) in thisUser.devices" :key="device.id")
+                  q-item.relative-position(v-if="!adBlock" style="padding-bottom:30px;")
+                    q-item-side()
+                      q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)")
                     q-item-main
-                      q-item-tile(label) {{team.owner.username}}
-                      q-item-tile.ellipsis(sublabel)
-                        small {{team.owner.tagline}}
-                    q-item-side(right icon="flash_on" stamp="")
-                      small.text-center {{parseInt(team.owner.tPower)}}
-          .col(v-if="team" v-for="stat of teamStats" :key="stat.label").col-xs-6.col-sm-3.col-md-2.col-lg-2
-            q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
-              p.light-paragraph.text-center {{stat.label}}
-              div.relative-position(style="margin:auto; margin-top:0px")
-                h5.text-center(style="z-index:5; margin-top:33px; margin-bottom:20px; font-size:18px;") {{stat.data}}
-                img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.6); z-index:-4")
-                q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
-                q-icon.text-center.absolute-center(v-else color="green-2" :name='stat.icon' style="font-size:80px; z-index:-4;")
-                q-tooltip {{stat.label}}
-      .row.justify-center.gutter
-        .layout-padding(v-if="!authenticated")
-          .layout-padding
-        .col
-          q-card()
-            p.light-paragraph.text-center {{leaderboardTitle}}
-            teamLeaderboard(:leaderboard="leaderboard" :thisUser="thisUser" :type="leaderboardType")
-        .col-md-12.col-lg-6
-          q-card
-            p.light-paragraph.text-center Team Promotions
-            div(v-if="teamPromotions")
-              .row.justify-center(style="padding-bottom:5px;")
-                small filter
-              .row.justify-center
-                q-btn(flat :class="{activeTab:ended === false}" @click="ended = false")
-                  | live & upcoming
-                q-btn(flat :class="{activeTab:ended === true}" @click="ended = true") Ended
-              h6.light-paragraph Physical Rewards
-              div(v-if="teamPromotions.physical.length > 0" style="max-height:600px; overflow:auto;")
-                promoCard.cursor-pointer.clickable(
-                v-for="promo of teamPromotions.physical"
-                :key="promo.id" :promo="promo" :userid="thisUser.id"
-                @selected="showPromoLeaderboard(promo)"
-                @deselected="setupLeaderboard()"
-                :deselect="selectedPromo")
-              div(v-else)
-                q-card.relative-position(style="padding:20px;")
-                  div.light-paragraph.text-center No physical rewards available...
-                  q-tooltip You can ask the team leader to add some additional rewards.
-              h6.light-paragraph Coin Rewards
-              div(v-if="teamPromotions.coin.length > 0" style="max-height:600px; overflow:auto;")
-                promoCard.cursor-pointer.clickable(
-                v-for="promo of teamPromotions.coin"
-                :key="promo.id" :promo="promo" :userid="thisUser.id"
-                @selected="showPromoLeaderboard(promo)"
-                @deselected="setupLeaderboard()"
-                :deselect="selectedPromo")
-              div(v-else)
-                q-card.relative-position(style="padding:20px;")
-                  div.light-paragraph.text-center No coin rewards available...
-                  q-tooltip You can ask the team leader to add some additional rewards.
-              h6.light-paragraph Boid NFT Collectibles
-              div(v-if="teamPromotions.nft.length > 0" style="max-height:600px; overflow:auto;")
-                .row
-                  .col
-                    promoCard.cursor-pointer.clickable(
-                    v-for="promo of teamPromotions.nft"
-                    :key="promo.id" :promo="promo" :userid="thisUser.id"
-                    @selected="showPromoLeaderboard(promo)"
-                    @deselected="setupLeaderboard()"
-                    :deselect="selectedPromo")
-              div(v-else)
-                q-card.relative-position(style="padding:20px;")
-                  div.light-paragraph.text-center No collectible rewards available...
-                  q-tooltip You can ask the team leader to add some additional rewards.
-          q-card(v-if="team.tWidget" style="padding:0px; height:510px; overflow:hidden;" )
-            iframe(
-            :src="team.tWidget"
-            style="margin:0px;"
-            id="tgw_5c6ca24c83ba88d8738b456d"
-            frameborder="0"
-            scrolling="no"
-            horizontalscrolling="no"
-            verticalscrolling="no"
-            width="100%"
-            height="540px"
-            )
+                      q-item-tile(label style="user-select: none;") {{device.name}}
+                      q-item-tile.relative-position(style="padding-left:15px;" sublabel  v-if="device.boincPower") CPU: {{device.boincPower.toLocaleString()}}
+                        | {{displayPending(device)}}
+                        q-tooltip Device Power (Pending)
+                        img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+
+                      q-item-tile.relative-position(style="padding-left:15px;" sublabel v-if="device.rvnPower && device.rvnPower > 0") GPU: {{device.rvnPower.toLocaleString()}}
+                        div.absolute-top-left(style="width:100px; height:30px;")
+                        img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+          .row.full-width.justify-center
+            q-card.full-width
+              p.light-paragraph.text-center Recently Won Previous Team Promotions
+              div(v-if="teamPromotions")
+                .row.justify-center(style="padding-bottom:5px;")
+                  small filter
+                .row.justify-center
+                  q-btn(flat :class="{activeTab:ended === false}" @click="ended = false")
+                    | live & upcoming
+                  q-btn(flat :class="{activeTab:ended === true}" @click="ended = true") Ended
+                h6.light-paragraph Physical Rewards
+                div(v-if="teamPromotions.physical.length > 0" style="max-height:600px; overflow:auto;")
+                  promoCard.cursor-pointer.clickable(
+                  v-for="promo of teamPromotions.physical"
+                  :key="promo.id" :promo="promo" :userid="thisUser.id"
+                  @selected="showPromoLeaderboard(promo)"
+                  @deselected="setupLeaderboard()"
+                  :deselect="selectedPromo")
+                div(v-else)
+                  q-card.relative-position(style="padding:20px;")
+                    div.light-paragraph.text-center No physical rewards available...
+                    q-tooltip You can ask the team leader to add some additional rewards.
+                h6.light-paragraph Coin Rewards
+                div(v-if="teamPromotions.coin.length > 0" style="max-height:600px; overflow:auto;")
+                  promoCard.cursor-pointer.clickable(
+                  v-for="promo of teamPromotions.coin"
+                  :key="promo.id" :promo="promo" :userid="thisUser.id"
+                  @selected="showPromoLeaderboard(promo)"
+                  @deselected="setupLeaderboard()"
+                  :deselect="selectedPromo")
+                div(v-else)
+                  q-card.relative-position(style="padding:20px;")
+                    div.light-paragraph.text-center No coin rewards available...
+                    q-tooltip You can ask the team leader to add some additional rewards.
+                h6.light-paragraph Boid NFT Collectibles
+                div(v-if="teamPromotions.nft.length > 0" style="max-height:600px; overflow:auto;")
+                  .row
+                    .col
+                      promoCard.cursor-pointer.clickable(
+                      v-for="promo of teamPromotions.nft"
+                      :key="promo.id" :promo="promo" :userid="thisUser.id"
+                      @selected="showPromoLeaderboard(promo)"
+                      @deselected="setupLeaderboard()"
+                      :deselect="selectedPromo")
+                div(v-else)
+                  q-card.relative-position(style="padding:20px;")
+                    div.light-paragraph.text-center No collectible rewards available...
+                    q-tooltip You can ask the team leader to add some additional rewards.
 </template>
 <script>
   import { openURL } from 'quasar'
   import teamLeaderboard from '@/teamLeaderboard.vue'
-  import teamChart from '@/teamChart.vue'
+  import userChart from '@/userChart.vue'
   import parseSocials from 'lib/parseSocial.js'
   import promoCard from '@/promoCard.vue'
+  import parseDevice from 'src/lib/parseDevice'
 
-
+  var info = require('src/lib/infoText.json')
 
   export default {
     name: 'index',
-    components:{teamChart,promoCard,teamLeaderboard},
+    components:{userChart,promoCard,teamLeaderboard},
     data () {
       return {
-        team:[],
+        user:[],
         openURL,
+        info,
+        parseDevice,
         chartData:null,
         leaderboardTitle:"",
         leaderboard: [],
@@ -182,84 +246,110 @@
           return this.thisUser.id === this.thatUser.id
         }else return false
       },
-      getTeamInfo: async function(){
-        this.team = await this.$api.getTeam({name:this.thatUser.team.name});
-      },
       parseSocial(){
         if (!this.team.social) return null
         return parseSocials(this.team.social)
       },
-      teamStats(){
-        if (!this.team.owner) return null
-        var ownerStake = this.team.owner.stake.toFixed(0).toLocaleString()
-        if (!ownerStake) return null
+      powerChart(){
+        if (!this.chartData) return null;
+        var labels = [];
+        var data = [];
+        this.chartData.forEach((el)=>{
+          if (!el.createdAt) return null;
+          const created = new Date(el.createdAt.toString());
+          labels.push(created.getMonth() + 1 + '/' + created.getDate());
+          data.push(parseInt(el.userPower));
+        });
+        return {labels,datasets:[{data:data}]}
+      },
+      userStats(){
+        if (!this.thatUser) return null
+        // var ownerStake = this.thatUser.team.owner.stake.toFixed(0).toLocaleString()
+        // if (!ownerStake) return null
         return [
           {
-            data:parseInt(this.team.power).toLocaleString(),
+            data:parseInt(this.thatUser.tPower).toLocaleString(),
             image:"/statics/images/BoidPower.svg",
-            label:"Team Power"
+            label:"User Total Power"
           },
           {
-            data:this.team.activeUsers,
-            icon:'fa-users',
-            label:"Active Users"
-          },
-          {
-            data:(this.team.bonus * 100).toFixed(2) + '%',
-            icon:'add',
-            label:"Team Bonus"
-          },
-          {
-            data:ownerStake + ' BOID',
+            data:parseInt(this.thatUser.tier).toLocaleString(),
             icon:'lock',
-            label:"Leader Stake"
+            label:"User Power Tier"
+          },
+          {
+            data:this.thatUser.invited.length + "/" + this.thatUser.sPower,
+            icon:'fa-users',
+            label:"Invited Users / Social Power"
+          },
+          {
+            data:this.thatUser.devices.length,
+            icon:'add',
+            label:"User Devices"
           }
         ]
       },
-      powerChart(){
-        if (!this.chartData) return null
-        var labels = []
-        var data = []
-        var data2 = []
-        this.chartData.forEach((el)=>{
-          if (!el.createdAt) return null
-          const created = new Date(el.createdAt)
-          labels.push(created.getMonth() + 1 + '/' + created.getDate())
-          data.push(parseInt(el.teamPower))
-          data2.push(parseInt(el.activeUsers))
+      teamPromotions(){
+        if (!this.promotions) return null
+        var tempPromo = this.promotions
+        var promotions = {}
+        const now = Date.now()
+        tempPromo = tempPromo.map((el,i,arr)=>{
+          if (Date.parse(el.startDate) > now && Date.parse(el.endDate) > now ){
+            el.active = false
+          }else{
+            el.active = true
+          }
+          if (el.leaderboardType === 'AVERAGE'){
+            el.leaderboard.sort((a, b) => b.averagePower - a.averagePower)
+          }else{
+            el.leaderboard.sort((a, b) => b.cumulativeMined - a.cumulativeMined)
+          }
+          return el
         })
-        return {labels,datasets:[{data:data},{data:data2}]}
-      },
+        this.endedPromotions = tempPromo.filter(el=> now > Date.parse(el.endDate))
+
+        if (this.ended) tempPromo = this.endedPromotions
+        else tempPromo = tempPromo.filter(el=> now < Date.parse(el.endDate))
+        // if (this.active) tempPromo = tempPromo.filter(()=>false)
+        promotions.physical = tempPromo.filter(el => el.reward.type === 'PHYSICAL')
+          .sort((a,b) => new Date(a.startDate) - new Date(b.startDate))
+        promotions.coin = tempPromo.filter(el => el.reward.type === 'COIN')
+          .sort((a,b) => new Date(a.startDate) - new Date(b.startDate))
+        promotions.nft = tempPromo.filter(el => el.reward.type === 'NFT')
+          .sort((a,b) => new Date(a.startDate) - new Date(b.startDate))
+
+        return promotions
+      }
     },
     methods: {
       openURL,
       showPromoLeaderboard(promo){
-        this.$router.push({ query: Object.assign({}, this.$route.query, { promo: promo.id }) })
-        if (Date.parse(promo.endDate) < Date.now()) this.leaderboardTitle = "The selected promotion has ended."
-        else if (!promo.active) this.leaderboardTitle = "The selected promotion has not started yet."
-        else this.leaderboardTitle = "leaderboard for the selected team promotion"
-        this.selectedPromo = promo.id
-        this.leaderboardType = promo.leaderboardType
+        this.$router.push({ query: Object.assign({}, this.$route.query, { promo: promo.id }) });
+        if (Date.parse(promo.endDate) < Date.now()) this.leaderboardTitle = "The selected promotion has ended.";
+        else if (!promo.active) this.leaderboardTitle = "The selected promotion has not started yet.";
+        else this.leaderboardTitle = "leaderboard for the selected team promotion";
+        this.selectedPromo = promo.id;
+        this.leaderboardType = promo.leaderboardType;
         const promoLeaderboard = promo.leaderboard.map(el =>{
-          var result = Object.assign({},el.user)
-          if (promo.leaderboardType == "AVERAGE") result.tPower = el.averagePower
+          var result = Object.assign({},el.user);
+          if (promo.leaderboardType == "AVERAGE") result.tPower = el.averagePower;
           else result.tPower = el.cumulativeMined
           result.tokenTransaction = el.tokenTransaction
           return result
-        })
-        // console.log('hi',promo.leaderboard)
-        // console.log('PROMOLEADERBOARD',promoLeaderboard)
+        });
         this.leaderboard = promoLeaderboard
       },
+      //todo should be updated
       setupLeaderboard: async function() {
         let query = Object.assign({}, this.$route.query)
         delete query.promo
         this.$router.replace({ query })
         this.leaderboardType = 'LIVE'
         this.leaderboardTitle = "Top Users on " + this.team.name.replace(/-/g, ' ')
-        // if (this.leaderboard.length > 0) console.log('found leaderboard already')
         this.leaderboard = await this.$api.teamLeaderboard({id:this.team.id})
       },
+      //todo should be updated
       async populateTeamPromotions(){
         this.promotions = await this.$api.getTeamPromotions({teamId:this.team.id})
         const promoId = this.$route.query.promo
@@ -272,29 +362,49 @@
             this.setupLeaderboard()
           }
         }
+
       },
-      async getTeamChart(){
-        this.chartData = await this.$api.getTeamChart({teamId:this.team.id})
-      }
+      async getUserChart(){
+        // todo should be updated with correct Api fix_me
+        this.chartData = [];
+        for( let i =0; i < 14; i ++ ){
+          let power = Math.random()*1000;
+          this.chartData.push({
+            userPower:power,
+            createdAt:new Date(new Date().getTime() - (new Date(2012,0,2).getTime() - new Date(2012, 0, 1).getTime())*(14-i))
+          });
+        }
+      },
+      async populateTeamPromotions(){
+        if( this.thatUser.team.id ){
+          this.promotions = await this.$api.getTeamPromotions({teamId:this.thatUser.team.id});
+          const promoId = this.$route.query.promo
+          if (promoId){
+            const foundPromo = this.promotions.find(el=>el.id === promoId)
+            if (foundPromo){
+              if (Date.parse(foundPromo.endDate) < Date.now()) this.ended = true
+              this.showPromoLeaderboard(foundPromo)
+            }else {
+              this.setupLeaderboard()
+            }
+          }
+        }
+      },
     },
     watch:{
       async ended(val){
-        // console.log(val)
       },
-      async team(val) {
-        if (!val) return
-        if (!this.$route.query.promo) this.setupLeaderboard()
-        this.populateTeamPromotions()
-        this.getTeamChart()
-        window.localStorage.setItem('invitedById', this.team.owner.id)
+      async user(val) {
+        if (!val) return;
+        this.getUserChart();
       },
       'thatUser'(val){
         if (!val) return
-        window.localStorage.setItem('invitedById',val.id)
-        console.log('thatUser',this.thatUser)
+        window.localStorage.setItem('invitedById',val.id);
+        // todo should be updated
+        this.populateTeamPromotions();
       },
       "thisUser":function(val,oldVal){
-
         if ((val.username != oldVal.username) && this.myProfile && this.$route.params.username){
           setTimeout(()=>{
             this.$router.push({name:"User",params:{username:this.thisUser.username}})
@@ -304,6 +414,7 @@
 
     },
     async created(){
+      this.user = await this.$api.getUser({username:this.$route.params.username});
       this.$e.$once('userUpdated',()=>{
         console.log('userUpdated',this.myProfile,this.$route.params.username)
       })
@@ -333,8 +444,31 @@
   .tokenimg{
     width:50px;
   }
+  .teamRange{
+  width:100%
+  }
   .user:hover {
     background-color: $grey-2;
+  }
+  .infobtn {
+    right: 15px !important;
+    top: 15px !important;
+    color: $blue !important;
+  }
+
+  .infobtn:hover {
+    color: $green-8 !important;
+  }
+  .q-btn-round.q-btn-small {
+    width: 30px;
+    height: 30px;
+  }
+  .hovericon:hover {
+    color: $blue;
+  }
+
+  .hovericon {
+    color: $grey-5;
   }
   .socialbtn:hover
     filter: opacity(1.0)
