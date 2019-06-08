@@ -7,7 +7,7 @@
             q-btn.on-left(big style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join Us
             q-btn.on-left(big style="font-size:20px" color="blue" @click="openURL('https://www.boid.com')") Learn More
       .row.justify-center
-        .col-sm-12.col-lg-4.relative-position
+        .col-sm-12.col-lg-5.relative-position
           q-card.animate-scale.relative-position(style="min-width:300px")
             .layout-padding.full-width.relative-position(style="height:140px;")
               img.avatar.absolute-center.block( v-if="myProfile" style="width:120px; height:120px;" :src="thisUser.image")
@@ -55,7 +55,23 @@
                       img.tokenimg( :src="thatUser.team.image")
                     td {{thatUser.team.name}}
           .col-xs-12.col-sm-6.col-md-12
-            q-card.animate-scale.relative-position
+            q-card(@click="ended=false")
+              p.light-paragraph.text-center Team Prizes Won
+              div(v-if="teamPromotions")
+                h6.light-paragraph List of team Promotions
+                div(v-if="teamPromotions.coin.length > 0" style="max-height:600px; overflow:auto;")
+                  promoCard.cursor-pointer.clickable(
+                  v-for="promo of teamPromotions.coin"
+                  :key="promo.id" :promo="promo" :userid="thisUser.id"
+                  @selected="showPromoLeaderboard(promo)"
+                  @deselected="setupLeaderboard()"
+                  :deselect="selectedPromo")
+                div(v-else)
+                  q-card.relative-position(style="padding:20px;")
+                    div.light-paragraph.text-center No coin rewards available...
+                    q-tooltip You can ask the team leader to add some additional rewards.
+          .col-xs-12.col-sm-6.col-md-12
+            q-card.animate-scale.relative-position(v-if=("authenticated"))
               .absolute-top-right
                 q-btn.infobtn(round small flat)
                   q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.social)")
@@ -99,21 +115,7 @@
                   q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Link EOS Account
                   br
                   q-btn.full-width(color="blue" flat @click="$root.$emit('modal','exchangeModal')") Get BOID
-          .col-xs-12.col-sm-12.col-md-4.col-xl-4
-            .row.full-width(v-if="thatUser")
-              .col-12.relative-position
-                q-card.animate-scale.relative-position(v-if="thatUser.team")
-                  p.light-paragraph.text-center Leader
-                    q-item( style="padding-top:6px;"
-                    highlight :to="{name:'User',params:{username:thatUser.team.owner.username}}")
-                      q-item-side(:avatar="thatUser.team.owner.image")
-                      q-item-main
-                        q-item-tile(label) {{thatUser.team.owner.username}}
-                        q-item-tile.ellipsis(sublabel)
-                          small {{thatUser.team.owner.tagline}}
-                      q-item-side(right icon="flash_on" stamp="")
-                        small.text-center {{parseInt(thatUser.team.owner.tPower)}}
-        .col-sm-12.col-lg-8
+        .col-sm-12.col-lg-7
           div(v-if="myProfile")
             div( v-if="thisUser.username")
               q-card.relative-position(ref="chartDiv" style="height:375px; padding: 10px; padding-top: 15px;")
@@ -163,53 +165,15 @@
                         div.absolute-top-left(style="width:100px; height:30px;")
                         img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
           .row.full-width.justify-center
-            q-card.full-width
-              p.light-paragraph.text-center Recently Won Previous Team Promotions
-              div(v-if="teamPromotions")
-                .row.justify-center(style="padding-bottom:5px;")
-                  small filter
-                .row.justify-center
-                  q-btn(flat :class="{activeTab:ended === false}" @click="ended = false")
-                    | live & upcoming
-                  q-btn(flat :class="{activeTab:ended === true}" @click="ended = true") Ended
-                h6.light-paragraph Physical Rewards
-                div(v-if="teamPromotions.physical.length > 0" style="max-height:600px; overflow:auto;")
-                  promoCard.cursor-pointer.clickable(
-                  v-for="promo of teamPromotions.physical"
-                  :key="promo.id" :promo="promo" :userid="thisUser.id"
-                  @selected="showPromoLeaderboard(promo)"
-                  @deselected="setupLeaderboard()"
-                  :deselect="selectedPromo")
-                div(v-else)
-                  q-card.relative-position(style="padding:20px;")
-                    div.light-paragraph.text-center No physical rewards available...
-                    q-tooltip You can ask the team leader to add some additional rewards.
-                h6.light-paragraph Coin Rewards
-                div(v-if="teamPromotions.coin.length > 0" style="max-height:600px; overflow:auto;")
-                  promoCard.cursor-pointer.clickable(
-                  v-for="promo of teamPromotions.coin"
-                  :key="promo.id" :promo="promo" :userid="thisUser.id"
-                  @selected="showPromoLeaderboard(promo)"
-                  @deselected="setupLeaderboard()"
-                  :deselect="selectedPromo")
-                div(v-else)
-                  q-card.relative-position(style="padding:20px;")
-                    div.light-paragraph.text-center No coin rewards available...
-                    q-tooltip You can ask the team leader to add some additional rewards.
-                h6.light-paragraph Boid NFT Collectibles
-                div(v-if="teamPromotions.nft.length > 0" style="max-height:600px; overflow:auto;")
-                  .row
-                    .col
-                      promoCard.cursor-pointer.clickable(
-                      v-for="promo of teamPromotions.nft"
-                      :key="promo.id" :promo="promo" :userid="thisUser.id"
-                      @selected="showPromoLeaderboard(promo)"
-                      @deselected="setupLeaderboard()"
-                      :deselect="selectedPromo")
-                div(v-else)
-                  q-card.relative-position(style="padding:20px;")
-                    div.light-paragraph.text-center No collectible rewards available...
-                    q-tooltip You can ask the team leader to add some additional rewards.
+            .col-xs-12.col-sm-6.col-md-12
+              q-card
+                div
+                  .row.justify-center
+                    q-btn(flat :class="{activeTab:powDisplay === false}" @click="powDisplay = false")
+                      | Work Units
+                    q-btn(flat :class="{activeTab:powDisplay === true}" @click="powDisplay = true") POW Shores
+                  h6.light-paragraph(v-if="powDisplay===false") Work Units
+                  h6.light-paragraph(v-else) POW Shores
 </template>
 <script>
   import { openURL } from 'quasar'
@@ -235,6 +199,7 @@
         leaderboard: [],
         leaderboardType:'LIVE',
         ended:false,
+        powDisplay:false,
         endedPromotions:[],
         promotions:[],
         selectedPromo:"",
@@ -309,8 +274,8 @@
         })
         this.endedPromotions = tempPromo.filter(el=> now > Date.parse(el.endDate))
 
-        if (this.ended) tempPromo = this.endedPromotions
-        else tempPromo = tempPromo.filter(el=> now < Date.parse(el.endDate))
+        if (this.ended) tempPromo = this.endedPromotions;
+        else tempPromo = tempPromo.filter(el=> now < Date.parse(el.endDate));
         // if (this.active) tempPromo = tempPromo.filter(()=>false)
         promotions.physical = tempPromo.filter(el => el.reward.type === 'PHYSICAL')
           .sort((a,b) => new Date(a.startDate) - new Date(b.startDate))
@@ -401,6 +366,7 @@
       'thatUser'(val){
         if (!val) return
         window.localStorage.setItem('invitedById',val.id);
+        console.log('thatUser',this.thatUser)//fix_me
         // todo should be updated
         this.populateTeamPromotions();
       },
@@ -436,7 +402,8 @@
     props:['thisUser','thatUser','api','authenticated'],
   }
 </script>
-<style lang="stylus">
+<style lang="stylus" scoped>
+  @import '~variables'
   .q-card {
     padding: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
