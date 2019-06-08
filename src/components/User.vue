@@ -143,27 +143,23 @@
                             q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
                             q-icon.text-center.absolute-center(v-else color="green-2" :name='stat.icon' style="font-size:80px; z-index:-4;")
                             q-tooltip {{stat.label}}
-          .row.justify-center
-            .col-xs-12.col-sm-6.col-md-12
-              q-card.animate-scale.relative-position(v-if="authenticated")
-                p.light-paragraph.text-center User Devices
-                  .absolute-top-right
-                    q-btn.absolute.infobtn(round small flat)
-                      q-icon.infobtn(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.devices)")
-                q-list( v-for="(device,index) in thisUser.devices" :key="device.id")
-                  q-item.relative-position(v-if="!adBlock" style="padding-bottom:30px;")
-                    q-item-side()
-                      q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)")
-                    q-item-main
-                      q-item-tile(label style="user-select: none;") {{device.name}}
-                      q-item-tile.relative-position(style="padding-left:15px;" sublabel  v-if="device.boincPower") CPU: {{device.boincPower.toLocaleString()}}
-                        | {{displayPending(device)}}
-                        q-tooltip Device Power (Pending)
-                        img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
-
-                      q-item-tile.relative-position(style="padding-left:15px;" sublabel v-if="device.rvnPower && device.rvnPower > 0") GPU: {{device.rvnPower.toLocaleString()}}
-                        div.absolute-top-left(style="width:100px; height:30px;")
-                        img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+          .row.full-width.justify-center
+            .h6.light-paragraph User Devices
+          .row.justify-center(v-if="authenticated" @click="$e.$emit('showInfoModal',info.devices)")
+            .col( v-for="(device, index) in thatUser.devices" :key="device.id")
+              q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
+                q-item.relative-position(v-if="!adBlock" style="padding-bottom:30px;")
+                  q-item-main
+                    q-item-tile(label style="user-select: none;") {{thisUser.devices[0].name}}
+                    q-item-tile.relative-position(style="padding-left:15px;" sublabel  v-if="device.boincPower") CPU: {{thisUser.devices[0].boincPower.toLocaleString()}}
+                      | {{displayPending(thisUser.devices[0])}}
+                      q-tooltip Device Power (Pending)
+                      img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+                    q-item-tile.relative-position(style="padding-left:15px;" sublabel v-if="device.rvnPower && device.rvnPower > 0") GPU: {{thisUser.devices[0].rvnPower.toLocaleString()}}
+                      div.absolute-top-left(style="width:100px; height:30px;")
+                      img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+          .row.full-width.justify-center
+            .h6.light-paragraph Work Units and Pow Shores
           .row.full-width.justify-center
             .col-xs-12.col-sm-6.col-md-12
               q-card
@@ -229,8 +225,6 @@
       },
       userStats(){
         if (!this.thatUser) return null
-        // var ownerStake = this.thatUser.team.owner.stake.toFixed(0).toLocaleString()
-        // if (!ownerStake) return null
         return [
           {
             data:parseInt(this.thatUser.tPower).toLocaleString(),
