@@ -360,13 +360,13 @@
         let query = Object.assign({}, this.$route.query)
         delete query.promo
         this.$router.replace({ query })
-        this.leaderboardType = 'LIVE'
-        this.leaderboardTitle = "Top Users on " + this.team.name.replace(/-/g, ' ')
-        this.leaderboard = await this.$api.teamLeaderboard({id:this.team.id})
+        this.leaderboardType = 'LIVE';
+        this.leaderboardTitle = "Top Users on " + this.thatUser.team.name.replace(/-/g, ' ');
+        this.leaderboard = await this.$api.teamLeaderboard({id:this.thatUser.team.id})
       },
       //todo should be updated
       async populateTeamPromotions(){
-        this.promotions = await this.$api.getTeamPromotions({teamId:this.team.id})
+        this.promotions = await this.$api.getTeamPromotions({teamId:this.thatUser.team.id})
         const promoId = this.$route.query.promo
         if (promoId){
           const foundPromo = this.promotions.find(el=>el.id === promoId)
@@ -394,11 +394,6 @@
       async getTeamInfo(){
         this.team = await this.$api.getTeam({name:this.thatUser.team.name});
         this.parseSocial = parseSocials( this.team.social);
-      },
-      async getUserDevice(id){
-        const device =  await this.$api.getDevice({id:id});
-        console.log("DEVICE>>>>>>>>>>>>>>",device);
-        this.userDevice.push(device);
       },
       async populateTeamPromotions(){
         if( this.thatUser.team.id ){
