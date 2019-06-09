@@ -173,9 +173,9 @@
                 q-card.relative-position.ellipsis(v-else style="min-width:70px; padding:10px;")
                   p.light-paragraph.text-center {{stat.label}}
                   div.relative-position(style="margin:auto; margin-top:0px")
-                    h5.text-center.absolute-left(style="z-index:5; margin-left:10px;margin-top:2px; font-size:18px;") {{parseInt(stat.data1)}}
+                    h5.text-center.absolute-left(style="z-index:5; margin-left:20px;margin-top:2px; font-size:18px;") {{parseInt(stat.data1)}}
                     h5.text-center(style="z-index:5; margin-top:33px; margin-bottom:20px; font-size:18px;") {{stat.split}}
-                    h5.text-center.absolute-right(style="z-index:5; margin-right:10px; margin-top:2px; margin-bottom:20px; font-size:18px;") {{parseInt(stat.data2)}}
+                    h5.text-center.absolute-right(style="z-index:5; margin-right:20px; margin-top:2px; margin-bottom:20px; font-size:18px;") {{parseInt(stat.data2)}}
                     img.text-center.absolute-right(v-if="stat.image" :src="stat.image" style="height:50px; margin-top:-12px; margin-right:22px; filter: opacity(.6); z-index:-4")
                     q-icon.text-center.absolute-left(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
                     q-tooltip {{stat.label}}
