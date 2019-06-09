@@ -18,15 +18,17 @@
     <session id="928059169">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="25" />
+          <entry key="project.closed" value="29" />
           <entry key="project.open.time.0" value="4" />
           <entry key="project.open.time.1" value="2" />
+          <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="3" />
           <entry key="project.open.time.17" value="1" />
-          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.2" value="2" />
+          <entry key="project.open.time.22" value="1" />
           <entry key="project.open.time.27" value="1" />
           <entry key="project.open.time.28" value="1" />
-          <entry key="project.open.time.3" value="2" />
+          <entry key="project.open.time.3" value="3" />
           <entry key="project.open.time.38" value="1" />
           <entry key="project.open.time.4" value="2" />
           <entry key="project.open.time.43" value="1" />
@@ -34,7 +36,7 @@
           <entry key="project.open.time.65" value="1" />
           <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.9" value="2" />
-          <entry key="project.opened" value="26" />
+          <entry key="project.opened" value="30" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -62,25 +64,25 @@
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
         <counts>
-          <entry key="ESLintLanguageService" value="22" />
+          <entry key="ESLintLanguageService" value="26" />
           <entry key="TypeScriptServerServiceImpl" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="babelrc" value="166" />
-          <entry key="js" value="811" />
+          <entry key="js" value="814" />
           <entry key="json" value="43" />
-          <entry key="txt" value="82" />
-          <entry key="vue" value="4837" />
+          <entry key="txt" value="84" />
+          <entry key="vue" value="7248" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="209" />
-          <entry key="JavaScript" value="811" />
-          <entry key="PLAIN_TEXT" value="82" />
-          <entry key="Vue.js" value="4837" />
+          <entry key="JavaScript" value="814" />
+          <entry key="PLAIN_TEXT" value="84" />
+          <entry key="Vue.js" value="7248" />
         </counts>
       </usages-collector>
     </session>
@@ -99,7 +101,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7329">
+            <state relative-caret-position="7224">
               <caret line="349" column="103" selection-start-line="349" selection-start-column="92" selection-end-line="349" selection-end-column="103" />
               <folding>
                 <element signature="e#14608#14637#0" expanded="true" />
@@ -111,11 +113,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/User.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="161" column="57" selection-start-line="161" selection-start-column="57" selection-end-line="161" selection-end-column="57" />
-              <folding>
-                <element signature="e#11039#11071#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="315">
+              <caret line="168" column="143" selection-start-line="168" selection-start-column="143" selection-end-line="168" selection-end-column="143" />
             </state>
           </provider>
         </entry>
@@ -123,8 +122,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Team.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6741">
-              <caret line="321" column="1" selection-start-line="321" selection-start-column="1" selection-end-line="321" selection-end-column="1" />
+            <state relative-caret-position="210">
+              <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
               <folding>
                 <element signature="e#6456#6495#0" expanded="true" />
               </folding>
@@ -153,7 +152,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/router.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
+            <state relative-caret-position="336">
               <caret line="17" column="37" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
@@ -165,8 +164,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/api.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3045">
-              <caret line="145" column="35" selection-start-line="145" selection-start-column="35" selection-end-line="145" selection-end-column="35" />
+            <state relative-caret-position="63">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -187,28 +186,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>account</find>
-      <find>EOS</find>
-      <find>My devices</find>
-      <find>devices</find>
-      <find>info</find>
-      <find>parseDevice</find>
-      <find>boincPower</find>
-      <find>icon</find>
-      <find>infobtn</find>
-      <find>My</find>
-      <find>globalStats</find>
-      <find>leaderboard</find>
-      <find>tea</find>
-      <find>team promotions</find>
-      <find>team p</find>
-      <find>promotions</find>
-      <find>populateTeamPromotions</find>
-      <find>team</find>
-      <find>img</find>
-      <find>fix_me</find>
-      <find>boid</find>
-      <find>social</find>
       <find>socialbtn</find>
       <find>leader</find>
       <find>$green-7</find>
@@ -217,6 +194,28 @@
       <find>promoCard</find>
       <find>teamPromotions</find>
       <find>ended</find>
+      <find>parseDevice</find>
+      <find>getDevice</find>
+      <find>$api.g</find>
+      <find>$api.</find>
+      <find>user devices</find>
+      <find>for</find>
+      <find>getTeamChart</find>
+      <find>$api</find>
+      <find>asnyc</find>
+      <find>`</find>
+      <find>console.l</find>
+      <find>console.log</find>
+      <find>invited</find>
+      <find>image</find>
+      <find>social</find>
+      <find>getUserChart</find>
+      <find>getTeamInfo</find>
+      <find>user</find>
+      <find>getUserDevices</find>
+      <find>parseSocial</find>
+      <find>parseSocials</find>
+      <find>fix_me</find>
     </findStrings>
     <replaceStrings>
       <replace>User</replace>
@@ -263,8 +262,9 @@
         <option value="$PROJECT_DIR$/src/components/Leaderboards.vue" />
         <option value="$PROJECT_DIR$/../history/User.vue" />
         <option value="$PROJECT_DIR$/src/components/userChart.vue" />
-        <option value="$PROJECT_DIR$/src/components/Team.vue" />
         <option value="$PROJECT_DIR$/src/App.vue" />
+        <option value="$PROJECT_DIR$/src/api.js" />
+        <option value="$PROJECT_DIR$/src/components/Team.vue" />
         <option value="$PROJECT_DIR$/src/components/User.vue" />
       </list>
     </option>
@@ -299,6 +299,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -320,7 +321,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -423,7 +423,11 @@
       <workItem from="1559888854216" duration="24693000" />
       <workItem from="1559916426716" duration="19000" />
       <workItem from="1559981026799" duration="4696000" />
-      <workItem from="1559988715998" duration="3568000" />
+      <workItem from="1559988715998" duration="4821000" />
+      <workItem from="1560060591214" duration="3757000" />
+      <workItem from="1560071097659" duration="7963000" />
+      <workItem from="1560082026529" duration="26000" />
+      <workItem from="1560087833583" duration="1994000" />
     </task>
     <task id="LOCAL-00001" summary="test components.">
       <created>1559258436872</created>
@@ -453,11 +457,25 @@
       <option name="project" value="LOCAL" />
       <updated>1559985570993</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="fix feedback -step2">
+      <created>1559994847260</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1559994847260</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fix feedback -step3">
+      <created>1560080337394</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1560080337394</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="101162000" />
+    <option name="totallyTimeSpent" value="116155000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -477,8 +495,8 @@
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3441704" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3295964" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.1984305" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -504,7 +522,9 @@
     <MESSAGE value="to make the basic architecture." />
     <MESSAGE value="test components." />
     <MESSAGE value="fix feedback -step1" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix feedback -step1" />
+    <MESSAGE value="fix feedback -step2" />
+    <MESSAGE value="fix feedback -step3" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix feedback -step3" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/node_modules/quasar-framework/umd/quasar.mat.umd.js" />
@@ -760,7 +780,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7329">
+        <state relative-caret-position="7224">
           <caret line="349" column="103" selection-start-line="349" selection-start-column="92" selection-end-line="349" selection-end-column="103" />
           <folding>
             <element signature="e#14608#14637#0" expanded="true" />
@@ -770,8 +790,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/Team.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6741">
-          <caret line="321" column="1" selection-start-line="321" selection-start-column="1" selection-end-line="321" selection-end-column="1" />
+        <state relative-caret-position="210">
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
           <folding>
             <element signature="e#6456#6495#0" expanded="true" />
           </folding>
@@ -794,7 +814,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/router.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
+        <state relative-caret-position="336">
           <caret line="17" column="37" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
@@ -804,8 +824,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/api.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3045">
-          <caret line="145" column="35" selection-start-line="145" selection-start-column="35" selection-end-line="145" selection-end-column="35" />
+        <state relative-caret-position="63">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
@@ -821,11 +841,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/User.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="161" column="57" selection-start-line="161" selection-start-column="57" selection-end-line="161" selection-end-column="57" />
-          <folding>
-            <element signature="e#11039#11071#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="315">
+          <caret line="168" column="143" selection-start-line="168" selection-start-column="143" selection-end-line="168" selection-end-column="143" />
         </state>
       </provider>
     </entry>

@@ -76,9 +76,8 @@
                   @deselected="setupLeaderboard()"
                   :deselect="selectedPromo")
                 div(v-else)
-                  q-card.relative-position(style="padding:20px;")
-                    div.light-paragraph.text-center No coin rewards available...
-                    q-tooltip You can ask the team leader to add some additional rewards.
+                  div.light-paragraph.text-center No coin rewards available...
+                  q-tooltip You can ask the team leader to add some additional rewards.
           .col-xs-12.col-sm-6.col-md-12
             q-card.animate-scale.relative-position(v-if=("authenticated"))
               .absolute-top-right
@@ -161,30 +160,30 @@
                     img.text-center.absolute-right(v-if="stat.image" :src="stat.image" style="height:50px; margin-top:-12px; margin-right:22px; filter: opacity(.6); z-index:-4")
                     q-icon.text-center.absolute-left(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
                     q-tooltip {{stat.label}}
-          .row.full-width.justify-center
-            q-card.full-width.animate-scale.relative-position(v-if="thisUser.tokens")
+          .row(style="width:100%; margin:0 !important;")
+            q-card.animate-scale.relative-position(v-if="thisUser.tokens" style="width:100%;")
               .h6.light-paragraph.text-center User Devices
-              .row.full-width(v-if="authenticated" @click="$e.$emit('showInfoModal',info.devices)")
-                .row.full-width.animate-scale.relative-position( v-for="(device, index) in userDevice" :key="device.id")
-                  q-card.relative-position.ellipsis(style="width:100%; padding:10px; box-shadow: 5px 10px 8px #888888 !important;")
-                    q-item-tile(label style="user-select: none;") {{index+1}}. {{device.name}}({{device.type}})
-                    q-item-tile.relative-position(style="padding-left:15px;" sublabel  v-if="device.boincPower") CPU: {{device.boincPower.toLocaleString()}}
-                        |{{displayPending(devices)}}
-                        q-tooltip Device Power (Pending)
-                          img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
-                        q-item-tile.relative-position(style="padding-left:15px;" sublabel v-if="device.rvnPower && device.rvnPower > 0") GPU: {{device.rvnPower.toLocaleString()}}
-                          div.absolute-top-left(style="width:100px; height:30px;")
-                          img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
-          .row.full-width.justify-center
-            q-card.full-width.animate-scale.relative-position
+              .row(v-if="authenticated" @click="$e.$emit('showInfoModal',info.devices)")
+                .col( v-for="(device, index) in userDevice" :key="device.id")
+                  .col-xs-6.col-sm-3.col-md-2.col-lg-2
+                    q-card.relative-position.ellipsis(style="min-width:70px; padding:10px; box-shadow:none !important; border:solid 1px #888888;")
+                      q-item-tile(label style="user-select: none;") {{index+1}}. {{device.name}}({{device.type}})
+                      q-item-tile.relative-position(style="padding-left:15px;" sublabel  v-if="device.boincPower") CPU: {{device.boincPower.toLocaleString()}}
+                          |{{displayPending(devices)}}
+                          q-tooltip Device Power (Pending)
+                            img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+                          q-item-tile.relative-position(style="padding-left:15px;" sublabel v-if="device.rvnPower && device.rvnPower > 0") GPU: {{device.rvnPower.toLocaleString()}}
+                            div.absolute-top-left(style="width:100px; height:30px;")
+                            img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+          .row(style="width:100%; margin:0 !important;")
+            q-card.animate-scale.relative-position(style="width:100%; padding:10px;")
               .h6.light-paragraph.text-center Work Units and Pow Shores
-              q-card.relative-position.ellipsis(style="width:100%; padding:10px;")
-                  .row.justify-center
-                    q-btn(flat :class="{activeTab:powDisplay === false}" @click="powDisplay = false")
-                      | Work Units
-                    q-btn(flat :class="{activeTab:powDisplay === true}" @click="powDisplay = true") POW Shores
-                  h6.light-paragraph.text-center(v-if="powDisplay===false") Work Units
-                  h6.light-paragraph.text-center(v-else) POW Shores
+                .row.justify-center(style="width:100%; padding:10px;")
+                  q-btn(flat :class="{activeTab:powDisplay === false}" @click="powDisplay = false")
+                    | Work Units
+                  q-btn(flat :class="{activeTab:powDisplay === true}" @click="powDisplay = true") POW Shores
+                h6.light-paragraph.text-center(v-if="powDisplay===false") Work Units
+                h6.light-paragraph.text-center(v-else) POW Shores
 </template>
 <script>
   import { openURL } from 'quasar'
