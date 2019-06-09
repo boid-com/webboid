@@ -73,8 +73,10 @@
     props: ['chartData'],
     mounted () {
       var data = this.chartData.datasets[0].data;
+      var userName = this.chartData.datasets[0].userName;
+      var userPower = this.chartData.datasets[0].userPower;
       this.chartData.datasets[0] = {
-        label:"User Boid Power",
+        label:"User Name:   " + userName +"   /  Current Total Power:  " + userPower,
         pointRadius:3,
         pointBackgroundColor:"rgb(244, 178, 56)",
         pointHoverRadius:5,
@@ -91,24 +93,7 @@
       height(){
         this.renderChart(this.chartData, this.options)
       },
-      chartData(data){
-        // // console.log(data)
-        // if (!data) return
-        // var data = data.datasets[0].data
-        // // console.log(data)
-        // return
-        // this.chartData.datasets[0] = {
-        //   label:"Boid Power",
-        //   pointRadius:5,
-        //   pointBackgroundColor:"#ffcc00",
-        //   pointHoverRadius:5,
-        //   pointColor:"#089cfc",
-        //   borderColor:"#ffcc00",
-        //   borderWidth:8,
-        //   data
-        // }
-        // this.renderChart(this.chartData, this.options)
-      }
+      chartData(data){ }
     }
   }
 </script>

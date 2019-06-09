@@ -7,41 +7,76 @@
             q-btn.on-left(big style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join Us
             q-btn.on-left(big style="font-size:20px" color="blue" @click="openURL('https://www.boid.com')") Learn More
       .row.justify-center
+        .layout-padding.full-width.relative-position(style="height:140px;")
+          img.avatar.absolute-center.block( v-if="myProfile" style="width:120px; height:120px;" :src="thisUser.image")
+          img.avatar.absolute-center.block( v-else style="width:120px; height:120px;" :src="thatUser.image")
+      .row.full-width.justify-center
+        div.full-width(v-if="myProfile")
+          div.full-width( v-if="thisUser.username")
+            q-card.relative-position(ref="chartDiv" style="height:375px; padding: 10px; padding-top: 15px;")
+              .light-paragraph.text-center(style="margin-bottom:30px;") My Graphs (14d)
+              userChart( style="margin-top:20"
+              v-if="powerChart" :chartData="powerChart" :height="295")
+              q-inner-loading(:visible="!powerChart")
+                q-spinner-ball(size="60px" color="blue")
+        div.full-width(v-else)
+          div.full-width(v-if="thatUser.username")
+            q-card.relative-position(ref="chartDiv" style="height:375px; padding: 10px; padding-top: 15px;")
+              .light-paragraph.text-center(style="margin-bottom:30px;") {{thatUser.username}}`s Graphs (14d)
+              userChart( style="margin-top:20"
+              v-if="powerChart" :chartData="powerChart" :height="295")
+              q-inner-loading(:visible="!powerChart")
+                q-spinner-ball(size="60px" color="blue")
+
+      .row.justify-center
         .col-sm-12.col-lg-5.relative-position
-          q-card.animate-scale.relative-position(style="min-width:300px")
-            .layout-padding.full-width.relative-position(style="height:140px;")
-              img.avatar.absolute-center.block( v-if="myProfile" style="width:120px; height:120px;" :src="thisUser.image")
-              img.avatar.absolute-center.block(v-else style="width:120px; height:120px;" :src="thatUser.image")
-            h5.text-center(v-if="myProfile") {{thisUser.username}}
-            h5.text-center(v-else) {{thatUser.username}}
-            div(v-if="!myProfile")
-              .tagline(v-if="thatUser.tagline")
-                h6.light-paragraph.text-center {{thatUser.tagline}}
-              .tagline(v-else-if="myProfile")
-                h6.light-paragraph.text-center add a cool tagline here
-            div(v-else)
-              .tagline(v-if="thisUser.tagline")
-                h6.light-paragraph.text-center {{thisUser.tagline}}
-          div(v-if="myProfile" style="margin:8px; margin-bottom:0px;")
-            q-btn.full-width(color='blue' @click="$e.$emit('openProfileEditModal')") Update Profile
-          div(style="bottom:15px;")
-            div(v-if="parseSocial" style="margin-top:16px;")
-              p.light-paragraph.text-center
-              .row.justify-center(style="padding-top:0px")
-                .col(v-for="(social,index) in parseSocial" :key="index")
-                  .row.justify-center
-                    q-btn.socialbtn(flat round @click="openURL(social.url)")
-                      img.socialbtn(:src="social.img" style="max-width:35px; filter:opacity(.8)")
-                      q-tooltip {{social.url}}
           .row
             q-card.animate-scale.relative-position(v-if="thatUser.team" class="teamRange")
-              div.light-paragraph.text-center NFT/Medals earned
+              div.light-paragraph.text-center Personal details
               table.q-table(style="width:100%")
                 tbody()
                   tr
                     td
                       img.tokenimg( :src="thatUser.image")
-                    td 0/0
+                    td
+                      tr(v-if="thatUser.username")
+                        td
+                          p.text-center User Name:
+                        td
+                          p.text-center {{thatUser.username}}
+                      tr(v-if="thatUser.tagline")
+                        td
+                          p.text-center Greeting:
+                        td
+                          div(v-if="!myProfile")
+                            .tagline(v-if="thatUser.tagline")
+                              h6.light-paragraph.text-center {{thatUser.tagline}}
+                            .tagline(v-else-if="myProfile")
+                              h6.light-paragraph.text-center add a cool tagline here
+                          div(v-else)
+                            .tagline(v-if="thisUser.tagline")
+                              h6.light-paragraph.text-center {{thisUser.tagline}}
+                      tr
+                        td
+                          p.text-center NFT/Medals
+                        td
+                          p.text-center 0 / 0
+                      tr(v-if="myProfile")
+                        td
+                        td.full-width
+                          div(v-if="myProfile" style="margin:8px; margin-bottom:0px;")
+                          q-btn(color='blue' @click="$e.$emit('openProfileEditModal')") Update Profile
+              div(style="bottom:15px;")
+                div(v-if="parseSocial" style="margin-top:16px;")
+                  p.light-paragraph.text-center
+                  .row.justify-center(style="padding-top:0px")
+                    .col(v-for="(social,index) in parseSocial" :key="index")
+                      .row.justify-center
+                        q-btn.socialbtn(flat round @click="openURL(social.url)")
+                          img.socialbtn(:src="social.img" style="max-width:35px; filter:opacity(.8)")
+                          q-tooltip {{social.url}}
+
+
           .row
             q-card.animate-scale.relative-position(v-if="thatUser.powerRatings")
               p.light-paragraph.text-center Power Rating
@@ -124,22 +159,6 @@
                   br
                   q-btn.full-width(color="blue" flat @click="$root.$emit('modal','exchangeModal')") Get BOID
         .col-sm-12.col-lg-7
-          div(v-if="myProfile")
-            div( v-if="thisUser.username")
-              q-card.relative-position(ref="chartDiv" style="height:375px; padding: 10px; padding-top: 15px;")
-                .light-paragraph.text-center(style="margin-bottom:30px;") My Graphs (14d)
-                userChart( style="margin-top:20"
-                v-if="powerChart" :chartData="powerChart" :height="295")
-                q-inner-loading(:visible="!powerChart")
-                  q-spinner-ball(size="60px" color="blue")
-          div(v-else)
-            div(v-if="thatUser.username")
-              q-card.relative-position(ref="chartDiv" style="height:375px; padding: 10px; padding-top: 15px;")
-                .light-paragraph.text-center(style="margin-bottom:30px;") {{thatUser.username}}`s Graphs (14d)
-                userChart( style="margin-top:20"
-                v-if="powerChart" :chartData="powerChart" :height="295")
-                q-inner-loading(:visible="!powerChart")
-                  q-spinner-ball(size="60px" color="blue")
           .row.full-width(v-if="thatUser")
             .col(v-if="thatUser" v-for="stat of userStats" :key="stat.label")
               .col-xs-6.col-sm-3.col-md-2.col-lg-2
@@ -154,9 +173,9 @@
                 q-card.relative-position.ellipsis(v-else style="min-width:70px; padding:10px;")
                   p.light-paragraph.text-center {{stat.label}}
                   div.relative-position(style="margin:auto; margin-top:0px")
-                    h5.text-center.absolute-left(style="z-index:5; margin-left:22px;margin-top:2px; font-size:18px;") {{parseInt(stat.data1)}}
+                    h5.text-center.absolute-left(style="z-index:5; margin-left:10px;margin-top:2px; font-size:18px;") {{parseInt(stat.data1)}}
                     h5.text-center(style="z-index:5; margin-top:33px; margin-bottom:20px; font-size:18px;") {{stat.split}}
-                    h5.text-center.absolute-right(style="z-index:5; margin-right:25px; margin-top:2px; margin-bottom:20px; font-size:18px;") {{parseInt(stat.data2)}}
+                    h5.text-center.absolute-right(style="z-index:5; margin-right:10px; margin-top:2px; margin-bottom:20px; font-size:18px;") {{parseInt(stat.data2)}}
                     img.text-center.absolute-right(v-if="stat.image" :src="stat.image" style="height:50px; margin-top:-12px; margin-right:22px; filter: opacity(.6); z-index:-4")
                     q-icon.text-center.absolute-left(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
                     q-tooltip {{stat.label}}
@@ -166,15 +185,18 @@
               .row(v-if="authenticated" @click="$e.$emit('showInfoModal',info.devices)")
                 .col( v-for="(device, index) in userDevice" :key="device.id")
                   .col-xs-6.col-sm-3.col-md-2.col-lg-2
-                    q-card.relative-position.ellipsis(style="min-width:70px; padding:10px; box-shadow:none !important; border:solid 1px #c8c8c8;")
-                      q-item-tile(label style="user-select: none;") {{index+1}}. {{device.name}}({{device.type}})
+                    q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
+                      q-item-tile(label style="user-select: none;") {{index+1}}. {{device.name}} {{device.type}}
                       q-item-tile.relative-position(style="padding-left:15px;" sublabel  v-if="device.boincPower") CPU: {{device.boincPower.toLocaleString()}}
-                          |{{displayPending(devices)}}
+                          |{{displayPending(device)}}
                           q-tooltip Device Power (Pending)
                             img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
-                          q-item-tile.relative-position(style="padding-left:15px;" sublabel v-if="device.rvnPower && device.rvnPower > 0") GPU: {{device.rvnPower.toLocaleString()}}
+                          q-item-tile.relative-position(style="padding-left:15px;" sublabel) GPU: {{device.rvnPower.toLocaleString()}}
                             div.absolute-top-left(style="width:100px; height:30px;")
                             img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+              .row.justify-center(style="width:100%; margin:0 !important;" v-if="thatUser.devices.length > 3 " )
+                q-btn(flat :class="{activeTab:true}" style = "background-color:#ddca43;" @click="deviceDisplay(false)" v-if="!devShowFlag") Show more
+                q-btn(flat :class="{activeTab:true}" style = "background-color:#ddca43;" @click="deviceDisplay(true)" v-else) Hide
           .row(style="width:100%; margin:0 !important;")
             q-card.animate-scale.relative-position(style="width:100%; padding:10px;")
               .h6.light-paragraph.text-center Work Units and Pow Shores
@@ -191,7 +213,6 @@
   import userChart from '@/userChart.vue'
   import parseSocials from 'lib/parseSocial.js'
   import promoCard from '@/promoCard.vue'
-  import parseDevice from 'src/lib/parseDevice'
 
   var info = require('src/lib/infoText.json')
 
@@ -204,7 +225,6 @@
         userTeam:[],
         openURL,
         info,
-        parseDevice,
         parseSocial:[],
         chartData:null,
         leaderboardTitle:"",
@@ -215,7 +235,8 @@
         endedPromotions:[],
         promotions:[],
         selectedPromo:"",
-        userDevice:[]
+        userDevice:[],
+        devShowFlag:false
       }
     },
     computed: {
@@ -234,10 +255,10 @@
           labels.push(created.getMonth() + 1 + '/' + created.getDate());
           data.push(parseInt(el.userPower));
         });
-        return {labels,datasets:[{data:data}]}
+        return {labels,datasets:[{data:data, userName: this.thatUser.username, userPower: this.thatUser.tPower}]}
       },
       userStats(){
-        if (!this.thatUser) return null
+        if (!this.thatUser) return null;
         return [
           {
             data:parseInt(this.thatUser.tPower).toLocaleString(),
@@ -286,7 +307,6 @@
 
         if (this.ended) tempPromo = this.endedPromotions;
         else tempPromo = tempPromo.filter(el=> now < Date.parse(el.endDate));
-        // if (this.active) tempPromo = tempPromo.filter(()=>false)
         promotions.physical = tempPromo.filter(el => el.reward.type === 'PHYSICAL')
           .sort((a,b) => new Date(a.startDate) - new Date(b.startDate))
         promotions.coin = tempPromo.filter(el => el.reward.type === 'COIN')
@@ -299,6 +319,31 @@
     },
     methods: {
       openURL,
+      deviceDisplay( displayFlag ){
+        if( !displayFlag ){
+          this.devShowFlag = true;
+          console.log('DEVICES>>>>>>>>>>>>>>>>>>>>>>');
+          this.userDevice = this.thatUser.devices;
+        }
+        else{
+          this.devShowFlag = false;
+          this.userDevice = [];
+          console.log( "USERDEVICE>>>>>>>>>>",this.thatUser );//fix_me
+          this.userDevice = this.thatUser.devices.filter((Item,key)=>(key<=2));
+          console.log( "DEVICE>>>>>>>>>>",this.userDevice );//fix_me
+        }
+      },
+      displayPending(device){
+        if (device.pending) return `(${device.pending})`
+        else return ""
+      },
+      getUserDevices(){
+        this.devShowFlag = false;
+        this.userDevice = [];
+        console.log( "USERDEVICE>>>>>>>>>>",this.thatUser );//fix_me
+        this.userDevice = this.thatUser.devices.filter((Item,key)=>(key<=2));
+        console.log( "DEVICE>>>>>>>>>>",this.userDevice );//fix_me
+      },
       showPromoLeaderboard(promo){
         this.$router.push({ query: Object.assign({}, this.$route.query, { promo: promo.id }) });
         if (Date.parse(promo.endDate) < Date.now()) this.leaderboardTitle = "The selected promotion has ended.";
@@ -350,12 +395,6 @@
           });
         }
       },
-      async getUserDevices(){
-        this.userDevice = [];
-        this.thatUser.devices.map((devItem)=>{
-          this.getUserDevice(devItem.id);
-        });
-      },
       //todo should be updated with user social function
       async getTeamInfo(){
         this.team = await this.$api.getTeam({name:this.thatUser.team.name});
@@ -390,7 +429,7 @@
         this.getUserChart();
       },
       'thatUser'(val){
-        if (!val) return
+        if (!val) return;
         window.localStorage.setItem('invitedById',val.id);
         // todo should be updated
         this.getUserDevices();

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="887114af-d4b6-417f-beb7-084bac29d3a3" name="Default Changelist" comment="">
+    <list default="true" id="887114af-d4b6-417f-beb7-084bac29d3a3" name="Default Changelist" comment="fix feedback -step3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/User.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/User.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/userChart.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/userChart.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -46,7 +47,7 @@
           <entry key="eslintignore" value="1" />
           <entry key="gitignore" value="1" />
           <entry key="html" value="4" />
-          <entry key="js" value="61" />
+          <entry key="js" value="62" />
           <entry key="json" value="6" />
           <entry key="vue" value="36" />
           <entry key="xml" value="1" />
@@ -56,7 +57,7 @@
         <counts>
           <entry key="HTML" value="4" />
           <entry key="JSON" value="9" />
-          <entry key="JavaScript" value="61" />
+          <entry key="JavaScript" value="62" />
           <entry key="PLAIN_TEXT" value="3" />
           <entry key="Vue.js" value="36" />
           <entry key="XML" value="1" />
@@ -74,7 +75,7 @@
           <entry key="js" value="814" />
           <entry key="json" value="43" />
           <entry key="txt" value="84" />
-          <entry key="vue" value="7248" />
+          <entry key="vue" value="8601" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -82,7 +83,7 @@
           <entry key="JSON" value="209" />
           <entry key="JavaScript" value="814" />
           <entry key="PLAIN_TEXT" value="84" />
-          <entry key="Vue.js" value="7248" />
+          <entry key="Vue.js" value="8601" />
         </counts>
       </usages-collector>
     </session>
@@ -92,7 +93,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
+            <state relative-caret-position="535">
               <caret line="40" column="36" selection-start-line="40" selection-start-column="36" selection-end-line="40" selection-end-column="36" />
             </state>
           </provider>
@@ -101,8 +102,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7224">
-              <caret line="349" column="103" selection-start-line="349" selection-start-column="92" selection-end-line="349" selection-end-column="103" />
+            <state relative-caret-position="255">
+              <caret line="292" column="6" lean-forward="true" selection-start-line="289" selection-start-column="4" selection-end-line="292" selection-end-column="6" />
               <folding>
                 <element signature="e#14608#14637#0" expanded="true" />
               </folding>
@@ -110,11 +111,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/User.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="168" column="143" selection-start-line="168" selection-start-column="143" selection-end-line="168" selection-end-column="143" />
+            <state relative-caret-position="504">
+              <caret line="177" column="83" selection-start-line="177" selection-start-column="83" selection-end-line="177" selection-end-column="83" />
+              <folding>
+                <element signature="e#12432#12464#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/userChart.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="78" column="64" selection-start-line="78" selection-start-column="64" selection-end-line="78" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -122,20 +135,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Team.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
+            <state relative-caret-position="171">
               <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
               <folding>
                 <element signature="e#6456#6495#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/userChart.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1575">
-              <caret line="75" selection-start-line="75" selection-end-line="75" />
             </state>
           </provider>
         </entry>
@@ -186,15 +190,11 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>socialbtn</find>
-      <find>leader</find>
-      <find>$green-7</find>
       <find>activeTab</find>
       <find>filter</find>
       <find>promoCard</find>
       <find>teamPromotions</find>
       <find>ended</find>
-      <find>parseDevice</find>
       <find>getDevice</find>
       <find>$api.g</find>
       <find>$api.</find>
@@ -205,17 +205,21 @@
       <find>asnyc</find>
       <find>`</find>
       <find>console.l</find>
-      <find>console.log</find>
       <find>invited</find>
       <find>image</find>
       <find>social</find>
       <find>getUserChart</find>
       <find>getTeamInfo</find>
       <find>user</find>
-      <find>getUserDevices</find>
       <find>parseSocial</find>
       <find>parseSocials</find>
       <find>fix_me</find>
+      <find>displayPending</find>
+      <find>parseDevice</find>
+      <find>console.log</find>
+      <find>userDevice</find>
+      <find>getUserDevices</find>
+      <find>powerChart</find>
     </findStrings>
     <replaceStrings>
       <replace>User</replace>
@@ -261,11 +265,11 @@
         <option value="$PROJECT_DIR$/src/router.js" />
         <option value="$PROJECT_DIR$/src/components/Leaderboards.vue" />
         <option value="$PROJECT_DIR$/../history/User.vue" />
-        <option value="$PROJECT_DIR$/src/components/userChart.vue" />
         <option value="$PROJECT_DIR$/src/App.vue" />
         <option value="$PROJECT_DIR$/src/api.js" />
         <option value="$PROJECT_DIR$/src/components/Team.vue" />
         <option value="$PROJECT_DIR$/src/components/User.vue" />
+        <option value="$PROJECT_DIR$/src/components/userChart.vue" />
       </list>
     </option>
   </component>
@@ -290,7 +294,7 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="953" />
+    <option name="x" value="-7" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -316,6 +320,12 @@
               <item name="webboid" type="b2602c69:ProjectViewProjectNode" />
               <item name="webboid" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="webboid" type="b2602c69:ProjectViewProjectNode" />
+              <item name="webboid" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -427,7 +437,7 @@
       <workItem from="1560060591214" duration="3757000" />
       <workItem from="1560071097659" duration="7963000" />
       <workItem from="1560082026529" duration="26000" />
-      <workItem from="1560087833583" duration="1994000" />
+      <workItem from="1560087833583" duration="10205000" />
     </task>
     <task id="LOCAL-00001" summary="test components.">
       <created>1559258436872</created>
@@ -471,11 +481,25 @@
       <option name="project" value="LOCAL" />
       <updated>1560080337394</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="fix feedback -step3">
+      <created>1560089929514</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1560089929514</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fix feedback -step3">
+      <created>1560090004659</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1560090004659</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116155000" />
+    <option name="totallyTimeSpent" value="124366000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -490,13 +514,13 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16763617" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14912744" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295964" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.1984305" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.1984305" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -527,7 +551,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="fix feedback -step3" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/quasar-framework/umd/quasar.mat.umd.js" />
     <entry file="file://$PROJECT_DIR$/test/components/header.test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -771,40 +794,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="40" column="36" selection-start-line="40" selection-start-column="36" selection-end-line="40" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7224">
-          <caret line="349" column="103" selection-start-line="349" selection-start-column="92" selection-end-line="349" selection-end-column="103" />
-          <folding>
-            <element signature="e#14608#14637#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Team.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-          <folding>
-            <element signature="e#6456#6495#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/userChart.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1575">
-          <caret line="75" selection-start-line="75" selection-end-line="75" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/teamLeaderboard.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="441">
@@ -839,10 +828,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="40" column="36" selection-start-line="40" selection-start-column="36" selection-end-line="40" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="292" column="6" lean-forward="true" selection-start-line="289" selection-start-column="4" selection-end-line="292" selection-end-column="6" />
+          <folding>
+            <element signature="e#14608#14637#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Team.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+          <folding>
+            <element signature="e#6456#6495#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/vue-chartjs/es/BaseCharts.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="60" column="43" lean-forward="true" selection-start-line="60" selection-start-column="43" selection-end-line="60" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/User.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="168" column="143" selection-start-line="168" selection-start-column="143" selection-end-line="168" selection-end-column="143" />
+        <state relative-caret-position="504">
+          <caret line="177" column="83" selection-start-line="177" selection-start-column="83" selection-end-line="177" selection-end-column="83" />
+          <folding>
+            <element signature="e#12432#12464#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/userChart.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="78" column="64" selection-start-line="78" selection-start-column="64" selection-end-line="78" selection-end-column="64" />
         </state>
       </provider>
     </entry>
