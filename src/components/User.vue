@@ -24,6 +24,15 @@
                 h6.light-paragraph.text-center {{thisUser.tagline}}
           div(v-if="myProfile" style="margin:8px; margin-bottom:0px;")
             q-btn.full-width(color='blue' @click="$e.$emit('openProfileEditModal')") Update Profile
+          div(style="bottom:15px;")
+            div(v-if="parseSocial" style="margin-top:16px;")
+              p.light-paragraph.text-center
+              .row.justify-center(style="padding-top:0px")
+                .col(v-for="(social,index) in parseSocial" :key="index")
+                  .row.justify-center
+                    q-btn.socialbtn(flat round @click="openURL(social.url)")
+                      img.socialbtn(:src="social.img" style="max-width:35px; filter:opacity(.8)")
+                      q-tooltip {{social.url}}
           .row
             q-card.animate-scale.relative-position(v-if="thatUser.team" class="teamRange")
               div.light-paragraph.text-center NFT/Medals earned
@@ -134,42 +143,48 @@
                   q-spinner-ball(size="60px" color="blue")
           .row.full-width(v-if="thatUser")
             .col(v-if="thatUser" v-for="stat of userStats" :key="stat.label")
-                      .col-xs-6.col-sm-3.col-md-2.col-lg-2
-                        q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
-                          p.light-paragraph.text-center {{stat.label}}
-                          div.relative-position(style="margin:auto; margin-top:0px")
-                            h5.text-center(style="z-index:5; margin-top:33px; margin-bottom:20px; font-size:18px;") {{stat.data}}
-                            img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.6); z-index:-4")
-                            q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
-                            q-icon.text-center.absolute-center(v-else color="green-2" :name='stat.icon' style="font-size:80px; z-index:-4;")
-                            q-tooltip {{stat.label}}
+              .col-xs-6.col-sm-3.col-md-2.col-lg-2
+                q-card.relative-position.ellipsis(v-if="stat.label!=='Invited Users / Social Power'" style="min-width:70px; padding:10px;")
+                  p.light-paragraph.text-center {{stat.label}}
+                  div.relative-position(style="margin:auto; margin-top:0px")
+                    h5.text-center(style="z-index:5; margin-top:33px; margin-bottom:20px; font-size:18px;") {{stat.data}}
+                    img.text-center.absolute-center(v-if="stat.image" :src="stat.image" style="height:50px; filter: opacity(.6); z-index:-4")
+                    q-icon.text-center.absolute-center(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
+                    q-icon.text-center.absolute-center(v-else color="green-2" :name='stat.icon' style="font-size:80px; z-index:-4;")
+                    q-tooltip {{stat.label}}
+                q-card.relative-position.ellipsis(v-else style="min-width:70px; padding:10px;")
+                  p.light-paragraph.text-center {{stat.label}}
+                  div.relative-position(style="margin:auto; margin-top:0px")
+                    h5.text-center.absolute-left(style="z-index:5; margin-left:22px;margin-top:2px; font-size:18px;") {{parseInt(stat.data1)}}
+                    h5.text-center(style="z-index:5; margin-top:33px; margin-bottom:20px; font-size:18px;") {{stat.split}}
+                    h5.text-center.absolute-right(style="z-index:5; margin-right:25px; margin-top:2px; margin-bottom:20px; font-size:18px;") {{parseInt(stat.data2)}}
+                    img.text-center.absolute-right(v-if="stat.image" :src="stat.image" style="height:50px; margin-top:-12px; margin-right:22px; filter: opacity(.6); z-index:-4")
+                    q-icon.text-center.absolute-left(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
+                    q-tooltip {{stat.label}}
           .row.full-width.justify-center
-            .h6.light-paragraph User Devices
-          .row.justify-center(v-if="authenticated" @click="$e.$emit('showInfoModal',info.devices)")
-            .col( v-for="(device, index) in thatUser.devices" :key="device.id")
-              q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
-                q-item.relative-position(v-if="!adBlock" style="padding-bottom:30px;")
-                  q-item-main
-                    q-item-tile(label style="user-select: none;") {{thisUser.devices[0].name}}
-                    q-item-tile.relative-position(style="padding-left:15px;" sublabel  v-if="device.boincPower") CPU: {{thisUser.devices[0].boincPower.toLocaleString()}}
-                      | {{displayPending(thisUser.devices[0])}}
-                      q-tooltip Device Power (Pending)
-                      img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
-                    q-item-tile.relative-position(style="padding-left:15px;" sublabel v-if="device.rvnPower && device.rvnPower > 0") GPU: {{thisUser.devices[0].rvnPower.toLocaleString()}}
-                      div.absolute-top-left(style="width:100px; height:30px;")
-                      img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+            q-card.full-width.animate-scale.relative-position(v-if="thisUser.tokens")
+              .h6.light-paragraph.text-center User Devices
+              .row.full-width(v-if="authenticated" @click="$e.$emit('showInfoModal',info.devices)")
+                .row.full-width.animate-scale.relative-position( v-for="(device, index) in userDevice" :key="device.id")
+                  q-card.relative-position.ellipsis(style="width:100%; padding:10px; box-shadow: 5px 10px 8px #888888 !important;")
+                    q-item-tile(label style="user-select: none;") {{index+1}}. {{device.name}}({{device.type}})
+                    q-item-tile.relative-position(style="padding-left:15px;" sublabel  v-if="device.boincPower") CPU: {{device.boincPower.toLocaleString()}}
+                        |{{displayPending(devices)}}
+                        q-tooltip Device Power (Pending)
+                          img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+                        q-item-tile.relative-position(style="padding-left:15px;" sublabel v-if="device.rvnPower && device.rvnPower > 0") GPU: {{device.rvnPower.toLocaleString()}}
+                          div.absolute-top-left(style="width:100px; height:30px;")
+                          img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
           .row.full-width.justify-center
-            .h6.light-paragraph Work Units and Pow Shores
-          .row.full-width.justify-center
-            .col-xs-12.col-sm-6.col-md-12
-              q-card
-                div
+            q-card.full-width.animate-scale.relative-position
+              .h6.light-paragraph.text-center Work Units and Pow Shores
+              q-card.relative-position.ellipsis(style="width:100%; padding:10px;")
                   .row.justify-center
                     q-btn(flat :class="{activeTab:powDisplay === false}" @click="powDisplay = false")
                       | Work Units
                     q-btn(flat :class="{activeTab:powDisplay === true}" @click="powDisplay = true") POW Shores
-                  h6.light-paragraph(v-if="powDisplay===false") Work Units
-                  h6.light-paragraph(v-else) POW Shores
+                  h6.light-paragraph.text-center(v-if="powDisplay===false") Work Units
+                  h6.light-paragraph.text-center(v-else) POW Shores
 </template>
 <script>
   import { openURL } from 'quasar'
@@ -187,9 +202,11 @@
     data () {
       return {
         user:[],
+        userTeam:[],
         openURL,
         info,
         parseDevice,
+        parseSocial:[],
         chartData:null,
         leaderboardTitle:"",
         leaderboard: [],
@@ -199,6 +216,7 @@
         endedPromotions:[],
         promotions:[],
         selectedPromo:"",
+        userDevice:[]
       }
     },
     computed: {
@@ -206,10 +224,6 @@
         if (this.thisUser && this.thatUser){
           return this.thisUser.id === this.thatUser.id
         }else return false
-      },
-      parseSocial(){
-        if (!this.team.social) return null
-        return parseSocials(this.team.social)
       },
       powerChart(){
         if (!this.chartData) return null;
@@ -237,7 +251,10 @@
             label:"User Power Tier"
           },
           {
-            data:this.thatUser.invited.length + "/" + this.thatUser.sPower,
+            data1:this.thatUser.invited.length,
+            split: "/",
+            data2:this.thatUser.sPower,
+            image:"/statics/images/BoidPower.svg",
             icon:'fa-users',
             label:"Invited Users / Social Power"
           },
@@ -249,12 +266,12 @@
         ]
       },
       teamPromotions(){
-        if (!this.promotions) return null
-        var tempPromo = this.promotions
-        var promotions = {}
-        const now = Date.now()
+        if (!this.promotions) return null;
+        var tempPromo = this.promotions;
+        var promotions = {};
+        const now = Date.now();
         tempPromo = tempPromo.map((el,i,arr)=>{
-          if (Date.parse(el.startDate) > now && Date.parse(el.endDate) > now ){
+          if(Date.parse(el.startDate) > now && Date.parse(el.endDate) > now ){
             el.active = false
           }else{
             el.active = true
@@ -265,7 +282,7 @@
             el.leaderboard.sort((a, b) => b.cumulativeMined - a.cumulativeMined)
           }
           return el
-        })
+        });
         this.endedPromotions = tempPromo.filter(el=> now > Date.parse(el.endDate))
 
         if (this.ended) tempPromo = this.endedPromotions;
@@ -334,6 +351,22 @@
           });
         }
       },
+      async getUserDevices(){
+        this.userDevice = [];
+        this.thatUser.devices.map((devItem)=>{
+          this.getUserDevice(devItem.id);
+        });
+      },
+      //todo should be updated with user social function
+      async getTeamInfo(){
+        this.team = await this.$api.getTeam({name:this.thatUser.team.name});
+        this.parseSocial = parseSocials( this.team.social);
+      },
+      async getUserDevice(id){
+        const device =  await this.$api.getDevice({id:id});
+        console.log("DEVICE>>>>>>>>>>>>>>",device);
+        this.userDevice.push(device);
+      },
       async populateTeamPromotions(){
         if( this.thatUser.team.id ){
           this.promotions = await this.$api.getTeamPromotions({teamId:this.thatUser.team.id});
@@ -360,8 +393,9 @@
       'thatUser'(val){
         if (!val) return
         window.localStorage.setItem('invitedById',val.id);
-        console.log('thatUser',this.thatUser)//fix_me
         // todo should be updated
+        this.getUserDevices();
+        this.getTeamInfo();
         this.populateTeamPromotions();
       },
       "thisUser":function(val,oldVal){
@@ -376,10 +410,12 @@
     async created(){
       this.user = await this.$api.getUser({username:this.$route.params.username});
       this.$e.$once('userUpdated',()=>{
-        console.log('userUpdated',this.myProfile,this.$route.params.username)
+        console.log('userUpdated>>>>>>>>>',this.myProfile,this.$route.params.username)//fix_me
       })
     },
     async mounted(){
+      this.userDevice = [];
+
       setTimeout(()=>{
         if(!this.$route.query.promo | !this.$q.platform.is.desktop) return
         window.scrollTo({
@@ -390,7 +426,7 @@
       },500)
     },
     destroyed(){
-      this.$e.$off('team')
+      this.$e.$off('user')
     },
 
     props:['thisUser','thatUser','api','authenticated'],
