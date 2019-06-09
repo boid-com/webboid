@@ -166,7 +166,7 @@
               .row(v-if="authenticated" @click="$e.$emit('showInfoModal',info.devices)")
                 .col( v-for="(device, index) in userDevice" :key="device.id")
                   .col-xs-6.col-sm-3.col-md-2.col-lg-2
-                    q-card.relative-position.ellipsis(style="min-width:70px; padding:10px; box-shadow:none !important; border:solid 1px #888888;")
+                    q-card.relative-position.ellipsis(style="min-width:70px; padding:10px; box-shadow:none !important; border:solid 1px #c8c8c8;")
                       q-item-tile(label style="user-select: none;") {{index+1}}. {{device.name}}({{device.type}})
                       q-item-tile.relative-position(style="padding-left:15px;" sublabel  v-if="device.boincPower") CPU: {{device.boincPower.toLocaleString()}}
                           |{{displayPending(devices)}}
