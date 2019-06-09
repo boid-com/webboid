@@ -322,15 +322,12 @@
       deviceDisplay( displayFlag ){
         if( !displayFlag ){
           this.devShowFlag = true;
-          console.log('DEVICES>>>>>>>>>>>>>>>>>>>>>>');
           this.userDevice = this.thatUser.devices;
         }
         else{
           this.devShowFlag = false;
           this.userDevice = [];
-          console.log( "USERDEVICE>>>>>>>>>>",this.thatUser );//fix_me
           this.userDevice = this.thatUser.devices.filter((Item,key)=>(key<=2));
-          console.log( "DEVICE>>>>>>>>>>",this.userDevice );//fix_me
         }
       },
       displayPending(device){
@@ -340,9 +337,7 @@
       getUserDevices(){
         this.devShowFlag = false;
         this.userDevice = [];
-        console.log( "USERDEVICE>>>>>>>>>>",this.thatUser );//fix_me
         this.userDevice = this.thatUser.devices.filter((Item,key)=>(key<=2));
-        console.log( "DEVICE>>>>>>>>>>",this.userDevice );//fix_me
       },
       showPromoLeaderboard(promo){
         this.$router.push({ query: Object.assign({}, this.$route.query, { promo: promo.id }) });
@@ -448,7 +443,6 @@
     async created(){
       this.user = await this.$api.getUser({username:this.$route.params.username});
       this.$e.$once('userUpdated',()=>{
-        console.log('userUpdated>>>>>>>>>',this.myProfile,this.$route.params.username)//fix_me
       })
     },
     async mounted(){
