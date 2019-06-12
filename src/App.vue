@@ -2,7 +2,7 @@
 
  #q-app
     q-layout(color="" ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
-      q-toolbar.shadow-1(slot="header") 
+      q-toolbar.shadow-1(slot="header" style="webkit-app-region: drag;") 
         q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
           | boid
           div(slot='subtitle') Season 1 - Alpha 0.0.4
@@ -32,7 +32,7 @@
           //- q-btn(@click="$root.$emit('resetScatter')") externaltest
         scatter
         //- q-btn( v-if="!local" @click='$router.push({name:"Stake"})'  color="green") BOID Staking
-      div.shadow-0(slot='left' v-if="showSideMenu")
+      div.shadow-0(slot='left' v-if="showSideMenu && !local")
         q-list(no-border='', link='', inset-delimiter='')
           q-side-link(item='', to='/', exact='')
             q-item-side(icon='home')
@@ -63,6 +63,7 @@
         .col-12
           .row.justify-center
             router-view(
+              v-if="show"
               :globalStats='globalStats'
               :leaderboard='leaderboard'
               :thisUser='thisUser'
@@ -72,7 +73,6 @@
               :api='api'
               @refreshUser='init()'
               :adBlock="adBlock"
-              :ch="ch"
               style="width:100%;"
             )
           div(
@@ -95,7 +95,7 @@
         profileEdit(:thisUser="thisUser" :api="api" :thisModal="$refs.profileEditModal")
       q-modal.shadow-3(ref="accountEditModal" @close="showOlark(true)" @open="showOlark(false)")
         accountEdit(:thisUser="thisUser" :thisModal="$refs.accountEditModal")
-      q-modal.shadow-3(ref="boincConfigModal" @close="showOlark(true)" @open="showOlark(false)" )
+      q-modal.shadow-3(ref="boincConfigModal" @close="showOlark(false)" @open="showOlark(false)" )
         .layout-padding1
           boincConfig(:config="boincConfigData" :thisModal="$refs.boincConfigModal")
       q-modal.position-relative(ref="socialModal")
@@ -164,19 +164,12 @@ var CPUCores = navigator.hardwareConcurrency
 export default {
   data() {
     return {
+      show:true,
       showSideMenu:true,
       ipcRenderer:null,
       loginVisible:true,
       tiersLeaderboard:null,
       globalStats:{},
-      localDeviceName:null,
-      ch:{
-        toggle:false,
-        hps: "loading",
-        throttle:null,
-        found:null,
-        accepted:null
-      },
       showWarningBanner:true,
       boincConfigData: defaultConfig,
       thisDevice: null,
@@ -208,12 +201,19 @@ export default {
     }
   },
   methods: {
+    reload(){
+      this.show = false
+      setTimeout(() => {
+        this.show = true
+      }, 500)
+    },
     openWebsite(url){
 
     },
     showOlark(val) {
       try {
         if (val) {
+          if (this.local) window.olark('api.box.hide')
           window.olark('api.box.show')
         } else window.olark('api.box.hide')
       } catch (error) {
@@ -286,7 +286,8 @@ export default {
   },
   mounted: async function() {
     // if (this.local && !this.authenticated) this.handleLogin()
-    if (this.local) this.ipcRenderer = window.local.ipcRenderer;
+    if (this.local) this.ipcRenderer = window.local.ipcRenderer
+    if (this.local) window.olark('api.box.hide')
     setTimeout(() => {
       this.pending = false
       // this.$root.$emit('modal.nue',true)
@@ -499,7 +500,8 @@ export default {
         console.log('close authModal')
         this.$refs.authModal.close()
         this.menuBreakpoint = 1200
-        if (window.olark) {
+        if (this.local) {}
+        else if (window.olark) {
           window.olark('api.visitor.updateFullName', {
             fullName: this.thisUser.username
           })
@@ -517,7 +519,7 @@ export default {
         }
       } else {
 
-        // if(this.local)this.$refs.authModal.open()
+        if(this.local) this.handleLogin()
         // if (this.local) this.$router.push({ name: 'Auth' })
         clearInterval(this.userPoll)
         this.userPoll = null
