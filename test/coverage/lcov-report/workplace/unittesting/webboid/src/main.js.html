@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for workplace/unittesting/webboid/src/main.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\..\index.html">All files</a> / <a href="index.html">workplace/unittesting/webboid/src</a> main.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/43</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/5</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/41</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
+<span class="cstat-no" title="statement not covered" >import Vue from 'vue'</span>
+<span class="cstat-no" title="statement not covered" >import Quasar, * as All from 'quasar'</span>
+<span class="cstat-no" title="statement not covered" >import router from './router'</span>
+<span class="cstat-no" title="statement not covered" >import 'quasar-extras/ionicons'</span>
+<span class="cstat-no" title="statement not covered" >import 'quasar-extras/fontawesome'</span>
+import { AddressbarColor } from 'quasar'
+<span class="cstat-no" title="statement not covered" >import LoadScript from 'vue-plugin-load-script'</span>
+<span class="cstat-no" title="statement not covered" >import api from './api.js'</span>
+<span class="cstat-no" title="statement not covered" >import Vuelidate from 'vuelidate'</span>
+<span class="cstat-no" title="statement not covered" >import 'quasar-extras/material-icons'</span>
+// import 'quasar-extras/ionicons'
+import 'quasar-extras/fontawesome'
+// import 'quasar-extras/animate'
+<span class="cstat-no" title="statement not covered" >import ScatterJS, { Network } from "scatterjs-core";</span>
+<span class="cstat-no" title="statement not covered" >import ScatterEOS from "scatterjs-plugin-eosjs2";</span>
+<span class="cstat-no" title="statement not covered" >import { Api, JsonRpc } from "eosjs";</span>
+<span class="cstat-no" title="statement not covered" >ScatterJS.plugins(new ScatterEOS())</span>
+var format=<span class="cstat-no" title="statement not covered" >require('format-number')()</span>
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >  async function init(){</span></span>
+<span class="cstat-no" title="statement not covered" >    AddressbarColor.set('#089cfc')</span>
+  // import storePlugin from './storePlugin'
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  Vue.config.productionTip = false</span>
+<span class="cstat-no" title="statement not covered" >  Vue.use(Quasar, {</span>
+    components: All,
+    directives: All
+  })
+<span class="cstat-no" title="statement not covered" >  Vue.filter('longNum', <span class="fstat-no" title="function not covered" >function (</span>value) {</span>
+<span class="cstat-no" title="statement not covered" >    try {</span>
+<span class="cstat-no" title="statement not covered" >      if (!value) <span class="cstat-no" title="statement not covered" >r</span>eturn ''</span>
+<span class="cstat-no" title="statement not covered" >      if (typeof value === 'string' || value instanceof String){</span>
+<span class="cstat-no" title="statement not covered" >        value = parseFloat(value.replace(/[^0-9.]/g, ""))</span>
+      }
+<span class="cstat-no" title="statement not covered" >      value = value.toFixed(2)</span>
+<span class="cstat-no" title="statement not covered" >      return format(value)</span>
+&nbsp;
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      console.log(error)</span>
+<span class="cstat-no" title="statement not covered" >      return value</span>
+    }
+&nbsp;
+&nbsp;
+  })
+<span class="cstat-no" title="statement not covered" >  Vue.filter('removeDash', <span class="fstat-no" title="function not covered" >function (</span>value) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!value) <span class="cstat-no" title="statement not covered" >r</span>eturn ''</span>
+<span class="cstat-no" title="statement not covered" >    return value.toString().replace(/-/g, ' ')</span>
+  })
+<span class="cstat-no" title="statement not covered" >  Vue.use(LoadScript);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  Vue.use(Vuelidate)</span>
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  Vue.prototype.$e = new Vue()</span>
+<span class="cstat-no" title="statement not covered" >  Vue.prototype.$api = await api.init()</span>
+<span class="cstat-no" title="statement not covered" >  if (__THEME === 'mat') {</span>
+<span class="cstat-no" title="statement not covered" >    require('quasar-extras/roboto-font')</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >require(`quasar/dist/quasar.${__THEME}.css`)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  Quasar.start(<span class="fstat-no" title="function not covered" >() =&gt; </span>{</span>
+    /* eslint-disable no-new */
+<span class="cstat-no" title="statement not covered" >    new Vue({</span>
+      el: '#q-app',
+      router,
+      render: <span class="fstat-no" title="function not covered" >h<span class="cstat-no" title="statement not covered" > =&gt; h(require('./App').default)</span></span>
+    })
+  })
+}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >init().catch(console.error)</span>
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 30 2019 22:05:39 GMT+0300 (Moscow Standard Time)
+</div>
+</div>
+<script src="..\..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\..\sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for workplace/unittesting/webboid/src/components/vote.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\..\..\index.html">All files</a> / <a href="index.html">workplace/unittesting/webboid/src/components</a> vote.vue
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/44</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/44</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template lang="pug"&gt;
+div(style="padding:20px; max-width: 1200px;")
+  h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") Boid Voter Proxy
+  .row.justify-center(style="padding:30px;")
+    .row
+      div
+       p.inline The Boid voter proxy grades other proxies on a scale from 1-3. We generate a list of block producers weighted by the grade of votes received from our rated proxies. The #[a.inline(href="https://bloks.io/account/boidcomproxy") boidcomproxy] then votes for the top 30 BPs in this weighted list. Read more about our grading technique #[a(href="https://medium.com/@boidcom/boid-eos-proxy-voting-review-march-2019-81661dd1224") here].
+  .row.justify-center
+    q-btn(color="blue" large  :disabled="!userLoggedIn"
+    @click="proxyVote()"
+    style="margin-bottom:10px; font-size:25px; padding:15px;") Vote Boidcomproxy
+    q-btn(v-if="userLoggedIn" style="margin-bottom:10px;padding:15px;" @click="walletLogout()") Logout
+  .row.justify-center
+    p.justify-center.text-amber-10.bg-grey-7(v-if="errormsg" style="padding:10px;") {{errormsg}}
+    p.justify-center.text-blue-6(v-if="statusmsg") {{statusmsg}}
+  .row.justify-center(v-if="userLoggedIn")
+    p Scatter Login: {{wallet.accountInfo.account_name}}
+  .row.justify-center
+    q-card.relative-position
+      p.light-paragraph.text-center Whitelisted Proxy Ratings
+      div(v-if="proxies")
+        .row
+          div(v-for="(list,index) in proxies" v-if="list.length&gt;0")
+            .row.justify-center
+              .rating.relative-position(:class="ratingColor(index)")
+                .absolute-center {{index}}
+            div(style="max-height:500px; overflow:auto;")
+              table.q-table.horizontal-separator.full-width
+                tbody.full-width(
+                  v-for="(proxy,index) in list" 
+                  :key="proxy.name" 
+                  style="height:0px;")
+                  tr.user
+                    td.relative-position
+                      h6 {{proxy.name}}
+        div(style="height:40px;")
+        q-btn.full-width.absolute-bottom(color="green" @click="openURL('https://trello.com/b/oosshNqk/proxy')") FULL LIST
+    q-card.relative-position
+      p.light-paragraph.text-center Weighted BP list
+      div(v-if="weightedList")
+        .row
+          .col
+            thead
+              tr
+                th.light-paragraph(style="padding:10px") Block Producer
+                th.light-paragraph(style="padding:10px") Vote Weight
+                th.light-paragraph(style="padding:10px") Voting
+            div(style="height:490px; overflow:auto;")
+              table.q-table.horizontal-separator.full-width
+                tbody.full-width(
+                  v-for="(bp,index) in weightedList" 
+                  :key="bp[0]")
+                  tr.user
+                    td.relative-position
+                      h6 {{bp[0]}}
+                    td.relative-position
+                      h6 {{bp[1]}}
+                    td.relative-position
+                      q-icon(:name="bpVoted(bp[0])")
+        div(style="height:40px;")
+        q-btn.full-width.absolute-bottom(color="green"
+        @click="openURL('https://medium.com/@boidcom/boid-eos-proxy-voting-review-march-2019-81661dd1224')") Learn More
+&lt;/template&gt;
+&lt;style lang="stylus" scoped&gt;
+  @import '~variables'
+&nbsp;
+  .q-card
+    padding 20px !important
+    padding-bottom 5px !important
+  .rating
+    padding 10px
+    background-color $grey-7
+    box-shadow: 1px 1px 4px #888888
+    color: white
+    font-size:20px
+    border-radius 100%
+    width:50px
+    height:50px
+&lt;/style&gt;
+&nbsp;
+&nbsp;
+&lt;script&gt;
+<span class="cstat-no" title="statement not covered" >import { openURL } from 'quasar'</span>
+<span class="cstat-no" title="statement not covered" >import { initAccessContext } from 'eos-transit'</span>
+<span class="cstat-no" title="statement not covered" >import scatter from 'eos-transit-scatter-provider'</span>
+// import ledger from 'eos-transit-ledger-provider'
+var accessContext
+<span class="cstat-no" title="statement not covered" >try {</span>
+<span class="cstat-no" title="statement not covered" >  accessContext = initAccessContext({</span>
+    appName: 'app.boid.com',
+    network: {
+      blockchain:'eos',
+      host:'public.eosinfra.io',
+      port:443,
+      protocol:'https',
+      chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+    },
+    walletProviders: [
+      scatter(),
+      // ledger()
+    ]
+  })
+} catch (error) {
+<span class="cstat-no" title="statement not covered" >  console.log('error here')</span>
+}
+&nbsp;
+&nbsp;
+export default {
+  data(){
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      proxies:null,
+      weightedList:null,
+      wallet:null,
+      errormsg:null,
+      statusmsg:'Connecting to Scatter (Desktop Only)...'
+    }
+  },
+  mounted(){
+<span class="cstat-no" title="statement not covered" >    this.getData()</span>
+<span class="cstat-no" title="statement not covered" >    this.scatterSetup()</span>
+  },
+  computed:{
+    userLoggedIn(){
+<span class="cstat-no" title="statement not covered" >      if (!this.wallet) return false</span>
+<span class="cstat-no" title="statement not covered" >      if (this.wallet &amp;&amp; this.wallet.active) return true</span>
+      else return false
+    }
+  },
+  methods:{
+    openURL,
+    async walletLogout(){
+<span class="cstat-no" title="statement not covered" >      this.wallet.logout()</span>
+<span class="cstat-no" title="statement not covered" >      this.wallet = null</span>
+    },
+    async getData(){
+<span class="cstat-no" title="statement not covered" >      this.proxyInfo = (await this.$api.proxyInfo())[0]</span>
+<span class="cstat-no" title="statement not covered" >      const proxies = this.proxyInfo.results.proxies</span>
+<span class="cstat-no" title="statement not covered" >      var parsed = []</span>
+<span class="cstat-no" title="statement not covered" >      for (var i = 0; i &lt; 4; i++){</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >        parsed[i] = proxies.filter(el =&gt; el.rating === i)</span></span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.proxies = parsed</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      const bpList = this.proxyInfo.results.weightedList</span>
+<span class="cstat-no" title="statement not covered" >      this.weightedList = bpList</span>
+&nbsp;
+    },
+    async scatterSetup(){
+<span class="cstat-no" title="statement not covered" >      try {</span>
+<span class="cstat-no" title="statement not covered" >        const walletProviders = accessContext.getWalletProviders()</span>
+<span class="cstat-no" title="statement not covered" >        const selectedWallet = walletProviders[0]</span>
+<span class="cstat-no" title="statement not covered" >        const wallet = accessContext.initWallet(selectedWallet)</span>
+<span class="cstat-no" title="statement not covered" >        await wallet.connect()</span>
+<span class="cstat-no" title="statement not covered" >        await wallet.login()</span>
+<span class="cstat-no" title="statement not covered" >        this.wallet = wallet</span>
+<span class="cstat-no" title="statement not covered" >        this.statusmsg = null</span>
+      } catch (error) {
+<span class="cstat-no" title="statement not covered" >        this.statusmsg = null</span>
+<span class="cstat-no" title="statement not covered" >        this.errormsg = error</span>
+        // alert(error)
+      }
+&nbsp;
+    },
+    async proxyVote(){
+<span class="cstat-no" title="statement not covered" >      try {</span>
+<span class="cstat-no" title="statement not covered" >        this.statusmsg = 'Sending Transaction...'</span>
+<span class="cstat-no" title="statement not covered" >        const result = await this.wallet.eosApi.transact({</span>
+          actions: [
+            {
+              account: 'eosio',
+              name: 'voteproducer',
+              authorization: [
+                {
+                  actor: this.wallet.auth.accountName,
+                  permission: this.wallet.auth.permission
+                }
+              ],
+              data: {
+                voter:this.wallet.auth.accountName,
+                proxy:'boidcomproxy',
+                producers:""
+              }
+            }
+          ]
+        },{
+          broadcast: true,
+          blocksBehind: 3,
+          expireSeconds: 60
+        })
+<span class="cstat-no" title="statement not covered" >        console.log(result)</span>
+<span class="cstat-no" title="statement not covered" >        this.errormsg = null</span>
+<span class="cstat-no" title="statement not covered" >        this.statusmsg = 'Success'</span>
+      } catch (error) {
+<span class="cstat-no" title="statement not covered" >        console.log(error)</span>
+<span class="cstat-no" title="statement not covered" >        this.errormsg = error</span>
+<span class="cstat-no" title="statement not covered" >        this.statusmsg = null</span>
+      }
+&nbsp;
+    },
+    ratingColor(index){
+<span class="cstat-no" title="statement not covered" >      if (index === 1) return 'bg-red-4'</span>
+<span class="cstat-no" title="statement not covered" >      if (index === 2) return 'bg-amber-7'</span>
+<span class="cstat-no" title="statement not covered" >      if (index === 3) return 'bg-green-5'</span>
+    },
+    bpVoted(bpName){
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      if (this.proxyInfo.results.producers.find(el=&gt; el === bpName)) return 'check'</span></span>
+    }
+  },
+  watch:{
+  }
+}
+&lt;/script&gt;
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 30 2019 22:05:39 GMT+0300 (Moscow Standard Time)
+</div>
+</div>
+<script src="..\..\..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\..\..\sorter.js"></script>
+</body>
+</html>

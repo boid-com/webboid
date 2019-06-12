@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for workplace/unittesting/webboid/src/components/Leaderboards.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\..\..\index.html">All files</a> / <a href="index.html">workplace/unittesting/webboid/src/components</a> Leaderboards.vue
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/28</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/28</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template lang="pug"&gt;
+div
+  .row.justify-center
+    .col-xs-12
+      q-card(v-if="globalStats") 
+        p.light-paragraph.text-center Network Stats
+        .row.justify-center
+          .col-auto
+            div(style="width:200px;")
+              .row.justify-center
+                h5 {{parseInt(globalStats.dPower).toLocaleString()}}
+              p.light-paragraph.text-center Total Power
+          .col-auto
+            div(style="width:200px;")
+              .row.justify-center
+                h5 {{globalStats.activeUsers}}
+              p.light-paragraph.text-center Active Users
+          .col-auto
+            div(style="width:200px;")
+              .row.justify-center
+                h5 {{parseInt(globalStats.averagePower).toLocaleString()}}
+              p.light-paragraph.text-center Average Power 
+  .row
+    .col-md-12.col-lg-6(style="padding-bottom:15px; max-height:520px;")
+      q-card(style="height:100%; overflow:auto;")
+        p.light-paragraph.text-center Top Movers (48hrs)
+        table.q-table.horizontal-separator(style="width:100%")
+          thead
+            tr
+              th 
+              th.relative-position(style="width:50px;") 
+                q-tooltip Boid Power change Percentage
+                q-icon.absolute-center(name="fa-percent" color="grey-7" size="25px" style="padding-top:15px;")
+                img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px; padding-right:45px;")
+          tbody(v-for="(user,index) in topMovers" :key="user.id").full-width
+            tr.user(style="cursor: pointer;" @click="$router.push({name:'User',params:{username:user.username}})")
+              td.relative-position
+                .absolute-left.text-grey-7
+                  //- .puck.text-center {{index + 1}}
+                .absolute-left.text-grey-7(style="left:45px; top:45px;")
+                  .puck-lg.text-center
+                    .row.justify-center
+                      img(:src="user.team.image" style="width:20px; height:20px; margin-top:1px;")
+                .row
+                  .col-auto
+                    img.avatar(:src="user.image")
+                  .col.relative-position(style="padding:15px; padding-bottom:30px;")
+                    .ellipsis(data-th="Username") {{user.username}}
+                    small.ellipsis.block.light-paragraph.absolute(
+                      style="bottom:0px; max-width:100%;"
+                      ) {{user.tagline}}
+              td(data-th="Power" style="width:80px;").text-green-5.text-bold + {{parseInt(user.percentageChange).toLocaleString()}}%
+              //- td(data-th="Power") {{parseInt(user.tPower).toLocaleString()}}
+    .col(style="padding-bottom:15px; ")
+      q-card(style="height:100%; max-height:520px;")
+        p.light-paragraph.text-center Recently Added Team Promotions
+        div(style="height:430px; overflow:auto;")
+          promoCard.cursor-pointer.clickable(
+          v-for="promo of recentPromotions" 
+          :key="promo.id" :promo="promo"
+          :basic="true"
+          @click.native="$router.push({name:'Team',params:{teamname:promo.team.name},query:{promo:promo.id}})"
+          )
+  .row
+    .col-md-12.col-lg-6(style="padding-bottom:15px;")
+      q-card(style="height:100%;" v-if="tiersLeaderboard").animate-scale.relative-position
+        p.light-paragraph.text-center Users
+        // q-btn.absolute-top-right(flat ground color="green" @click="refreshLeaderboard()")
+        //   q-icon(name="refresh")
+        .row.justify-between
+          .col-auto
+            .row.justify-center
+              small Power Tier
+            div(style="padding:4px;")
+            .row
+              q-btn(big :class="{tierBtn:index === selectedTier}" 
+              v-for="(tier,index) of tiersLeaderboard.length" 
+              :key="index" 
+              @click="selectedTier = index") {{index}}
+          .col-auto
+            .row.justify-center
+              small.text-white 1
+            div(style="padding:4px;")
+            q-btn( big :class="{tierBtn: showSocial}" @click="selectedTier = null") social
+        div(style="padding:15px;")
+        table.q-table.horizontal-separator(v-if="!showSocial" style="width:100%")
+          thead
+            tr
+              th 
+              th.relative-position(style="width:50px;") 
+                q-tooltip Boid Power change Percentage
+                img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px; padding-right:15px;")
+          tbody( v-for="(user,index) in selectedLeaderboard" :key="user.id").full-width
+            tr.user(style="cursor: pointer;" @click="$router.push({name:'User',params:{username:user.username}})")
+              td.relative-position
+                .absolute-left.text-grey-7
+                  .puck.text-center {{index + 1}}
+                .absolute-left.text-grey-7(style="left:45px; top:45px;")
+                  .puck-lg.text-center
+                    .row.justify-center
+                      img(:src="user.team.image" style="width:20px; height:20px; margin-top:1px;")
+                .row
+                  .col-auto
+                    img.avatar(:src="user.image")
+                  .col.relative-position(style="padding:15px; padding-bottom:30px;")
+                    .ellipsis(data-th="Username") {{user.username}}
+                    small.ellipsis.block.light-paragraph.absolute(
+                      style="bottom:0px; max-width:100%;"
+                      ) {{user.tagline}}
+              td(data-th="Power" style="width:80px;") {{parseInt(user.tPower).toLocaleString()}}
+              //- td(data-th="Power") {{parseInt(user.tPower).toLocaleString()}}
+        table.q-table.horizontal-separator(v-else style="width:100%")
+          thead
+            tr
+              th.relative-position
+                small.light-paragraph.absolute-left Does not include team leaders.
+              th.relative-position(style="width:30px;") 
+                q-tooltip Active users invited(tier 1+)
+                q-icon.absolute-center(name="fa-users" style="top:15px;" color="grey-8")
+              th.relative-position(style="width:30px;") 
+                q-tooltip Boid Power from social invites only
+                p.absolute-left(style="height:30px; top:5px; padding-left:10px;") S
+                img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px; padding-right:5px;")
+          tbody( v-for="(user,index) in socialLeaderboard" :key="user.id").full-width
+            tr.user(style="cursor: pointer;" @click="$router.push({name:'User',params:{username:user.username}})")
+              td.relative-position
+                .absolute-left.text-grey-7
+                  .puck.text-center {{index + 1}}
+                .absolute-left.text-grey-7(style="left:45px; top:45px;")
+                  .puck-lg.text-center
+                    .row.justify-center
+                      img(:src="user.team.image" style="width:20px; height:20px; margin-top:1px;")
+                .row
+                  .col-auto
+                    img.avatar(:src="user.image")
+                  .col.relative-position(style="padding:15px; padding-bottom:30px;")
+                    .ellipsis(data-th="Username") {{user.username}}
+                    small.ellipsis.block.light-paragraph.absolute(
+                      style="bottom:0px; max-width:100%;"
+                      ) {{user.tagline}}
+              td() {{parseInt(user.invited).toLocaleString()}}
+              td(data-th="Power") {{parseInt(user.sPower).toLocaleString()}}
+    .col-md-12.col-lg-6
+      q-card.animate-scale
+        p.light-paragraph.text-center Teams
+        table.q-table.horizontal-separator(style="width:100%")
+          thead
+            tr
+              th(style="width:0px;")
+              th.relative-position(style="width:50px;") 
+                q-tooltip Team Boid Power
+                img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px;")
+          tbody(v-for="(team,index) in teamLeaderboard" :key="team.id")
+            tr.user.cursor-pointer(@click="$router.push({name:'Team',params:{teamname:team.name}})")
+              td.relative-position
+                .absolute-left.text-grey-7 {{index + 1}}
+                .row
+                  .col-auto
+                    img.tokenimg(:src="team.image")
+                  .col(style="padding:15px;")
+                    .ellipsis(style="max-width:100%;") {{team.name | removeDash}}
+              td(data-th="Power") {{parseInt(team.power).toLocaleString()}}
+&nbsp;
+&lt;/template&gt;
+&nbsp;
+&lt;script&gt;
+<span class="cstat-no" title="statement not covered" >import promoCard from '@/promoCard.vue'</span>
+&nbsp;
+export default {
+  
+  name: 'index',
+  data() {
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      team: {},
+      promotions:null,
+      topMovers:null,
+      selectedTier:null,
+      showSocial:false,
+      selectedLeaderboard:null,
+      socialLeaderboard:null,
+      tiersLeaderboard:null,
+      teamLeaderboard:null
+    }
+  },
+  components:{promoCard},
+  computed: {
+    recentPromotions(){
+<span class="cstat-no" title="statement not covered" >      if (!this.promotions) return </span>
+<span class="cstat-no" title="statement not covered" >      const now = Date.now()</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      return this.promotions.map((el,i,arr)=&gt;{</span></span>
+<span class="cstat-no" title="statement not covered" >        if (Date.parse(el.startDate) &gt; now ){el.active = false}else{el.active = true}</span>
+<span class="cstat-no" title="statement not covered" >        return el</span>
+      })
+    }
+  },
+  methods: {
+    async refreshLeaderboard(){
+      // console.log('refresh')
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      this.$api.tiersLeaderboard().then(el =&gt;{</span></span>
+<span class="cstat-no" title="statement not covered" >        this.tiersLeaderboard = el</span>
+      })
+<span class="cstat-no" title="statement not covered" >      this.promotions = await this.$api.recentPromotions()</span>
+<span class="cstat-no" title="statement not covered" >      this.topMovers = await this.$api.topGainers()</span>
+<span class="cstat-no" title="statement not covered" >      this.socialLeaderboard = await this.$api.socialLeaderboard()</span>
+<span class="cstat-no" title="statement not covered" >      this.teamLeaderboard = await this.$api.teamsLeaderboard()</span>
+<span class="cstat-no" title="statement not covered" >      if (!this.selectedTier &amp;&amp; this.showSocial != true ) this.selectedTier = this.thisUser.tier</span>
+    }
+  },
+  watch: {
+    team(val) {
+<span class="cstat-no" title="statement not covered" >      console.log('gotTeam', val)</span>
+    },
+    selectedTier(val){
+<span class="cstat-no" title="statement not covered" >      if (val != null) {</span>
+<span class="cstat-no" title="statement not covered" >          if (this.tiersLeaderboard) this.selectedLeaderboard = this.tiersLeaderboard[this.selectedTier]</span>
+<span class="cstat-no" title="statement not covered" >          this.showSocial = false</span>
+<span class="cstat-no" title="statement not covered" >          return</span>
+<span class="cstat-no" title="statement not covered" >        }</span>
+      else return this.showSocial = true, this.selectedLeaderboard = null
+    },
+    thisUser(val){
+<span class="cstat-no" title="statement not covered" >      console.log(val)</span>
+<span class="cstat-no" title="statement not covered" >      if (!val.tier) this.selectedTier = 0</span>
+<span class="cstat-no" title="statement not covered" >      if (!this.selectedTier &amp;&amp; this.showSocial != true ) this.selectedTier = val.tier</span>
+    },
+    tiersLeaderboard(val){
+<span class="cstat-no" title="statement not covered" >      console.log(val)</span>
+<span class="cstat-no" title="statement not covered" >      if(!val) return</span>
+<span class="cstat-no" title="statement not covered" >      if (this.showSocial === false) this.selectedLeaderboard = val[this.selectedTier]</span>
+    }
+  },
+  async mounted() {
+<span class="cstat-no" title="statement not covered" >    console.log('MOUNTED LEADERBOARDS')</span>
+<span class="cstat-no" title="statement not covered" >    this.refreshLeaderboard()</span>
+&nbsp;
+    // console.log(this.socialLeaderboard)
+  },
+  props: ['thisUser', 'api', 'authenticated','globalStats']
+}
+&lt;/script&gt;
+&nbsp;
+&lt;style lang="stylus"&gt;
+@import '~variables'
+&nbsp;
+p
+  margin-bottom 0
+.tierBtn{
+  background-color $blue-6
+  color: white
+}
+&nbsp;
+.q-card {
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+.tokenimg{
+  width:50px;
+}
+.user:hover {
+  background-color: $grey-2
+}
+&lt;/style&gt;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 30 2019 22:05:39 GMT+0300 (Moscow Standard Time)
+</div>
+</div>
+<script src="..\..\..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\..\..\sorter.js"></script>
+</body>
+</html>

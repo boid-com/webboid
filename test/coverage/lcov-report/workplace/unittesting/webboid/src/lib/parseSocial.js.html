@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for workplace/unittesting/webboid/src/lib/parseSocial.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\..\..\index.html">All files</a> / <a href="index.html">workplace/unittesting/webboid/src/lib</a> parseSocial.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/30</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/24</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/29</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export default (social)=&gt;{
+  var socialData = <span class="cstat-no" title="statement not covered" >Object.entries(social)</span>
+  .filter(<span class="fstat-no" title="function not covered" >el<span class="cstat-no" title="statement not covered" >=&gt;el[1])</span></span>
+  .map(<span class="fstat-no" title="function not covered" >(</span>el)=&gt;{
+    let social = <span class="cstat-no" title="statement not covered" >{}</span>
+    // social.label = el[0]
+<span class="cstat-no" title="statement not covered" >    social.url = el[1]</span>
+<span class="cstat-no" title="statement not covered" >    if (el[0] === "telegram"){</span>
+<span class="cstat-no" title="statement not covered" >      social.img = "/statics/social/telegramicon.png"</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if (el[0] === "discord"){</span>
+<span class="cstat-no" title="statement not covered" >      social.img = "/statics/social/discordicon.svg"</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if (el[0] === "weChat"){</span>
+<span class="cstat-no" title="statement not covered" >      social.img = ""</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if (el[0] === "twitter"){</span>
+<span class="cstat-no" title="statement not covered" >      social.img = "/statics/social/twittericon.svg"</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if (el[0] === "trybe"){</span>
+<span class="cstat-no" title="statement not covered" >      social.img = "/statics/social/trybeicon.png"</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if (el[0] === "steemit"){</span>
+<span class="cstat-no" title="statement not covered" >      social.img = "/statics/social/steemiticon.png"</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if (el[0] === "medium"){</span>
+<span class="cstat-no" title="statement not covered" >      social.img = "/statics/social/mediumicon.png"</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if (el[0] === "website"){</span>
+<span class="cstat-no" title="statement not covered" >      social.img = "/statics/social/wwwicon.png"</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if (el[0] === "website2"){</span>
+<span class="cstat-no" title="statement not covered" >      social.img = "https://i.imgur.com/Maqnjme.png"</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if (el[0] === "youtube"){</span>
+<span class="cstat-no" title="statement not covered" >      social.img = "/statics/social/youtubeicon.png"</span>
+    }
+    else <span class="cstat-no" title="statement not covered" >if (el[0] === "reddit"){</span>
+<span class="cstat-no" title="statement not covered" >      social.img = "/statics/social/redditicon.svg"</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return social</span>
+  })
+<span class="cstat-no" title="statement not covered" >  if (socialData.length &lt; 1) <span class="cstat-no" title="statement not covered" >return null</span></span>
+  else <span class="cstat-no" title="statement not covered" >return socialData </span>
+}
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 30 2019 22:05:39 GMT+0300 (Moscow Standard Time)
+</div>
+</div>
+<script src="..\..\..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\..\..\sorter.js"></script>
+</body>
+</html>

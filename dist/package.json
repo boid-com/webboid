@@ -1,11 +1,12 @@
 {
-"scripts": {
-  "start": "serve . --single"
-},
-"dependencies": {
-  "serve": "latest"
-},
-"now": {
-  "alias": "boid"
-}
+  "scripts": {
+    "start": "serve . --single"
+  },
+  "dependencies": {
+    "quasar": "^1.0.0-rc.4",
+    "serve": "latest"
+  },
+  "now": {
+    "alias": "boid"
+  }
 }
