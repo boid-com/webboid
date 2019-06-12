@@ -38,7 +38,7 @@
                               p.text-center(style="margin:0;") 0
                 .row.full-width.justify-center
                   img.avatar.absolute-center.block( style="width:85px; height:85px; position:absolute;top:135px;" :src="thatUser.image")
-                div.justify-center( class="mask")
+                <!--div.justify-center( class="mask")-->
               userChart( style="margin-top:20"
               v-if="powerChart" :chartData="powerChart" :height="295")
               q-inner-loading(:visible="!powerChart")

@@ -15,7 +15,7 @@
             bodySpacing:4,
             xPadding:10
           },
-          legend:{position:"bottom", display:true,labels:{
+          legend:{position:"bottom", display:false,labels:{
               fontSize:18,
               boxWidth:40,
               onClick(data){
