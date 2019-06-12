@@ -1,365 +1,196 @@
 <template lang="pug">
-div
-  .row.justify-center.relative-position(v-if="!loading && thisDevice.name" style="padding:5px;")
-    .col
-      q-card(style='max-height:410px;')
-        q-card-media.relative-position
-          q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="openConfigModal()")
-            q-icon(color='grey-7' name="settings")
-            q-tooltip Settings
-          q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="openConfigModal()" style="top:40px;")
-            q-icon(color='grey-7' name="refresh")
-            q-tooltip Refresh
-          .row
-            .col-auto
-              img(style="opacity:.9; width:100px; height:100px; padding:15px;" src="statics/images/magnifyingglass.svg")
-            .col-7.relative-position
-              h6.light-paragraph Device Boid Power
-                q-tooltip Boid Power is updated as each Work Unit is finished. You only receive Boid Power after you have completed at least one Work Unit first. Work Units can take 6-12 hours to process, so be patient when starting.
-              div.relative-position(style="width:70%")
-                img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
-                div(style="padding-left:20px; padding-top:5px;")
-                  div(v-if="thisDevice.power") {{thisDevice.power.toFixed(4)}}
-                  div(v-else)
-                    | 0.0
-                  small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
-                    q-tooltip Pending power can take 24 hours or more to be verified.
-              .row.justify-center
-                q-btn.light-paragraph( flat style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://www.worldcommunitygrid.org/research/mcm1/overview.do')") Mapping Cancer Markers
-                q-tooltip Learn more about the current computational task
-                // h6.absolute-bottom-right.text-grey-7(style="margin-right:10px;") Mapping Cancer Makers
-          div(style="padding-left:10px;" v-if="toggle")
-            p.on-right(v-if="activeTasks.length > 0") Work Units ({{activeTasks.length}})
-              q-tooltip Work Units are small tasks that help solve huge problems.
-            p(v-else) Downloading Work Units....
-        q-card-main(v-if="toggle" style="max-height:195px; overflow:scroll; padding-top:0px;")
-          div(v-if="activeTasks.length > 0" v-for="(task,index) in activeTasks" :key='task.slot[0]' style="margin-bottom:5px;")
-            
-            q-progress( style="height:10px;" v-if="task.active_task_state[0] == 1 && !onBatteries" :buffer="0" height="40px" stripe :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
-            q-progress(v-else :buffer="0" height="40px" stripe :percentage="task.checkpoint_fraction_done[0]*100" color="grey-4")
-            q-tooltip 
-              p(style="margin:0px;") Task:
-              | {{task.result_name[0]}} 
-              div(style="height:10px;")
-              p(style="margin:0px;") Progress:
-              | {{(task.checkpoint_fraction_done[0]*100).toFixed(0)}}%
-            
-        q-card-separator
-        q-card-actions.taller.relative-position()
-          q-btn(small round flat)
-            q-icon.on-right(v-if="toggle" :name="boincStatusIcon")
-          h6.text-grey-8.on-right(v-if="toggle" style="padding-top:5px;") {{boincStatus}}
-          q-spinner-grid.inline.on-right.absolute-right(:size="20" color="grey-4" v-if="toggle" style="right:70px; top:20px;")
-          q-toggle.absolute-right(color="green" style="padding:20px;" v-model="toggle")
-    .col
-      q-card(style='max-width:440px; max-height:410px;')
-        h4 GPU
+div(style="height:100%; overflow:hidden;")
+  p.text-center(style="padding:40px;" v-if="config") {{config.device.uid}}
+  div(v-if="!loading && thisDevice" ref="navigation").bg-grey-3.relative-position
+    .row.justify-center.items-center
+      .col-auto
+        deviceName(:thisDevice="thisDevice") 
+      div.absolute-right(style="margin-right:13px; margin-top:15px height:100%;")
+        q-btn(flat style="margin-top:5px;" @click="openConfigModal()")
+          q-icon(name="settings" color="grey-7" style="height:100%")
+          q-tooltip Global Settings
+    .row.justify-center.no-wrap
+      div(v-for="nav in navigation")
+        q-btn( flat :class="{selected: page === nav.name}" @click="page = nav.name" :disable="nav.disabled")
+          q-icon.on-left(:name="nav.icon")
+          | {{nav.name}}
+          div(v-if="nav.disabled")
+            q-tooltip Coming soon
+  .row.justify-center.relative-position(v-if="!loading && thisDevice" style="padding:5px;")
+    .full-width
+      cpuWidget(v-show="page === 'CPU' || page === 'Dash'"
+        :thisDevice="thisDevice" ref="cpuWidget")
+    .full-width
+      gpuWidget(v-show="page === 'GPU' || page === 'Dash' "
+        :thisDevice="thisDevice" ref="gpuWidget")
+    .full-width.relative-position
+      hddWidget(:disabled="true" v-show="page === 'HDD' || page === 'Dash' " :thisDevice="thisDevice")
   .layout-padding.relative-position(v-else)
-    .text-center {{initStatus}}
     div(style="padding-top:70px;")
-    q-btn.absolute-center(flat @click="refreshDevice()" big)
-      q-tooltip Refresh Device
-      q-icon(name="refresh")
-    .row.justify-center
-      q-btn( flat @click="ipcRenderer.send('openURL','https://www.youtube.com/watch?v=VVlGjVDek_M')" ) Problems?
-
-
-  </template>
+    q-btn.absolute-center(flat @click="$e.$emit('openAuthModal')" big color="green") Login
+  q-modal(ref="modal" @close="thisModal=null, modalData=null" )
+    component(:is="thisModal" :thisModal="$refs.modal" :data="modalData" v-if="thisModal")
+</template>
 
 <script>
 import parseDevice from 'src/lib/parseDevice'
-import { Alert,openURL } from 'quasar'
+import { Alert, openURL } from 'quasar'
+import cpuWidget from '@/cpuWidget.vue'
+import gpuWidget from '@/gpuWidget.vue'
+import hddWidget from '@/hddWidget.vue'
+import gpuConfig from '@/gpuConfig.vue'
+import deviceName from '@/deviceName.vue'
+import cpuConfig from '@/cpuConfig.vue'
+import deviceConfig from '@/deviceConfig.vue'
 
+
+const ipcMain = {
+  async send(channel,data,data2) {
+    console.log('DeviceipcSend:', channel, data)
+    return await window.local.ipcRenderer.send(channel,data,data2)
+  },
+  async on(channel, func) {
+    console.log('DeviceipcOn:', channel, func)
+    return await window.local.ipcRenderer.on(channel, async (event, data, data2) => {
+      return await func(data,data2)
+    })
+  },
+  async once(channel, func) {
+    console.log('DeviceipcOnce:', channel, func)
+    return await window.local.ipcRenderer.once(channel, async (event, data, data2) => {
+      return await func(data,data2)
+    })
+  },
+}
 var masterInterval = null
 function ec(err){
   console.error(err)
   // alert(err)
 }
 
-function setupDevice(device) {
-  if (!device) return null
-  var type
-  if (device.os.name === 'Darwin') type = 'MAC'
-  else type = 'WINDOWS'
-  return {
-    status:'ACTIVE',
-    cpid: device.cpid,
-    name: device.name,
-    type,
-    meta: device
-  }
+var deviceInterval = null
+
+
+async function initLocalDevice(v){
+  ipcMain.once('config.getDevice',async device => {
+    console.log('got device datas',device)
+    console.log(device.os)
+    if (device.os === 'darwin') device.os = 'MAC'
+    else if (device.os === 'win32') device.os = 'WINDOWS'
+    else device.os = 'LINUX'
+    var deviceExists = false
+    var newDevice = false
+    deviceExists = await v.$api.findDevice(device)
+    if(!deviceExists) newDevice = await v.$api.registerDevice(device) 
+    var id = deviceExists.id || newDevice.id
+    if (!id) {
+      v.$e.$emit('logout')
+      return alert('There was a problem registering this device.')
+    }
+    if (deviceInterval) clearInterval(deviceInterval)
+      v.thisDevice = await v.$api.getDevice({id})
+      deviceInterval = setInterval( async () => {
+        v.thisDevice = await v.$api.getDevice({id})
+      }, 10000)
+  })
+  ipcMain.send('config.getDevice')
 }
 
 export default {
+  components:{cpuWidget,gpuWidget,gpuConfig,hddWidget,deviceName,cpuConfig,deviceConfig},
   data() {
     return {
-      ipcRenderer:null,
-      loading: true,
-      initialized:false,
+      config:null,
+      thisDevice:null,
+      editName:false,
+      newDeviceName:"",
+      thisModal:null,
+      navigation:[{name:"Dash", icon:"dashboard"},{name:"CPU",icon:"memory"},{name:"GPU",icon:"apps"},{name:"HDD",icon:"storage",disabled:true}],
+      page:"Dash",
+      ipcRenderer:window.local.ipcRenderer,
+      loading: false,
+      initialized:true,
       parseDevice,
-      initStatus:"Initializing...",
-      onBatteries: false,
-      deviceStatePoll: null,
-      actionbg: {
-        backgroundColor: 'white'
-      },
-      config: {
-        run_if_user_active: null
-      },
-      boincStatus: 'Initializing....',
-      boincStatusIcon: 'check',
-      activeTasks: [],
-      thisDevice: {
-        name: null,
-        power: '',
-        status: '',
-        id: '',
-        meta: {},
-        icon: 'WINDOWS',
-        type: 'WINDOWS',
-        powerRatings: []
-      },
-      deviceId: null,
-      pending: false,
-      toggle: false
+      ipcMain,
+      localDevice:null,
+      deviceInterval:null
     }
   },
-  computed: {},
+  computed: {
+    state(){
+      if (!this.config) return null
+      else return this.config.state
+    }
+  },
   methods: {
     openURL,
-    refreshDevice: async function(){
-        try {
-          this.init()
-          window.local.ipcRenderer.send('boinc.activeTasks')
-        } catch (error) {
-          alert(error.message)
-          ec(error)
-          return
-        }
+    async openConfigModal(){
+      this.$emit('modal','deviceConfig',await this.getConfig())
     },
-    openConfigModal() {
-      this.$e.$emit('openBoincConfigModal', this.config)
+    getConfig(){
+      return new Promise( res => {
+        ipcMain.once('config.get',(data) => {
+          res(data.config)
+        })
+        ipcMain.send('config.get')
+      })
     },
-    modulateTaskProgress(progress) {
-      progress = parseFloat(progress)
-      function getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max))
-      }
-      if (progress < .02) progress += .01
-      return progress * 100 + getRandomInt(2)
-    },
-    handleLocalDevice: async function(localDevice) {
-      if (!localDevice) {
-        console.log('received blank localDevice')
-        window.local.ipcRenderer.send('initBoinc')
-        // setTimeout(()=>{
-        //   this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
-        // },3000)
-      } else {
-        if (localDevice.cpid) {
-          try {
-            var result = await this.$api.getDevice({cpid:localDevice.cpid}).catch(ec)
-            console.log('RESULT FROM CHECK',result)
-            if (!result) return
-            if (result === 'none'){
-              console.log('device does not exist, User can claim device')
-              try {
-                var newDevice = await this.$api.addDevice(setupDevice(localDevice)).catch(ec)
-                this.thisDevice = await this.$api.getDevice({id:newDevice.id}).catch(ec)
-                console.log("INITIALIZED TRUE")
-                this.initialized = true
-              } catch (error) {
-                console.error(error)
-                // clearInterval(this.deviceStatePoll)
-                return
-              }
-            } else {
-              if (result.owner.id === this.thisUser.id) {
-                console.log('this device is owned by this user')
-                try {
-                  this.thisDevice = await this.$api.getDevice({id:result.id})
-                } catch (error) {
-                  ec(error)
-                  return
-                }
-              } else {
-                this.$e.$emit('logout')
-                alert('This device is already claimed by a different account. 😢 \n \n Contact us: support@boid.com')
-              }
-            }
-          } catch (error) {
-            // clear`l(this.deviceStatePoll)
-            ec(error)
-            // alert(error)
-            // this.$e.$emit('logout')
-            // this.$e.$emit('openAuthModal')
-          }
-        } else {
-          this.$e.$emit('logout')
-          this.$e.$emit('openAuthModal')
-          alert('This device is acting up. 😢 \n \n Contact us: support@boid.com')
-        }
-        if (localDevice.wcgid) {
-          if (localDevice.wcgid == 0) return
-          if (localDevice.wcgid == "0") return
-          if (this.thisDevice.wcgid === localDevice.wcgid) return
-          else {
-            var result = await this.$api.updateDevice({
-              deviceId: this.thisDevice.id,
-              wcgid: localDevice.wcgid
-            }).catch(console.error)
-            console.log(result)
-          }
-        }
-      }
-    },
-    init() {
-      if (window.local && this.authenticated) {
-        setTimeout(() => {
-          window.olark('api.box.hide')
-          console.log("INIT")
-          console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) 
-          if (this.initialized){
-            if (masterInterval) clearInterval(masterInterval)
-            masterInterval = setInterval(this.init, 180000)
-          }
-          this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
-        }, 600)
-      }else{
-        // throw('Not Authenticated, restart app')
-      }
-    }
-  },
-  props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
-  mounted() {
-    console.log('this.route',this.$route.name)
-    if (!this.$route.name === 'Desktop') return
-    if (masterInterval) clearInterval(masterInterval)
-    // masterInterval = setInterval(this.init, 10000)
-    this.init()
-    if (window.local){
-      console.log('creating event emitters')
-      this.ipcRenderer = window.local.ipcRenderer
-      window.local.ipcRenderer.send('boinc.config.get')
-      window.local.ipcRenderer.on('boinc.toggle', (event, toggle) => {
-        console.log('GOT TOGGLE:', toggle)
-        if (!this.loading) this.toggle = toggle
-      })
-      window.local.ipcRenderer.on('boinc.config', (event, value) => {
-        console.log('GOT CONFIG', value)
-        this.config = value
-      })
-      window.local.ipcRenderer.on('boinc.activeTasks', (event, activeTasks) => {
-        console.log('got ACTIVETASKS',JSON.stringify(activeTasks))
-        if (activeTasks) {
-          this.activeTasks = activeTasks
-        }
-      })
-      window.local.ipcRenderer.on('boinc.suspended', (event, status) => {
-        console.log('GOT BOINC SUSPENDED:', status)
-        if (status) {
-          this.onBatteries = true
-          this.boincStatus = `Paused: ${status}`
-          this.boincStatusIcon = 'pause'
-        } else {
-          this.onBatteries = false
-          this.boincStatus = 'Computing Tasks...'
-          this.boincStatusIcon = 'check'
-        }
-      })
-      window.local.ipcRenderer.on('deviceReady', (event, device) => {
-        console.log('GOT DEVICE:', device)
-      })
-      window.local.ipcRenderer.on('boinc.error', (event, error) => { 
-
-        console.error('boinc.error', error)
-        // if (typeof error == "string") alert(error)
-        // else{
-        //   try{
-        //     alert(JSON.stringify(error))
-        //   } catch (error) {
-        //     console.error('unable to display error to user')
-        //   }
-        // }
-      })
+    init(){
+      // ipcMain.once('config.getState',(data,data2) => alert(JSON.stringify(data)))
+      // ipcMain.send('config.getState')
+      this.getConfig()
     }
   }, 
+  props: ['thisUser', 'authenticated'],
+  created(){
+    ipcMain.send('config.initIPC')
+  },
+  mounted() {
+    this.init()
+    if (!window.local) return alert('Desktop App error')
+    this.$on('modal', (val,data) => { this.thisModal = val,this.modalData = data })
+    // ipc.on('config.get', data => this.config = data)   
+    // ipc.send('config.get') 
+  }, 
   watch: {
-    activeTasks(value) {
-      if (value.length > 0) {
-        if (
-          value.some(el => {
-            return el.active_task_state[0] == 1
-          })
-        ) {
-          // console.log('SOME TASKS ARE1` RUNNING')
-          if (!this.onBatteries) {
-            this.boincStatus = 'Computing Tasks...'
-            this.boincStatusIcon = 'check'
-          }
-        } else {
-          // console.log('NO TASKS ARE RUNNING')
-        }
-      }
+    thisModal(val){
+      this.$nextTick(el =>{
+        if (val) this.$refs.modal.open()
+        else this.$refs.modal.close()
+      })
     },
     thisDevice: async function(value) {
-      // console.log('got deviceid')
       if (value) {
-        console.log("INITIALIZED TRUE")
+        console.log("thisDevice:",this.thisDevice)
         this.initialized = true
-        window.local.ipcRenderer.send('boinc.config.get')
         this.loading = false
-        console.log(JSON.stringify(this.thisDevice))
-        this.$root.$emit('localDeviceName',value.name)
-        // if (this.thisDevice.status == 'ACTIVE') this.toggle = true
-        // else {
-          // this.toggle = false
-          // window.local.ipcRenderer.send('boinc.cmd', 'quit')
-        // }
         this.thisDevice.icon = parseDevice.icon(this.thisDevice)
       }
     },
-    toggle: async function(value) {
-      // console.log('TOGGLE STATE', value)
-      this.pending = true
-      try {
-        var deviceStatus = {
-          deviceId: this.thisDevice.id
-        }
-        if (value) {
-          deviceStatus.status = 'ACTIVE'
-          this.actionbg.backgroundColor = 'li'
-          window.local.ipcRenderer.send('startBoinc')
-          window.local.ipcRenderer.send('boinc.activeTasks')
-          clearInterval(this.deviceStatePoll)
-          this.deviceStatePoll = setInterval(() => {
-            console.log('request device active tasks')
-            window.local.ipcRenderer.send('boinc.activeTasks')
-          }, 200000)
-        } else {
-          deviceStatus.status = 'ONLINE'
-          this.actionbg.backgroundColor = 'white'
-          window.local.ipcRenderer.send('boinc.cmd', 'quit')
-          clearInterval(this.deviceStatePoll)
-        } 
-        // var result = await this.api.device.updateStatus(deviceStatus)
-      } catch (error) {
-        ec(error)
-
-      } finally {
-        this.thisDevice = await this.$api.getDevice({id:this.thisDevice.id}).catch(ec)
-        this.pending = false
-      }
-    },
     authenticated(val) {
-      console.log(val)
-      if (val) setTimeout(this.refreshDevice,1000)
+      if (!val) this.$root.$emit('reload')
+      else initLocalDevice(this)
+    },
+    config(){
+
     }
   }
 }
 </script>
 
-<style scoped lang="stylus">
+<style lang="stylus">
+@import '~variables'
+.infobtn
+  height:10px
+  width: 30px
+
+.devicebg
+  background-color $green-5
+
+.selected
+  background-color $green-5
+  color: white
+
 .layout-padding {
   max-width: 700px;
 }

@@ -21,6 +21,7 @@ export default new VueRouter({
     { path: '/t/:teamname?', component: load('Team'), name: 'Team' },
     { path: '/leaderboards/', component: load('Leaderboards'), name: 'Leaderboards' },
     { path: '/device/', component: load('Device'), name: 'Device' },
+    { path: '/device2/', component: load('Device2'), name: 'Device2' },
     { path: '/desktop/', component: load('Device'), name: 'Desktop' },
     { path: '/local', component: load('Bus'), name: 'Local' },
     { path: '/auth/', component: load('Auth'), name: 'Auth' },
