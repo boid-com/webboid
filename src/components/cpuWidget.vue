@@ -104,7 +104,7 @@ export default {
   data() {
     return {
       disableToggle:false,
-      toggle: JSON.parse(window.localStorage.getItem('cpuToggle')),
+      toggle: false,
       ipcRenderer: null,
       thisDevice: this.$parent.thisDevice,
       activeTasks: null,
@@ -125,16 +125,18 @@ export default {
   },
   created(){
     console.log('LOCALSTORAGE TOGGLE:',JSON.parse(window.localStorage.getItem('cpuToggle')))
-    // if (!JSON.parse(window.localStorage.getItem('gpuToggle'))) {
-    //   this.toggle = false
-    //   window.localStorage.setItem('gpuToggle',false)}
+
   },
   beforeDestroy(){
     clearInterval(window.boincInterval)
     this.$root.$off('updateCPUConfig')
   },
   mounted() { 
-    if (JSON.parse(window.localStorage.getItem('cpuToggle'))) this.start()
+    if (JSON.parse(window.localStorage.getItem('cpuToggle'))) {
+      setTimeout(() => {
+        this.toggle = true
+      }, 1000)
+    }
     clearInterval(window.boincInterval)
     this.ipcRenderer = window.local.ipcRenderer
     this.$root.$on('updateCPUConfig', el => {
@@ -252,7 +254,7 @@ export default {
       this.statusIconColor = "grey-8"
       ipc.send('stop')
       clearInterval(window.boincInterval)
-      this.status = "Stoping..."
+      this.status = "Stopping..."
     }
   },
   computed: {
