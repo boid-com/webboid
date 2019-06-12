@@ -6,77 +6,45 @@
           div
             q-btn.on-left(big style="font-size:30px" color="green" @click="$e.$emit('openAuthModal',true)") Join Us
             q-btn.on-left(big style="font-size:20px" color="blue" @click="openURL('https://www.boid.com')") Learn More
-      .row.justify-center
-        .layout-padding.full-width.relative-position(style="height:140px;")
-          img.avatar.absolute-center.block( v-if="myProfile" style="width:120px; height:120px;" :src="thisUser.image")
-          img.avatar.absolute-center.block( v-else style="width:120px; height:120px;" :src="thatUser.image")
       .row.full-width.justify-center
-        div.full-width(v-if="myProfile")
-          div.full-width( v-if="thisUser.username")
-            q-card.relative-position(ref="chartDiv" style="height:375px; padding: 10px; padding-top: 15px;")
-              .light-paragraph.text-center(style="margin-bottom:30px;") My Graphs (14d)
+        div.full-width
+          div.full-width
+            q-card.relative-position(ref="chartDiv" style="height:445px; padding: 10px; padding-top: 15px;")
+              .layout-padding.full-width.relative-position(style="height:140px;")
+                .row.full-width.justify-center
+                  .col-sm-12.col-lg-4.relative-position
+                    q-card.animate-scale.relative-position(style="height:85px;")
+                      .row.justify-center(style="padding-top:0px")
+                        .col(v-for="(social,index) in parseSocial" :key="index")
+                          .row.justify-center
+                            q-btn.socialbtn(flat round @click="openURL(social.url)")
+                              img.socialbtn(:src="social.img" style="max-width:35px; filter:opacity(.8)")
+                              q-tooltip {{social.url}}
+                  .col-sm-12.col-lg-4.relative-position
+                    p.light-paragraph.text-center(style="font-size:24px;margin-top:20px;") {{thatUser.username}}
+                  .col-sm-12.col-lg-4.relative-position
+                    q-card.animate-scale.relative-position(v-if="thatUser.team" style="height:85px;")
+                      table.q-table(style="width:100%; padding:0;")
+                        thead()
+                          th
+                            p.text-center(style="margin:0;") NFT
+                          th
+                            p.text-center(style="margin:0;") Medals
+                        tbody()
+                          tr
+                            td
+                              p.text-center(style="margin:0;") 0
+                            td
+                              p.text-center(style="margin:0;") 0
+                .row.full-width.justify-center
+                  img.avatar.absolute-center.block( style="width:85px; height:85px; position:absolute;top:135px;" :src="thatUser.image")
+                div.justify-center( class="mask")
               userChart( style="margin-top:20"
               v-if="powerChart" :chartData="powerChart" :height="295")
               q-inner-loading(:visible="!powerChart")
                 q-spinner-ball(size="60px" color="blue")
-        div.full-width(v-else)
-          div.full-width(v-if="thatUser.username")
-            q-card.relative-position(ref="chartDiv" style="height:375px; padding: 10px; padding-top: 15px;")
-              .light-paragraph.text-center(style="margin-bottom:30px;") {{thatUser.username}}`s Graphs (14d)
-              userChart( style="margin-top:20"
-              v-if="powerChart" :chartData="powerChart" :height="295")
-              q-inner-loading(:visible="!powerChart")
-                q-spinner-ball(size="60px" color="blue")
-
       .row.justify-center
         .col-sm-12.col-lg-5.relative-position
-          .row
-            q-card.animate-scale.relative-position(v-if="thatUser.team" class="teamRange")
-              div.light-paragraph.text-center Personal details
-              table.q-table(style="width:100%")
-                tbody()
-                  tr
-                    td
-                      img.tokenimg( :src="thatUser.image")
-                    td
-                      tr(v-if="thatUser.username")
-                        td
-                          p.text-center User Name:
-                        td
-                          p.text-center {{thatUser.username}}
-                      tr(v-if="thatUser.tagline")
-                        td
-                          p.text-center Greeting:
-                        td
-                          div(v-if="!myProfile")
-                            .tagline(v-if="thatUser.tagline")
-                              h6.light-paragraph.text-center {{thatUser.tagline}}
-                            .tagline(v-else-if="myProfile")
-                              h6.light-paragraph.text-center add a cool tagline here
-                          div(v-else)
-                            .tagline(v-if="thisUser.tagline")
-                              h6.light-paragraph.text-center {{thisUser.tagline}}
-                      tr
-                        td
-                          p.text-center NFT/Medals
-                        td
-                          p.text-center 0 / 0
-                      tr(v-if="myProfile")
-                        td
-                        td.full-width
-                          div(v-if="myProfile" style="margin:8px; margin-bottom:0px;")
-                          q-btn(color='blue' @click="$e.$emit('openProfileEditModal')") Update Profile
-              div(style="bottom:15px;")
-                div(v-if="parseSocial" style="margin-top:16px;")
-                  p.light-paragraph.text-center
-                  .row.justify-center(style="padding-top:0px")
-                    .col(v-for="(social,index) in parseSocial" :key="index")
-                      .row.justify-center
-                        q-btn.socialbtn(flat round @click="openURL(social.url)")
-                          img.socialbtn(:src="social.img" style="max-width:35px; filter:opacity(.8)")
-                          q-tooltip {{social.url}}
-
-
           .row
             q-card.animate-scale.relative-position(v-if="thatUser.powerRatings")
               p.light-paragraph.text-center Power Rating
@@ -113,51 +81,6 @@
                 div(v-else)
                   div.light-paragraph.text-center No coin rewards available...
                   q-tooltip You can ask the team leader to add some additional rewards.
-          .col-xs-12.col-sm-6.col-md-12
-            q-card.animate-scale.relative-position(v-if=("authenticated"))
-              .absolute-top-right
-                q-btn.infobtn(round small flat)
-                  q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.social)")
-              p.light-paragraph.text-center Social
-              div.relative-position(style="margin:auto; margin-top:30px")
-                q-tooltip The number of users that have signed up for Boid using your referral link.
-                h3.text-center(style="z-index:5;") {{parseInt(thatUser.invited.length)}}
-                  q-icon.text-center.absolute-center(color="blue-1" name='fa-users' style="font-size:50px; z-index:-4;")
-              div(style="height:15px;")
-              q-btn.full-width( outline color="green" @click="$e.$emit('openSocialModal')")
-                | Get Invite Link
-          .col-xs-12.col-sm-6.col-md-12
-            q-card.animate-scale.relative-position(v-if="thisUser.tokens")
-              .absolute-top-right
-                q-btn.absolute.infobtn(round small flat)
-                  q-icon.infobtn(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
-              p.light-paragraph.text-center Wallet
-              table.q-table.reactive(style="width:100%")
-                tbody(v-for="token in thisUser.tokens" :key="token.id")
-                  tr.tokenlist.cursor-pointer()
-                    td
-                      img.tokenimg(:src="token.type.image")
-                    td {{token.type.name}}
-                    td
-                      small Pending
-                      p {{token.balance.toFixed(4)}}
-                      small Paid Out
-                      p {{token.paid.toFixed(4)}}
-                    td
-                  //- q-tooltip View Transactions
-              div(v-if="thisUser.payoutAccount")
-                p.light-paragraph.text-center EOS Payout Account
-                .row.gutter-md(style="padding-top:10px")
-                  .col-8
-                    h5(style="margin:5px;") {{thisUser.payoutAccount}}
-                  .col-4
-                    div
-                      q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Change
-              div(v-else)
-                p.light-paragraph.text-center You have not linked an EOS account yet
-                  q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Link EOS Account
-                  br
-                  q-btn.full-width(color="blue" flat @click="$root.$emit('modal','exchangeModal')") Get BOID
         .col-sm-12.col-lg-7
           .row.full-width(v-if="thatUser")
             .col(v-if="thatUser" v-for="stat of userStats" :key="stat.label")
@@ -187,7 +110,7 @@
                   .col-xs-6.col-sm-3.col-md-2.col-lg-2
                     q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
                       q-item-tile(label style="user-select: none;") {{index+1}}. {{device.name}} {{device.type}}
-                      q-item-tile.relative-position(style="padding-left:15px;" sublabel  v-if="device.boincPower") CPU: {{device.boincPower.toLocaleString()}}
+                      q-item-tile.relative-position(style="padding-left:15px;" sublabel) CPU: {{device.boincPower.toLocaleString()}}
                           |{{displayPending(device)}}
                           q-tooltip Device Power (Pending)
                             img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
@@ -493,6 +416,13 @@
 
   .hovericon {
     color: $grey-5;
+  }
+  .mask{
+    width:90%;
+    height:30px;
+    background-color:white;
+    position:absolute;
+    top:400px;
   }
   .socialbtn:hover
     filter: opacity(1.0)
