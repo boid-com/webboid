@@ -213,7 +213,7 @@ export default {
     showOlark(val) {
       try {
         if (val) {
-          if (this.local) return
+          if (this.local) window.olark('api.box.hide')
           window.olark('api.box.show')
         } else window.olark('api.box.hide')
       } catch (error) {
@@ -287,6 +287,7 @@ export default {
   mounted: async function() {
     // if (this.local && !this.authenticated) this.handleLogin()
     if (this.local) this.ipcRenderer = window.local.ipcRenderer
+    if (this.local) window.olark('api.box.hide')
     setTimeout(() => {
       this.pending = false
       // this.$root.$emit('modal.nue',true)
@@ -437,7 +438,8 @@ export default {
         console.log('close authModal')
         this.$refs.authModal.close()
         this.menuBreakpoint = 1200
-        if (window.olark) {
+        if (this.local) {}
+        else if (window.olark) {
           window.olark('api.visitor.updateFullName', {
             fullName: this.thisUser.username
           })
@@ -455,7 +457,7 @@ export default {
         }
       } else {
 
-        // if(this.local)this.$refs.authModal.open()
+        if(this.local) this.handleLogin()
         // if (this.local) this.$router.push({ name: 'Auth' })
         clearInterval(this.userPoll)
         this.userPoll = null

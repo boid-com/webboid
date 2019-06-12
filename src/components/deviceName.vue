@@ -1,11 +1,11 @@
 <template lang="pug">
-.row.justify-center(style="height:45px; overflow:hidden")
+.row.justify-center(style="height:45px; overflow:hidden" ref="hi")
   q-icon(:name="thisDevice.icon")
   div( v-if="!$parent.editName" style="padding:13px;").text-black {{thisDevice.name}}
   div(v-else)
-    q-input( @keyup.enter="editDeviceName(newDeviceName)" style="width:210px; height:10px; padding:5px; margin:5px; padding-bottom:15px; " placeholder="new device name" v-model="newDeviceName")
+    q-input(ref="nameBox" @keyup.enter="editDeviceName(newDeviceName)" style="width:210px; height:10px; padding:5px; margin:5px; padding-bottom:15px; " placeholder="new device name" v-model="newDeviceName")
   div(v-if="!$parent.editName")
-    q-btn.infobtn(small round flat @click="$parent.editName = true" style="height:25px; width:30px; margin-top:3px" )
+    q-btn.infobtn(small round flat @click="enterEditMode()" style="height:25px; width:30px; margin-top:3px" )
       q-icon(name="edit" size="20px")
       q-tooltip Edit device name
   div(v-else).on-right
@@ -25,6 +25,10 @@ export default {
   },
   props:['thisDevice'],
   methods:{
+    enterEditMode(){
+      this.$parent.editName = true
+      this.$nextTick( () => this.$refs.nameBox.focus())
+    },
     editDeviceName: async function(name){
       try {
         this.newDeviceName = ""

@@ -1,8 +1,14 @@
 <template lang="pug">
 div(style="height:100%; overflow:hidden;")
   p.text-center(style="padding:40px;" v-if="config") {{config.device.uid}}
-  div(v-if="!loading && thisDevice" ref="navigation").bg-grey-3
-    deviceName(:thisDevice="thisDevice")
+  div(v-if="!loading && thisDevice" ref="navigation").bg-grey-3.relative-position
+    .row.justify-center.items-center
+      .col-auto
+        deviceName(:thisDevice="thisDevice") 
+      div.absolute-right(style="margin-right:13px; margin-top:15px height:100%;")
+        q-btn(flat style="margin-top:5px;" @click="openConfigModal()")
+          q-icon(name="settings" color="grey-7" style="height:100%")
+          q-tooltip Global Settings
     .row.justify-center.no-wrap
       div(v-for="nav in navigation")
         q-btn( flat :class="{selected: page === nav.name}" @click="page = nav.name" :disable="nav.disabled")
@@ -21,12 +27,7 @@ div(style="height:100%; overflow:hidden;")
       hddWidget(:disabled="true" v-show="page === 'HDD' || page === 'Dash' " :thisDevice="thisDevice")
   .layout-padding.relative-position(v-else)
     div(style="padding-top:70px;")
-    q-btn.absolute-center(flat @click="init()" big)
-      q-tooltip Refresh Device
-      q-icon(name="refresh")
-    .row.justify-center
-      q-btn( flat @click="ipcMain.send('openURL','https://www.youtube.com/watch?v=VVlGjVDek_M')" ) Problems?
-  //- div(style="height:20px").full-width.bg-grey-8.absolute-bottom
+    q-btn.absolute-center(flat @click="$e.$emit('openAuthModal')" big color="green") Login
   q-modal(ref="modal" @close="thisModal=null, modalData=null" )
     component(:is="thisModal" :thisModal="$refs.modal" :data="modalData" v-if="thisModal")
 </template>
@@ -39,6 +40,9 @@ import gpuWidget from '@/gpuWidget.vue'
 import hddWidget from '@/hddWidget.vue'
 import gpuConfig from '@/gpuConfig.vue'
 import deviceName from '@/deviceName.vue'
+import cpuConfig from '@/cpuConfig.vue'
+import deviceConfig from '@/deviceConfig.vue'
+
 
 const ipcMain = {
   async send(channel,data,data2) {
@@ -79,7 +83,10 @@ async function initLocalDevice(v){
     deviceExists = await v.$api.findDevice(device)
     if(!deviceExists) newDevice = await v.$api.registerDevice(device) 
     var id = deviceExists.id || newDevice.id
-    if (!id) return alert('There was a problem registering this device')
+    if (!id) {
+      v.$e.$emit('logout')
+      return alert('There was a problem registering this device.')
+    }
     if (deviceInterval) clearInterval(deviceInterval)
       v.thisDevice = await v.$api.getDevice({id})
       deviceInterval = setInterval( async () => {
@@ -90,7 +97,7 @@ async function initLocalDevice(v){
 }
 
 export default {
-  components:{cpuWidget,gpuWidget,gpuConfig,hddWidget,deviceName},
+  components:{cpuWidget,gpuWidget,gpuConfig,hddWidget,deviceName,cpuConfig,deviceConfig},
   data() {
     return {
       config:null,
@@ -117,9 +124,21 @@ export default {
   },
   methods: {
     openURL,
+    async openConfigModal(){
+      this.$emit('modal','deviceConfig',await this.getConfig())
+    },
+    getConfig(){
+      return new Promise( res => {
+        ipcMain.once('config.get',(data) => {
+          res(data.config)
+        })
+        ipcMain.send('config.get')
+      })
+    },
     init(){
-      ipcMain.once('config.getState',(data,data2) => alert(JSON.stringify(data)))
-      ipcMain.send('config.getState')
+      // ipcMain.once('config.getState',(data,data2) => alert(JSON.stringify(data)))
+      // ipcMain.send('config.getState')
+      this.getConfig()
     }
   }, 
   props: ['thisUser', 'authenticated'],
@@ -127,6 +146,7 @@ export default {
     ipcMain.send('config.initIPC')
   },
   mounted() {
+    this.init()
     if (!window.local) return alert('Desktop App error')
     this.$on('modal', (val,data) => { this.thisModal = val,this.modalData = data })
     // ipc.on('config.get', data => this.config = data)   
@@ -149,7 +169,7 @@ export default {
     },
     authenticated(val) {
       if (!val) this.$root.$emit('reload')
-      initLocalDevice(this)
+      else initLocalDevice(this)
     },
     config(){
 

@@ -4,11 +4,13 @@ div
     div.absolute(v-if="disabled" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.6);")
       h6.absolute-center.no-margin.text-white Unable to initialize
     q-card-media.relative-position
-      q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="$parent.$emit('modal','cpuConfig',{config})")
+      | {{isPaused}}
+      q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="configModal()")
         q-icon(color='grey-7' name="settings")
         q-tooltip Settings
       q-btn.infobtn.absolute-top-right(v-if="!selected" color='blue' flat round small @click="$parent.page = 'CPU'" style="top:40px;")
-        q-icon(color='green-7' name="info_outline")
+        q-icon(color='green-7' name="info" v-if="toggle")
+        q-icon(color='grey' name="info" v-else)
         q-tooltip Details
       q-btn.infobtn.absolute-top-right(v-else color='blue' flat round small @click="$parent.page = 'Dash'" style="top:40px;")
         q-icon(color='green-7' name="keyboard_arrow_up")
@@ -28,51 +30,28 @@ div
               //- small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
               q-tooltip Boid Power is displayed at a 6-12 hour delay.
           .row
-            q-btn.light-paragraph.no-margin( flat small style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://www.worldcommunitygrid.org/research/mcm1/overview.do')") rvn.boid.com
+            q-btn.light-paragraph.no-margin( flat small style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://www.worldcommunitygrid.org/research/viewAllProjects.do')") WorldCommunityGrid
             q-tooltip Learn more about the current computational task
     q-card-separator
     q-card-main.relative-position(v-if="selected" style="height:320px; overflow:hidden; width:100%; padding:0px;")
-      div(style="overflow:auto; height:285px;")
-        div(v-for="log of reverseLog" style="padding:0px; margin:10px; overflow:hidden;" ref="logDisplay")
-          small.block {{log.time}}
-          pre(style="margin:0px;")
-            small(style="padding:0px;") {{log.text}}
-      q-card-separator
-      div
-        .row.items-center
-          .col-auto(style="height:40px;" v-if="toggle")
-            .row(style="height:100%;").items-center
-              small.light-paragraph(style="margin:5px;") BOINC
-              q-btn(small flat @click="alert('boinc stats here')") stats 
-              //- q-btn(small flat @click="alert(trexStats)") details 
-          .col
-            .row.justify-end
-              .col-auto(style="height:40px;")
-                q-btn( style="height:100%;" small flat @click="selectText()" :disable="reverseLog.length < 1") Copy Log
+      cpuInfo
     q-card-separator
     div(style="height:50px;")
       .row.items-center(style="height:100%;")
         .col-auto
-          q-btn.inline(@click="dev()") dev
-          h6.text-grey-8.on-right.no-margin.inline(style="padding:20px;") {{status}} 
+          div(style="padding:10px; padding-right:0px;")
+            q-icon(:name="statusIcon" :color="statusIconColor" size="25px;")
+        .col-auto
+          h6.text-grey-8.on-right.no-margin.inline(style="padding-left:5px;") {{status}} 
         .col.full-width
           .row.justify-end.items-baseline(style="padding-bottom:10px;")
-            q-btn.infobtn(:color='activebtnminus' flat round small 
-            @click="adjustIntensity(cpuUtilization - 5)" 
-            :disabled="cpuUtilization < 10 || toggle")
-              q-icon(name="remove")
-            h6.text-grey-8 {{cpuUtilization.toFixed(0)}} %
-              q-tooltip CPU Intensity
-            q-btn.infobtn(:color='activebtnplus' flat round small  
-            @click="adjustIntensity(cpuUtilization + 5)" 
-            :disabled="cpuUtilization > 96 || toggle")
-              q-icon(name="add")
             q-toggle(:disable="disableToggle" color="green" style="padding-right:20px; padding-top:10px;" v-model="toggle")
 </template>
 
 <script>
 import { Loading, Toast } from 'quasar'
-import boinc from '../lib/boinc.js'
+const boinc = require('../lib/boinc.js')
+import cpuInfo from '@/cpuInfo.vue'
 
 Toast.setDefaults({timeout: 2000})
 
@@ -94,9 +73,16 @@ const ipc = {
     channel = 'boinc.' + channel
     console.log('ipcOn:', channel, func)
     return await window.local.ipcRenderer.on(channel, async (event, data) => {
-      return await func(data)
+      return func(data)
     })
-  }
+  },
+  async once(channel, func) {
+    channel = 'boinc.' + channel
+    console.log('ipcOn:', channel, func)
+    return await window.local.ipcRenderer.once(channel, async (event, data, data2) => {
+      return await func(data,data2)
+    })
+  },
 }
 const convertRange = ( value, r1, r2 ) => ( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ]
 const convertHashrate = (number) => (number / 1000000).toFixed(0) + ' MH/s '
@@ -111,53 +97,120 @@ function copyDivToClipboard(elem) {
     document.execCommand("copy");
     window.getSelection().removeAllRanges();
 }
-
+var needsProject = false
 export default {
   props: [],
+  components:{cpuInfo},
   data() {
     return {
       disableToggle:false,
-      toggle: false,
+      toggle: JSON.parse(window.localStorage.getItem('cpuToggle')),
       ipcRenderer: null,
       thisDevice: this.$parent.thisDevice,
       activeTasks: null,
       disabled: false,
-      status: "initializing...",
+      status: "Toggle on to start >",
       boincInfo: null,
-      statusIcon: "pause",
+      statusIcon: "stop",
+      isPaused:false,
       statusLog: [],
       config:null,
       shouldAutoStart:false,
       directories:null,
       boinc,
-      cpuUtilization:40
+      state:{workUnits:[],results:[],uptime:0},
+      prefs:null,
+      statusIconColor:"grey-8"
     }
   },
+  created(){
+    console.log('LOCALSTORAGE TOGGLE:',JSON.parse(window.localStorage.getItem('cpuToggle')))
+    // if (!JSON.parse(window.localStorage.getItem('gpuToggle'))) {
+    //   this.toggle = false
+    //   window.localStorage.setItem('gpuToggle',false)}
+  },
+  beforeDestroy(){
+    clearInterval(window.boincInterval)
+    this.$root.$off('updateCPUConfig')
+  },
   mounted() { 
-    this.$root.$on('updateCPUConfig', el => ipc.send('config.write',el))
-
-
+    if (JSON.parse(window.localStorage.getItem('cpuToggle'))) this.start()
+    clearInterval(window.boincInterval)
     this.ipcRenderer = window.local.ipcRenderer
+    this.$root.$on('updateCPUConfig', el => {
+      const prefs = boinc.convertForPrefs(el.prefs)      
+      ipc.send('config.write', el.config)
+      ipc.send('prefs.write', prefs)
+      setTimeout(() => {
+        ipc.send('cmd','read_global_prefs_override')
+        ipc.send('prefs.read')
+      }, 1000)
+      setTimeout(() => {
+        ipc.send('state.getUI')
+      }, 2000)
+    })
     // ipc.on('gpu.error',alert)
     ipc.on('init', data => this.directories = data)
     ipc.send('init')
-    // ipc.on('trex.config.read', data => this.trexConfig = data)
-    // ipc.on('config.init', data => this.shouldAutoStart = data.autoStart)
-    // ipc.on('wildrig.config.read', data => this.wildrigConfig = gpu.wildrig.config.parse(data))
-    // ipc.on('config.read', data => this.config = data)
-    // ipc.on('getGPU', (data) => this.gpuInfo = gpu.parse(data))
-    // ipc.send('getGPU')
-    // ipc.send('config.init',gpu.config.defaultConfig)
-
-    // ipc.on('trex.config.init',(data)=>{console.log(data)})
+    ipc.on('started',()=>{
+      ipc.send('state.getProject')
+    })
+    ipc.on('state.getProject',data => {
+      if (!data){
+        console.log('need to connect device to WCG')
+          var userProjectURL = 'http://www.worldcommunitygrid.org/'
+          var addProject = 'project_attach ' + userProjectURL + ' ' + this.thisDevice.wcgKey
+          ipc.send('cmd',addProject)
+          setTimeout(() => ipc.send('state.getProject'), 15000)
+      } else {
+        try {
+          const wcgid = data.hostid[0]
+          if (wcgid == "0") return setTimeout(() => ipc.send('state.getProject'), 15000)
+          console.log('WCGID DEBUG',wcgid,this.thisDevice.wcgid)
+          if (this.thisDevice.wcgid != wcgid) this.$api.updateDevice({id:this.thisDevice.id,wcgid})
+        } catch (error) { ec(error) }
+      }
+    })
+    ipc.once('config.init', data => {
+      if (data.autoStart && !this.toggle) {
+        this.status = "Autostarting"
+        setTimeout(() => {
+          this.toggle = true
+        }, 1000)
+      } 
+    })
+    ipc.send('config.init',boinc.config.defaultConfig)
+    ipc.on('state.getUI',data => this.state = data)
+    ipc.send('state.getUI')
     ipc.on('status', (data) => this.status = data)
-    ipc.on('log', data => this.statusLog.push({
-      text: data.replace(/\[.*?\]/g,'')
-    }))
+    ipc.on('prefs.read', prefs => this.prefs = prefs)
+    ipc.send('prefs.read')
+    ipc.on('log', data => {
+      const text = boinc.parseLog(data)
+      const paused = boinc.checkPaused(text)
+      const resumed = boinc.checkResumed(text)
+      if (paused) this.isPaused = paused
+      if (resumed) this.isPaused = false
+      this.statusLog.push({
+      time: new Date().toLocaleString(),
+      text
+      })
+    })
   },
   methods: {
+    configModal(){
+      ipc.once('prefs.read',(prefs)=>{
+        prefs = boinc.parsePrefs(prefs)
+        ipc.once('config.read',(config) => this.$parent.$emit('modal','cpuConfig',{prefs,config}))
+        ipc.send('config.read')
+      })
+      ipc.send('prefs.read')
+    },
     dev(){
-      ipc.send('init')
+      ipc.once('prefs.read',(data)=>{
+        alert(JSON.stringify(boinc.parsePrefs(data)))
+      })
+      ipc.send('prefs.read')
     },
     selectText(data) {
       copyToClipboard(JSON.stringify(this.statusLog,null,2))
@@ -179,21 +232,27 @@ export default {
     },
     start() {
       this.statusIcon = "check"
+      this.statusIconColor = "green"
       this.status = "Starting..."
-        clearInterval(this.boincInterval)
+        clearInterval(window.boincInterval)
         setTimeout(() => {
-          this.boincInterval = setInterval(() => {
+          window.boincInterval = setInterval(() => {
             if (this.toggle) ipc.send('state.getUI')
-            else clearInterval(this.boincInterval)
-          }, 2000)
+            else clearInterval(window.boincInterval)
+          }, 30000)
         }, 2000)
         ipc.send('start')
+        ipc.send('state.getUI')
+        setTimeout(() => {
+          ipc.send('state.getUI')
+        }, 5000)
     },
     stop() {
       this.statusIcon = "stop"
+      this.statusIconColor = "grey-8"
       ipc.send('stop')
-      clearInterval(this.boincInterval)
-      this.status = ""
+      clearInterval(window.boincInterval)
+      this.status = "Stoping..."
     }
   },
   computed: {
@@ -221,6 +280,31 @@ export default {
     }
   },
   watch: {
+    isPaused(val){
+      if(val){
+        this.statusIcon = "pause"
+        this.statusIconColor = "grey-8"
+        this.status = val
+      }else{
+        this.statusIcon = "check"
+        this.statusIconColor = "green"
+        ipc.send('state.getUI')
+      }
+    },
+    state(val){
+      if (!val || !this.toggle || !this.prefs) return
+      if (this.isPaused) return
+      if (!val.workUnits) return
+      const workUnits = val.workUnits.filter(el => el.active_task_state[0] == 1)
+      this.status = "Processing " + workUnits.length + " Work Units at " + parseFloat(this.prefs.max_ncpus_pct).toFixed(0) + '%' + ' CPU'
+    },
+    status(val){
+      if (val === 'Stopped') {
+        this.statusIcon = "stop"
+        this.statusIconColor = "grey-8"
+        this.disableToggle = false}
+    },
+    
     statusLog(val){
       if (val.length > 1000) this.statusLog.shift()
     },
@@ -230,25 +314,20 @@ export default {
         if (val && !this.toggle) this.status = "Ready to start"
       }, 1500)
     },
-    boincInfo(val) {
-      if (this.shouldAutoStart) {
-        this.status = "Autostarting"
-        setTimeout(() => {
-          this.toggle = true
-          this.shouldAutoStart = false
-        }, 1000)
-      } 
-    },
     toggle(val) {
       this.disableToggle =  true
-      setTimeout(() => {
-        this.disableToggle = false
-      }, 2500)
+      window.localStorage.setItem('cpuToggle',val)
       if (val) {
-        
+        setTimeout(() => {
+          this.disableToggle = false
+        }, 4500)
         // if (!this.boincInfo) return this.toggle = false
         this.start()
       } else {
+        this.isPaused = false
+        setTimeout(() => {
+          this.disableToggle = false
+        }, 10500)
         this.stop()
       }
     },
