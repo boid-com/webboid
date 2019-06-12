@@ -1,0 +1,1202 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for workplace/unittesting/webboid/src/components/Device.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\..\..\index.html">All files</a> / <a href="index.html">workplace/unittesting/webboid/src/components</a> Device.vue
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/127</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/54</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/126</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template lang="pug"&gt;
+div()
+  .layout-padding.relative-position(v-if="!loading &amp;&amp; thisDevice.name")
+    h6.text-center(style="padding: 0px; margin: 0px;") {{thisDevice.name}} 
+      q-icon.float-lefth.on-right.inline( style="padding-bottom:3px;" :name='parseDevice.icon(thisDevice)' :color="parseDevice.color(thisDevice)")
+      q-tooltip Your Device Name
+  
+    q-card(style='width:90vw; max-height:410px;')
+      q-card-media.relative-position
+        q-btn.infobtn.absolute-top-right(color='blue' flat round @click="openConfigModal()")
+          q-icon(color='grey-7' name="settings")
+          q-tooltip Settings
+        .row
+          .col-auto
+            img(style="opacity:.9; width:100px; height:100px; padding:15px;" src="statics/images/magnifyingglass.svg")
+          .col-7.relative-position
+            h6.light-paragraph Device Boid Power
+              q-tooltip Boid Power is updated as each Work Unit is finished. You only receive Boid Power after you have completed at least one Work Unit first. Work Units can take 6-12 hours to process, so be patient when starting.
+            div.relative-position(style="width:70%")
+              img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; top:5px;")
+              div(style="padding-left:20px; padding-top:5px;")
+                div(v-if="thisDevice.power") {{thisDevice.power.toFixed(4)}}
+                div(v-else)
+                  | 0.0
+                small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
+                  q-tooltip Pending power can take 24 hours or more to be verified.
+                q-btn.absolute-right(flat @click="refreshDevice()")
+                  q-tooltip Refresh Device
+                  q-icon(name="refresh")
+            .row.justify-center
+              q-btn.light-paragraph( flat style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://www.worldcommunitygrid.org/research/mcm1/overview.do')") Mapping Cancer Markers
+              q-tooltip Learn more about the current computational task
+              // h6.absolute-bottom-right.text-grey-7(style="margin-right:10px;") Mapping Cancer Makers
+        div(style="padding-left:10px;" v-if="toggle")
+          p.on-right(v-if="activeTasks.length &gt; 0") Work Units ({{activeTasks.length}})
+            q-tooltip Work Units are small tasks that help solve huge problems.
+          p(v-else) Downloading Work Units....
+      q-card-main(v-if="toggle" style="max-height:195px; overflow:scroll; padding-top:0px;")
+        div(v-if="activeTasks.length &gt; 0" v-for="(task,index) in activeTasks" :key='task.slot[0]' style="margin-bottom:5px;")
+          
+          q-progress( style="height:10px;" v-if="task.active_task_state[0] == 1 &amp;&amp; !onBatteries" :buffer="0" height="40px" stripe :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
+          q-progress(v-else :buffer="0" height="40px" stripe :percentage="task.checkpoint_fraction_done[0]*100" color="grey-4")
+          q-tooltip 
+            p(style="margin:0px;") Task:
+            | {{task.result_name[0]}} 
+            div(style="height:10px;")
+            p(style="margin:0px;") Progress:
+            | {{(task.checkpoint_fraction_done[0]*100).toFixed(0)}}%
+          
+      q-card-separator
+      q-card-actions.taller.relative-position()
+        q-btn(small round flat)
+          q-icon.on-right(v-if="toggle" :name="boincStatusIcon")
+        h6.text-grey-8.on-right(v-if="toggle" style="padding-top:5px;") {{boincStatus}}
+        q-spinner-grid.inline.on-right.absolute-right(:size="20" color="grey-4" v-if="toggle" style="right:70px; top:20px;")
+        q-toggle.absolute-right(color="green" style="padding:20px;" v-model="toggle")
+  .layout-padding.relative-position(v-else)
+    .text-center {{initStatus}}
+    div(style="padding-top:70px;")
+    q-btn.absolute-center(flat @click="refreshDevice()" big)
+      q-tooltip Refresh Device
+      q-icon(name="refresh")
+    .row.justify-center
+      q-btn( flat @click="ipcRenderer.send('openURL','https://www.youtube.com/watch?v=VVlGjVDek_M')" ) Problems?
+&nbsp;
+&nbsp;
+  &lt;/template&gt;
+&nbsp;
+&lt;script&gt;
+<span class="cstat-no" title="statement not covered" >import parseDevice from 'src/lib/parseDevice'</span>
+<span class="cstat-no" title="statement not covered" >import { Alert,openURL } from 'quasar'</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >var masterInterval = null</span>
+<span class="fstat-no" title="function not covered" >function ec(err){</span>
+<span class="cstat-no" title="statement not covered" >  console.error(err)</span>
+  // alert(err)
+}
+&nbsp;
+<span class="fstat-no" title="function not covered" >function setupDevice(device) {</span>
+<span class="cstat-no" title="statement not covered" >  if (!device) return null</span>
+  var type
+<span class="cstat-no" title="statement not covered" >  if (device.os.name === 'Darwin') type = 'MAC'</span>
+  else type = 'WINDOWS'
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    status:'ACTIVE',
+    cpid: device.cpid,
+    name: device.name,
+    type,
+    meta: device
+  }
+}
+&nbsp;
+export default {
+  data() {
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      ipcRenderer:null,
+      loading: true,
+      initialized:false,
+      parseDevice,
+      initStatus:"Initializing...",
+      onBatteries: false,
+      deviceStatePoll: null,
+      actionbg: {
+        backgroundColor: 'white'
+      },
+      config: {
+        run_if_user_active: null
+      },
+      boincStatus: 'Initializing....',
+      boincStatusIcon: 'check',
+      activeTasks: [],
+      thisDevice: {
+        name: null,
+        power: '',
+        status: '',
+        id: '',
+        meta: {},
+        icon: 'WINDOWS',
+        type: 'WINDOWS',
+        powerRatings: []
+      },
+      deviceId: null,
+      pending: false,
+      toggle: false
+    }
+  },
+  computed: {},
+  methods: {
+    openURL,
+<span class="fstat-no" title="function not covered" >    refreshDevice: async function(){</span>
+<span class="cstat-no" title="statement not covered" >        try {</span>
+<span class="cstat-no" title="statement not covered" >          this.init()</span>
+<span class="cstat-no" title="statement not covered" >          window.local.ipcRenderer.send('boinc.activeTasks')</span>
+        } catch (error) {
+<span class="cstat-no" title="statement not covered" >          alert(error.message)</span>
+<span class="cstat-no" title="statement not covered" >          ec(error)</span>
+<span class="cstat-no" title="statement not covered" >          return</span>
+        }
+    },
+    openConfigModal() {
+<span class="cstat-no" title="statement not covered" >      this.$e.$emit('openBoincConfigModal', this.config)</span>
+    },
+    modulateTaskProgress(progress) {
+<span class="cstat-no" title="statement not covered" >      progress = parseFloat(progress)</span>
+<span class="fstat-no" title="function not covered" >      function getRandomInt(max) {</span>
+<span class="cstat-no" title="statement not covered" >        return Math.floor(Math.random() * Math.floor(max))</span>
+      }
+<span class="cstat-no" title="statement not covered" >      if (progress &lt; .02) progress += .01</span>
+<span class="cstat-no" title="statement not covered" >      return progress * 100 + getRandomInt(2)</span>
+    },
+<span class="fstat-no" title="function not covered" >    handleLocalDevice: async function(localDevice) {</span>
+<span class="cstat-no" title="statement not covered" >      if (!localDevice) {</span>
+<span class="cstat-no" title="statement not covered" >        console.log('received blank localDevice')</span>
+<span class="cstat-no" title="statement not covered" >        window.local.ipcRenderer.send('initBoinc')</span>
+        // setTimeout(()=&gt;{
+        //   this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))
+        // },3000)
+      } else {
+<span class="cstat-no" title="statement not covered" >        if (localDevice.cpid) {</span>
+<span class="cstat-no" title="statement not covered" >          try {</span>
+<span class="cstat-no" title="statement not covered" >            var result = await this.$api.getDevice({cpid:localDevice.cpid}).catch(ec)</span>
+<span class="cstat-no" title="statement not covered" >            console.log('RESULT FROM CHECK',result)</span>
+<span class="cstat-no" title="statement not covered" >            if (!result) return</span>
+<span class="cstat-no" title="statement not covered" >            if (result === 'none'){</span>
+<span class="cstat-no" title="statement not covered" >              console.log('device does not exist, User can claim device')</span>
+<span class="cstat-no" title="statement not covered" >              try {</span>
+<span class="cstat-no" title="statement not covered" >                var newDevice = await this.$api.addDevice(setupDevice(localDevice)).catch(ec)</span>
+<span class="cstat-no" title="statement not covered" >                this.thisDevice = await this.$api.getDevice({id:newDevice.id}).catch(ec)</span>
+<span class="cstat-no" title="statement not covered" >                console.log("INITIALIZED TRUE")</span>
+<span class="cstat-no" title="statement not covered" >                this.initialized = true</span>
+              } catch (error) {
+<span class="cstat-no" title="statement not covered" >                console.error(error)</span>
+                // clearInterval(this.deviceStatePoll)
+<span class="cstat-no" title="statement not covered" >                return</span>
+              }
+            } else {
+<span class="cstat-no" title="statement not covered" >              if (result.owner.id === this.thisUser.id) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log('this device is owned by this user')</span>
+<span class="cstat-no" title="statement not covered" >                try {</span>
+<span class="cstat-no" title="statement not covered" >                  this.thisDevice = await this.$api.getDevice({id:result.id})</span>
+                } catch (error) {
+<span class="cstat-no" title="statement not covered" >                  ec(error)</span>
+<span class="cstat-no" title="statement not covered" >                  return</span>
+                }
+              } else {
+<span class="cstat-no" title="statement not covered" >                this.$e.$emit('logout')</span>
+<span class="cstat-no" title="statement not covered" >                alert('This device is already claimed by a different account. 😢 \n \n Contact us: support@boid.com')</span>
+              }
+            }
+          } catch (error) {
+            // clear`l(this.deviceStatePoll)
+<span class="cstat-no" title="statement not covered" >            ec(error)</span>
+            // alert(error)
+            // this.$e.$emit('logout')
+            // this.$e.$emit('openAuthModal')
+          }
+        } else {
+<span class="cstat-no" title="statement not covered" >          this.$e.$emit('logout')</span>
+<span class="cstat-no" title="statement not covered" >          this.$e.$emit('openAuthModal')</span>
+<span class="cstat-no" title="statement not covered" >          alert('This device is acting up. 😢 \n \n Contact us: support@boid.com')</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (localDevice.wcgid) {</span>
+<span class="cstat-no" title="statement not covered" >          if (localDevice.wcgid == 0) return</span>
+<span class="cstat-no" title="statement not covered" >          if (localDevice.wcgid == "0") return</span>
+<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >          if (this.thisDevice.wcgid === localDevice.wcgid) return</span></span>
+          else {
+<span class="cstat-no" title="statement not covered" >            var result = await this.$api.updateDevice({</span>
+              deviceId: this.thisDevice.id,
+              wcgid: localDevice.wcgid
+            }).catch(console.error)
+<span class="cstat-no" title="statement not covered" >            console.log(result)</span>
+          }
+        }
+      }
+    },
+    init() {
+<span class="cstat-no" title="statement not covered" >      if (window.local &amp;&amp; this.authenticated) {</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >        setTimeout(() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >          window.olark('api.box.hide')</span>
+<span class="cstat-no" title="statement not covered" >          console.log("INIT")</span>
+<span class="cstat-no" title="statement not covered" >          console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) </span>
+<span class="cstat-no" title="statement not covered" >          if (this.initialized){</span>
+<span class="cstat-no" title="statement not covered" >            if (masterInterval) clearInterval(masterInterval)</span>
+<span class="cstat-no" title="statement not covered" >            masterInterval = setInterval(this.init, 180000)</span>
+          }
+<span class="cstat-no" title="statement not covered" >          this.handleLocalDevice(window.local.ipcRenderer.sendSync('localDevice'))</span>
+        }, 600)
+      }else{
+        // throw('Not Authenticated, restart app')
+      }
+    }
+  },
+  props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
+  mounted() {
+<span class="cstat-no" title="statement not covered" >    console.log('this.route',this.$route.name)</span>
+<span class="cstat-no" title="statement not covered" >    if (!this.$route.name === 'Desktop') return</span>
+<span class="cstat-no" title="statement not covered" >    if (masterInterval) clearInterval(masterInterval)</span>
+    // masterInterval = setInterval(this.init, 10000)
+<span class="cstat-no" title="statement not covered" >    this.init()</span>
+<span class="cstat-no" title="statement not covered" >    if (window.local){</span>
+<span class="cstat-no" title="statement not covered" >      console.log('creating event emitters')</span>
+<span class="cstat-no" title="statement not covered" >      this.ipcRenderer = window.local.ipcRenderer</span>
+<span class="cstat-no" title="statement not covered" >      window.local.ipcRenderer.send('boinc.config.get')</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      window.local.ipcRenderer.on('boinc.toggle', (event, toggle) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >        console.log('GOT TOGGLE:', toggle)</span>
+<span class="cstat-no" title="statement not covered" >        if (!this.loading) this.toggle = toggle</span>
+      })
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      window.local.ipcRenderer.on('boinc.config', (event, value) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >        console.log('GOT CONFIG', value)</span>
+<span class="cstat-no" title="statement not covered" >        this.config = value</span>
+      })
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      window.local.ipcRenderer.on('boinc.activeTasks', (event, activeTasks) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >        console.log('got ACTIVETASKS',JSON.stringify(activeTasks))</span>
+<span class="cstat-no" title="statement not covered" >        if (activeTasks) {</span>
+<span class="cstat-no" title="statement not covered" >          this.activeTasks = activeTasks</span>
+        }
+      })
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      window.local.ipcRenderer.on('boinc.suspended', (event, status) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >        console.log('GOT BOINC SUSPENDED:', status)</span>
+<span class="cstat-no" title="statement not covered" >        if (status) {</span>
+<span class="cstat-no" title="statement not covered" >          this.onBatteries = true</span>
+<span class="cstat-no" title="statement not covered" >          this.boincStatus = `Paused: ${status}`</span>
+<span class="cstat-no" title="statement not covered" >          this.boincStatusIcon = 'pause'</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          this.onBatteries = false</span>
+<span class="cstat-no" title="statement not covered" >          this.boincStatus = 'Computing Tasks...'</span>
+<span class="cstat-no" title="statement not covered" >          this.boincStatusIcon = 'check'</span>
+        }
+      })
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      window.local.ipcRenderer.on('deviceReady', (event, device) =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >        console.log('GOT DEVICE:', device)</span>
+      })
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      window.local.ipcRenderer.on('boinc.error', (event, error) =&gt; { </span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        console.error('boinc.error', error)</span>
+        // if (typeof error == "string") alert(error)
+        // else{
+        //   try{
+        //     alert(JSON.stringify(error))
+        //   } catch (error) {
+        //     console.error('unable to display error to user')
+        //   }
+        // }
+      })
+    }
+  }, 
+  watch: {
+    activeTasks(value) {
+<span class="cstat-no" title="statement not covered" >      if (value.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >        if (</span></span>
+          value.some(el =&gt; {
+<span class="cstat-no" title="statement not covered" >            return el.active_task_state[0] == 1</span>
+          })
+        ) {
+          // console.log('SOME TASKS ARE1` RUNNING')
+<span class="cstat-no" title="statement not covered" >          if (!this.onBatteries) {</span>
+<span class="cstat-no" title="statement not covered" >            this.boincStatus = 'Computing Tasks...'</span>
+<span class="cstat-no" title="statement not covered" >            this.boincStatusIcon = 'check'</span>
+          }
+        } else {
+          // console.log('NO TASKS ARE RUNNING')
+        }
+      }
+    },
+<span class="fstat-no" title="function not covered" >    thisDevice: async function(value) {</span>
+      // console.log('got deviceid')
+<span class="cstat-no" title="statement not covered" >      if (value) {</span>
+<span class="cstat-no" title="statement not covered" >        console.log("INITIALIZED TRUE")</span>
+<span class="cstat-no" title="statement not covered" >        this.initialized = true</span>
+<span class="cstat-no" title="statement not covered" >        window.local.ipcRenderer.send('boinc.config.get')</span>
+<span class="cstat-no" title="statement not covered" >        this.loading = false</span>
+<span class="cstat-no" title="statement not covered" >        console.log(JSON.stringify(this.thisDevice))</span>
+        // if (this.thisDevice.status == 'ACTIVE') this.toggle = true
+        // else {
+          // this.toggle = false
+          // window.local.ipcRenderer.send('boinc.cmd', 'quit')
+        // }
+<span class="cstat-no" title="statement not covered" >        this.thisDevice.icon = parseDevice.icon(this.thisDevice)</span>
+      }
+    },
+<span class="fstat-no" title="function not covered" >    toggle: async function(value) {</span>
+      // console.log('TOGGLE STATE', value)
+<span class="cstat-no" title="statement not covered" >      this.pending = true</span>
+<span class="cstat-no" title="statement not covered" >      try {</span>
+<span class="cstat-no" title="statement not covered" >        var deviceStatus = {</span>
+          deviceId: this.thisDevice.id
+        }
+<span class="cstat-no" title="statement not covered" >        if (value) {</span>
+<span class="cstat-no" title="statement not covered" >          deviceStatus.status = 'ACTIVE'</span>
+<span class="cstat-no" title="statement not covered" >          this.actionbg.backgroundColor = 'li'</span>
+<span class="cstat-no" title="statement not covered" >          window.local.ipcRenderer.send('startBoinc')</span>
+<span class="cstat-no" title="statement not covered" >          window.local.ipcRenderer.send('boinc.activeTasks')</span>
+<span class="cstat-no" title="statement not covered" >          clearInterval(this.deviceStatePoll)</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >          this.deviceStatePoll = setInterval(() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >            console.log('request device active tasks')</span>
+<span class="cstat-no" title="statement not covered" >            window.local.ipcRenderer.send('boinc.activeTasks')</span>
+          }, 200000)
+        } else {
+<span class="cstat-no" title="statement not covered" >          deviceStatus.status = 'ONLINE'</span>
+<span class="cstat-no" title="statement not covered" >          this.actionbg.backgroundColor = 'white'</span>
+<span class="cstat-no" title="statement not covered" >          window.local.ipcRenderer.send('boinc.cmd', 'quit')</span>
+<span class="cstat-no" title="statement not covered" >          clearInterval(this.deviceStatePoll)</span>
+        } 
+        // var result = await this.api.device.updateStatus(deviceStatus)
+      } catch (error) {
+<span class="cstat-no" title="statement not covered" >        ec(error)</span>
+&nbsp;
+      } finally {
+<span class="cstat-no" title="statement not covered" >        this.thisDevice = await this.$api.getDevice({id:this.thisDevice.id}).catch(ec)</span>
+<span class="cstat-no" title="statement not covered" >        this.pending = false</span>
+      }
+    }
+    // '$route.path'(path) {
+    //   console.log(path)
+    // }
+  }
+}
+&lt;/script&gt;
+&nbsp;
+&lt;style scoped lang="stylus"&gt;
+.layout-padding {
+  max-width: 700px;
+}
+&nbsp;
+.infobtn {
+  color: $grey-6;
+  font-size: 15px;
+  right: 5px;
+  top: 5px;
+}
+&nbsp;
+.taller {
+  height: 60px;
+}
+&nbsp;
+body {
+  user-select: none;
+}
+&lt;/style&gt;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 30 2019 22:05:39 GMT+0300 (Moscow Standard Time)
+</div>
+</div>
+<script src="..\..\..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\..\..\sorter.js"></script>
+</body>
+</html>

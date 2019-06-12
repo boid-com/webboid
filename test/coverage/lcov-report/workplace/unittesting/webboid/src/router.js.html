@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for workplace/unittesting/webboid/src/router.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\..\index.html">All files</a> / <a href="index.html">workplace/unittesting/webboid/src</a> router.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/3</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/6</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import Vue from 'vue'</span>
+<span class="cstat-no" title="statement not covered" >import VueRouter from 'vue-router'</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >Vue.use(VueRouter)</span>
+&nbsp;
+function <span class="fstat-no" title="function not covered" >load (component) {</span>
+<span class="cstat-no" title="statement not covered" >  return <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >() =&gt; import(`@/${component}.vue`)</span></span></span>
+}
+&nbsp;
+export default new VueRouter({
+  mode: 'history',
+  scrollBehavior: <span class="fstat-no" title="function not covered" >(</span>to,from) =&gt; {
+<span class="cstat-no" title="statement not covered" >    if (to.path === from.path) <span class="cstat-no" title="statement not covered" >return</span></span>
+    else <span class="cstat-no" title="statement not covered" >return { y: 0 }</span>
+  },
+&nbsp;
+  routes: [
+    { path: '/', component: load('Index'), name: 'Index' },
+    { path: '/confirmPayoutAccount/:requestId/:accountName', component: load('Index'), name:'confirmPayoutAccount'},
+    { path: '/u/:username?', component: load('User'), name: 'User' },
+    { path: '/t/:teamname?', component: load('Team'), name: 'Team' },
+    { path: '/leaderboards/', component: load('Leaderboards'), name: 'Leaderboards' },
+    { path: '/device/', component: load('Device'), name: 'Device' },
+    { path: '/desktop/', component: load('Device'), name: 'Desktop' },
+    { path: '/local', component: load('Bus'), name: 'Local' },
+    { path: '/auth/', component: load('Auth'), name: 'Auth' },
+    { path: '/staking/', component: load('Stake'), name: 'Stake' },
+    { path: '/changeaccount/:requestId', component: load('ChangeAccount'), name: 'ChangeAccount' },
+    // { path: '/tx/:requestId', component: load('ChangeAccount'), name: 'ChangeAccount' },
+    { path: '/vote/', component: load('vote'), name: 'Vote' },
+    { path: '*', component: load('Index') }
+  ]
+})
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 30 2019 22:05:39 GMT+0300 (Moscow Standard Time)
+</div>
+</div>
+<script src="..\..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\..\sorter.js"></script>
+</body>
+</html>

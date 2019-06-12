@@ -5,7 +5,7 @@
       q-toolbar.shadow-1(slot="header" style="webkit-app-region: drag;") 
         q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
           | boid
-          div(slot='subtitle') Season 1 - Alpha 0.0.5
+          div(slot='subtitle') Season 1 - Alpha 0.0.4
         div(v-if="loginVisible")
           q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
             q-icon.on-right(name="create")
@@ -22,7 +22,7 @@
             q-popover(ref='profileMenu' anchor="bottom right" self="top right")
               q-item(link @click='handleLogout()')
                 | Logout
-              q-item(link v-if="!local" @click='$router.push({name:"User",params:{username:thisUser.username}}),$refs.profileMenu.close()')
+              q-item(link v-if="!local" @click='$router.push({name:"User",params:{username:thisUser.username, teamname:thisUser.team.name}}),$refs.profileMenu.close()')
                 | My Profile
               q-item(link v-else @click="ipcRenderer.send('openURL','https://app.boid.com/u/'+thisUser.username)")
                 | My Profile
@@ -241,45 +241,45 @@ export default {
     //   this.$refs.authModal.open()
     // },
     handleLogout() {
-      Loading.show({ delay: 0 })
-      this.$api.logout()
+      Loading.show({ delay: 0 });
+      this.$api.logout();
       // if (!this.local) location.reload()
-      this.authenticated = false
-      this.thisUser = {}
-      Loading.hide()
+      this.authenticated = false;
+      this.thisUser = {};
+      Loading.hide();
       if(this.local) {
         this.$nextTick(function () {
-          window.olark('api.box.hide')
+          window.olark('api.box.hide');
           this.$root.$emit("modal","auth")
         })
       }
     },
     init: async function(id) {
       if (!id) {
-        id = this.$api.localUser()
-        console.log('id here:',id)
-        if (id) return this.init(id)
+        id = this.$api.localUser();
+        console.log('id here:',id);
+        if (id) return this.init(id);
         else {
-          this.pending = false
-          this.authenticated = false
-          if (this.local) this.$root.$emit("modal","auth")
+          this.pending = false;
+          this.authenticated = false;
+          if (this.local) this.$root.$emit("modal","auth");
           return}
       }
-      const userData = await this.$api.getUser({id})
-      console.log('userData from Init',userData)
-      if (!userData) return
-      this.thisUser = userData
-      this.pending = false
-      this.authenticated = true
+      const userData = await this.$api.getUser({id});
+      console.log('userData from Init',userData);
+      if (!userData) return;
+      this.thisUser = userData;
+      this.pending = false;
+      this.authenticated = true;
       Loading.hide()
       }, hideAllMenus(val){
         if (val){
-          this.showMenu = false
-          this.showSideMenu = false
+          this.showMenu = false;
+          this.showSideMenu = false;
           this.loginVisible = false
         }else{
           if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
-          this.showSideMenu = true
+          this.showSideMenu = true;
           this.loginVisible = true
         }
       }
@@ -291,13 +291,13 @@ export default {
     setTimeout(() => {
       this.pending = false
       // this.$root.$emit('modal.nue',true)
-    }, 1000)
+    }, 1000);
     setTimeout(() => {
       // if (adBlocker.isDetected()) {
       //   this.adBlock = true
       //   console.log('adblock detected2')
       // }
-    }, 500)
+    }, 500);
     if (window.olark) {
      window.olark.configure('system.hb_position', 'right') 
     }
@@ -305,12 +305,12 @@ export default {
       console.log(err)
       // this.$refs.authModal.open()
     })
-    var that = this
+    var that = this;
     if (window.innerWidth <= this.menuBreakpoint) this.showMenu = true
   },
   created() {
     if (window.local) {
-      this.local = true
+      this.local = true;
       console.log('FOUND LOCAL IN APP',window.local.ipcRenderer)
       
       }
@@ -318,18 +318,80 @@ export default {
         this.updateLeaderboards().catch(console.error)
         setInterval(this.updateLeaderboards, 128000)
     }
-    this.$root.$on('reload',this.reload)
+    this.$root.$on('browserDeviceThrottle',(input)=>{
+      if (miner){
+        if (input){
+          if (input > .9) input = .9;
+          if (input < .09) input = 0;
+          miner.setThrottle(input)
+        }
+        this.ch.throttle = miner.getThrottle()
+      }else {
+        this.ch.throttle = 0
+      }
+    })
+    this.$root.$on('browserDeviceToggle',(toggle,deviceId)=>{
+      this.ch.toggle = toggle;
+      if (toggle){
+        this.$loadScript("https://coinhive.com/lib/coinhive.min.js").then(()=>{
+          this.ch.hps = "Loading...";
+          miner = new window.CoinHive.User('i3u3mkfSxqzZKwsJVrTEfo0IV8QHJOjR', deviceId);
+          miner.start({
+            throttle:0.3,
+            threads: ()=>{if (CPUCores>2) {return CPUCores - 1} else{ return CPUCores}}
+          });
+          miner.setThrottle(.3)
+          hashInterval = setInterval(()=>{
+            this.ch.hps = miner.getHashesPerSecond().toFixed(0)
+          },8000);
+          this.ch.throttle = miner.getThrottle();
+          miner.on('found', (data) => {
+            this.ch.found = true;
+            setTimeout(()=>{
+              this.ch.found = false 
+            },2000)
+          });
+
+          miner.on('error', function(params) {
+            if (params.error !== 'connection_error') {
+              console.error('The pool reported an error', params.error);
+            }
+          });
+
+          miner.on('job', function(data) {
+            console.log(data)
+          });
+
+          miner.on('accepted', (data) => {
+            this.ch.accepted = true;
+            setTimeout(()=>{
+              this.ch.accepted = false 
+            },2000)
+          })
+      })
+
+      }else {
+        if (miner) {
+          miner.stop();
+          if (hashInterval) clearInterval(hashInterval)
+          }
+      }
+
+    });
+    this.$root.$on('localDeviceName',val =>{
+      this.localDeviceName = val
+    });
     this.$root.$on('hideAllMenus',val =>{
       this.hideAllMenus(val)
     })
     this.$root.$on('modal',val =>{
-      this.thisModal = val
-      if (val) this.$refs.modal.open(), this.showOlark(false)
+      this.thisModal = val;
+      if (val) this.$refs.modal.open(), this.showOlark(false);
       else this.$refs.modal.close(), this.showOlark(true)
     })
     this.$e.$on('thatUser', value => {
-      console.log('thatUser', value)
-      this.thatUser = value
+      console.log('thatUser', value);
+      this.thatUser = value;
       console.log(this.thatUser)
     })
     this.$e.$on('refreshUser', (id) => {

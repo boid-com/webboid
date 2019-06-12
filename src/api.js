@@ -55,7 +55,7 @@ setupAxios,
       // console.log('final API',api)
       return api
     }).catch(alert)
-  }}
+  }};
 
 function getEndpoint(){
   // return 'https://api.boid.com'

@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for workplace/unittesting/webboid/src/components/Scatter.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\..\..\index.html">All files</a> / <a href="index.html">workplace/unittesting/webboid/src/components</a> Scatter.vue
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/62</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/62</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template lang="pug"&gt;
+div
+  //- q-btn(@click='logout()') Logout
+  //- p(v-if="account") {{account.name}}
+//- h1 Boid Stake, Claim, Unstake
+//- h5
+//- | boid Scatter Example
+//- br
+//- section(v-if='scatter &amp;&amp; account')
+//- button(@click='stake') Stake
+//- q-input(v-model.number='stakeAmount', type='number', placeholder='stake amount')
+//- input(v-model.number='stakeTime', type='number', placeholder='stake time')
+//- section(v-if='scatter &amp;&amp; account')
+//- button(@click='unstake') Unstake
+//- section(v-if='scatter &amp;&amp; account')
+//- button(@click='claim') Claim
+//- button(@click='login' v-if='scatter &amp;&amp; !account') Login with Scatter
+//- section.logged-in-with(v-if='scatter &amp;&amp; account')
+//- | Logged in with: {{account.name}}
+//- button.small(@click='logout') Logout
+//- section(v-if='!scatter')
+//- | You need Scatter to interact with this website.
+//- a(href='https://get-scatter.com/' target='_blank') Click here to get it.
+&lt;/template&gt;
+&nbsp;
+&lt;script&gt;
+<span class="cstat-no" title="statement not covered" >import ScatterJS, { Network } from "scatterjs-core";</span>
+<span class="cstat-no" title="statement not covered" >import ScatterEOS from "scatterjs-plugin-eosjs2";</span>
+<span class="cstat-no" title="statement not covered" >import { Api, JsonRpc } from "eosjs";</span>
+<span class="cstat-no" title="statement not covered" >ScatterJS.plugins(new ScatterEOS());</span>
+&nbsp;
+// MAINNET
+<span class="cstat-no" title="statement not covered" >const network = Network.fromJson({</span>
+   blockchain:'eos',
+   host:'https://public.eosinfra.io',
+   port:443,
+   protocol:'https',
+   chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+});
+&nbsp;
+// JUNGLE
+// const network = Network.fromJson({
+//   blockchain: "eos",
+//   protocol: "https",
+//   host: "jungle2.cryptolions.io",
+//   port: 443,
+//   chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473"
+// });
+<span class="cstat-no" title="statement not covered" >window.network = network</span>
+&nbsp;
+let eos;
+<span class="cstat-no" title="statement not covered" >const rpc = new JsonRpc(network.fullhost());</span>
+export default {
+  data() {
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      scatter: null,
+      stakeAmount: null,
+      stakeTime: null,
+      scatterAuth:null,
+      scatterId:null
+    };
+  },
+  mounted() {
+<span class="cstat-no" title="statement not covered" >    this.setEosInstance();</span>
+    // this.init()
+<span class="cstat-no" title="statement not covered" >    this.$root.$on('requestScatterAuth',this.authenticate)</span>
+<span class="cstat-no" title="statement not covered" >    this.$root.$on('scatterLogin',this.login)</span>
+<span class="cstat-no" title="statement not covered" >    this.$root.$on('scatterLogout',this.logout)</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    this.$root.$on('resetScatter',()=&gt;{</span></span>
+<span class="cstat-no" title="statement not covered" >      this.logout()</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      setTimeout(()=&gt;{this.login()},1000)</span></span>
+      })
+&nbsp;
+&nbsp;
+  },
+  computed: {
+    account() {
+<span class="cstat-no" title="statement not covered" >      if (!this.scatter || !this.scatter.identity) return null;</span>
+<span class="cstat-no" title="statement not covered" >      return this.scatter.identity.accounts[0];</span>
+    }
+  },
+  methods: {
+    async init(){
+<span class="cstat-no" title="statement not covered" >      try {</span>
+<span class="cstat-no" title="statement not covered" >        const connected = await ScatterJS.scatter.connect("boid")</span>
+<span class="cstat-no" title="statement not covered" >        if (!connected) {</span>
+<span class="cstat-no" title="statement not covered" >          console.error("Could not connect to Scatter.")</span>
+<span class="cstat-no" title="statement not covered" >          return false</span>
+        }
+<span class="cstat-no" title="statement not covered" >        this.scatter = ScatterJS.scatter</span>
+<span class="cstat-no" title="statement not covered" >        window.scatter = ScatterJS.scatter</span>
+<span class="cstat-no" title="statement not covered" >        this.$root.$emit('scatter',this.scatter)</span>
+<span class="cstat-no" title="statement not covered" >        return true</span>
+<span class="cstat-no" title="statement not covered" >        console.log("SCATTER ID", this.scatter.identity)</span>
+      } catch (error) {
+<span class="cstat-no" title="statement not covered" >        console.log(error)</span>
+      }
+&nbsp;
+    },
+    async login() {
+<span class="cstat-no" title="statement not covered" >      console.log('got login')</span>
+<span class="cstat-no" title="statement not covered" >      if (!this.scatter) { </span>
+<span class="cstat-no" title="statement not covered" >        const result = await this.init()</span>
+<span class="cstat-no" title="statement not covered" >        if (!result) alert('could not connect to Scatter, make sure Scatter is running and refresh the page.')</span>
+      }
+<span class="cstat-no" title="statement not covered" >      try {</span>
+<span class="cstat-no" title="statement not covered" >        const result = await this.scatter.getIdentity({ accounts: [network] })</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        console.log(result)</span>
+      } catch (error) {
+<span class="cstat-no" title="statement not covered" >        console.log(error)</span>
+      }
+    },
+    logout() {
+<span class="cstat-no" title="statement not covered" >      if (!this.scatter) return</span>
+<span class="cstat-no" title="statement not covered" >      this.scatter.forgetIdentity()</span>
+<span class="cstat-no" title="statement not covered" >      this.scatterId = null</span>
+<span class="cstat-no" title="statement not covered" >      this.scatterAuth = null</span>
+    },
+    async stake() {
+<span class="cstat-no" title="statement not covered" >      const options = {</span>
+        authorization: [`${this.account.name}@${this.account.authority}`]
+      };
+<span class="cstat-no" title="statement not covered" >      await eos.transact(</span>
+        {
+          actions: [
+            {
+              account: "we3i5kdsdo12",
+              name: "stake",
+              authorization: [
+                {
+                  actor: this.account.name,
+                  permission: this.account.authority
+                }
+              ],
+              data: {
+                _stake_account: this.account.name,
+                _stake_period: this.stakeTime,
+                _staked: this.stakeAmount.toFixed(4) + " BOID",
+                memo: "memo"
+              }
+            }
+          ]
+        },
+        {
+          blocksBehind: 3,
+          expireSeconds: 30
+        }
+      );
+    },
+    async unstake() {
+<span class="cstat-no" title="statement not covered" >      try {</span>
+<span class="cstat-no" title="statement not covered" >        const options = {</span>
+          authorization: [`${this.account.name}@${this.account.authority}`]
+        };
+<span class="cstat-no" title="statement not covered" >        await eos.transact(</span>
+          {
+            actions: [
+              {
+                account: "we3i5kdsdo12",
+                name: "unstake",
+                authorization: [
+                  {
+                    actor: this.account.name,
+                    permission: this.account.authority
+                  }
+                ],
+                data: {
+                  _stake_account: this.account.name
+                }
+              }
+            ]
+          },
+          {
+            blocksBehind: 3,
+            expireSeconds: 30
+          }
+        );
+      } catch (e) {
+<span class="cstat-no" title="statement not covered" >        console.log(e);</span>
+      }
+    },
+    async claim() {
+<span class="cstat-no" title="statement not covered" >      const options = {</span>
+        authorization: [`${this.account.name}@${this.account.authority}`]
+      };
+<span class="cstat-no" title="statement not covered" >      await eos.transact(</span>
+        {
+          actions: [
+            {
+              account: "we3i5kdsdo12",
+              name: "claim",
+              authorization: [
+                {
+                  actor: this.account.name,
+                  permission: this.account.authority
+                }
+              ],
+              data: {
+                _stake_account: this.account.name
+              }
+            }
+          ]
+        },
+        {
+          blocksBehind: 3,
+          expireSeconds: 30
+        }
+      );
+    },
+    setEosInstance() {
+<span class="cstat-no" title="statement not covered" >      if (this.account) {</span>
+<span class="cstat-no" title="statement not covered" >        eos = this.scatter.eos(network, Api, { rpc });</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        eos = new Api({ rpc });</span>
+      }
+    },
+    async authenticate(nonce,msg,key){
+<span class="cstat-no" title="statement not covered" >      try {</span>
+<span class="cstat-no" title="statement not covered" >        if (!this.scatter) return null</span>
+<span class="cstat-no" title="statement not covered" >        const sig = await this.scatter.authenticate(nonce,msg,key)</span>
+<span class="cstat-no" title="statement not covered" >        if(!sig) return null</span>
+<span class="cstat-no" title="statement not covered" >        this.scatterAuth = sig</span>
+<span class="cstat-no" title="statement not covered" >        return sig</span>
+      } catch (error) {
+<span class="cstat-no" title="statement not covered" >        console.error(error)</span>
+<span class="cstat-no" title="statement not covered" >        return null</span>
+      }
+    }
+  },
+  watch: {
+    ["account"]() {
+<span class="cstat-no" title="statement not covered" >      this.setEosInstance()</span>
+<span class="cstat-no" title="statement not covered" >      this.$root.$emit('scatterId',this.account)</span>
+&nbsp;
+    },
+    scatterAuth(){
+<span class="cstat-no" title="statement not covered" >      this.$root.$emit('scatterAuth',this.scatterAuth)</span>
+    }
+  }
+};
+&lt;/script&gt;
+&nbsp;
+//hello</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 30 2019 22:05:39 GMT+0300 (Moscow Standard Time)
+</div>
+</div>
+<script src="..\..\..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\..\..\sorter.js"></script>
+</body>
+</html>

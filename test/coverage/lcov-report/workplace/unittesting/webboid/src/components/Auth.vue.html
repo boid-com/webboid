@@ -1,0 +1,1298 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for workplace/unittesting/webboid/src/components/Auth.vue</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="..\..\..\..\..\prettify.css" />
+    <link rel="stylesheet" href="..\..\..\..\..\base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(..\..\..\..\..\sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="..\..\..\..\..\index.html">All files</a> / <a href="index.html">workplace/unittesting/webboid/src/components</a> Auth.vue
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/118</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/40</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/118</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&lt;template lang="pug"&gt;
+.relative-position(style="margin:20px; overflow:hidden;")
+  div.relative-position.q-pa-lg(style="min-height: 350px;" v-if="page == 0")
+    div
+      h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
+      h6.text-weight-light.text-center(style="margin-bottom:30px;") The Social Supercomputer
+      h6.text-weight-light.text-center(style="margin-bottom:30px;" v-if="invitedByUser") You were invited by 
+      div(v-if="confirmAccount")
+        h6.text-weight-light.text-center(style="margin-bottom:30px;" ) You are linking your EOS account
+          h4.text-black {{confirmAccount.accountName}}
+      
+    .row.justify-center
+      h6.text-weight-light.q-mb-md.text-grey-9(v-if="!confirmAccount") Login / Register
+    div(v-if="!emailForm")
+      .row.justify-center(style="padding-top:30px")
+        // .col-auto(v-for="login in socialLogins" :key="login.name")
+          .row.justify-center
+            .socialBtn(q-ripple @click="login.auth()")
+              img.socialIcon(:src="login.icon")
+      .row.justify-center(style="margin-top:20px")
+        q-btn.full-width( round big flat color="grey-10" @click="emailForm = true" style="max-width: 270px" :disable="disableBtns")
+          q-icon.on-left(name="mail" color="grey-7")
+          | Email/password
+        //- q-btn.full-width( round big flat color="grey-10" @click="$root.$emit('resetScatter'),thisModal.close()" style="max-width: 270px" :disable="disableBtns")
+        //-   q-icon.on-left(name="mail" color="grey-7")
+        //-   | Scatter
+    div(v-if="emailForm" style="padding-left:20px; padding-right: 20px;")
+      div
+        q-input(
+          style="font-size: 20px;"
+          v-model="form.email"
+          @blur="$v.form.email.$touch"
+          :error="$v.form.email.$error"
+          stack-label="email"
+          type="text"
+          @keyup.enter="submit"
+        )
+        .q-ma-lg
+        q-input(
+          style="font-size: 20px;"
+          stack-label="password"
+          type="password"
+          v-model="form.password"
+          @blur="$v.form.password.$touch"
+          :error="$v.form.password.$error"
+          @keyup.enter="submit"
+        )
+        .col
+          .row.justify-center.q-mt-sm(style="min-height:35px;")
+            p.float-left.text-red(v-if="$v.form.password.$error" color="red") Password should be longer
+          .row
+            q-checkbox(v-if="!localAuth" v-model="rememberMe" label="remember me")
+        .row
+          q-btn(style="margin:10px;" color="grey-9" flat @click="page = 1") Forgot Password?
+      div.text-center(style="margin-top:10px;")
+          //- q-btn.text-center( big @click="emailForm = false" flat style="margin-auto" invert color="blue")
+          //-   q-icon.on-left(name="arrow_back")
+          //-   | Back 
+          q-btn.text-center.on-left( v-if="!confirmAccount" big @click="join" style="margin-auto" :disabled="!loginRdy" color="blue" size="lg") Register
+            q-icon.on-right(name="edit")  
+          q-btn.text-center( v-if="!confirmAccount" big @click="submit" style="margin-auto" :disabled="!loginRdy" invert color="green" size="lg") Login
+            q-icon.on-right(name="arrow_forward")
+&nbsp;
+          q-btn.text-center( v-else big @click="submit" style="margin-auto" :disabled="!loginRdy" invert color="green" size="lg") Confirm
+            q-icon.on-right(name="arrow_forward")
+  div(v-else-if="page == 1")
+    h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
+    h6.text-weight-light.text-center(style="margin-bottom:30px;") The Social Supercomputer
+    br
+    h6 Password Recovery
+    q-input(
+      style="font-size: 20px;"
+      v-model="form.email"
+      @keyup="$v.form.email.$touch"
+      :error="$v.form.email.$error"
+      stack-label="email"
+      type="text"
+      @keyup.enter="passwordRecovery()"
+    )
+    small.text-grey-8 Enter the email associated with your Boid account.
+    br
+    br
+    br
+    q-btn.on-left(@click="page = 0" flat) &lt; Back
+    q-btn.absolute-bottom-right(@click="passwordRecovery()" color="blue" :disable="$v.form.email.$error") Recover Password
+  div(v-else-if="page == 2")
+    h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") boid
+    h6.text-weight-light.text-center(style="margin-bottom:30px;") The Social Supercomputer
+    br
+    p {{finishedMessage}}
+    br
+    br
+    br
+    br
+    q-btn.absolute-bottom-right(@click="thisModal.close()" color="blue" :disable="$v.form.email.$error") Done
+  q-inner-loading(:visible="pending")
+    q-spinner-ball(size="90px" color="blue")
+    //- q-btn.float-left.on-left(@click="submit" outline color="blue") Register
+&nbsp;
+&nbsp;
+&lt;/template&gt;
+&nbsp;
+&lt;script&gt;
+<span class="cstat-no" title="statement not covered" >import { required, email, minLength } from 'vuelidate/lib/validators'</span>
+<span class="cstat-no" title="statement not covered" >import { Toast } from 'quasar'</span>
+<span class="cstat-no" title="statement not covered" >Toast.setDefaults({</span>
+  timeout: 10000,
+})
+<span class="fstat-no" title="function not covered" >function loginUser(that,result){</span>
+<span class="cstat-no" title="statement not covered" >  that.$api.setupAxios(result.token)</span>
+<span class="cstat-no" title="statement not covered" >  window.localStorage.setItem('token',result.token)</span>
+<span class="cstat-no" title="statement not covered" >  window.localStorage.setItem('id',result.id)</span>
+<span class="cstat-no" title="statement not covered" >  that.$e.$emit('refreshUser',result.id)</span>
+}
+&nbsp;
+<span class="fstat-no" title="function not covered" >async function initiateChangeAccount(v,type){</span>
+<span class="cstat-no" title="statement not covered" >  try {</span>
+<span class="cstat-no" title="statement not covered" >    v.pending = true</span>
+<span class="cstat-no" title="statement not covered" >    const result = await v.$api.createAccountUpdateRequest({type,email:v.form.email})</span>
+<span class="cstat-no" title="statement not covered" >    if (result.invalid){</span>
+<span class="cstat-no" title="statement not covered" >      Toast.create.negative(result.invalid)</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      setTimeout(() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >        v.pending = false</span>
+      }, 1500)
+<span class="cstat-no" title="statement not covered" >      return</span>
+    }
+    else {
+<span class="cstat-no" title="statement not covered" >      v.changeRequestSent = true</span>
+<span class="cstat-no" title="statement not covered" >      v.pending = false</span>
+<span class="cstat-no" title="statement not covered" >      console.log(result)</span>
+<span class="cstat-no" title="statement not covered" >      v.page = 2</span>
+<span class="cstat-no" title="statement not covered" >      v.finishedMessage = result.message</span>
+    }
+  } catch (error) {
+<span class="cstat-no" title="statement not covered" >    v.pending = false</span>
+<span class="cstat-no" title="statement not covered" >    alert(error.message)</span>
+  }
+}
+&nbsp;
+&nbsp;
+export default {
+  data() {
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      confirmAccount:null,
+      emailForm:false,
+      disableBtns:false,
+      finishedMessage:"",
+      socialLogins:[
+        {
+          name:'Google',
+          icon:"https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg",
+          auth(){
+<span class="cstat-no" title="statement not covered" >            console.log('google Social Auth')</span>
+            }
+        },
+        {
+          name: 'Twitter',
+          icon: "https://upload.wikimedia.org/wikipedia/fr/c/c8/Twitter_Bird.svg",
+          auth(){
+<span class="cstat-no" title="statement not covered" >            console.log('Twitter Social Auth')</span>
+          }
+        },
+        {
+          name: 'Facebook',
+          icon: "https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg",
+          auth(){
+<span class="cstat-no" title="statement not covered" >            console.log('Facebook Social Auth')</span>
+          }
+        }
+      ],
+      modal: false,
+      register:false,
+      localAuth: false,
+      page:0,
+      form: {
+        email: '',
+        password: '',
+        invitedById: null,
+        device: null
+      },
+      pending: false,
+      rememberMe: true,
+      invitedByUser: null,
+      registering: false
+    }
+  },
+  validations: {
+    form: {
+      email: { required, email },
+      password: { required, minLength: minLength(5) }
+    }
+  },
+  computed: {
+    loginRdy() {
+<span class="cstat-no" title="statement not covered" >      if (!this.$v.form.$error) {</span>
+<span class="cstat-no" title="statement not covered" >        return true</span>
+      }
+    }
+  },
+  methods: {
+<span class="fstat-no" title="function not covered" >    submit: async function() {</span>
+<span class="cstat-no" title="statement not covered" >      this.$v.form.$touch()</span>
+<span class="cstat-no" title="statement not covered" >      if (this.$v.form.$error) {</span>
+<span class="cstat-no" title="statement not covered" >        Toast.create('Please review fields again.')</span>
+<span class="cstat-no" title="statement not covered" >        return</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.pending = true</span>
+<span class="cstat-no" title="statement not covered" >      var result = await this.$api.authenticateUser(this.form)</span>
+<span class="cstat-no" title="statement not covered" >      if (result.invalid) {</span>
+<span class="cstat-no" title="statement not covered" >        Toast.create.negative(result.invalid)</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >        setTimeout(() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >          this.pending = false</span>
+        }, 1500)
+      } else {
+<span class="cstat-no" title="statement not covered" >        if (this.confirmAccount) this.$router.push('/')</span>
+<span class="cstat-no" title="statement not covered" >        console.log('loginResult', result)</span>
+<span class="cstat-no" title="statement not covered" >        loginUser(this,result)</span>
+<span class="cstat-no" title="statement not covered" >        if (this.confirmAccount){</span>
+<span class="cstat-no" title="statement not covered" >          var validateRequest = await this.api.auth.validatePayoutAccountRequest(this.confirmAccount.requestId).catch(console.log)</span>
+<span class="cstat-no" title="statement not covered" >          console.log(validateRequest)</span>
+<span class="cstat-no" title="statement not covered" >          this.pending = false</span>
+<span class="cstat-no" title="statement not covered" >          if (validateRequest.error){</span>
+<span class="cstat-no" title="statement not covered" >            Toast.create.negative(validateRequest.error)   </span>
+<span class="cstat-no" title="statement not covered" >            this.confirmAccount = null       </span>
+          } 
+          else{
+<span class="cstat-no" title="statement not covered" >            Toast.create.positive('EOS Account linked successfully')</span>
+<span class="cstat-no" title="statement not covered" >            this.thisModal.close()</span>
+<span class="cstat-no" title="statement not covered" >            this.$router.push('/')</span>
+<span class="cstat-no" title="statement not covered" >            this.confirmAccount = null</span>
+<span class="cstat-no" title="statement not covered" >            this.$e.$emit('refreshUser')</span>
+<span class="cstat-no" title="statement not covered" >            this.$e.$emit('userUpdated')</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >            setTimeout(()=&gt;{</span></span>
+<span class="cstat-no" title="statement not covered" >              window.location.replace('https://app.boid.com')</span>
+            },3000)
+          } 
+        }else{
+<span class="cstat-no" title="statement not covered" >          this.thisModal.close()</span>
+        }
+<span class="cstat-no" title="statement not covered" >        this.pending = false</span>
+<span class="cstat-no" title="statement not covered" >        if (this.localAuth) {</span>
+          // window.local.ipcRenderer.sendToHost('token', result)
+          // window.local.ipcRenderer.sendToHost('user', userData)
+<span class="cstat-no" title="statement not covered" >          if (this.form.device) {</span>
+<span class="cstat-no" title="statement not covered" >            console.log('ready to check user device!!!!!!', this.form.device)</span>
+          }
+        } 
+      }
+    },
+<span class="fstat-no" title="function not covered" >    join: async function() {</span>
+<span class="cstat-no" title="statement not covered" >      this.$v.form.$touch()</span>
+<span class="cstat-no" title="statement not covered" >      if (this.$v.form.$error) {</span>
+<span class="cstat-no" title="statement not covered" >        Toast.create('Please review fields again.')</span>
+<span class="cstat-no" title="statement not covered" >        return</span>
+      }
+<span class="cstat-no" title="statement not covered" >      this.pending = true</span>
+<span class="cstat-no" title="statement not covered" >      console.log('invitedById',window.localStorage.getItem('invitedById'))</span>
+<span class="cstat-no" title="statement not covered" >      this.form.invitedById = window.localStorage.getItem('invitedById')</span>
+      // if (this.invitedByUser) this.form.invitedById = this.invitedByUser.id
+<span class="cstat-no" title="statement not covered" >      console.log('this form', this.form)</span>
+<span class="cstat-no" title="statement not covered" >      const newUserData = await this.$api.signUpUser(this.form)</span>
+<span class="cstat-no" title="statement not covered" >      console.log('newUserData',newUserData)</span>
+<span class="cstat-no" title="statement not covered" >      if (newUserData.invalid) {</span>
+<span class="cstat-no" title="statement not covered" >        Toast.create.negative(newUserData.invalid)</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >        setTimeout(() =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >          this.pending = false</span>
+        }, 1500)
+      } else {
+<span class="cstat-no" title="statement not covered" >        loginUser(this,newUserData)</span>
+<span class="cstat-no" title="statement not covered" >        this.pending = false</span>
+<span class="cstat-no" title="statement not covered" >        this.thisModal.close()</span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >        this.$nextTick(function() {</span></span>
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >          setTimeout(() =&gt; {</span></span>
+            // this.$router.push('/')
+          }, 1000)
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >          setTimeout(()=&gt;{</span></span>
+<span class="cstat-no" title="statement not covered" >            console.log('open nue modal')</span>
+<span class="cstat-no" title="statement not covered" >            this.$root.$emit('modal.nue',true)</span>
+          },1000)
+        })
+      }
+    },
+    passwordRecovery(){
+<span class="cstat-no" title="statement not covered" >      if(this.$v.form.email.$error) return Toast.create.negative("Enter a valid email.")</span>
+<span class="cstat-no" title="statement not covered" >      const result = initiateChangeAccount(this,'PASSWORD')</span>
+    },
+<span class="fstat-no" title="function not covered" >    checkInvitedBy: async function() {</span>
+<span class="cstat-no" title="statement not covered" >      console.log(this.$route)</span>
+&nbsp;
+      // var invitedBy = this.$route.params.username
+      // if (invitedBy) var validUser = await this.api.user.getByUsername(invitedBy)
+      // if (validUser){
+      //   this.form.invitedById = validUser.id
+      //   this.invitedByUser = validUser
+      // }
+      // this.$router.push("/")
+    }
+  },
+  props: ['thisUser', 'authenticated', 'api', 'thisModal'],
+<span class="fstat-no" title="function not covered" >  created: async function() {</span>
+<span class="cstat-no" title="statement not covered" >    if (window.local) {</span>
+<span class="cstat-no" title="statement not covered" >      console.log("FOUND WINDOW.LOCAL")</span>
+<span class="cstat-no" title="statement not covered" >      this.localAuth = true</span>
+&nbsp;
+    }
+<span class="cstat-no" title="statement not covered" >    if (window.localStorage.getItem('rememberMe') === null) window.localStorage.setItem('rememberMe', 'true')</span>
+<span class="cstat-no" title="statement not covered" >    this.rememberMe = JSON.parse(window.localStorage.getItem('rememberMe'))</span>
+<span class="cstat-no" title="statement not covered" >    var username = window.localStorage.getItem('invitedBy')</span>
+<span class="cstat-no" title="statement not covered" >    if (username) {</span>
+<span class="cstat-no" title="statement not covered" >      var user = await this.$api.getUser({username})</span>
+<span class="cstat-no" title="statement not covered" >      if (!user) return localStorage.removeItem('invitedBy')</span>
+<span class="cstat-no" title="statement not covered" >      if (this.thisUser.id === user.id) return</span>
+<span class="cstat-no" title="statement not covered" >      this.form.invitedById = user.id</span>
+<span class="cstat-no" title="statement not covered" >      this.invitedByUser = user</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    this.$e.$on('openAuthModal', val =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >      this.register = val</span>
+<span class="cstat-no" title="statement not covered" >      this.pending = false</span>
+<span class="cstat-no" title="statement not covered" >      this.page = 0</span>
+<span class="cstat-no" title="statement not covered" >      this.form = {</span>
+        email: '',
+        password: '',
+        invitedById: null
+      }
+<span class="cstat-no" title="statement not covered" >      this.invitedById = window.localStorage.getItem('invitedById')</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      this.$v.form.$reset()</span>
+      // this.registering = val
+    })
+  },
+  watch: {
+<span class="fstat-no" title="function not covered" >    rememberMe: function(value) {</span>
+<span class="cstat-no" title="statement not covered" >      window.localStorage.setItem('rememberMe', value)</span>
+    },
+    '$route.name'(name){
+<span class="cstat-no" title="statement not covered" >      if (name != 'confirmPayoutAccount') return</span>
+<span class="cstat-no" title="statement not covered" >      this.emailForm = true</span>
+<span class="cstat-no" title="statement not covered" >      this.confirmAccount = {</span>
+        requestId: this.$route.params.requestId,
+        accountName: this.$route.params.accountName,
+      }
+    },
+    'window.local'() {
+<span class="cstat-no" title="statement not covered" >      console.log(window.local)</span>
+    },
+<span class="fstat-no" title="function not covered" >    '$route.params.username': async function(username) {</span>
+<span class="cstat-no" title="statement not covered" >      if (!username) return</span>
+<span class="cstat-no" title="statement not covered" >      var user = await this.$api.getUser({username})</span>
+<span class="cstat-no" title="statement not covered" >      if (!user) return this.$router.push('/')</span>
+<span class="cstat-no" title="statement not covered" >      this.$e.$emit('thatUser', user)</span>
+<span class="cstat-no" title="statement not covered" >      console.log('on User Page', user.username)</span>
+      // if (this.thisUser.id === user.id) return
+<span class="cstat-no" title="statement not covered" >      window.localStorage.setItem('invitedBy', user.username)</span>
+<span class="cstat-no" title="statement not covered" >      this.form.invitedById = user.id</span>
+<span class="cstat-no" title="statement not covered" >      this.invitedByUser = user</span>
+    },
+    // '$route.params.teamname': async function(teamname) {
+    //   if (!teamname) return
+    //   console.log('found Teamname', teamname)
+    //   var team = await this.$api.getTeam({name:teamname})
+    //   console.log('TEAM DATA:',team)
+    //   if (!team) return
+    //   this.team = team
+    //   this.$e.$emit('team', team)
+    //   if (!team.owner) return
+    //   this.invitedByUser = team.owner
+    //   this.form.invitedById = team.owner.id
+    //   window.localStorage.setItem('invitedBy', team.owner.username)
+    // },
+    'form.email'(val) {
+      // console.log(this.$v.form.email.$error)
+      // // if()
+      // if (!val &amp;&amp; this.form.email != "" ){
+      //   console.log(this.form.email)
+      // }
+    }
+  }
+}
+&lt;/script&gt;
+&nbsp;
+&lt;style lang="stylus"&gt;
+@import '~variables'
+ 
+.socialBtn
+  background-color white
+  margin 5px
+  padding 10px
+  border-radius 100%
+  height: 50px
+  width: 50px
+  drop-shadow: 0px 2px 5px black
+  cursor: pointer
+  transition background-color .4s
+.socialBtn:hover
+  background-color $grey-2
+  box-shadow 0px 2px 1px $grey-5
+input.q-input-target
+  height: 50px !important
+  padding-top 15px
+&nbsp;
+.socialIcon
+  height: 70px
+  width: 70px
+  margin: 20px
+&nbsp;
+.q-if
+  padding 0px
+  padding-top 5px
+&nbsp;
+&lt;/style&gt;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu May 30 2019 22:05:39 GMT+0300 (Moscow Standard Time)
+</div>
+</div>
+<script src="..\..\..\..\..\prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="..\..\..\..\..\sorter.js"></script>
+</body>
+</html>
