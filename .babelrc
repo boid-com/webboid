@@ -1,4 +1,19 @@
 {
+  "env":{
+    "test":{
+      "presets":[
+        [
+          "@babel/preset-env", {
+          "modules": false,
+          "loose": false,
+          "useBuiltIns": "usage",
+          "exclude": [ "transform-classes" ]
+        }
+        ],
+        "vue"
+      ]
+    }
+  },
   "presets": [
     ["@babel/preset-env",{"modules":"commonjs"}],
     ["@vue/app", {
@@ -10,7 +25,24 @@
   ],
   "plugins": [
     ["add-module-exports"],
-    ["@babel/plugin-transform-runtime", { "regenerator": true }]
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["transform-es2015-modules-commonjs"],
+    ["@babel/plugin-proposal-class-properties"],
+    ["@babel/plugin-proposal-function-sent"],
+    ["@babel/plugin-proposal-export-namespace-from"],
+    ["@babel/plugin-proposal-numeric-separator"],
+    ["@babel/plugin-proposal-throw-expressions"],
+    ["@babel/plugin-syntax-dynamic-import"],
+    ["syntax-dynamic-import"],
+    [
+      "@babel/plugin-transform-runtime", {
+      "absoluteRuntime": false,
+      "corejs": 2,
+      "helpers": true,
+      "regenerator": true,
+      "useESModules": false
+    }
+    ]
   ],
  "comments": false
 }
