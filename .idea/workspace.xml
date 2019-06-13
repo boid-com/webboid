@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="887114af-d4b6-417f-beb7-084bac29d3a3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/components/User.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/User.vue" afterDir="false" />
-    </list>
+    <list default="true" id="887114af-d4b6-417f-beb7-084bac29d3a3" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -93,8 +91,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/User.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="37" selection-end-column="64" />
+            <state relative-caret-position="252">
+              <caret line="33" column="28" lean-forward="true" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -365,7 +363,7 @@
       <workItem from="1560147334296" duration="1238000" />
       <workItem from="1560352101764" duration="5927000" />
       <workItem from="1560363031745" duration="19000" />
-      <workItem from="1560428470736" duration="2883000" />
+      <workItem from="1560428470736" duration="3393000" />
     </task>
     <task id="LOCAL-00001" summary="test components.">
       <created>1559258436872</created>
@@ -476,7 +474,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="136893000" />
+    <option name="totallyTimeSpent" value="137403000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -850,8 +848,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/User.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="37" selection-end-column="64" />
+        <state relative-caret-position="252">
+          <caret line="33" column="28" lean-forward="true" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
         </state>
       </provider>
     </entry>
