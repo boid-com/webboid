@@ -38,7 +38,7 @@
                     //-       td
                     //-         p.text-center(style="margin:0;") 0
               .row.full-width.justify-center
-                img.avatar.absolute-center.block( style="width:95px; height:auto; margin-top:30px;" :src="thatUser.image").bg-white
+                img.avatar.absolute-center.block( style="width:95px; object-fit:cover; height:95px; margin-top:30px;" :src="thatUser.image").bg-white
             userChart( style="margin-top:0"
             v-if="powerChart" :chartData="powerChart" :height="295")
             q-inner-loading(:visible="!powerChart")
