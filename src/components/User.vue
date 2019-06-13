@@ -24,20 +24,18 @@
                     p.light-paragraph.text-center(style="font-size:24px;margin-top:20px;") {{thatUser.username}}
                   .col-sm-12.col-lg-4.relative-position
                     q-card.animate-scale.relative-position(v-if="thatUser.team" style="height:85px;")
-                      div(style="margin:10px")
-                        p {{thatUser.tagline}}
-                      <!--table.q-table(style="width:100%; padding:0;")-->
-                        <!--thead()-->
-                          <!--th-->
-                            <!--p.text-center(style="margin:0;") NFT-->
-                          <!--th-->
-                            <!--p.text-center(style="margin:0;") Medals-->
-                        <!--tbody()-->
-                          <!--tr-->
-                            <!--td-->
-                              <!--p.text-center(style="margin:0;") 0-->
-                            <!--td-->
-                              <!--p.text-center(style="margin:0;") 0-->
+                      table.q-table(style="width:100%; padding:0;")
+                        thead()
+                          th
+                            p.text-center(style="margin:0;") NFT
+                          th
+                            p.text-center(style="margin:0;") Medals
+                        tbody()
+                          tr
+                            td
+                              p.text-center(style="margin:0;") 0
+                            td
+                              p.text-center(style="margin:0;") 0
                 .row.full-width.justify-center
                   img.avatar.absolute-center.block( style="width:85px; height:85px; position:absolute;top:135px;" :src="thatUser.image")
               userChart( style="margin-top:20"
