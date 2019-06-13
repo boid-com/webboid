@@ -40,10 +40,10 @@ div
                 .absolute-left.text-grey-7(style="left:45px; top:45px;")
                   .puck-lg.text-center
                     .row.justify-center
-                      img(:src="user.team.image" style="width:20px; height:20px; margin-top:1px;")
+                      img(:src="user.team.image" style="width:20px; height:20px; object-fit:cover; margin-top:1px;")
                 .row
                   .col-auto
-                    img.avatar(:src="user.image")
+                    img.avatar(:src="user.image" style="object-fit:cover; height:55px; width:55px; ")
                   .col.relative-position(style="padding:15px; padding-bottom:30px;")
                     .ellipsis(data-th="Username") {{user.username}}
                     small.ellipsis.block.light-paragraph.absolute(
@@ -101,7 +101,7 @@ div
                       img(:src="user.team.image" style="width:20px; height:20px; margin-top:1px;")
                 .row
                   .col-auto
-                    img.avatar(:src="user.image")
+                    img.avatar(:src="user.image" style="object-fit:cover; height:55px; width:55px; ")
                   .col.relative-position(style="padding:15px; padding-bottom:30px;")
                     .ellipsis(data-th="Username") {{user.username}}
                     small.ellipsis.block.light-paragraph.absolute(
@@ -132,7 +132,7 @@ div
                       img(:src="user.team.image" style="width:20px; height:20px; margin-top:1px;")
                 .row
                   .col-auto
-                    img.avatar(:src="user.image")
+                    img.avatar(:src="user.image" style="object-fit:cover; height:55px; width:55px; ")
                   .col.relative-position(style="padding:15px; padding-bottom:30px;")
                     .ellipsis(data-th="Username") {{user.username}}
                     small.ellipsis.block.light-paragraph.absolute(
