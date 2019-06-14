@@ -8,7 +8,7 @@
       @refresh="refresh"
       @selection="selection"
       @rowclick="rowClick"
-      style="text-align:center"
+      style="text-align:center; overflow-x:auto;"
       )
 
     .row
@@ -19,7 +19,8 @@
       @refresh="refresh"
       @selection="selection"
       @rowclick="rowClick"
-      style="text-align:center"
+      style="text-align:center; overflow-x:auto;"
+
       )
 </template>
 <script>
@@ -35,7 +36,7 @@
         table_workunits:[],
         config1: {
           title: '',
-          refresh: true,
+          refresh: false,
           noHeader: false,
           columnPicker: true,
           leftStickyColumns: 0,
@@ -54,7 +55,7 @@
         },
         config2: {
           title: '',
-          refresh: true,
+          refresh: false,
           noHeader: false,
           columnPicker: true,
           leftStickyColumns: 0,
