@@ -19,6 +19,7 @@ export default new VueRouter({
     { path: '/confirmPayoutAccount/:requestId/:accountName', component: load('Index'), name:'confirmPayoutAccount'},
     { path: '/u/:username?', component: load('User'), name: 'User' },
     { path: '/t/:teamname?', component: load('Team'), name: 'Team' },
+    { path: '/datatable/', component: load('workUnitsDev'), name: 'workUnitsDev' },
     { path: '/leaderboards/', component: load('Leaderboards'), name: 'Leaderboards' },
     { path: '/device/', component: load('Device'), name: 'Device' },
     { path: '/desktop2/', component: load('Device2'), name: 'Device2' },
