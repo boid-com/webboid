@@ -13,6 +13,7 @@ var getApi = async () => {
     return {}
   }
 }
+axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
 var api = {
 axios,
 events,
