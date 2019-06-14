@@ -138,6 +138,9 @@ export default {
     this.ipcRenderer = window.local.ipcRenderer
     this.$root.$on('updateCPUConfig', el => {
       if (el.prefs.run_if_user_active && el.prefs.run_on_batteries) this.isPaused = false
+      else if (el.prefs.run_on_batteries && this.isPaused.search('Batteries') > -1) this.isPaused = false
+      else if (el.prefs.run_if_user_active && this.isPaused.search('Activity') > -1) this.isPaused = false
+
       const prefs = boinc.convertForPrefs(el.prefs)      
       ipc.send('config.write', el.config)
       ipc.send('prefs.write', prefs)
