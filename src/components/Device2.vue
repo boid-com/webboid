@@ -87,11 +87,12 @@ async function initLocalDevice(v){
       v.$e.$emit('logout')
       return alert('There was a problem registering this device.')
     }
+    v.thisDevice = await v.$api.getDevice({id})
     if (deviceInterval) clearInterval(deviceInterval)
       v.thisDevice = await v.$api.getDevice({id})
       deviceInterval = setInterval( async () => {
         v.thisDevice = await v.$api.getDevice({id})
-      }, 10000)
+      }, 30000)
   })
   ipcMain.send('config.getDevice')
 }

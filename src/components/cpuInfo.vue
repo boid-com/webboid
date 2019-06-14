@@ -136,12 +136,12 @@ export default {
     async getCompletedWU(){
       try {
         this.loadingValidWU = true
-        this.$api.getValidatedWorkUnits(this.$parent.thisDevice).then(data =>{
+        this.$api.getWorkUnits({cpid:this.$parent.thisDevice.cpid,valid:true}).then(data =>{
           this.validWU = parseWUs(data.sort(function(b,a){return Date.parse(a.receivedTime) - Date.parse(b.receivedTime)}))
           this.loadingValidWU = false
         })
         this.loadingPendingWU = true
-        this.$api.getPendingWorkUnits(this.$parent.thisDevice).then(data =>{
+        this.$api.getPendingWorkUnits({cpid:this.$parent.thisDevice.cpid,valid:false}).then(data =>{
           this.pendingWU = parseWUs(data.sort(function(b,a){return Date.parse(a.receivedTime) - Date.parse(b.receivedTime)}))
           this.loadingPendingWU = false
         })
