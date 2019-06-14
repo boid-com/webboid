@@ -136,12 +136,12 @@ export default {
     async getCompletedWU(){
       try {
         this.loadingValidWU = true
-        this.$api.getValidatedWorkUnits(this.$parent.thisDevice).then(data =>{
+        this.$api.getWorkUnits({wcgid:this.$parent.thisDevice.wcgid,valid:true}).then(data =>{
           this.validWU = parseWUs(data.sort(function(b,a){return Date.parse(a.receivedTime) - Date.parse(b.receivedTime)}))
           this.loadingValidWU = false
         })
         this.loadingPendingWU = true
-        this.$api.getPendingWorkUnits(this.$parent.thisDevice).then(data =>{
+        this.$api.getWorkUnits({wcgid:this.$parent.thisDevice.wcgid,valid:false}).then(data =>{
           this.pendingWU = parseWUs(data.sort(function(b,a){return Date.parse(a.receivedTime) - Date.parse(b.receivedTime)}))
           this.loadingPendingWU = false
         })
@@ -182,27 +182,30 @@ export default {
       return parsed
     },
     activeWorkUnits(){
-      if (this.$parent.toggle) return this.$parent.state.workUnits.filter(el => el.active_task_state[0] == 1)
-      else return []
+      try {
+        if (this.$parent.toggle) return this.$parent.state.workUnits.filter(el => el.active_task_state[0] == 1)
+        else return []
+      } catch (error) {
+        console.error(error)
+        return []
+      }
+
     },
     completed(){
-      return this.$parent.state.results.filter((el)=> parseInt(el.state) != 2)
+      try {
+        return this.$parent.state.results.filter((el)=> parseInt(el.state) != 2)
+      }catch(error){
+        console.error(error)
+        return []
+      }
     },
-    workUnits:{
-      set(newVal){ 
-        const index = this.$parent.state.workUnits.findIndex(el => newVal.slot[0] = el.slot[0])
-        console.log(index)
-        if (index > -1 ) this.$set(this.$parent.state.workUnits,index,newVal)
-    },
-      get(){
-      var units = this.$parent.state.workUnits
-      if (!units) return []
-      const parsed =  units.map((el) => {
-        el.expand = false
-        return el
-      })
-        return parsed
-      } 
+    workUnits(){
+      try {
+        return this.$parent.state.workUnits
+      } catch (error) {
+        console.error(error)
+        return []
+      }
     }
   },
   watch:{

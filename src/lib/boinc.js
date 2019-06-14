@@ -39,7 +39,7 @@ var boinc = {
   },
   checkPaused(val){
     if (val.search('Suspending computation - computer is in use') > -1 ) return 'Paused: User Activity Detected'
-    if (val.search('Suspending computation - on batteries') > -1 ) return 'Paused: Device is operating on batteries'
+    if (val.search('Suspending computation - on batteries') > -1 ) return 'Paused: Device on Batteries'
     return false
   },
   checkResumed(val){

@@ -326,11 +326,12 @@ export default {
   },
   mounted() {
     this.init()
+    // alert(process.env.NODE_ENV)
   },
   watch: {
     async globalVars(data){
       this.tierBonus = JSON.parse(data.tierBonus)
-      // console.log('TIER BONUS',this.tierBonus)
+      // -nsole.log('TIER BONUS',this.tierBonus)
     },
     ch(){
       this.chThrottleDisplay = this.ch.throttle

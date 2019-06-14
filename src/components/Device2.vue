@@ -90,8 +90,9 @@ async function initLocalDevice(v){
     if (deviceInterval) clearInterval(deviceInterval)
       v.thisDevice = await v.$api.getDevice({id})
       deviceInterval = setInterval( async () => {
+        console.log('getDevice')
         v.thisDevice = await v.$api.getDevice({id})
-      }, 10000)
+      }, 30000)
   })
   ipcMain.send('config.getDevice')
 }

@@ -131,12 +131,10 @@
 
 <script>
 window.olark.identify('3844-769-10-6059')
-var coinhive = require('vue-coin-hive')
 import 'quasar-extras/animate'
 // import Chartist from "chartist"
 import { Loading, Toast } from 'quasar'
 import auth from '@/Auth.vue'
-// import adBlocker from 'just-detect-adblock'
 import profileEdit from '@/ProfileEdit.vue'
 import scatter from '@/Scatter.vue'
 import boincConfig from '@/BoincConfig.vue'
@@ -156,8 +154,6 @@ var data = {
 var defaultConfig = null
 
 var miner = null
-// var proxyAddr = 'ws://localhost:8892'
-// var proxyAddr = "wss://proxboid.mybluemix.net/"
 
 var CPUCores = navigator.hardwareConcurrency
 
@@ -255,6 +251,7 @@ export default {
       }
     },
     init: async function(id) {
+      
       if (!id) {
         id = this.$api.localUser();
         console.log('id here:',id);
@@ -451,7 +448,6 @@ export default {
   },
   components: {
     auth,
-    coinhive,
     profileEdit,
     accountEdit,
     boincConfig,

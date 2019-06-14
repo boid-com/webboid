@@ -1,10 +1,11 @@
 import EventEmitter from 'event-emitter'
 import Axios from 'axios' 
-
 var events = new EventEmitter()
 
 var baseURL = getEndpoint()
 var axios = new Axios.create({baseURL})
+axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded'
+
 var getApi = async () => {
   try {
     const api = (await axios.post('util/getapi')).data

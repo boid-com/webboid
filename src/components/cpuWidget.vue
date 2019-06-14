@@ -4,7 +4,6 @@ div
     div.absolute(v-if="disabled" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.6);")
       h6.absolute-center.no-margin.text-white Unable to initialize
     q-card-media.relative-position
-      | {{isPaused}}
       q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="configModal()")
         q-icon(color='grey-7' name="settings")
         q-tooltip Settings
@@ -104,7 +103,7 @@ export default {
   data() {
     return {
       disableToggle:false,
-      toggle: false,
+      toggle: JSON.parse(window.localStorage.getItem('cpuToggle')) || false,
       ipcRenderer: null,
       thisDevice: this.$parent.thisDevice,
       activeTasks: null,
@@ -125,21 +124,24 @@ export default {
   },
   created(){
     console.log('LOCALSTORAGE TOGGLE:',JSON.parse(window.localStorage.getItem('cpuToggle')))
-
+    // if (!JSON.parse(window.localStorage.getItem('gpuToggle'))) {
+    //   this.toggle = false
+    //   window.localStorage.setItem('gpuToggle',false)}
   },
   beforeDestroy(){
     clearInterval(window.boincInterval)
     this.$root.$off('updateCPUConfig')
   },
   mounted() { 
-    if (JSON.parse(window.localStorage.getItem('cpuToggle'))) {
-      setTimeout(() => {
-        this.toggle = true
-      }, 1000)
-    }
+    if (JSON.parse(window.localStorage.getItem('cpuToggle'))) this.start()
     clearInterval(window.boincInterval)
     this.ipcRenderer = window.local.ipcRenderer
     this.$root.$on('updateCPUConfig', el => {
+      if(this.isPaused){
+        if (el.prefs.run_if_user_active && el.prefs.run_on_batteries) this.isPaused = false
+        else if (el.prefs.run_on_batteries && this.isPaused.search('Batteries') > -1) this.isPaused = false
+        else if (el.prefs.run_if_user_active && this.isPaused.search('Activity') > -1) this.isPaused = false
+      }
       const prefs = boinc.convertForPrefs(el.prefs)      
       ipc.send('config.write', el.config)
       ipc.send('prefs.write', prefs)
@@ -254,7 +256,7 @@ export default {
       this.statusIconColor = "grey-8"
       ipc.send('stop')
       clearInterval(window.boincInterval)
-      this.status = "Stopping..."
+      this.status = "Stoping..."
     }
   },
   computed: {
