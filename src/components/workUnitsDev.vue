@@ -249,10 +249,17 @@
     props:['thisUser','thatUser','api','authenticated'],
   }
 </script>
-<style lang="stylus" scoped>
+<style lang="stylus">
   @import '~variables'
   .my-label
     padding 5px
     border-radius 3px
     display inline-block
+  input.q-input-target
+    padding-top 0 !important
+  .q-if
+    padding: 0;
+    padding-top: 0;
+    margin:0;
+
 </style>
