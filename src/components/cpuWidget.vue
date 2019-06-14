@@ -4,7 +4,6 @@ div
     div.absolute(v-if="disabled" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.6);")
       h6.absolute-center.no-margin.text-white Unable to initialize
     q-card-media.relative-position
-      | {{isPaused}}
       q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="configModal()")
         q-icon(color='grey-7' name="settings")
         q-tooltip Settings
@@ -104,7 +103,7 @@ export default {
   data() {
     return {
       disableToggle:false,
-      toggle: JSON.parse(window.localStorage.getItem('cpuToggle')),
+      toggle: JSON.parse(window.localStorage.getItem('cpuToggle')) || false,
       ipcRenderer: null,
       thisDevice: this.$parent.thisDevice,
       activeTasks: null,

@@ -131,12 +131,10 @@
 
 <script>
 window.olark.identify('3844-769-10-6059')
-var coinhive = require('vue-coin-hive')
 import 'quasar-extras/animate'
 // import Chartist from "chartist"
 import { Loading, Toast } from 'quasar'
 import auth from '@/Auth.vue'
-// import adBlocker from 'just-detect-adblock'
 import profileEdit from '@/ProfileEdit.vue'
 import scatter from '@/Scatter.vue'
 import boincConfig from '@/BoincConfig.vue'
@@ -156,8 +154,6 @@ var data = {
 var defaultConfig = null
 
 var miner = null
-// var proxyAddr = 'ws://localhost:8892'
-// var proxyAddr = "wss://proxboid.mybluemix.net/"
 
 var CPUCores = navigator.hardwareConcurrency
 
@@ -451,7 +447,6 @@ export default {
   },
   components: {
     auth,
-    coinhive,
     profileEdit,
     accountEdit,
     boincConfig,
@@ -473,21 +468,6 @@ export default {
       if (path === '/device'){
         this.$router.push('/desktop')
       }
-      if (path === '/device2'){
-        this.$router.push('/desktop')
-      }
-      if (path === '/device3'){
-        this.$router.push('/desktop')
-      }
-      if (path === '/device4'){
-        this.$router.push('/desktop')
-      }
-      if (path === '/device5'){
-        this.$router.push('/desktop')
-      }
-      if (path === '/device6'){
-        this.$router.push('/desktop')
-      }
       else if (this.$route.name === 'confirmPayoutAccount' ){
         // this.handleLogout()
         this.handleLogin()
@@ -496,7 +476,7 @@ export default {
     authenticated(authed) {
       this.pending = false
       if (authed) {
-        if (this.local) this.$router.push({ name: 'Desktop' })
+        // if (this.local) this.$router.push({ name: 'Desktop' })
         console.log('close authModal')
         this.$refs.authModal.close()
         this.menuBreakpoint = 1200
