@@ -113,16 +113,10 @@
           },
           {
             label: 'Elapse Time',
-            field: 'elpasedTime',
+            field: 'elapsedTime',
             width: '140px',
             // classes: 'bg-orange-2',
-            filter: true,
-            sort (a, b) {
-              return (new Date(a)) - (new Date(b))
-            },
-            format (value) {
-              return new Date(value).toLocaleString()
-            }
+            type: 'number',
           },
           {
             label: 'Granted Credit',
@@ -153,7 +147,7 @@
           },
           {
             label: 'Receiver Time',
-            field: 'receiverTime',
+            field: 'receivedTime',
             width: '140px',
             format (value) {
               return new Date(value).toLocaleString()
@@ -236,6 +230,7 @@
     },
     async created(){
       this.table_pending   = await this.$api.getWorkUnits({skip:2,valid:'WU'});
+      console.log("TABLE_PENDDING>>>>", this.table_pending);
       this.table_workunits = await this.$api.getWorkUnits({skip:2});
     },
     async mounted(){
