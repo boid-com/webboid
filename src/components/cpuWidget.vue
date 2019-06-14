@@ -137,6 +137,7 @@ export default {
     clearInterval(window.boincInterval)
     this.ipcRenderer = window.local.ipcRenderer
     this.$root.$on('updateCPUConfig', el => {
+      if (el.prefs.run_if_user_active && el.prefs.run_on_batteries) this.isPaused = false
       const prefs = boinc.convertForPrefs(el.prefs)      
       ipc.send('config.write', el.config)
       ipc.send('prefs.write', prefs)
