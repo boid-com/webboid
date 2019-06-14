@@ -87,10 +87,10 @@ async function initLocalDevice(v){
       v.$e.$emit('logout')
       return alert('There was a problem registering this device.')
     }
-    v.thisDevice = await v.$api.getDevice({id})
     if (deviceInterval) clearInterval(deviceInterval)
       v.thisDevice = await v.$api.getDevice({id})
       deviceInterval = setInterval( async () => {
+        console.log('getDevice')
         v.thisDevice = await v.$api.getDevice({id})
       }, 30000)
   })

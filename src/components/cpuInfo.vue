@@ -141,7 +141,7 @@ export default {
           this.loadingValidWU = false
         })
         this.loadingPendingWU = true
-        this.$api.getPendingWorkUnits({cpid:this.$parent.thisDevice.cpid,valid:false}).then(data =>{
+        this.$api.getWorkUnits({cpid:this.$parent.thisDevice.cpid,valid:false}).then(data =>{
           this.pendingWU = parseWUs(data.sort(function(b,a){return Date.parse(a.receivedTime) - Date.parse(b.receivedTime)}))
           this.loadingPendingWU = false
         })
