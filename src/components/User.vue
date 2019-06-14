@@ -146,7 +146,6 @@
       return {
         user:[],
         userTeam:[],
-        openURL,
         info,
         parseSocial:[],
         chartData:null,

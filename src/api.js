@@ -1,6 +1,5 @@
 import EventEmitter from 'event-emitter'
 import Axios from 'axios' 
-
 var events = new EventEmitter()
 
 var baseURL = getEndpoint()

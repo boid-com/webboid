@@ -251,6 +251,7 @@ export default {
       }
     },
     init: async function(id) {
+      
       if (!id) {
         id = this.$api.localUser();
         console.log('id here:',id);
