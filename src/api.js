@@ -4,6 +4,8 @@ var events = new EventEmitter()
 
 var baseURL = getEndpoint()
 var axios = new Axios.create({baseURL})
+axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded'
+
 var getApi = async () => {
   try {
     const api = (await axios.post('util/getapi')).data
@@ -13,7 +15,6 @@ var getApi = async () => {
     return {}
   }
 }
-axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
 var api = {
 axios,
 events,
@@ -58,7 +59,7 @@ setupAxios,
   }};
 
 function getEndpoint(){
-  // return 'https://api.boid.com'
+  return 'https://api.boid.com'
   if (process.env.NODE_ENV === 'development') return 'http://localhost:3000'
   else return 'https://api.boid.com'
 }
