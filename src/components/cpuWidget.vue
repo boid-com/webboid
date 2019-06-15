@@ -256,7 +256,7 @@ export default {
       this.statusIconColor = "grey-8"
       ipc.send('stop')
       clearInterval(window.boincInterval)
-      this.status = "Stoping..."
+      this.status = "Stopping..."
     }
   },
   computed: {
