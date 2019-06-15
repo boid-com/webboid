@@ -3,25 +3,17 @@
     .row
       h5 Work Units Devices
       q-data-table( :data="table_workunits"
-      :config="config1"
+      :config="config"
       :columns="columns"
       @refresh="refresh"
       @selection="selection"
       @rowclick="rowClick"
       style="text-align:center; overflow-x:auto;"
       )
-
-    .row
-      h5 Pendding Devices
-      q-data-table( :data="table_pending"
-      :config="config2"
-      :columns="columns"
-      @refresh="refresh"
-      @selection="selection"
-      @rowclick="rowClick"
-      style="text-align:center; overflow-x:auto;"
-
-      )
+      template(slot="col-outcome" slot-scope="cell")
+        div(v-if="cell.data === '3'" class="my-label text-white bg-primary") Audit
+          q-tooltip Some data
+        div(v-else class="my-label text-white bg-negative") {{cell.data}}
 </template>
 <script>
   import { openURL } from 'quasar'
@@ -34,7 +26,7 @@
         openURL,
         table_pending:[],
         table_workunits:[],
-        config1: {
+        config: {
           title: '',
           refresh: false,
           noHeader: false,
@@ -51,36 +43,9 @@
             rowsPerPage: 15,
             options: [5, 10, 15, 30, 50, 100]
           },
-          selection: 'multiple'
-        },
-        config2: {
-          title: '',
-          refresh: false,
-          noHeader: false,
-          columnPicker: true,
-          leftStickyColumns: 0,
-          rightStickyColumns: 2,
-          bodyStyle: {
-            maxHeight: '500px',
-          },
-          rowHeight: '50px',
-          responsive: true,
-          pagination: {
-            rowsPerPage: 15,
-            options: [5, 10, 15, 30, 50, 100]
-          },
-          selection: 'multiple'
+          selection: null
         },
         columns: [
-          {
-            label: 'Id',
-            field: 'id',
-            width: '140px',
-            filter: true,
-            sort (a, b) {
-              return (a) - (b)
-            },
-          },
           {
             label: 'Name',
             field: 'name',
@@ -88,22 +53,11 @@
             filter: true,
             sort: true,
             type: 'string',
-            // width: '500px'
-          },
-          {
-            label: 'Device Id',
-            field: 'deviceId',
-            width: '140px',
-            filter: true,
-            sort (a, b) {
-              return (a) - (b)
-            },
           },
           {
             label: 'Cpu Time',
             field: 'cpuTime',
             width: '140px',
-            // classes: 'bg-orange-2',
             filter: true,
             sort (a, b) {
               return (new Date(a)) - (new Date(b))
@@ -116,19 +70,30 @@
             label: 'Elapse Time',
             field: 'elapsedTime',
             width: '140px',
-            // classes: 'bg-orange-2',
             type: 'number',
-          },
-          {
-            label: 'Granted Credit',
-            width: '140px',
-            field: 'grantedCredit',
           },
           {
             label: 'Out Come',
             field: 'outcome',
             width: '120px',
             sort: true,
+            filter: true,
+            format( value ) {
+              switch (value) {
+                case 1:
+                  return 'success';
+                case 3:
+                  return 'error';
+                case 4:
+                  return 'no reply';
+                case 6:
+                  return 'validation';
+                case 7:
+                  return 'abandoned';
+                default:
+                  return 'incorrect reply';
+              }
+            },
             type: 'string'
           },
           {
@@ -159,10 +124,12 @@
             field: 'serverState',
             width: '120px',
             format (value) {
-              if (value === 'Informational') {
-                return '<i class="material-icons text-positive" style="font-size: 22px">info</i>'
-              }
-              return value
+              if (value === 4)
+                return 'in-progress';
+              else if( value === 5 )
+                return 'reported';
+              else
+                return 'unknown value';
             },
           },
           {
@@ -177,8 +144,24 @@
             label: 'Validate State',
             field: 'validateState',
             sort: true,
+            format(value){
+              switch ( value ){
+                case 0:
+                  return 'pending validation';
+                case 1:
+                  return 'valid';
+                case 2:
+                  return 'invalid';
+                case 4:
+                  return 'pending verification';
+                case 5:
+                  return 'results failed to given deadline';
+                default:
+                  return 'unknown result';
+              }
+            },
             type: 'string',
-            width: '140px'
+            width: '200px'
           },
           {
             label: 'Weight',

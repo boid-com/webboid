@@ -67,7 +67,7 @@
                       img.tokenimg( :src="thatUser.team.image")
                     td {{thatUser.team.name}}
           .col-xs-12.col-sm-6.col-md-12
-            //- q-card(@click="ended=false")
+            q-card(@click="ended=false")
               p.light-paragraph.text-center Team Prizes Won
               div(v-if="teamPromotions")
                 h6.light-paragraph List of team Promotions
@@ -103,7 +103,7 @@
                     q-icon.text-center.absolute-left(v-if="stat.icon != 'add'" color="green-2" :name='stat.icon' style="font-size:45px; z-index:-4;")
                     q-tooltip {{stat.label}}
           .row(style="width:100%; margin:0 !important;")
-            //- q-card.animate-scale.relative-position(v-if="thisUser.tokens" style="width:100%;")
+            q-card.animate-scale.relative-position(v-if="thisUser.tokens" style="width:100%;")
               .h6.light-paragraph.text-center User Devices
               .row(v-if="authenticated" @click="$e.$emit('showInfoModal',info.devices)")
                 .col( v-for="(device, index) in userDevice" :key="device.id")
@@ -120,8 +120,8 @@
               .row.justify-center(style="width:100%; margin:0 !important;" v-if="thatUser.devices.length > 3 " )
                 q-btn(flat :class="{activeTab:true}" style = "background-color:#ddca43;" @click="deviceDisplay(false)" v-if="!devShowFlag") Show more
                 q-btn(flat :class="{activeTab:true}" style = "background-color:#ddca43;" @click="deviceDisplay(true)" v-else) Hide
-          //- .row(style="width:100%; margin:0 !important;")
-          //-   q-card.animate-scale.relative-position(style="width:100%; padding:10px;")
+          .row(style="width:100%; margin:0 !important;")
+            q-card.animate-scale.relative-position(style="width:100%; padding:10px;")
               .h6.light-paragraph.text-center Work Units and Pow Shores
                 .row.justify-center(style="width:100%; padding:10px;")
                   q-btn(flat :class="{activeTab:powDisplay === false}" @click="powDisplay = false")
