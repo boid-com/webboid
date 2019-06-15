@@ -21,6 +21,7 @@
 </template>
 <script>
   import { openURL } from 'quasar'
+  import align from "../../test/quasar-framework/src/mixins/align";
 
   export default {
     name: 'index',
@@ -38,10 +39,11 @@
           noHeader: false,
           columnPicker: false,
           leftStickyColumns: 0,
-          rightStickyColumns: 2,
+          rightStickyColumns: 0,
           bodyStyle: {
-            maxHeight: '500px',
-            color:'blue'
+            maxHeight: '800px',
+            color:'black',
+            textAlign:'center'
           },
           rowHeight: '50px',
           responsive: true,
@@ -57,7 +59,6 @@
             field: 'name',
             width: '200px',
             filter: true,
-            sort: true,
             type: 'string',
           },
           {
@@ -65,13 +66,12 @@
             field: 'cpuTime',
             width: '200px',
             filter: true,
-            sort (a, b) {
-              return (new Date(a)) - (new Date(b))
-            },
             format (value) {
               let dataDiff = new Date() - new Date(value);
               let hours = parseInt(dataDiff / 3600 );
-              return hours.toString() + 'hours past';
+              if( hours )
+                return hours.toString() + ' hours past';
+              else return '';
             }
           },
           {
@@ -89,7 +89,6 @@
             label: 'Out Come',
             field: 'outcome',
             width: '120px',
-            sort: true,
             filter: true,
             format( value ) {
               switch (value) {
@@ -104,7 +103,7 @@
                 case 7:
                   return 'abandoned';
                 default:
-                  return 'incorrect reply';
+                  return '';
               }
             },
             type: 'string'
@@ -113,24 +112,29 @@
             label: 'Power',
             field: 'power',
             filter: true,
-            sort: true,
-            type: 'number',
+            format( value ) {
+              if( value > 0 )
+                return parseFloat(value).toFixed(8);
+              else if( value !== 0 )return '<p style="font-size:24px;color:blue;">'+ value +'</p>';
+              else return value;
+            },
+            type: 'string',
             width: '140px',
           },
-          {
-            label: 'Time State',
-            field: 'sentTime',
-            width: '140px',
-            format (value) {
-              let days = new Date().getDate() - new Date(value).getDate();
-              if( days > 1 )
-                return days.toString() + 'days ago';
-              else if( days > 0 )
-                return 'yesterday';
-              else
-                return 'today';
-            }
-          },
+          // {
+          //   label: 'Time State',
+          //   field: 'sentTime',
+          //   width: '140px',
+          //   format (value) {
+          //     let days = new Date().getDate() - new Date(value).getDate();
+          //     if( days > 1 )
+          //       return days.toString() + 'days ago';
+          //     else if( days > 0 )
+          //       return 'yesterday';
+          //     else
+          //       return 'today';
+          //   }
+          // },
           {
             label: 'Server State',
             field: 'serverState',
@@ -141,7 +145,7 @@
               else if( value === 5 )
                 return 'reported';
               else
-                return 'unknown value';
+                return '';
             },
           },
           {
@@ -149,13 +153,11 @@
             field: 'updatedAt',
             width: '200px',
             filter: true,
-            sort: true,
             type: 'string',
           },
           {
             label: 'Validate State',
             field: 'validateState',
-            sort: true,
             format(value){
               switch ( value ){
                 case 0:
@@ -169,7 +171,7 @@
                 case 5:
                   return 'results failed to given deadline';
                 default:
-                  return 'unknown result';
+                  return '';
               }
             },
             type: 'string',
@@ -178,14 +180,17 @@
           {
             label: 'Weight',
             field: 'weight',
-            sort: true,
             type: 'string',
+            format( value ) {
+              if( value > 0 )
+                return parseFloat(value).toFixed(8);
+              else return value;
+            },
             width: '120px'
           },
           {
             label: 'Work Unit Id',
             field: 'workUnitId',
-            sort: true,
             type: 'string',
             width: '120px'
           }
@@ -196,6 +201,18 @@
     },
     methods: {
       openURL,
+      // the function to sort data
+      sortData: function (arrayData) {
+        function compare(a, b) {
+          if (a.sentTime > b.sentTime)
+            return -1;
+          if (a.sentTime < b.sentTime)
+            return 1;
+          return 0;
+        }
+        arrayData.sort( compare );
+      },
+
       getTableData: async function ( key, param ){
         if( key === 'valid' ){
           if( param === 0 ){
@@ -206,7 +223,48 @@
             this.click_invalid = false;
           }
         }
-        this.table_data   = await this.$api.getWorkUnits( {'valid': param });
+        //get data from backend
+        let data   = await this.$api.getWorkUnits( {'valid': param });
+        this.sortData( data );
+        // make the data to be displayed
+        this.table_data = [];
+        let current_time = new Date().getDate();
+        let data_sent = 0;
+        let prev_data = 0;
+        data.forEach((item)=>{
+          data_sent = new Date( item.sentTime ).getDate();
+          if( data_sent !== prev_data )
+          {
+            let display_text = 'today';
+            if( current_time - data_sent > 1 )
+              display_text = (current_time - data_sent) + ' days ago';
+            else if( current_time - data_sent > 0 )
+              display_text = 'yesterday';
+            else
+              display_text = 'today';
+            this.table_data.push({
+              appName:'',
+              cupTime:'',
+              elapsedTime:'',
+              grantedCredit:'',
+              id:'',
+              name:'',
+              outcome:'',
+              power:display_text,
+              receivedTime:'',
+              sentTime:'',
+              serverState:'',
+              updatedAt:'',
+              validateState:'',
+              weight:'',
+              workUnitId:''
+            });
+            this.table_data.push(item);
+          }else{
+            this.table_data.push(item);
+          }
+          prev_data = data_sent;
+        });
       }
     },
     watch:{
@@ -237,11 +295,11 @@
       },
     },
     async created(){
-      this.table_data   = await this.$api.getWorkUnits();
+      this.getTableData();
     },
     async mounted(){
       setTimeout(()=>{
-        if(!this.$route.query.promo | !this.$q.platform.is.desktop) return
+        if(!this.$route.query.promo || !this.$q.platform.is.desktop) return;
         window.scrollTo({
           top: 500,
           left: 0,
@@ -265,11 +323,9 @@
     padding-top 0 !important
   .q-if
     padding: 0;
-    padding-top: 0;
     margin:0;
   .activeTab
     margin-left:10px;
     background-color: $green-7 !important;
     color: white
-
 </style>

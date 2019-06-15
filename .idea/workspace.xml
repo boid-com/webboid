@@ -75,16 +75,16 @@
           <entry key="babelrc" value="166" />
           <entry key="js" value="828" />
           <entry key="json" value="43" />
-          <entry key="txt" value="144" />
-          <entry key="vue" value="13882" />
+          <entry key="txt" value="145" />
+          <entry key="vue" value="15577" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="209" />
           <entry key="JavaScript" value="828" />
-          <entry key="PLAIN_TEXT" value="144" />
-          <entry key="Vue.js" value="13882" />
+          <entry key="PLAIN_TEXT" value="145" />
+          <entry key="Vue.js" value="15577" />
         </counts>
       </usages-collector>
     </session>
@@ -106,8 +106,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/workUnitsDev.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="117" column="22" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="22" />
+            <state relative-caret-position="418">
+              <caret line="187" column="14" selection-start-line="187" selection-start-column="14" selection-end-line="187" selection-end-column="14" />
+              <folding>
+                <element signature="e#1024#1056#0" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -125,7 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>image</find>
       <find>parseSocial</find>
       <find>displayPending</find>
       <find>parseDevice</find>
@@ -155,6 +158,7 @@
       <find>user</find>
       <find>getTableData</find>
       <find>powerChart</find>
+      <find>power</find>
     </findStrings>
     <replaceStrings>
       <replace>User</replace>
@@ -379,7 +383,7 @@
       <workItem from="1560428470736" duration="3393000" />
       <workItem from="1560522330324" duration="10907000" />
       <workItem from="1560538468016" duration="42000" />
-      <workItem from="1560581113813" duration="11999000" />
+      <workItem from="1560581113813" duration="17489000" />
     </task>
     <task id="LOCAL-00001" summary="test components.">
       <created>1559258436872</created>
@@ -521,11 +525,25 @@
       <option name="project" value="LOCAL" />
       <updated>1560584813121</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="fix feedback for browsing-step2.">
+      <created>1560593162926</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1560593162926</updated>
+    </task>
+    <task id="LOCAL-00022" summary="fix feedback for browsing-step2.">
+      <created>1560593469530</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1560593469530</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="161044000" />
+    <option name="totallyTimeSpent" value="166534000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -546,7 +564,7 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295964" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33856502" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.18946189" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -604,7 +622,8 @@
     <MESSAGE value="fix feedback -step5" />
     <MESSAGE value="fix datatable issue." />
     <MESSAGE value="fix feedback for browsing-step1." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix feedback for browsing-step1." />
+    <MESSAGE value="fix feedback for browsing-step2." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix feedback for browsing-step2." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -917,8 +936,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/workUnitsDev.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="117" column="22" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="22" />
+        <state relative-caret-position="418">
+          <caret line="187" column="14" selection-start-line="187" selection-start-column="14" selection-end-line="187" selection-end-column="14" />
+          <folding>
+            <element signature="e#1024#1056#0" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
