@@ -29,7 +29,7 @@ div
               //- small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
               q-tooltip Boid Power is displayed at a 6-12 hour delay.
           .row
-            q-btn.light-paragraph.no-margin( flat small style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://www.worldcommunitygrid.org/research/viewAllProjects.do')") WorldCommunityGrid
+            q-btn.light-paragraph.no-margin( flat small style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://www.worldcommunitygrid.org/research/viewAllProjects.do')") World Community Grid
             q-tooltip Learn more about the current computational task
     q-card-separator
     q-card-main.relative-position(v-if="selected" style="height:320px; overflow:hidden; width:100%; padding:0px;")
