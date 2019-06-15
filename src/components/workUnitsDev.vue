@@ -2,9 +2,9 @@
   .div(class="layout-padding")
     h5 Work Units Devices
     .row.full-width
-      q-btn(flat :class="{activeTab: true}"  style="" @click="()=>getTableData('valid', 1 )") View valid All
+      q-btn(flat :class="{activeTab: click_valid===false}"  style="background:#ddca43; margin-left:10px;" @click="()=>getTableData('valid', 1 )") View valid All
       <!--q-btn(flat :class="{activeTab: true}" @click="()=>getTableData('valid', 2  )") View Invalid-->
-      q-btn(flat :class="{activeTab: true}" @click="()=>getTableData('valid', 0 )") View Pending
+      q-btn(flat :class="{activeTab: click_invalid===false}" style="background:#ddca43; margin-left:10px;" @click="()=>getTableData('valid', 0 )") View Pending
     .row
       q-data-table( :data="table_data"
       :config="config"
@@ -198,18 +198,12 @@
       openURL,
       getTableData: async function ( key, param ){
         if( key === 'valid' ){
-          if( param === '0' ){
-            this.click_pending = true;
-            this.click_valid   = false;
-            this.click_invalid = false;
-          }else if( param === '1' ){
-            this.click_pending = false;
-            this.click_valid   = true;
-            this.click_invalid = false;
-          }else{
-            this.click_pending = false;
+          if( param === 0 ){
             this.click_valid   = false;
             this.click_invalid = true;
+          }else if( param === 1 ){
+            this.click_valid   = true;
+            this.click_invalid = false;
           }
         }
         this.table_data   = await this.$api.getWorkUnits( {'valid': param });
@@ -275,11 +269,7 @@
     margin:0;
   .activeTab
     margin-left:10px;
-    background-color: $green-7
-    color: white
-  .activeTabClick
-    margin-left:10px;
-    background-color: #ddca43
+    background-color: $green-7 !important;
     color: white
 
 </style>
