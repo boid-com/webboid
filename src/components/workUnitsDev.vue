@@ -1,8 +1,12 @@
 <template lang="pug" >
   .div(class="layout-padding")
+    h5 Work Units Devices
+    .row.full-width
+      q-btn(flat :class="{activeTab: true}"  style="" @click="()=>getTableData('valid', 1 )") View valid All
+      <!--q-btn(flat :class="{activeTab: true}" @click="()=>getTableData('valid', 2  )") View Invalid-->
+      q-btn(flat :class="{activeTab: true}" @click="()=>getTableData('valid', 0 )") View Pending
     .row
-      h5 Work Units Devices
-      q-data-table( :data="table_workunits"
+      q-data-table( :data="table_data"
       :config="config"
       :columns="columns"
       @refresh="refresh"
@@ -24,13 +28,15 @@
     data () {
       return {
         openURL,
-        table_pending:[],
-        table_workunits:[],
+        click_valid: false,
+        click_invalid:false,
+        click_pending: false,
+        table_data:[],
         config: {
           title: '',
           refresh: false,
           noHeader: false,
-          columnPicker: true,
+          columnPicker: false,
           leftStickyColumns: 0,
           rightStickyColumns: 2,
           bodyStyle: {
@@ -49,7 +55,7 @@
           {
             label: 'Name',
             field: 'name',
-            width: '140px',
+            width: '200px',
             filter: true,
             sort: true,
             type: 'string',
@@ -57,19 +63,26 @@
           {
             label: 'Cpu Time',
             field: 'cpuTime',
-            width: '140px',
+            width: '200px',
             filter: true,
             sort (a, b) {
               return (new Date(a)) - (new Date(b))
             },
             format (value) {
-              return new Date(value).toLocaleString()
+              let dataDiff = new Date() - new Date(value);
+              let hours = parseInt(dataDiff / 3600 );
+              return hours.toString() + 'hours past';
             }
           },
           {
             label: 'Elapse Time',
             field: 'elapsedTime',
             width: '140px',
+            format( value ) {
+              if( value > 0 )
+                return parseFloat(value).toFixed(8);
+              else return value;
+            },
             type: 'number',
           },
           {
@@ -102,21 +115,20 @@
             filter: true,
             sort: true,
             type: 'number',
+            width: '140px',
           },
           {
-            label: 'Sent Time',
+            label: 'Time State',
             field: 'sentTime',
             width: '140px',
             format (value) {
-              return new Date(value).toLocaleString()
-            }
-          },
-          {
-            label: 'Receiver Time',
-            field: 'receivedTime',
-            width: '140px',
-            format (value) {
-              return new Date(value).toLocaleString()
+              let days = new Date().getDate() - new Date(value).getDate();
+              if( days > 1 )
+                return days.toString() + 'days ago';
+              else if( days > 0 )
+                return 'yesterday';
+              else
+                return 'today';
             }
           },
           {
@@ -135,7 +147,7 @@
           {
             label: 'Updated At',
             field: 'updatedAt',
-            width: '120px',
+            width: '200px',
             filter: true,
             sort: true,
             type: 'string',
@@ -184,6 +196,24 @@
     },
     methods: {
       openURL,
+      getTableData: async function ( key, param ){
+        if( key === 'valid' ){
+          if( param === '0' ){
+            this.click_pending = true;
+            this.click_valid   = false;
+            this.click_invalid = false;
+          }else if( param === '1' ){
+            this.click_pending = false;
+            this.click_valid   = true;
+            this.click_invalid = false;
+          }else{
+            this.click_pending = false;
+            this.click_valid   = false;
+            this.click_invalid = true;
+          }
+        }
+        this.table_data   = await this.$api.getWorkUnits( {'valid': param });
+      }
     },
     watch:{
       pagination (value) {
@@ -210,12 +240,10 @@
           style[value] = this.bodyHeight + 'px'
         }
         this.config.bodyStyle = style
-      }
+      },
     },
     async created(){
-      this.table_pending   = await this.$api.getWorkUnits({skip:2,valid:'WU'});
-      console.log("TABLE_PENDDING>>>>", this.table_pending);
-      this.table_workunits = await this.$api.getWorkUnits({skip:2});
+      this.table_data   = await this.$api.getWorkUnits();
     },
     async mounted(){
       setTimeout(()=>{
@@ -245,5 +273,13 @@
     padding: 0;
     padding-top: 0;
     margin:0;
+  .activeTab
+    margin-left:10px;
+    background-color: $green-7
+    color: white
+  .activeTabClick
+    margin-left:10px;
+    background-color: #ddca43
+    color: white
 
 </style>

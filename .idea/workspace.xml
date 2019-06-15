@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="887114af-d4b6-417f-beb7-084bac29d3a3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/User.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/User.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/workUnitsDev.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/workUnitsDev.vue" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -76,16 +75,16 @@
           <entry key="babelrc" value="166" />
           <entry key="js" value="828" />
           <entry key="json" value="43" />
-          <entry key="txt" value="107" />
-          <entry key="vue" value="11720" />
+          <entry key="txt" value="144" />
+          <entry key="vue" value="13882" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="209" />
           <entry key="JavaScript" value="828" />
-          <entry key="PLAIN_TEXT" value="107" />
-          <entry key="Vue.js" value="11720" />
+          <entry key="PLAIN_TEXT" value="144" />
+          <entry key="Vue.js" value="13882" />
         </counts>
       </usages-collector>
     </session>
@@ -95,8 +94,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/User.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
-              <caret line="127" column="20" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="20" />
+            <state relative-caret-position="276">
+              <caret line="122" column="45" selection-start-line="122" selection-start-column="45" selection-end-line="122" selection-end-column="45" />
               <folding>
                 <element signature="e#9333#9365#0" expanded="true" />
               </folding>
@@ -107,8 +106,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/workUnitsDev.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="159" column="41" selection-start-line="159" selection-start-column="41" selection-end-line="159" selection-end-column="41" />
+            <state relative-caret-position="176">
+              <caret line="117" column="22" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -126,18 +125,12 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>asnyc</find>
-      <find>`</find>
-      <find>console.l</find>
-      <find>invited</find>
       <find>image</find>
-      <find>getTeamInfo</find>
       <find>parseSocial</find>
       <find>displayPending</find>
       <find>parseDevice</find>
       <find>console.log</find>
       <find>userDevice</find>
-      <find>getUserDevices</find>
       <find>fix_me</find>
       <find>thisUser</find>
       <find>powDisplay</find>
@@ -151,11 +144,17 @@
       <find>rowClick</find>
       <find>config</find>
       <find>deviceDisplay</find>
-      <find>powerChart</find>
       <find>parseSocials</find>
+      <find>myProfile</find>
+      <find>show</find>
+      <find>getUserDevices</find>
+      <find>teamPromotions</find>
+      <find>getTeamInfo</find>
+      <find>populateTeamPromotions</find>
       <find>getUserChart</find>
       <find>user</find>
-      <find>myProfile</find>
+      <find>getTableData</find>
+      <find>powerChart</find>
     </findStrings>
     <replaceStrings>
       <replace>User</replace>
@@ -231,7 +230,7 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-7" />
+    <option name="x" value="953" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
   </component>
@@ -267,7 +266,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../webboid_0613_newa/webboid" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -282,12 +281,12 @@
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2018.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\workplace\unittesting\webboid\test\components" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\workplace\unittesting\webboid\src\components" />
       <recent name="E:\workplace\unittesting\webboid\src" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\workplace\unittesting\webboid\test\components" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -380,7 +379,7 @@
       <workItem from="1560428470736" duration="3393000" />
       <workItem from="1560522330324" duration="10907000" />
       <workItem from="1560538468016" duration="42000" />
-      <workItem from="1560581113813" duration="3627000" />
+      <workItem from="1560581113813" duration="11999000" />
     </task>
     <task id="LOCAL-00001" summary="test components.">
       <created>1559258436872</created>
@@ -515,11 +514,18 @@
       <option name="project" value="LOCAL" />
       <updated>1560538340185</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="fix feedback for browsing-step1.">
+      <created>1560584813121</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1560584813121</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="152672000" />
+    <option name="totallyTimeSpent" value="161044000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -534,13 +540,13 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.046536226" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.02961396" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295964" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.17937219" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33856502" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -549,7 +555,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32847533" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.24575311" />
-      <window_info active="true" anchor="bottom" id="Messages" order="11" visible="true" weight="0.32847533" />
+      <window_info anchor="bottom" id="Messages" order="11" weight="0.32847533" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -597,7 +603,8 @@
     <MESSAGE value="fix feedback -step4" />
     <MESSAGE value="fix feedback -step5" />
     <MESSAGE value="fix datatable issue." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix datatable issue." />
+    <MESSAGE value="fix feedback for browsing-step1." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix feedback for browsing-step1." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -900,8 +907,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/User.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="127" column="20" selection-start-line="127" selection-start-column="20" selection-end-line="127" selection-end-column="20" />
+        <state relative-caret-position="276">
+          <caret line="122" column="45" selection-start-line="122" selection-start-column="45" selection-end-line="122" selection-end-column="45" />
           <folding>
             <element signature="e#9333#9365#0" expanded="true" />
           </folding>
@@ -910,8 +917,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/workUnitsDev.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="159" column="41" selection-start-line="159" selection-start-column="41" selection-end-line="159" selection-end-column="41" />
+        <state relative-caret-position="176">
+          <caret line="117" column="22" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="22" />
         </state>
       </provider>
     </entry>
