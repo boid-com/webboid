@@ -52,7 +52,7 @@
                       div.infoBox
                         p.block.adjust.no-margin.text-center {{wu.power.toFixed(2) || 0}}
                         small Power
-    div(v-if="page === 'Active' " style="overflow:scroll").relative-position
+    div(v-if="page === 'Active' ").relative-position
       div(style=" padding:5px;")
         div.shadow-6(style="margin:5px; padding:20px; z-index:4; width:80%;" v-if="!closeNotice").absolute-center.bg-white
           q-btn( @click="closeNotice=true" flat color="red" style="right:-10px; top:-10px;").float-right
