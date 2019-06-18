@@ -133,7 +133,11 @@ export default {
     this.$root.$off('updateCPUConfig')
   },
   mounted() { 
-    if (JSON.parse(window.localStorage.getItem('cpuToggle'))) this.start()
+    if (JSON.parse(window.localStorage.getItem('cpuToggle'))) {
+      setTimeout(() => {
+        this.start()
+      }, 5000)
+    }
     clearInterval(window.boincInterval)
     this.ipcRenderer = window.local.ipcRenderer
     this.$root.$on('updateCPUConfig', el => {
@@ -180,7 +184,7 @@ export default {
         this.status = "Autostarting"
         setTimeout(() => {
           this.toggle = true
-        }, 1000)
+        }, 5000)
       } 
     })
     ipc.send('config.init',boinc.config.defaultConfig)
@@ -235,6 +239,7 @@ export default {
 
     },
     start() {
+      const currentLogLength = this.eventLog.length
       this.statusIcon = "check"
       this.statusIconColor = "green"
       this.status = "Starting..."
@@ -250,6 +255,11 @@ export default {
         setTimeout(() => {
           ipc.send('state.getUI')
         }, 5000)
+        setTimeout(() => {
+          if (this.eventLog.length === currentLogLength && this.currentLogLength != 1000){
+            this.start()
+          }
+        }, 10000)
     },
     stop() {
       this.statusIcon = "stop"
