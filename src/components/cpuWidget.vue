@@ -239,7 +239,7 @@ export default {
 
     },
     start() {
-      const currentLogLength = this.eventLog.length
+      const currentLogLength = this.statusLog.length || 0
       this.statusIcon = "check"
       this.statusIconColor = "green"
       this.status = "Starting..."
@@ -256,7 +256,7 @@ export default {
           ipc.send('state.getUI')
         }, 5000)
         setTimeout(() => {
-          if (this.eventLog.length === currentLogLength && this.currentLogLength != 1000){
+          if (this.statusLog.length === currentLogLength && this.currentLogLength != 1000){
             this.start()
           }
         }, 10000)
