@@ -130,6 +130,8 @@ export default {
   },
   beforeDestroy(){
     clearInterval(window.boincInterval)
+    clearInterval(window.boincInterval2)
+
     this.$root.$off('updateCPUConfig')
   },
   mounted() { 
@@ -139,6 +141,8 @@ export default {
       }, 5000)
     }
     clearInterval(window.boincInterval)
+    clearInterval(window.boincInterval2)
+
     this.ipcRenderer = window.local.ipcRenderer
     this.$root.$on('updateCPUConfig', el => {
       if(this.isPaused){
@@ -244,12 +248,15 @@ export default {
       this.statusIconColor = "green"
       this.status = "Starting..."
         clearInterval(window.boincInterval)
-        setTimeout(() => {
-          window.boincInterval = setInterval(() => {
-            if (this.toggle) ipc.send('state.getUI')
-            else clearInterval(window.boincInterval)
-          }, 30000)
-        }, 2000)
+        clearInterval(window.boincInterval2)
+        window.boincInterval = setInterval(() => {
+          if (this.toggle) ipc.send('state.getUI')
+          else clearInterval(window.boincInterval)
+        }, 30000)
+        window.boincInterval2 = setInterval(() => {
+          if (this.toggle) ipc.send('cmd','read_global_prefs_override')
+          else clearInterval(window.boincInterval2)
+        }, 1800000)
         ipc.send('start')
         ipc.send('state.getUI')
         setTimeout(() => {
@@ -266,6 +273,8 @@ export default {
       this.statusIconColor = "grey-8"
       ipc.send('stop')
       clearInterval(window.boincInterval)
+      clearInterval(window.boincInterval2)
+
       this.status = "Stopping..."
     }
   },
