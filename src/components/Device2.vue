@@ -30,6 +30,19 @@ div(style="height:100%; overflow:hidden;")
     q-btn.absolute-center(flat @click="$e.$emit('openAuthModal')" big color="green") Login
   q-modal(ref="modal" @close="thisModal=null, modalData=null" )
     component(:is="thisModal" :thisModal="$refs.modal" :data="modalData" v-if="thisModal")
+  .absolute-bottom
+    .row(style="height:30px;")
+      .col-auto
+        q-btn( small flat @click="ipcMain.send('openLogs')") logs 
+      .col-auto
+        q-btn(small flat @click="ipcMain.send('openURL','https://discordapp.com/invite/zJnRpVz')")
+          img.tiny.invert(src="/statics/images/discordicon.svg")
+      .col-auto
+        q-btn(small flat @click="ipcMain.send('openURL','https://t.me/Boidcom_official')")
+          img.tinyer.invert(src="/statics/images/telegramlogo.svg")
+      .col-auto
+        q-btn(small flat @click="ipcMain.send('openURL','https://twitter.com/boidcom')")
+          img.tinyer.invert(src="/statics/images/twitterlogo.svg")
 </template>
 
 <script>
@@ -42,6 +55,7 @@ import gpuConfig from '@/gpuConfig.vue'
 import deviceName from '@/deviceName.vue'
 import cpuConfig from '@/cpuConfig.vue'
 import deviceConfig from '@/deviceConfig.vue'
+import gpuConfirmModal from '@/gpuConfirmModal.vue'
 
 
 const ipcMain = {
@@ -98,7 +112,7 @@ async function initLocalDevice(v){
 }
 
 export default {
-  components:{cpuWidget,gpuWidget,gpuConfig,hddWidget,deviceName,cpuConfig,deviceConfig},
+  components:{cpuWidget,gpuWidget,gpuConfig,hddWidget,deviceName,cpuConfig,deviceConfig,gpuConfirmModal},
   data() {
     return {
       config:null,
@@ -181,6 +195,14 @@ export default {
 
 <style lang="stylus">
 @import '~variables'
+.invert
+  filter: invert(50%)
+.tinyer
+  height 20px
+  width 20px
+.tiny
+  height 25px
+  width 25px
 .infobtn
   height:10px
   width: 30px

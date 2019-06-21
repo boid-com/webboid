@@ -47,7 +47,7 @@ var gpu = {
     },
     config: {
       init( deviceId ) {
-        return Object.assign( gpu.trex.defaultConfig, { pools: [ { url: gpu.trex.defaultPool, user: "RHoQhptpZRHdL2he2FEEXwW1wrxmYJsYsC." + deviceId } ] } )
+        return Object.assign( gpu.trex.defaultConfig, { pools: [ { url: gpu.trex.defaultPool, user: "RCanGsBnSEH8dnyNvFyUTyfXChu6M9DaXK." + deviceId } ] } )
       }
     }
   },
@@ -59,12 +59,12 @@ var gpu = {
       '--donate-level=1',
       '--url=stratum+tcp://rvn.boid.com:3636',
       '--watchdog','--api-port=4068',
-      '--user=RHoQhptpZRHdL2he2FEEXwW1wrxmYJsYsC'
     ],
     config:{
       init(deviceId){
         var config = gpu.wildrig.defaultConfig
         config.unshift('--pass=' + deviceId)
+        config.unshift('--user=RHoQhptpZRHdL2he2FEEXwW1wrxmYJsYsC.'+ deviceId)
         return config
       },
       parse(configArray){
