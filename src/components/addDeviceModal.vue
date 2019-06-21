@@ -157,13 +157,13 @@ export default {
         return {
           label:"Download for Windows",
           icon:'fa-windows',
-          url:'https://github.com/Boid-John/BoidDesktop/releases/download/0.0.3/Boid-windows-installer-0.0.3.exe.zip'
+          url:'https://github.com/Boid-John/BoidDesktop/releases/download/v0.0.51RC/Boid-0.0.51.Setup.exe'
         }
       }else if (this.$q.platform.is.mac){
         return {
           label:"Download for Mac",
           icon:'fa-apple',
-          url:'https://github.com/Boid-John/BoidDesktop/releases/download/0.0.3/Boid-0.0.03.dmg'
+          url:'https://github.com/Boid-John/BoidDesktop/releases/download/v0.0.51RC/Boid-0.0.51.dmg'
         }
       }else if (this.$q.platform.is.linux){
         return {
