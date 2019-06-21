@@ -3,41 +3,41 @@ div
   .row
     .col
       q-card
-        p.light-paragraph.text-center 2019 Q1 - Q2 Season Schedule
+        p.light-paragraph.text-center 2019 Q3 - Q4 Season Schedule
         .row.relative-position
           .col-11
             div.absolute-center.gt-sm(style="height:5px; width:80%; background-color:grey; z-index:-1;")
-          .col.scheduleCard.text-grey
-            q-card.bg-grey-2.scheduleCard
+          .col.scheduleCard.text-white.strong
+            q-card.scheduleCard(color="green")
               p.text-center Break
-              p.text-center 1/1 - 2/7
+              p.text-center 6/21 - 7/21
           .col.scheduleCard.text-grey
-            q-card.bg-grey-2.scheduleCard
-              p.text-center Season 0
-              p.text-center 2/7 - 4/7
-          .col
+            q-card.bg-white.scheduleCard
+              p.text-center Season 2
+              p.text-center 7/21 - 9/21
+          .col.scheduleCard.text-grey
             q-card.bg-white.text-grey
               p.text-center Break
-              p.text-center 4/7 - 4/21
-          .col
-            q-card.bg-whitescheduleCard(color="green")
-              p.text-center Season 1
-              p.text-center 4/21 - 6/21
+              p.text-center 9/21 - 10/21
+          .col.scheduleCard.text-grey
+            q-card.bg-white.scheduleCard
+              p.text-center Season 3
+              p.text-center 10/21 - 12/21
   .row
     .col
       q-card
         .row.justify-center
           div(style="padding-bottom:10px;")
             q-btn(  flat
-              :class="{selected:page==='info'}"
+              :class="{selectedTab:page==='info'}"
               @click="page='info'"
             ) info
             q-btn( flat
-              :class="{selected:page==='calc'}"
+              :class="{selectedTab:page==='calc'}"
               @click="page='calc'"
             ) Profit Calculator
             q-btn( flat
-              :class="{selected:page==='exchange'}"
+              :class="{selectedTab:page==='exchange'}"
               @click="page='exchange'"
             ) exchange
         .row.justify-center
@@ -50,11 +50,11 @@ div
                 .row
                   .col-3(style="padding-top:10%")
                     q-btn( flat
-                      :class="{selected: profitCalc.timeScale == 86400000}"
+                      :class="{selectedTab: profitCalc.timeScale == 86400000}"
                       @click="profitCalc.timeScale = 8.64e+7"
                     ) Daily
                     q-btn( flat
-                      :class="{selected: profitCalc.timeScale == 86400000 * 7}"
+                      :class="{selectedTab: profitCalc.timeScale == 86400000 * 7}"
                       @click="profitCalc.timeScale = 8.64e+7 * 7"
                     ) Weekly
                     small Timescale
@@ -134,7 +134,7 @@ div
 @import '~variables'
   .q-card
     padding 20px
-  .selected
+  .selectedTab
     background-color $blue-6
     color: white
   .clickable:hover
