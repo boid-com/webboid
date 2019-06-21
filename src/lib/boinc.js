@@ -47,6 +47,11 @@ var boinc = {
     if (val.search('Resuming network activity') > -1 ) return true
     return false
   },
+  checkBenchmarking(val){
+    if (val.search('Running CPU Benchmarks') > -1 ) return true
+    if (val.search('CPU benchmarks in progress') > -1 ) return true
+    return false
+  },
   config:{defaultConfig:{autoStart:true}}
 }
 module.exports = boinc

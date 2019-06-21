@@ -313,7 +313,7 @@ export default {
       this.disableToggle =  true
       setTimeout(() => {
         this.disableToggle = false
-      }, 2500)
+      }, 5500)
       if (val) {
         console.log(this.gpuInfo)
         if (!this.gpuInfo) return this.toggle = false

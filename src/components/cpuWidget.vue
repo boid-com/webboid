@@ -203,6 +203,7 @@ export default {
       const resumed = boinc.checkResumed(text)
       if (paused) this.isPaused = paused
       if (resumed) this.isPaused = false
+
       this.statusLog.push({
       time: new Date().toLocaleString(),
       text
@@ -243,6 +244,9 @@ export default {
 
     },
     start() {
+      setTimeout(() => {
+        this.disableToggle = false
+      }, 15500)
       const currentLogLength = this.statusLog.length || 0
       this.statusIcon = "check"
       this.statusIconColor = "green"
@@ -269,6 +273,9 @@ export default {
         }, 10000)
     },
     stop() {
+      setTimeout(() => {
+        this.disableToggle = false
+      }, 10500)
       this.statusIcon = "stop"
       this.statusIconColor = "grey-8"
       ipc.send('stop')
@@ -341,16 +348,10 @@ export default {
       this.disableToggle =  true
       window.localStorage.setItem('cpuToggle',val)
       if (val) {
-        setTimeout(() => {
-          this.disableToggle = false
-        }, 4500)
         // if (!this.boincInfo) return this.toggle = false
         this.start()
       } else {
         this.isPaused = false
-        setTimeout(() => {
-          this.disableToggle = false
-        }, 10500)
         this.stop()
       }
     },

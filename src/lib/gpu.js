@@ -89,7 +89,7 @@ var gpu = {
       console.log( gpuID )
       var parsedGPU = findGPU( gpuID )
       if ( parsedGPU ) parsedGPU.valid = true, parsedGPU.name = gpu.name
-      else parsedGPU = gpu, parsedGPU.valid = Z
+      else parsedGPU = gpu, parsedGPU.valid = false
       gpus.push( parsedGPU )
     }
     return gpus
