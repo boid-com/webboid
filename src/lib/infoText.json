@@ -1,7 +1,7 @@
 {
   "wallet": {
     "heading": "Your Wallet",
-    "body": "In the wallet area you can view your accounts pending and paid balances of any tokens you've earned using the Boid app. The Pending Balance represents Boid tokens that have been earned but not yet paid to you. Tokens are paid out every 24-48 hours to users with a pending balance of over 10,000 Boid Tokens. Paid Out represents the total number of tokens that have been transferred to your EOS account. This does NOT reflect your EOS account’s Boid Balance, only the sum of historical transfers.",
+    "body": "In the wallet area you can view your accounts pending and paid balances of any tokens you've earned using the Boid app. The Pending Balance represents Boid tokens that have been earned but not yet paid to you. Tokens are paid out every 24-48 hours to users with a pending balance of over 100 Boid Tokens. Paid Out represents the total number of tokens that have been transferred to your EOS account. This does NOT reflect your EOS account’s Boid Balance, only the sum of historical transfers.",
     "link":""
   },
   "power": {

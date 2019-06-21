@@ -2,7 +2,7 @@
 div(style="min-height:100px; margin-top:40px;").full-width.bg-grey-9
   .row.justify-end
     .col-auto(style="margin: 10px;")
-      q-btn(flat @click="openURL('https://discordapp.com/invite/DCQ6FrC')")
+      q-btn(flat @click="openURL('https://discordapp.com/invite/zJnRpVz')")
         //- q-icon(name="fa-discord")
         img(src="/statics/images/discordicon.svg")
       q-btn.on-right(flat @click="openURL('https://twitter.com/boidcom')")

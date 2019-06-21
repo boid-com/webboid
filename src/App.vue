@@ -5,7 +5,7 @@
       q-toolbar.shadow-1(slot="header" style="webkit-app-region: drag;") 
         q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
           | boid
-          div(slot='subtitle') Season 1 - Alpha 0.0.5
+          div(slot='subtitle') Season 1 - Alpha
         div(v-if="loginVisible")
           q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
             q-icon.on-right(name="create")
@@ -209,8 +209,8 @@ export default {
     showOlark(val) {
       try {
         if (val) {
-          if (this.local) window.olark('api.box.hide')
-          window.olark('api.box.show')
+          if (this.local) return window.olark('api.box.hide')
+          else window.olark('api.box.show')
         } else window.olark('api.box.hide')
       } catch (error) {
         console.error(error)
@@ -500,7 +500,7 @@ export default {
         }
       } else {
 
-        if(this.local) this.handleLogin()
+        // if(this.local) this.handleLogin()
         // if (this.local) this.$router.push({ name: 'Auth' })
         clearInterval(this.userPoll)
         this.userPoll = null

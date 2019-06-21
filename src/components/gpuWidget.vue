@@ -3,6 +3,8 @@ div
   q-card(style='max-height:480px;' v-if="thisDevice && ipcRenderer").relative-position
     div.absolute(v-if="disabled" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.6);")
       h6.absolute-center.no-margin.text-white Not compatible with this OS
+    div.absolute(v-if="!gpuActivated" style="height:100%; width:100%; z-index:100; background-color:rgba(0,0,0,.6);")
+      q-btn.absolute-center.no-margin.bg-white(@click="activateGPU()") Activate GPU
     q-card-media.relative-position
       q-btn.infobtn.absolute-top-right(color='blue' flat round small @click="$parent.$emit('modal','gpuConfig',{config,directories})")
         q-icon(color='grey-7' name="settings")
@@ -149,13 +151,18 @@ export default {
       wildrigStats:null,
       config:null,
       shouldAutoStart:false,
-      directories:null
+      directories:null,
+      gpuActivated:false
     }
   },
   mounted() { 
     this.$root.$on('updateGPUConfig', el => ipc.send('config.write',el))
-
-
+    this.$root.$on('confirmGPU',el => {
+      if (el){
+        localStorage.setItem('gpuActivated',true)
+        this.gpuActivated = true
+      }
+    })
     this.ipcRenderer = window.local.ipcRenderer
     // ipc.on('gpu.error',alert)
     ipc.on('init', data => this.directories = data)
@@ -176,8 +183,13 @@ export default {
       time: new Date().toLocaleString(),
       text: data.replace(/\[.*?\]/g,'')
     }))
+    if (JSON.parse(localStorage.getItem('gpuActivated'))) this.gpuActivated = true
   },
   methods: {
+    activateGPU(){
+      this.$parent.$emit('modal','gpuConfirmModal')
+
+    },
     selectText(data) {
       copyToClipboard(JSON.stringify(this.statusLog,null,2))
       // copyDivToClipboard(this.$refs.logDisplay)
