@@ -27,7 +27,7 @@ div(style="height:100%; overflow:hidden;")
       hddWidget(:disabled="true" v-show="page === 'HDD' || page === 'Dash' " :thisDevice="thisDevice")
   .layout-padding.relative-position(v-else)
     div(style="padding-top:70px;")
-    q-btn.absolute-center(flat @click="$e.$emit('openAuthModal')" big color="green") Login
+    //- q-btn.absolute-center(flat @click="$e.$emit('openAuthModal')" big color="green") Login
   q-modal(ref="modal" @close="thisModal=null, modalData=null" )
     component(:is="thisModal" :thisModal="$refs.modal" :data="modalData" v-if="thisModal")
   .absolute-bottom

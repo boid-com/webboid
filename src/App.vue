@@ -209,8 +209,8 @@ export default {
     showOlark(val) {
       try {
         if (val) {
-          if (this.local) window.olark('api.box.hide')
-          window.olark('api.box.show')
+          if (this.local) return window.olark('api.box.hide')
+          else window.olark('api.box.show')
         } else window.olark('api.box.hide')
       } catch (error) {
         console.error(error)
@@ -500,7 +500,7 @@ export default {
         }
       } else {
 
-        if(this.local) this.handleLogin()
+        // if(this.local) this.handleLogin()
         // if (this.local) this.$router.push({ name: 'Auth' })
         clearInterval(this.userPoll)
         this.userPoll = null
