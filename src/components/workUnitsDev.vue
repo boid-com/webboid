@@ -67,7 +67,7 @@
             width: '200px',
             filter: true,
             format (value) {
-              if( value === 0 || value )
+              if( value >= 0 )
                 return ( value === 0 )? 0 : parseFloat(value).toFixed(8);
               else
                 return '';
