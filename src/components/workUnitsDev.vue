@@ -67,8 +67,8 @@
             width: '200px',
             filter: true,
             format (value) {
-              if( value )
-               return new Date( value ).toLocaleString();
+              if( value === 0 || value )
+                return ( value === 0 )? 0 : parseFloat(value).toFixed(8);
               else
                 return '';
             }
