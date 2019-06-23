@@ -109,14 +109,16 @@
                 .col( v-for="(device, index) in userDevice" :key="device.id")
                   .col-xs-6.col-sm-3.col-md-2.col-lg-2
                     q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
-                      q-item-tile(label style="user-select: none;") {{index+1}}. {{device.name}} {{device.type}}
-                      q-item-tile.relative-position(style="padding-left:15px;" sublabel) CPU: {{device.boincPower.toLocaleString()}}
-                          |{{displayPending(device)}}
-                          q-tooltip Device Power (Pending)
-                            img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
-                          q-item-tile.relative-position(style="padding-left:15px;" sublabel) GPU: {{device.rvnPower.toLocaleString()}}
-                            div.absolute-top-left(style="width:100px; height:30px;")
-                            img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+                      q-item-side()
+                        q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)") {{device.name}}{{device.type}}
+                      q-item-tile(label style="user-select: none;")
+                        q-item-tile.relative-position(style="padding-left:15px;" sublabel) CPU: {{device.boincPower.toLocaleString()}}
+                            |{{displayPending(device)}}
+                            q-tooltip Device Power (Pending)
+                              img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
+                            q-item-tile.relative-position(style="padding-left:15px;" sublabel) GPU: {{device.rvnPower.toLocaleString()}}
+                              div.absolute-top-left(style="width:100px; height:30px;")
+                              img.absolute-left(src="/statics/images/BoidPower.svg" style="height:20px; left:0px;")
               .row.justify-center(style="width:100%; margin:0 !important;" v-if="thatUser.devices.length > 3 " )
                 q-btn(flat :class="{activeTab:true}" style = "background-color:#ddca43;" @click="deviceDisplay(false)" v-if="!devShowFlag") Show more
                 q-btn(flat :class="{activeTab:true}" style = "background-color:#ddca43;" @click="deviceDisplay(true)" v-else) Hide
@@ -136,6 +138,7 @@
   import userChart from '@/userChart.vue'
   import parseSocials from 'lib/parseSocial.js'
   import promoCard from '@/promoCard.vue'
+  import parseDevice from 'src/lib/parseDevice'
 
   var info = require('src/lib/infoText.json')
 
@@ -145,6 +148,7 @@
     data () {
       return {
         user:[],
+        parseDevice,
         userTeam:[],
         openURL,
         info,

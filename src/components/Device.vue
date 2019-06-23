@@ -1,10 +1,10 @@
 <template lang="pug">
 div()
   .layout-padding.relative-position(v-if="!loading && thisDevice.name")
-    h6.text-center(style="padding: 0px; margin: 0px;") {{thisDevice.name}} 
+    h6.text-center(style="padding: 0px; margin: 0px;") {{thisDevice.name}}
       q-icon.float-lefth.on-right.inline( style="padding-bottom:3px;" :name='parseDevice.icon(thisDevice)' :color="parseDevice.color(thisDevice)")
       q-tooltip Your Device Name
-  
+
     q-card(style='width:90vw; max-height:410px;')
       q-card-media.relative-position
         q-btn.infobtn.absolute-top-right(color='blue' flat round @click="openConfigModal()")
@@ -22,7 +22,7 @@ div()
                 div(v-if="thisDevice.power") {{thisDevice.power.toFixed(4)}}
                 div(v-else)
                   | 0.0
-                small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
+                small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}}
                   q-tooltip Pending power can take 24 hours or more to be verified.
                 q-btn.absolute-right(flat @click="refreshDevice()")
                   q-tooltip Refresh Device
@@ -37,16 +37,16 @@ div()
           p(v-else) Downloading Work Units....
       q-card-main(v-if="toggle" style="max-height:195px; overflow:scroll; padding-top:0px;")
         div(v-if="activeTasks.length > 0" v-for="(task,index) in activeTasks" :key='task.slot[0]' style="margin-bottom:5px;")
-          
+
           q-progress( style="height:10px;" v-if="task.active_task_state[0] == 1 && !onBatteries" :buffer="0" height="40px" stripe :percentage="modulateTaskProgress(task.checkpoint_fraction_done[0])")
           q-progress(v-else :buffer="0" height="40px" stripe :percentage="task.checkpoint_fraction_done[0]*100" color="grey-4")
-          q-tooltip 
+          q-tooltip
             p(style="margin:0px;") Task:
-            | {{task.result_name[0]}} 
+            | {{task.result_name[0]}}
             div(style="height:10px;")
             p(style="margin:0px;") Progress:
             | {{(task.checkpoint_fraction_done[0]*100).toFixed(0)}}%
-          
+
       q-card-separator
       q-card-actions.taller.relative-position()
         q-btn(small round flat)
@@ -218,7 +218,7 @@ export default {
         setTimeout(() => {
           window.olark('api.box.hide')
           console.log("INIT")
-          console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice')) 
+          console.log('LOCAL DEVICE',window.local.ipcRenderer.sendSync('localDevice'))
           if (this.initialized){
             if (masterInterval) clearInterval(masterInterval)
             masterInterval = setInterval(this.init, 180000)
@@ -232,8 +232,8 @@ export default {
   },
   props: ['thisUser', 'authenticated', 'api', 'thisModal', 'ch'],
   mounted() {
-    console.log('this.route',this.$route.name)
-    if (!this.$route.name === 'Desktop') return
+    console.log('this.route',this.$route.name);
+    if (!this.$route.name === 'Desktop') return;
     if (masterInterval) clearInterval(masterInterval)
     // masterInterval = setInterval(this.init, 10000)
     this.init()
@@ -270,7 +270,7 @@ export default {
       window.local.ipcRenderer.on('deviceReady', (event, device) => {
         console.log('GOT DEVICE:', device)
       })
-      window.local.ipcRenderer.on('boinc.error', (event, error) => { 
+      window.local.ipcRenderer.on('boinc.error', (event, error) => {
 
         console.error('boinc.error', error)
         // if (typeof error == "string") alert(error)
@@ -283,7 +283,7 @@ export default {
         // }
       })
     }
-  }, 
+  },
   watch: {
     activeTasks(value) {
       if (value.length > 0) {
@@ -340,7 +340,7 @@ export default {
           this.actionbg.backgroundColor = 'white'
           window.local.ipcRenderer.send('boinc.cmd', 'quit')
           clearInterval(this.deviceStatePoll)
-        } 
+        }
         // var result = await this.api.device.updateStatus(deviceStatus)
       } catch (error) {
         ec(error)
