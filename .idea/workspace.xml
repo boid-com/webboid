@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="887114af-d4b6-417f-beb7-084bac29d3a3" name="Default Changelist" comment="fix feedback for browsing-steplast.">
-      <change afterPath="$PROJECT_DIR$/src/components/deviceTest.vue" afterDir="false" />
+    <list default="true" id="887114af-d4b6-417f-beb7-084bac29d3a3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Device.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Device.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Leaderboards.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Leaderboards.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/User.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/User.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -150,8 +145,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/deviceTest.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="45" column="48" lean-forward="true" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
+            <state relative-caret-position="378">
+              <caret line="58" column="54" lean-forward="true" selection-start-line="58" selection-start-column="54" selection-end-line="58" selection-end-column="54" />
               <folding>
                 <element signature="e#4912#4941#0" expanded="true" />
               </folding>
@@ -424,7 +419,7 @@
       <workItem from="1560581113813" duration="18210000" />
       <workItem from="1560869610703" duration="223000" />
       <workItem from="1560870165224" duration="675000" />
-      <workItem from="1561286208526" duration="15895000" />
+      <workItem from="1561286208526" duration="15948000" />
     </task>
     <task id="LOCAL-00001" summary="test components.">
       <created>1559258436872</created>
@@ -587,11 +582,18 @@
       <option name="project" value="LOCAL" />
       <updated>1560599258083</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="fix feedback for browsing-steplast.">
+      <created>1561310631679</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1561310631679</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="184048000" />
+    <option name="totallyTimeSpent" value="184101000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -612,7 +614,7 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295964" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.24439462" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29820627" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -1007,8 +1009,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/deviceTest.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="45" column="48" lean-forward="true" selection-start-line="45" selection-start-column="48" selection-end-line="45" selection-end-column="48" />
+        <state relative-caret-position="378">
+          <caret line="58" column="54" lean-forward="true" selection-start-line="58" selection-start-column="54" selection-end-line="58" selection-end-column="54" />
           <folding>
             <element signature="e#4912#4941#0" expanded="true" />
           </folding>
