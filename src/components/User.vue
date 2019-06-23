@@ -105,10 +105,10 @@
           .row(style="width:100%; margin:0 !important;")
             q-card.animate-scale.relative-position(v-if="thisUser.tokens" style="width:100%;")
               .h6.light-paragraph.text-center User Devices
-              .row(v-if="authenticated" @click="$e.$emit('showInfoModal',info.devices)")
+              .row(v-if="authenticated")
                 .col( v-for="(device, index) in userDevice" :key="device.id")
                   .col-xs-6.col-sm-3.col-md-2.col-lg-2
-                    q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;")
+                    q-card.relative-position.ellipsis(style="min-width:70px; padding:10px;" @click="$router.push({name:'deviceTest',params:{deviceId:device.id}})")
                       q-item-side()
                         q-icon(:name="parseDevice.icon(device)" :color="parseDevice.color(device)") {{device.name}}{{device.type}}
                       q-item-tile(label style="user-select: none;")
