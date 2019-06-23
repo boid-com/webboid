@@ -43,7 +43,7 @@
           bodyStyle: {
             maxHeight: '800px',
             color:'black',
-            textAlign:'center'
+            textAlign:'left'
           },
           rowHeight: '50px',
           responsive: true,
@@ -67,11 +67,10 @@
             width: '200px',
             filter: true,
             format (value) {
-              let dataDiff = new Date() - new Date(value);
-              let hours = parseInt(dataDiff / 3600 );
-              if( hours )
-                return hours.toString() + ' hours past';
-              else return '';
+              if( value )
+               return new Date( value ).toLocaleString();
+              else
+                return '';
             }
           },
           {
@@ -121,20 +120,6 @@
             type: 'string',
             width: '140px',
           },
-          // {
-          //   label: 'Time State',
-          //   field: 'sentTime',
-          //   width: '140px',
-          //   format (value) {
-          //     let days = new Date().getDate() - new Date(value).getDate();
-          //     if( days > 1 )
-          //       return days.toString() + 'days ago';
-          //     else if( days > 0 )
-          //       return 'yesterday';
-          //     else
-          //       return 'today';
-          //   }
-          // },
           {
             label: 'Server State',
             field: 'serverState',
@@ -147,13 +132,6 @@
               else
                 return '';
             },
-          },
-          {
-            label: 'Updated At',
-            field: 'updatedAt',
-            width: '200px',
-            filter: true,
-            type: 'string',
           },
           {
             label: 'Validate State',
@@ -254,7 +232,6 @@
               receivedTime:'',
               sentTime:'',
               serverState:'',
-              updatedAt:'',
               validateState:'',
               weight:'',
               workUnitId:''
