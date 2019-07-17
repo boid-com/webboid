@@ -163,7 +163,7 @@ export default {
         return {
           label:"Download for Mac",
           icon:'fa-apple',
-          url:'https://github.com/Boid-John/BoidDesktop/releases/download/v0.0.51RC/Boid-0.0.51.dmg'
+          url:'https://github.com/Boid-John/BoidDesktop/releases/download/v0.0.52/Boid-0.0.52.dmg'
         }
       }else if (this.$q.platform.is.linux){
         return {
