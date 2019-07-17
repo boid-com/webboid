@@ -157,7 +157,7 @@ export default {
         return {
           label:"Download for Windows",
           icon:'fa-windows',
-          url:'https://github.com/Boid-John/BoidDesktop/releases/download/v0.0.51RC/Boid-0.0.51.Setup.exe'
+          url:'https://github.com/Boid-John/BoidDesktop/releases/download/v0.0.52/Boid-0.0.52.Setup.exe'
         }
       }else if (this.$q.platform.is.mac){
         return {
