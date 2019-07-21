@@ -80,8 +80,8 @@ div(style="padding:20px; max-width: 1600px;")
             q-icon(name="refresh")
           q-inner-loading(:visible="walletLoading")
             q-spinner-ball(size="60px" color="blue")
-        q-card(color="green-6")
-          p Boid Season 1 has ended. Staking/Unstaking is now available. Make sure you are staked before season 2 starts.
+        q-card(color="amber-6")
+          p Boid Season 2 has started. Staking/Unstaking is now locked.
         //- q-card(color="red-4")
         //-   p Boid Season 1 is currently underway. Staking/Unstaking is locked during the Boid seasons
 

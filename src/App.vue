@@ -5,7 +5,7 @@
       q-toolbar.shadow-1(slot="header" style="webkit-app-region: drag;") 
         q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
           | boid
-          div(slot='subtitle') Season Break - Alpha
+          div(slot='subtitle') Season 2 - Alpha
         div(v-if="loginVisible")
           q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
             q-icon.on-right(name="create")
@@ -146,6 +146,7 @@ import bFooter from '@/Footer.vue'
 import updatePayoutModal from '@/updatePayoutModal.vue'
 import changeTeam from '@/changeTeam.vue'
 import exchangeModal from '@/exchange.vue'
+// require('./lib/initTransit')()
 var hashInterval = null
 // var trackJs = window.trackJs
 var data = {

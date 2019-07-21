@@ -26,6 +26,7 @@
     "chart.js": "^2.8.0",
     "crypto-js": "^3.1.9-1",
     "eos-transit": "^2.0.0",
+    "eos-transit-keycat-provider": "^4.0.0",
     "eos-transit-ledger-provider": "^2.0.0",
     "eos-transit-scatter-provider": "^2.0.0",
     "eosjs": "^20.0.0-beta3",
