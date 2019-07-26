@@ -6,7 +6,6 @@
           "@babel/preset-env", {
           "modules": false,
           "loose": false,
-          "useBuiltIns": "usage",
           "exclude": [ "transform-classes" ]
         }
         ],

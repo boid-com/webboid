@@ -7,12 +7,12 @@ div
         .row.relative-position
           .col-11
             div.absolute-center.gt-sm(style="height:5px; width:80%; background-color:grey; z-index:-1;")
-          .col.scheduleCard.text-white.strong
-            q-card.scheduleCard(color="green")
+          .col.scheduleCard.text-grey
+            q-card.bg-white.text-grey
               p.text-center Break
               p.text-center 6/21 - 7/21
-          .col.scheduleCard.text-grey
-            q-card.bg-white.scheduleCard
+          .col.scheduleCard
+            q-card.bg-white.scheduleCard(color="green")
               p.text-center Season 2
               p.text-center 7/21 - 9/21
           .col.scheduleCard.text-grey
@@ -145,8 +145,8 @@ div
 
 
 <script>
-import { Toast } from 'quasar'
 var format=require('format-number')()
+import { Toast } from 'quasar'
 import { openURL } from 'quasar'
 import exchanges from '@/exchange.vue'
 

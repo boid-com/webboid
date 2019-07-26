@@ -19,7 +19,6 @@
     "babel-core": "6.x || ^7.0.0-bridge.0"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.4",
     "@babel/runtime": "^7.0.0",
     "@vue/cli-plugin-babel": "^3.5.0",
     "axios": "^0.19.0",
@@ -29,13 +28,11 @@
     "eos-transit-keycat-provider": "^4.0.0",
     "eos-transit-ledger-provider": "^2.0.0",
     "eos-transit-scatter-provider": "^2.0.0",
-    "eosjs": "^20.0.0-beta3",
+    "eosjs": "^20.0.0",
     "event-emitter": "^0.3.5",
     "eventlistener": "0.0.1",
     "format-number": "^3.0.0",
     "is-image-url": "^1.1.8",
-    "pug": "^2.0.0-rc.4",
-    "pug-loader": "^2.3.0",
     "quasar-extras": "0.x",
     "quasar-framework": "^0.14.9",
     "scatterjs-core": "^2.7.7",
@@ -48,6 +45,8 @@
     "vuelidate": "^0.6.1"
   },
   "devDependencies": {
+    "pug": "^2.0.0-rc.4",
+    "pug-loader": "^2.3.0",
     "core-js": "2",
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
