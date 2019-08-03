@@ -34,7 +34,8 @@ div(style="padding:20px; max-width: 1200px;")
                     .row.justify-center(style="padding-bottom:10px;")
                       img.avatar(style="width:70px; height:70px;" :src="thisUser.image")
               div.text-center(style="padding-bottom:5px;") {{thisUser.username}}
-              div #[small Pending:] {{format(userPending)}} BOID
+              div(v-if="userPending && userPending > 0") #[small Pending:] {{format(userPending)}} BOID
+              div(v-else) #[small Pending:] 00.00 BOID
               div(style="height:25px;")
               q-btn.full-width.absolute-bottom(color="grey-8" flat small @click="$root.$emit('modal','auth')") Change Boid Account
           .row
