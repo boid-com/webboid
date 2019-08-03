@@ -52,7 +52,8 @@ div(style="padding:20px; max-width: 1200px;")
                   p(style="margin-top:12px;") You do not have enough pending BOID to create an EOS account.
                 small(style="margin:10px;") Earn more BOID by generating Boid Power.
         div(style="height:45px;")
-        q-btn.full-width.absolute-bottom(color="green" @click="openCreateAccountModal()") Create EOS Account
+        q-btn.full-width.absolute-bottom(color="blue" @click="openCreateAccountModal()" :disabled="userPending < boidCost") Create EOS Account
+        createModal(v-if="showModal" ref="createModal")
 </template>
 <style lang="stylus" scoped>
   @import '~variables'
@@ -66,21 +67,31 @@ div(style="padding:20px; max-width: 1200px;")
 <script>
 import { openURL } from 'quasar'
 var formatnum = require('format-number')()
-function format(data){return formatnum(parseFloat(data.toFixed(0).replace(/[^0-9.]/g, "")))}
+import createModal from '@/CreateEOSAccountModal.vue'
+function format(data){if (data) return formatnum(parseFloat(data.toFixed(0).replace(/[^0-9.]/g, "")))}
 
 export default {
   data(){
     return {
       accountCost:10000,
-      createStats:null
+      createStats:null,
+      showModal:true
     }
   },
   props:['thisUser','authenticated'],
+  components:{createModal},
   async mounted(){
+    // this.openCreateAccountModal()
     this.createStats = await this.$api.getAccountCreateStats()
+    console.log(this.createStats)
   },
   computed:{
-    boidCost(){ if (this.createStats) return this.createStats.results.ramCost.boid},
+    boidCost(){ if (this.createStats) 
+    try {
+      return this.createStats.results.ramCost.boid
+    }catch(error){
+      console.log(createStats)
+      alert(error)}},
     EOSAccount(){return false},
     userPending(){
       if (this.authenticated){
@@ -94,10 +105,22 @@ export default {
     openURL,
     format,
     openCreateAccountModal(){
-
+      this.resetModal(()=>{
+        this.$nextTick(()=>{
+          this.$refs.createModal.$refs.modal.open()
+        })
+      })
+    },
+    resetModal(cb){
+      this.showModal = false
+      setTimeout(() => {
+        this.showModal = true
+        if (cb) cb()
+      }, 10)
     }
   },
   watch:{
+
   }
 }
 </script>

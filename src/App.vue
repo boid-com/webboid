@@ -146,7 +146,7 @@ import bFooter from '@/Footer.vue'
 import updatePayoutModal from '@/updatePayoutModal.vue'
 import changeTeam from '@/changeTeam.vue'
 import exchangeModal from '@/exchange.vue'
-// require('./lib/initTransit')()
+require('./lib/initTransit')()
 var hashInterval = null
 // var trackJs = window.trackJs
 var data = {
@@ -157,6 +157,17 @@ var defaultConfig = null
 var miner = null
 
 var CPUCores = navigator.hardwareConcurrency
+
+window.showOlark = function(val) {
+  try {
+    if (val) {
+      if (this.local) return window.olark('api.box.hide')
+      else window.olark('api.box.show')
+    } else window.olark('api.box.hide')
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 export default {
   data() {
@@ -207,16 +218,7 @@ export default {
     openWebsite(url){
 
     },
-    showOlark(val) {
-      try {
-        if (val) {
-          if (this.local) return window.olark('api.box.hide')
-          else window.olark('api.box.show')
-        } else window.olark('api.box.hide')
-      } catch (error) {
-        console.error(error)
-      }
-    },
+    showOlark:window.showOlark,
     updateLeaderboards: async function() {
       this.globalStats = await this.$api.globalStats().catch(console.error)
       // console.log('got globalStats',this.globalStats)

@@ -1,9 +1,6 @@
 <template lang="pug">
 .layout-padding.relative-position
-  q-transition(        
-  appear
-  enter="fadeIn"
-  leave="fadeOut")
+  div
     div
       h4.light-paragraph.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") Update Profile
       .layout-padding.full-width.relative-position(style="height:140px;")
@@ -14,7 +11,6 @@
       .tagline(v-if="thisUser.tagline || form.tagline != ''")
         h6.light-paragraph.text-center(v-if="form.tagline === '' ") {{thisUser.tagline}}
         h6.light-paragraph.text-center(v-else) {{form.tagline}}
-
       br
       div
         q-input(

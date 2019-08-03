@@ -1,9 +1,9 @@
 <template lang="pug">
 div(style="padding:20px; max-width: 1600px;")
   .row.justify-center(style="margin-bottom:20px;")
-    .col-auto
+    .full-width
       h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") BOID Staking
-      p You can now stake BOID tokens to amplify the profitability of your generated Boid Power. 
+      p.text-center You can stake BOID to amplify the profitability of your generated Boid Power. 
   div
     .row.justify-center
       .col-md-3
