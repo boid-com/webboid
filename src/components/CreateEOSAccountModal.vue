@@ -288,12 +288,14 @@ export default {
         this.creationState = await this.$api.getAccountCreateJob({jobID})
         console.log(this.creationState)
         if (this.creationState.errorMessage){
+          this.$e.emit('refreshUser')
           clearInterval(checkStatus)
           this.accountCreating = false
           this.accountCreateError = true
           // alert(this.creationState.errorMessage)
         }
         else if(this.creationState.executed){
+          this.$e.emit('refreshUser')
           clearInterval(checkStatus)
           this.accountCreating = false
           this.accountCreateError = false
