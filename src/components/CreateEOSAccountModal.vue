@@ -263,7 +263,7 @@ export default {
     accountURL(){if (this.form.username) return "https://bloks.io/account/"+this.form.username}
   },
   mounted(){
-    setupDebug(this)
+    // setupDebug(this)
   },
   methods:{
     randomName(){
