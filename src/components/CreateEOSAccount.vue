@@ -11,7 +11,7 @@ div(style="padding:20px; max-width: 1200px;")
       .col-auto
         img(src="https://assets.boid.com/images/NewBoidLogo.svg" style="width:60px;")
       .col-auto
-        h4.text-center {{format(boidCost)}} BOID
+        h4.text-center(v-if="boidCost") {{format(boidCost)}} BOID
   .row.justify-center(style="min-height:200px;")
     q-card.relative-position(v-if="false")
       div
