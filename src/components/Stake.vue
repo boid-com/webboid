@@ -173,7 +173,7 @@ async function fillBalances(v){
     },500)
   } catch (error) {
     v.walletLoading = false
-    console.log(error.message)
+    console.log(error)
     // alert(error)
   }
 
@@ -308,7 +308,7 @@ export default {
           Toast.create.negative(error.message)
         }else{
           console.log(error)
-          alert(JSON.stringify(error))
+          alert(error)
         }
 
       }
@@ -329,7 +329,7 @@ export default {
           Toast.create.negative(error.message)
         } else{
           console.log(error)
-          alert(JSON.stringify(error))
+          alert(error)
         }
       }
       setTimeout(()=>{fillBalances(this)},2000)

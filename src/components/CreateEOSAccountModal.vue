@@ -280,27 +280,33 @@ export default {
     },
     showOlark:window.showOlark,
     async createAccount(){
-      this.page = 4
-      this.accountCreating = true
-      const jobID = await this.$api.initializeEOSAccountCreationJob({form:this.form,createStats:this.$parent.createStats})
-      this.creationID = jobID
-      const checkStatus = setInterval(async () => {
-        this.creationState = await this.$api.getAccountCreateJob({jobID})
-        console.log(this.creationState)
-        if (this.creationState.errorMessage){
-          this.$e.emit('refreshUser')
-          clearInterval(checkStatus)
-          this.accountCreating = false
-          this.accountCreateError = true
-          // alert(this.creationState.errorMessage)
-        }
-        else if(this.creationState.executed){
-          this.$e.emit('refreshUser')
-          clearInterval(checkStatus)
-          this.accountCreating = false
-          this.accountCreateError = false
-        }
-      }, 2000)
+      try {
+        this.page = 4
+        this.accountCreating = true
+        const jobID = await this.$api.initializeEOSAccountCreationJob({form:this.form,createStats:this.$parent.createStats})
+        this.creationID = jobID
+        const checkStatus = setInterval(async () => {
+          this.creationState = await this.$api.getAccountCreateJob({jobID})
+          console.log(this.creationState)
+          if (this.creationState.errorMessage){
+            this.$e.$emit('refreshUser')
+            clearInterval(checkStatus)
+            this.accountCreating = false
+            this.accountCreateError = true
+            // alert(this.creationState.errorMessage)
+          }
+          else if(this.creationState.executed){
+            this.$e.$emit('refreshUser')
+            clearInterval(checkStatus)
+            this.accountCreating = false
+            this.accountCreateError = false
+          }
+        }, 2000)
+      } catch (error) {
+        this.accountCreating = false
+        this.accountCreateError = true
+       alert(error) 
+      }
     },
     async submit(username){
       const valid = username.search('(^[a-z1-5.]{0,11}[a-z1-5]$)|(^[a-z1-5.]{12}[a-j1-5]$)')
