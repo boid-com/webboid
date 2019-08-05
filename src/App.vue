@@ -7,6 +7,8 @@
           | boid
           div(slot='subtitle') Season 2 - Alpha
         div(v-if="loginVisible")
+          q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/CreateEOSAccount')") EOS Accounts
+            img.on-right(src="/statics/eoslogo.png" style="width:15px;")
           q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
             q-icon.on-right(name="create")
           q-btn.gt-xs( v-if="!local" flat style="margin-right:10px;" @click="$router.push('/staking')") stake

@@ -3,29 +3,51 @@ div(style="padding:20px; max-width: 1200px;")
   h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px;") Create EOS Account
   .row.justify-center(style="padding:30px;")
     .col-xs-12.col-xl-8
-      p.inline You can now generate an EOS account directly from your Boid pending balance. This means anyone can now earn an EOS account by just generating Boid Power with their CPU Cycles. If you have an existing EOS Account with BOID tokens you can use those tokens to generate new EOS accounts as well.
-  .row.justify-center(style="min-height:140px;")
-   q-card.relative-position
-    h5.text-center(style="margin-top:0px;") Account Creation Cost
-    .row.justify-center.items-center
-      .col-auto
-        img(src="https://assets.boid.com/images/NewBoidLogo.svg" style="width:60px;")
-      .col-auto
-        h4.text-center(v-if="boidCost") {{format(boidCost)}} BOID
+      p.inline You can now generate an EOS account directly from your Boid pending balance. This means anyone can now earn an EOS account by just generating Boid Power with their CPU Cycles.
   .row.justify-center(style="min-height:200px;")
-    q-card.relative-position(v-if="false")
-      div
-        p.light-paragraph.text-center Use Existing EOS Account
-        .row.justify-center.full-width(style="" v-if="!EOSAccount")
-          q-btn(color="blue").absolute-center.full-width EOS Account Login
+    .row(style="max-width:300px;").items-stretch
+      .col-12(style="padding-bottom:15px;")
+        q-card.relative-position(style="height:100%;")
+          div
+            p.light-paragraph.text-center Free Wombat Account
+            .row
+              .col-4
+                img(src="/statics/wombaticon.png" style="width:80px; padding-right:10px; padding-top:20px;")
+              .col
+                small Wombat gives you a free EOS account with some limitations. You can pay to upgrade your Wombat account to a pro account later. 
+          div(style="padding-top:5px;")
+            small.text-center(style="padding:0px;") The wombat mobile app is compatible with Boid and other Scatter based EOS Dapps
+          div(style="height:25px;")
+          q-btn.full-width.absolute-bottom(color="blue"  @click="openURL('https://www.getwombat.io')") getwombat.io
+            q-icon.on-right(name="open_in_new" size="15px;" color="grey-3")
+      .col-12(style="margin-bottom:15px;")
+        q-card.relative-position(style="height:100%;")
+          div
+            p.light-paragraph.text-center EOS Name Service
+            .row
+              .col-4
+                img(src="/statics/enslogo.jpg" style="width:80px; padding-right:10px; padding-top:20px;")
+              .col
+                small EOS Name Service allows you to purchase custom and premium EOS account names using many different payment methods.
+          div(style="padding:5px;")
+          div(style="height:35px;")
+          q-btn.full-width.absolute-bottom(color="blue"  @click="openURL('https://www.eosnameservice.io/?ref=boidcompromo')") eosnameservice.io
+            q-icon.on-right(name="open_in_new" size="15px;" color="grey-3")
 
-        q-btn.full-width.absolute-bottom(color="green" @click="" :disabled="!EOSAccount") Create EOS Account
     q-card.relative-position
       div
         p.light-paragraph.text-center Use Pending BOID Balance
+        q-card.relative-position
+          h5.text-center(style="margin-top:0px;") Account Creation Cost
+          .row.justify-center.items-center
+            .col-auto
+              img(src="https://assets.boid.com/images/NewBoidLogo.svg" style="width:60px;")
+            .col-auto
+              h4.text-center(v-if="boidCost") {{format(boidCost)}} BOID
         .row.justify-center.full-width(style="" v-if="!authenticated")
-          q-btn(color="blue" @click="$root.$emit('modal','auth')").absolute-center.full-width Boid Account Login
+          q-btn(color="green" @click="$root.$emit('modal','auth')").absolute-center Boid Account Login
         div(v-if="authenticated")
+          p.light-paragraph.text-center From This Boid Account
           .row.justify-center
             q-card.relative-position.shadow-4
               div
@@ -53,7 +75,7 @@ div(style="padding:20px; max-width: 1200px;")
                   p(style="margin-top:12px;") You do not have enough pending BOID to create an EOS account.
                 small(style="margin:10px;") Earn more BOID by generating Boid Power.
         div(style="height:45px;")
-        q-btn.full-width.absolute-bottom(color="blue" @click="openCreateAccountModal()" :disabled="userPending < boidCost") Create EOS Account
+        q-btn.full-width.absolute-bottom(color="blue" @click="openCreateAccountModal()" :disabled="userPending < boidCost") Create EOS Account Now
         createModal(v-if="showModal" ref="createModal")
 </template>
 <style lang="stylus" scoped>
