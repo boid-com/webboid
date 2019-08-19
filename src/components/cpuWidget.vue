@@ -61,7 +61,7 @@ const copyToClipboard = str => {
   el.select()
   document.execCommand('copy')
   document.body.removeChild(el)
-};
+}
 const ipc = {
   async send(channel, data) {
     channel = 'boinc.' + channel
