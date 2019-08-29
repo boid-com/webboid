@@ -4,7 +4,7 @@
     div(v-if="!showCarbon")
       h6.text-center BOID/EOS
       .row.justify-center
-        q-btn(flat @click="openURL('https://newdex.io/trade/BOID_EOS')") newdex
+        q-btn(flat @click="openURL('https://eos.newdex.io/trade/boidcomtoken-boid-eos')") newdex
         q-btn(flat @click="openURL('https://eosdaq.com/exchange/BOID_EOS')") eosdaq
         q-btn(flat @click="openURL('https://dexeos.io/trade/?market=eos&symbol=BOID')") dexeos
         q-btn(flat @click="openURL('https://chaince.com/trade/boideos')") Chaince
