@@ -267,10 +267,11 @@ export default {
           ipc.send('state.getUI')
         }, 5000)
         setTimeout(() => {
-          if (this.statusLog.length === currentLogLength && this.currentLogLength != 1000){
+          if (this.statusLog.length === currentLogLength && currentLogLength != 1000){
+            console.info("RESTARTING DUE TO BUG??")
             this.start()
           }
-        }, 10000)
+        }, 20000)
     },
     stop() {
       setTimeout(() => {
