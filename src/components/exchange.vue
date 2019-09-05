@@ -12,7 +12,7 @@
       h6.text-center BOID/CUSD
       .row.justify-center
         q-btn(flat @click="openURL('https://dexeos.io/trade/?market=cusd&symbol=BOID')") Dexeos
-    q-btn( v-if="!showCarbon" color="green" @click="openURL('https://boid.carbon.money/')").full-width.no-margin.absolute-bottom get Carbon
+    q-btn( v-if="!showCarbon" color="green" @click="openURL('https://buy.carbon.money/')").full-width.no-margin.absolute-bottom get Carbon
 </template>
 
 <script>
