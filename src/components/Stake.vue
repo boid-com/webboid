@@ -7,6 +7,9 @@ div(style="padding:20px; max-width: 1600px;")
   div
     .row.justify-center
       .col-md-3
+        q-card.bg-red.text-white
+          h6 The Season has ended but Staking is not yet enabled. Currently we are migrating data to the updated contract. Check back tomorrow.
+
         q-card
           .light-paragraph.text-center Stake Actions
           .row.relative-position
@@ -16,7 +19,7 @@ div(style="padding:20px; max-width: 1600px;")
               q-btn.absolute-bottom-right(
                 @click="formattedStake = liquidBalance"
                 style="margin-bottom:10px;" flat color="blue" :disabled="!account") 100%
-          q-btn.full-width(color="green" :disabled="!account" @click="stake()") Stake
+          q-btn.full-width(color="green" :disabled="true" @click="stake()") Stake
           div(style="height:1 0px;")
           .row.relative-position
             .col-7
