@@ -45,7 +45,9 @@ div
             ul
               li(v-for="info of stakeFAQ" :key="info") {{info}}
           div(v-else-if="page==='calc'").full-width
-            .row.full-width.justify-end
+            q-card.bg-red.text-white
+              h6 During the Season Break, The Boid token code and tokeneconomics is being upgraded. This means the profit calculator will be much less accurate. The details of the changes being implemented can be viewed #[a(href="https://decentium.org/johnatboid11/boid-network") here.] This calculator will be upgraded after the changes are finalized (est 10/1).
+            .row.justify-end(style="margin:10px;")
               .col-7
                 .row
                   .col-3(style="padding-top:10%")
