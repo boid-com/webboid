@@ -157,13 +157,13 @@ export default {
         return {
           label:"Download for Windows",
           icon:'fa-windows',
-          url:'https://github.com/Boid-John/BoidDesktop/releases/download/v0.0.53/Boid-0.0.53.Setup.exe'
+          url:'https://github.com/Boid-John/BoidDesktop/releases/download/v0.0.6/Boid-0.0.6.Setup.exe'
         }
       }else if (this.$q.platform.is.mac){
         return {
           label:"Download for Mac",
           icon:'fa-apple',
-          url:'https://github.com/Boid-John/BoidDesktop/releases/download/v0.0.53/Boid-0.0.53.dmg'
+          url:'https://github.com/Boid-John/BoidDesktop/releases/download/v0.0.6/Boid-0.0.6.dmg'
         }
       }else if (this.$q.platform.is.linux){
         return {
