@@ -63,7 +63,7 @@
                   q-icon(name="warning" size="50px;")
               .col
                 div( style="padding:10px;" color="white" inverted )
-                  q-checkbox(v-model="terms.info" label="Boid Cloud Device is not an investment." color="black")
+                  q-checkbox(v-model="terms.infmo" label="Boid Cloud Device is not an investment." color="black")
                   .row
                     small(style="padding:10px; max-width:350px;") Don't order a Boid Cloud device for speculative purposes. There is no guarantee or expectation of profitability from this order.
           div.bg-white.text-grey-9
