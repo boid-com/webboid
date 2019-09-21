@@ -28,6 +28,7 @@ export default new VueRouter({
     { path: '/staking/', component: load('Stake'), name: 'Stake' },
     { path: '/createEOSAccount/', component: load('CreateEOSAccount'), name: 'CreateEOSAccount' },
     { path: '/changeaccount/:requestId', component: load('ChangeAccount'), name: 'ChangeAccount' },
+    { path: '/cloudBoid', component: load('CloudBoid'), name: 'CloudBoid' },
     // { path: '/tx/:requestId', component: load('ChangeAccount'), name: 'ChangeAccount' },
     { path: '/vote/', component: load('vote'), name: 'Vote' },
     { path: '*', component: load('Index') }
