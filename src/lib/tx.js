@@ -18,9 +18,11 @@ function stakeTx(data){
           }
         ],
         data: {
-          _stake_account: data.account.name,
-          _staked: data.stakeAmount.toFixed(4) + " BOID",
-          memo: "BOID token staking"
+          from: data.account.name,
+          to: data.account.name,
+          quantity: data.stakeAmount.toFixed(4) + " BOID",
+          time_limit:0,
+          use_staked_balance:false,
         }
       }
     ]
@@ -40,7 +42,12 @@ function unstakeTx(data){
           }
         ],
         data: {
-          _stake_account: data.account.name,
+          from:data.account.name,
+          to:data.account.name,
+          time_limit:0,
+          to_staked_balance:false,
+          issuer_unstake:false,
+          transfer:false,
           quantity: data.unStakeAmount.toFixed(4) + " BOID"
         }
       }

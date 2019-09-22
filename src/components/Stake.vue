@@ -7,8 +7,8 @@ div(style="padding:20px; max-width: 1600px;")
   div
     .row.justify-center
       .col-md-3
-        q-card.bg-red.text-white
-          h6 The Season has ended but Staking is not yet enabled. Currently we are migrating data to the updated contract. Check back tomorrow.
+        q-card.bg-amber-10.text-white
+          h6 If you receive an error during staking about an existing stake expiration time, you should unstake 100% of your existing BOID and then stake again. If you still see an error then contact us support@boid.com. Enjoy the stake break!
 
         q-card
           .light-paragraph.text-center Stake Actions
@@ -19,7 +19,7 @@ div(style="padding:20px; max-width: 1600px;")
               q-btn.absolute-bottom-right(
                 @click="formattedStake = liquidBalance"
                 style="margin-bottom:10px;" flat color="blue" :disabled="!account") 100%
-          q-btn.full-width(color="green" :disabled="true" @click="stake()") Stake
+          q-btn.full-width(color="green" :disabled="!account" @click="stake()") Stake
           div(style="height:1 0px;")
           .row.relative-position
             .col-7
@@ -157,20 +157,12 @@ async function fillBalances(v){
     v.userStake = '0.00'
     v.disableStake = false
     v.userBalance = (await rpc.get_currency_balance('boidcomtoken',v.account.name,'BOID'))[0]
-    var result = (await rpc.get_table_rows({
-        json: true,
-        code: 'boidcomtoken',
-        scope: 'boidcomtoken',
-        table: 'stakes', 
-        limit:1,
-        lower_bound:v.account.name              
-    })).rows[0]
-    console.log(result)
-    if (result.stake_account != v.account.name) result = '0.00'
-    else result = result.staked.replace(' BOID','')
-    console.log('STAKE RESULT',result)
-    if (result > 0) v.disableStake = true
-    v.userStake = result
+    var selfStaked = ((await window.eosjs.getStake(v.account.name)))
+    if (selfStaked){
+      console.log('selfStaked',selfStaked)
+      if (parseFloat(selfStaked.quantity) > 0) v.disableStake = true
+      v.userStake = selfStaked.quantity
+    }
     setTimeout(()=>{
       v.walletLoading = false
     },500)
