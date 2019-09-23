@@ -8,8 +8,8 @@ div(style="padding:20px; max-width: 1600px;")
     .row.justify-center
       .col-md-3
         q-card.bg-amber-10.text-white
-          h6 If you receive an error during staking about an existing stake expiration time, you should unstake 100% of your existing BOID and then stake again. If you still see an error then contact us support@boid.com. Enjoy the stake break!
-
+          //- h6 If you receive an error during staking about an existing stake expiration time, you should unstake 100% of your existing BOID and then stake again. If you still see an error then contact us support@boid.com. Enjoy the stake break!
+          h6 Staking is paused for maintenance. Staking should be available tomorrow. 
         q-card
           .light-paragraph.text-center Stake Actions
           .row.relative-position
