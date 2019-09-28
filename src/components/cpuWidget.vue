@@ -151,8 +151,8 @@ export default {
         else if (el.prefs.run_if_user_active && this.isPaused.search('Activity') > -1) this.isPaused = false
       }
       const prefs = boinc.convertForPrefs(el.prefs)      
-      ipc.send('config.write', el.config)
-      ipc.send('prefs.write', prefs)
+      ipc.send('config.write', el.config)   //<--- BOID config.json file
+      ipc.send('prefs.write', prefs)        //<--- BOINC client override.xml file
       setTimeout(() => {
         ipc.send('cmd','read_global_prefs_override')
         ipc.send('prefs.read')

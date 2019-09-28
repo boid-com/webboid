@@ -80,12 +80,16 @@ export default {
   },
   computed:{
     pauseOnBattery:{
-      set(val){return this.prefs.run_on_batteries = !val},
-      get(val){return !this.prefs.run_on_batteries}
+      // set(val){return this.prefs.run_on_batteries = !val},
+      // get(val){return !this.prefs.run_on_batteries}
+      set(val){return this.config.run_on_batteries = !val},
+      get(val){return !this.config.run_on_batteries}
     },
     pauseOnActivity:{
-      set(val){return this.prefs.run_if_user_active = !val},
-      get(val){return !this.prefs.run_if_user_active}
+      // set(val){return this.prefs.run_if_user_active = !val},
+      // get(val){return !this.prefs.run_if_user_active}
+      set(val){return this.config.run_if_user_active = !val},
+      get(val){return !this.config.run_if_user_active}
     }
   },
   mounted(){

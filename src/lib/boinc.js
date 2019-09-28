@@ -52,7 +52,7 @@ var boinc = {
     if (val.search('CPU benchmarks in progress') > -1 ) return true
     return false
   },
-  config:{defaultConfig:{autoStart:true}}
+  config:{defaultConfig:{autoStart:true, suspend_on_activity:false, suspend_on_battery:false, idle_time_to_run:3}}
 }
 module.exports = boinc
 // export boinc
