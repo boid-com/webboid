@@ -10,33 +10,51 @@ function err(error){
 
 import { Api, JsonRpc } from "eosjs"
 
-const rpc = new JsonRpc('https://public.eosinfra.io');
+const rpc = new JsonRpc('https://eos.greymass.com:443');
 window.transit = {}
 
-async function getStake(accountName) {
+async function getTotalStake(account) {
   try {
     let res = await rpc.get_table_rows({
       json: true,
       code: 'boidcomtoken',
-      scope: accountName,
-      lower_bound: accountName,
+      scope: account,
       table: "staked",
-      limit: 1
+      limit: 10000
     })
-    console.log(res.rows[0])
-    return res.rows[0]
+    const userTotalStaked = res.rows.reduce((acc,el) => parseFloat(el.quantity) + acc ,0)
+    return userTotalStaked
   } catch(error) {
+    console.log(error)
+    return undefined
+  }
+}
+
+async function getTotalDelegated(account) {
+  try {
+    let res = await rpc.get_table_rows({
+      json: true,
+      code: 'boidcomtoken',
+      scope: account,
+      table: "delegation",
+      limit: 10000
+    })
+    console.log(res)
+    const userTotalStaked = res.rows.reduce((acc,el) => parseFloat(el.quantity) + acc ,0)
+    console.log(userTotalStaked)
+    return userTotalStaked
+  } catch(error) {
+    console.log(error)
     return undefined
   }
 }
 
 
 
-
 async function init(){
   
   
-  window.eosjs = {rpc,getStake}
+  window.eosjs = {rpc,getTotalStake,getTotalDelegated}
 
 
   // var accessContext
@@ -45,7 +63,7 @@ async function init(){
   //     appName: 'app.boid.com',
   //     network: {
   //       blockchain:'eos',
-  //       host:'public.eosinfra.io',
+  //       host:'eos.greymass.com',
   //       port:443,
   //       protocol:'https',
   //       chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'

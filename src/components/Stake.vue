@@ -65,15 +65,18 @@ div(style="padding:20px; max-width: 1600px;")
                 q-btn.full-width( color="blue" @click="$root.$emit('modal','updatePayoutModal')") Link different EOS Account
               .row.justify-center    
                 // q-btn.full-width(@click='reset()' color="green") Change Scatter Login
-        q-card.relative-position(v-if="account")
+        q-card.relative-position(v-if="account" style="user-select:text;")
           .light-paragraph.text-center EOS Wallet
           p.text-center {{account.name}}
-          p Total Balance
-            h6 {{userBalance}} BOID
-          p Liquid Balance
-            h6 {{liquidBalance}} BOID
-          p Staked
-            h6 {{userStake}} BOID
+          div Total Balance
+          .row(style="padding:10px;")
+            strong {{userBalance}}
+          div Liquid Balance
+          .row(style="padding:10px;")
+            strong {{liquidBalance.toLocaleString(undefined,{minimumFractionDigits: 4})}} BOID
+          div Self + Delegated Stake
+          .row(style="padding:10px;")
+            strong {{userStake}} BOID
           //- q-btn(@click='reset()' color="blue") Change Account
           q-btn.absolute-top-right(
             round
@@ -130,7 +133,7 @@ import interactivePanel from "components/interactivePanel.vue"
 // MAINNET
 const network = Network.fromJson({
    blockchain:'eos',
-   host:'public.eosinfra.io',
+   host:'api.eosdetroit.io',
    port:443,
    protocol:'https',
    chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
@@ -158,11 +161,13 @@ async function fillBalances(v){
     v.userStake = '0.00'
     v.disableStake = false
     v.userBalance = (await rpc.get_currency_balance('boidcomtoken',v.account.name,'BOID'))[0]
-    var selfStaked = ((await window.eosjs.getStake(v.account.name)))
+    v.totalDelegated = await window.eosjs.getTotalDelegated(v.account.name)
+    var selfStaked = ((await window.eosjs.getTotalStake(v.account.name)))
+    console.log('SELFSTAKE',selfStaked)
     if (selfStaked){
       console.log('selfStaked',selfStaked)
-      if (parseFloat(selfStaked.quantity) > 0) v.disableStake = true
-      v.userStake = selfStaked.quantity
+      if (parseFloat(selfStaked) > 0) v.disableStake = true
+      v.userStake = selfStaked + " BOID"
     }
     setTimeout(()=>{
       v.walletLoading = false
@@ -193,7 +198,8 @@ export default {
       userBalance:'0.00',
       userStake:'0.00',
       error:null,
-      walletLoading:true
+      walletLoading:true,
+      totalDelegated:0
     }
   },
   components:{interactivePanel},
@@ -205,13 +211,7 @@ export default {
   computed: {
     liquidBalance(){
       try {
-        console.log(this.userBalance, this.userStake)
-        console.log(parseFloat(this.userBalance.replace(/[^0-9.]/g, "")), parseFloat(this.userStake.replace(/[^0-9.]/g, "")))
-
-        const result = format((parseFloat(this.userBalance.replace(/[^0-9.]/g, "")) - parseFloat(this.userStake.replace(/[^0-9.]/g, ""))))
-        console.log(result)
-        return result
-
+      return parseFloat(this.userBalance) - this.totalDelegated
       } catch (error) {
         console.log(error)
         return 0.00
@@ -366,8 +366,8 @@ export default {
       this.userStake = format(parseFloat(data.replace(/[^0-9.]/g, "")))
     },
     userBalance(data){
-      if (!data) return
-      this.userBalance = format(parseFloat(data.replace(/[^0-9.]/g, "")))
+      // if (!data) return
+      // this.userBalance = format(parseFloat(data.replace(/[^0-9.]/g, "")))
 
     }
   }
