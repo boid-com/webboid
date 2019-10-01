@@ -36,12 +36,12 @@ var gpu = {
     }
   },
   trex: {
-    defaultPool: "stratum+tcp://rvn.boid.com:3636",
+    defaultPool: "stratum+tcp://boid.x16rv2.jamiec.org:3637",
     defaultConfig: {
       pools: [],
       "api-bind-http": "0.0.0.0:4067",
       "json-response": true,
-      "algo": "x16r",
+      "algo": "x16rv2",
       "intensity": 15,           
       "autoupdate": false
     },
@@ -53,11 +53,11 @@ var gpu = {
   },
   wildrig:{
     defaultConfig:[ 
-      '--algo=x16r',
+      '--algo=x16rv2',
       '--opencl-threads=2',
       '--opencl-launch=14x0',
       '--donate-level=1',
-      '--url=stratum+tcp://rvn.boid.com:3636',
+      '--url=stratum+tcp://boid.x16rv2.jamiec.org:3637',
       '--watchdog','--api-port=4068',
     ],
     config:{

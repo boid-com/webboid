@@ -30,7 +30,7 @@ div
               //- small(v-if="thisDevice.pending") Pending:{{thisDevice.pending.toFixed(0)}} 
               q-tooltip Boid Power is displayed at a 1-2 hour delay.
           .row
-            q-btn.light-paragraph.no-margin( flat small style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://rvn.boid.com')") rvn.boid.com
+            q-btn.light-paragraph.no-margin( flat small style="margin-bottom: 5px;" @click="ipcRenderer.send('openURL','https://boid.x16rv2.jamiec.org')") rvn.boid.com
             q-tooltip Learn more about the current computational task
         .col-auto
           div(v-if="gpuInfo" style="margin:0px; overflow:auto; max-height:70px;").ellipsis
