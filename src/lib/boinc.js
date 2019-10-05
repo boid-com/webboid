@@ -29,7 +29,8 @@ var boinc = {
     textArray = data.replace(/\[.*?\]/g,'').split(/(\r\n|\n|\r)/gm)
     textArray = textArray.map((el)=>{
     if(el === "\n" || el === "") return el
-    else return el.slice(20)
+    //else return el.slice(20)
+    else return el
     })
     parsedText = textArray.join('')
     return parsedText
