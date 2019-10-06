@@ -22,7 +22,7 @@
             .col-auto.item-start
               small.text-grey-8 Resume after
             .col-2
-              q-input(:disable="!pauseOnActivity" type="number" :min="1" :decimals="0" style="height:25px; padding-top:0px; margin-bottom:0px; margin-top:0px; padding-bottom:10px; padding-left:10px;" v-model="prefs.idle_time_to_run")
+              q-input(:disable="!pauseOnActivity" type="number" :min="1" :decimals="0" style="height:25px; padding-top:0px; margin-bottom:0px; margin-top:0px; padding-bottom:10px; padding-left:10px;" v-model="config.idle_time_to_run")
             .col
               small.text-grey-8 minutes of inactivity
       .flex.flex-center(style="padding-top:20px;")
