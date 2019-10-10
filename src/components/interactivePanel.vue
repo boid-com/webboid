@@ -32,14 +32,14 @@ div
               :class="{selectedTab:page==='info'}"
               @click="page='info'"
             ) info
-            q-btn( flat
-              :class="{selectedTab:page==='calc'}"
-              @click="page='calc'"
-            ) Profit Calculator
-            q-btn( flat
-              :class="{selectedTab:page==='exchange'}"
-              @click="page='exchange'"
-            ) exchange
+            //- q-btn( flat
+            //-   :class="{selectedTab:page==='calc'}"
+            //-   @click="page='calc'"
+            //- ) Profit Calculator
+            //- q-btn( flat
+            //-   :class="{selectedTab:page==='exchange'}"
+            //-   @click="page='exchange'"
+            //- ) exchange
         .row.justify-center
           div(v-if="page==='info'")
             ul
