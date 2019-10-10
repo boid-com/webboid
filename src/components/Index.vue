@@ -136,7 +136,7 @@
                   p.light-paragraph.text-center You have not linked an EOS account yet
                   q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Link EOS Account  
                 br
-                q-btn.full-width(color="blue" flat @click="$root.$emit('modal','exchangeModal')") Get BOID
+                //- q-btn.full-width(color="blue" flat @click="$root.$emit('modal','exchangeModal')") Get BOID
             q-card.no-padding.gt-sm(style="height:510px; overflow:hidden; width:100%;")
               iframe(
                 src="https://tgwidget.com/widget/?id=5c6c9bb583ba8859728b4567"
