@@ -77,9 +77,9 @@
       .row.justify-center
         .col-12
           .row.justify-center
-            q-btn(@click="transitWallet.terminate()" :disable="Boolean(!transitWallet)") Terminate
-            q-btn(@click="initTransitWallet('scatter')" :disable="Boolean(transitWallet)") Init
-            q-btn(@click="walletClaim('johnatboid11')") claim
+            //- q-btn(@click="transitWallet.terminate()" :disable="Boolean(!transitWallet)") Terminate
+            //- q-btn(@click="initTransitWallet('scatter')" :disable="Boolean(transitWallet)") Init
+            //- q-btn(@click="walletClaim('johnatboid11')") claim
             router-view(
               v-if="show"
               :globalStats='globalStats'
