@@ -7,7 +7,7 @@ div.relative-position(v-if="thisUser" style="padding:30px; min-height:300px; max
     q-btn(color="amber-8" flat @click="openURL('https://www.youtube.com/watch?v=VVlGjVDek_M')") I need help!
   div(v-if="page === 0" style="margin-bottom: 100px")
     .row.justify-center
-      div
+      div 
         p.text-center(v-if="!thisUser.payoutAccount") 
         div(v-else)
           br
@@ -24,17 +24,20 @@ div.relative-position(v-if="thisUser" style="padding:30px; min-height:300px; max
       .row.justify-center(style="padding:20px;")
         p.text-grey-9(style="padding-top:10px;" v-if="!thisUser.payoutAccount") Don't have an EOS account?
         p.text-grey-9(style="padding-top:10px;" v-else) Need a new EOS account?
-        p Quickly get an EOS account at #[a(href="https://www.eosnameservice.io/?ref=boidcombonus") EOSNameService.io]
-      .row.justify-center(v-if="!scatterId")
+
+        p Quickly get an EOS account at #[a(href="https://accounts.boid.com") accounts.boid.com]
+      .row.justify-center(v-if="!transitWallet")
         p.text-grey-9 Link your existing EOS account using Scatter
         .row.justify-center
-          q-btn(color="green" style="margin:20px;" @click="$root.$emit('scatterLogin')") Scatter Login
+          q-btn(color="green" style="margin:20px;" @click="$root.$emit('initTransitWallet')") Scatter Login
       div(v-else)
         p.text-grey-8 Scatter Identity:
-          h4.text-center {{scatterId.name}}
+          h4.text-center {{transitWallet.auth.accountName}}
           .row.justify-center(style="padding:20px; padding-top:0px;")
-            q-btn(@click="$root.$emit('resetScatter')") Change Scatter Id
-            q-btn(color="green" @click="linkAccount()" ) Link EOS Account
+            .col
+              q-btn(@click="reLogin()").on-left Link Different EOS Account
+            .col(v-if="transitWallet.auth.accountName !== thisUser.payoutAccount")
+              q-btn(color="green" @click="linkAccount()" ) Link this EOS Account
               
         //- p This EOS account will receive tokens earned from this Boid account.
       
@@ -74,6 +77,12 @@ export default {
     this.init()
   },
   methods:{
+    reLogin(){
+      this.transitWallet.terminate()
+      setTimeout(el => {
+        this.$root.$emit('initTransitWallet')
+      },1000)
+    },
     openURL,
     reset(){
       this.page = 0
@@ -96,7 +105,7 @@ export default {
       
     },
     async linkAccount(){
-      const result = await this.$api.createAccountUpdateRequest({type:"EOS",newEos:this.scatterId.name})
+      const result = await this.$api.createAccountUpdateRequest({type:"EOS",newEos:this.transitWallet.auth.accountName})
       if(!result) alert('there was a problem with this request')
       if(result.success){
         this.page = 1
@@ -117,7 +126,7 @@ export default {
   },
   computed:{
   },
-  props:['thisModal','api','thisUser'],
+  props:['thisModal','api','thisUser','transitWallet'],
   watch:{
     thisModal(modal){
       if (modal){

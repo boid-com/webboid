@@ -108,7 +108,7 @@
             .col-xs-12.col-sm-6.col-md-12
               q-card.animate-scale.relative-position(v-if="thisUser.tokens")
                 .absolute-top-right
-                  q-btn.absolute.infobtn(round small flat)
+                  //- q-btn.absolute.infobtn(round small flat)
                     q-icon.infobtn(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
                 .absolute(style="left:60px; top:0px;").bg-red
                   q-btn.absolute.infobtn(round small flat)
@@ -326,7 +326,7 @@ export default {
       console.log('here we are')
     }
   },
-  props: ['globalStats','thisUser', 'thisDevice', 'authenticated', 'api', 'ch', 'adBlock', 'leaderboard', 'teamLeaderboard'],
+  props: ['globalStats','thisUser', 'thisDevice', 'authenticated', 'api', 'ch', 'adBlock', 'leaderboard', 'teamLeaderboard','transitWallet'],
   components: {
     device,
     leaderboard,

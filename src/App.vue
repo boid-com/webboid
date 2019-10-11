@@ -19,17 +19,15 @@
           //-   q-icon(name="home")
           q-btn.text-black(@click='' flat v-if="transitWallet", color='light')
             .on-right
-              | {{thisUser.username}}
-            q-icon.on-right(name="account_circle")
+              | {{transitWallet.auth.accountName}}
+            img.on-right(src="/statics/eoslogo.png" style="width:15px;")
             q-popover(ref='profileMenu' anchor="bottom right" self="top right")
-              q-item(link @click='handleLogout()')
-                | Logout
-              q-item(link v-if="!local" @click='$router.push({name:"User",params:{username:thisUser.username, teamname:thisUser.team.name}}),$refs.profileMenu.close()')
-                | My Profile
-              q-item(link v-else @click="ipcRenderer.send('openURL','https://app.boid.com/u/'+thisUser.username)")
-                | My Profile
-          //- q-btn.on-left(v-if="!transitWallet" @click='$root.$emit("modal","eosAuth")', color='green')
-          //-   | EOS Login
+              q-item(link @click='transitWallet.terminate()')
+                | Scatter Logout
+              q-item(link v-if="!local" @click='openURL("https://bloks.io/account/" + transitWallet.auth.accountName),$refs.profileMenu.close()')
+                | My EOS Account
+          q-btn.on-left(v-if="!transitWallet" @click='initTransitWallet("scatter")', color='green')
+            | Scatter
           q-btn.text-black(@click='' flat v-if="authenticated", color='light')
             .on-right
               | {{thisUser.username}}
@@ -89,6 +87,7 @@
               :thisDevice="thisDevice"
               :authenticated='authenticated'
               :api='api'
+              :transitWallet='transitWallet'
               @refreshUser='init()'
               :adBlock="adBlock"
               style="width:100%;"
@@ -138,10 +137,8 @@
         removeDeviceModal(:modal="$refs.removeDeviceModal" :api="api" :thisUser="thisUser" 	)
       q-modal(ref="nueModal" no-esc-dismiss no-backdrop-dismiss)
         nueModal(:modal="$refs.nueModal" :api="api" :thisUser="thisUser" 	)
-      q-modal(ref="updatePayoutAccount")
-        updatePayoutModal(:thisModal="$refs.updatePayoutAccount" :api="api" :thisUser="thisUser")
       q-modal(ref="modal" @close="showOlark(true),thisModal=null")
-        component(:is="thisModal" :thisModal="$refs.modal" :modal="$refs.modal" :thisUser="thisUser" :teamLeaderboard="teamLeaderboard")
+        component(:is="thisModal" :thisModal="$refs.modal" :modal="$refs.modal" :thisUser="thisUser" :teamLeaderboard="teamLeaderboard" :transitWallet="transitWallet")
       div.bg-white.fullscreen(v-if="pending")
         q-inner-loading(:visible="pending")
           q-spinner-ball(size="70px" color="blue")
@@ -150,7 +147,7 @@
 <script>
 window.olark.identify('3844-769-10-6059')
 import 'quasar-extras/animate'
-import { Loading, Toast } from 'quasar'
+import { Loading, Toast, openURL } from 'quasar'
 import auth from '@/Auth.vue'
 import profileEdit from '@/ProfileEdit.vue'
 import scatter from '@/Scatter.vue'
@@ -230,9 +227,12 @@ export default {
     }
   },
   methods: {
+    openURL,
     async initTransitWallet(walletType){
       this.transitWallet = await initWallet('scatter')
+      if (!this.transitWallet) return
       this.transitWallet.subscribe(state => {
+        console.log('Transit Wallet State:',state)
         if (state.connected === false) this.transitWallet = null
       })
     },
@@ -332,6 +332,7 @@ export default {
     // if (this.local && !this.authenticated) this.handleLogin()
     if (this.local) this.ipcRenderer = window.local.ipcRenderer
     if (this.local) window.olark('api.box.hide')
+    this.initTransitWallet()
     setTimeout(() => {
       this.pending = false
       // this.$root.$emit('modal.nue',true)
@@ -362,6 +363,9 @@ export default {
         this.updateLeaderboards().catch(console.error)
         setInterval(this.updateLeaderboards, 128000)
     }
+    this.$root.$on('initTransitWallet',val =>{
+      this.initTransitWallet()
+    });
     this.$root.$on('browserDeviceThrottle',(input)=>{
       if (miner){
         if (input){

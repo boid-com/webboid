@@ -202,9 +202,9 @@ export default {
 const stakeFAQ = [
   "Staking BOIDs increases your profitability when you generate Boid Power using the Boid app.",
   "Staked tokens are locked in your wallet until they are unstaked.",
-  "You can manually stake and unstake instantly during a season break period.",
-  "During a Boid Season, you can’t stake or unstake tokens.",
-  "All tokens staked when the season break ends will remain staked for the entire season",
+  "You can manually stake and unstake instantly at any time.",
+  // "During a Boid Season, you can’t stake or unstake tokens.",
+  // "All tokens staked when the season break ends will remain staked for the entire season",
   "The minimum amount of BOIDs you can stake is 100k",
 ]
 
