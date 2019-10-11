@@ -17,7 +17,7 @@
             q-icon(name="home")
           //- q-btn( v-else flat style="margin-right:10px;" @click="$router.push('/')")
           //-   q-icon(name="home")
-          q-btn.text-black(@click='' flat v-if="transitWallet", color='light')
+          q-btn.text-black(@click='' flat v-if="transitWallet && !local", color='light')
             .on-right
               | {{transitWallet.auth.accountName}}
             img.on-right(src="/statics/eoslogo.png" style="width:15px;")
@@ -26,7 +26,7 @@
                 | Scatter Logout
               q-item(link v-if="!local" @click='openURL("https://bloks.io/account/" + transitWallet.auth.accountName),$refs.profileMenu.close()')
                 | My EOS Account
-          q-btn.on-left(v-if="!transitWallet" @click='initTransitWallet("scatter")', color='green')
+          q-btn.on-left(v-if="!transitWallet && !local" @click='initTransitWallet("scatter")', color='green')
             | Scatter
           q-btn.text-black(@click='' flat v-if="authenticated", color='light')
             .on-right
@@ -332,7 +332,7 @@ export default {
     // if (this.local && !this.authenticated) this.handleLogin()
     if (this.local) this.ipcRenderer = window.local.ipcRenderer
     if (this.local) window.olark('api.box.hide')
-    this.initTransitWallet()
+    if (!this.local)this.initTransitWallet()
     setTimeout(() => {
       this.pending = false
       // this.$root.$emit('modal.nue',true)
