@@ -28,8 +28,8 @@
                 | My Profile
               q-item(link v-else @click="ipcRenderer.send('openURL','https://app.boid.com/u/'+thisUser.username)")
                 | My Profile
-          q-btn.on-left(v-if="!transitWallet" @click='$root.$emit("modal","eosAuth")', color='green')
-            | EOS Login
+          //- q-btn.on-left(v-if="!transitWallet" @click='$root.$emit("modal","eosAuth")', color='green')
+          //-   | EOS Login
           q-btn.text-black(@click='' flat v-if="authenticated", color='light')
             .on-right
               | {{thisUser.username}}
