@@ -110,33 +110,10 @@
                 .absolute-top-right
                   q-btn.absolute.infobtn(round small flat)
                     q-icon.infobtn(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
-                p.light-paragraph.text-center Wallet
-                table.q-table.reactive(style="width:100%")
-                  tbody(v-for="token in thisUser.tokens" :key="token.id")
-                    tr.tokenlist.cursor-pointer()
-                      td 
-                        img.tokenimg(:src="token.type.image")
-                      td {{token.type.name}}
-                      td 
-                        small Pending 
-                        p {{token.balance.toFixed(4)}} 
-                        small Paid Out
-                        p {{token.paid.toFixed(4)}}
-                      td
-                    //- q-tooltip View Transactions
-                div(v-if="thisUser.payoutAccount")
-                  p.light-paragraph.text-center EOS Payout Account 
-                  .row.gutter-md(style="padding-top:10px")
-                    .col-8
-                      h5(style="margin:5px;") {{thisUser.payoutAccount}}
-                    .col-4
-                      div
-                        q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Change  
-                div(v-else)
-                  p.light-paragraph.text-center You have not linked an EOS account yet
-                  q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Link EOS Account  
-                br
-                //- q-btn.full-width(color="blue" flat @click="$root.$emit('modal','exchangeModal')") Get BOID
+                .absolute(style="left:60px; top:0px;").bg-red
+                  q-btn.absolute.infobtn(round small flat)
+                    q-icon.infobtn(name="refresh" size="30px" @click="$emit('refreshWallet')")
+                miniWallet
             q-card.no-padding.gt-sm(style="height:510px; overflow:hidden; width:100%;")
               iframe(
                 src="https://tgwidget.com/widget/?id=5c6c9bb583ba8859728b4567"
@@ -249,6 +226,7 @@ import { openURL } from 'quasar'
 import leaderboard from '@/Leaderboards'
 import bHeader from '@/Header'
 import exchangeModal from '@/exchange'
+import miniWallet from '@/miniWallet'
 
 var info = require('src/lib/infoText.json')
 
@@ -353,7 +331,8 @@ export default {
     device,
     leaderboard,
     bHeader,
-    exchangeModal
+    exchangeModal,
+    miniWallet
   }
 }
 </script>

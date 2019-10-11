@@ -177,7 +177,6 @@ async function fillBalances(v){
     console.log(error)
     // alert(error)
   }
-
 }
 
 import { Toast } from 'quasar'

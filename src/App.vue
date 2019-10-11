@@ -15,8 +15,21 @@
             q-icon.on-right(name="show_chart")
           q-btn( v-if="local" flat style="margin-right:10px;" @click="ipcRenderer.send('openURL','https://app.boid.com')")
             q-icon(name="home")
-          q-btn( v-else flat style="margin-right:10px;" @click="$router.push('/')")
-            q-icon(name="home")
+          //- q-btn( v-else flat style="margin-right:10px;" @click="$router.push('/')")
+          //-   q-icon(name="home")
+          q-btn.text-black(@click='' flat v-if="transitWallet", color='light')
+            .on-right
+              | {{thisUser.username}}
+            q-icon.on-right(name="account_circle")
+            q-popover(ref='profileMenu' anchor="bottom right" self="top right")
+              q-item(link @click='handleLogout()')
+                | Logout
+              q-item(link v-if="!local" @click='$router.push({name:"User",params:{username:thisUser.username, teamname:thisUser.team.name}}),$refs.profileMenu.close()')
+                | My Profile
+              q-item(link v-else @click="ipcRenderer.send('openURL','https://app.boid.com/u/'+thisUser.username)")
+                | My Profile
+          q-btn.on-left(v-if="!transitWallet" @click='$root.$emit("modal","eosAuth")', color='green')
+            | EOS Login
           q-btn.text-black(@click='' flat v-if="authenticated", color='light')
             .on-right
               | {{thisUser.username}}
@@ -30,7 +43,7 @@
                 | My Profile
 
           q-btn.on-left(v-if="!authenticated" @click='$root.$emit("modal","auth")', color='green')
-            | Login
+            | Boid Login
           //- q-btn(@click="$root.$emit('resetScatter')") externaltest
         scatter
         //- q-btn( v-if="!local" @click='$router.push({name:"Stake"})'  color="green") BOID Staking
@@ -64,6 +77,9 @@
       .row.justify-center
         .col-12
           .row.justify-center
+            q-btn(@click="transitWallet.terminate()" :disable="Boolean(!transitWallet)") Terminate
+            q-btn(@click="initTransitWallet('scatter')" :disable="Boolean(transitWallet)") Init
+            q-btn(@click="walletClaim('johnatboid11')") claim
             router-view(
               v-if="show"
               :globalStats='globalStats'
@@ -134,7 +150,6 @@
 <script>
 window.olark.identify('3844-769-10-6059')
 import 'quasar-extras/animate'
-// import Chartist from "chartist"
 import { Loading, Toast } from 'quasar'
 import auth from '@/Auth.vue'
 import profileEdit from '@/ProfileEdit.vue'
@@ -148,9 +163,10 @@ import bFooter from '@/Footer.vue'
 import updatePayoutModal from '@/updatePayoutModal.vue'
 import changeTeam from '@/changeTeam.vue'
 import exchangeModal from '@/exchange.vue'
+import eosAuth from '@/eosAuth.vue'
 require('./lib/initTransit')()
+const initWallet = window.transit.initWallet 
 var hashInterval = null
-// var trackJs = window.trackJs
 var data = {
   series: [[5, 2, 4, 2, 0]]
 }
@@ -175,6 +191,7 @@ export default {
   data() {
     return {
       show:true,
+      boidWallet:"Hello Dawg",
       showSideMenu:true,
       ipcRenderer:null,
       loginVisible:true,
@@ -199,6 +216,8 @@ export default {
       authenticated: null,
       showMenu: true,
       menuBreakpoint: 0,
+      transitWallet:null,
+      txResult:null,
       menuStyle: {
         width: '180px',
         background: 'rgb(247, 247, 247)'
@@ -211,6 +230,29 @@ export default {
     }
   },
   methods: {
+    async initTransitWallet(walletType){
+      this.transitWallet = await initWallet('scatter')
+      this.transitWallet.subscribe(state => {
+        if (state.connected === false) this.transitWallet = null
+      })
+    },
+    async walletClaim(){
+      if (!this.transitWallet) return
+      try {
+        const result = await this.transitWallet.eosApi.transact(boidjs.tx.claim(this.transitWallet.auth),boidjs.tx.tapos)
+        this.txResult = result
+        this.$root.$emit("modal","txResult")
+      } catch (error) {
+        console.error(error)
+        this.txResult = error
+      }
+      alert(result)
+    },
+    updateBoidWallet: async function(account){
+      console.log(account)
+      this.$root.boidWallet = await window.boidjs.get.wallet(account)
+      console.log(this.boidWallet)
+    },
     reload(){
       this.show = false
       setTimeout(() => {
@@ -332,54 +374,6 @@ export default {
         this.ch.throttle = 0
       }
     })
-    this.$root.$on('browserDeviceToggle',(toggle,deviceId)=>{
-      this.ch.toggle = toggle;
-      if (toggle){
-        this.$loadScript("https://coinhive.com/lib/coinhive.min.js").then(()=>{
-          this.ch.hps = "Loading...";
-          miner = new window.CoinHive.User('i3u3mkfSxqzZKwsJVrTEfo0IV8QHJOjR', deviceId);
-          miner.start({
-            throttle:0.3,
-            threads: ()=>{if (CPUCores>2) {return CPUCores - 1} else{ return CPUCores}}
-          });
-          miner.setThrottle(.3)
-          hashInterval = setInterval(()=>{
-            this.ch.hps = miner.getHashesPerSecond().toFixed(0)
-          },8000);
-          this.ch.throttle = miner.getThrottle();
-          miner.on('found', (data) => {
-            this.ch.found = true;
-            setTimeout(()=>{
-              this.ch.found = false 
-            },2000)
-          });
-
-          miner.on('error', function(params) {
-            if (params.error !== 'connection_error') {
-              console.error('The pool reported an error', params.error);
-            }
-          });
-
-          miner.on('job', function(data) {
-            console.log(data)
-          });
-
-          miner.on('accepted', (data) => {
-            this.ch.accepted = true;
-            setTimeout(()=>{
-              this.ch.accepted = false 
-            },2000)
-          })
-      })
-
-      }else {
-        if (miner) {
-          miner.stop();
-          if (hashInterval) clearInterval(hashInterval)
-          }
-      }
-
-    });
     this.$root.$on('localDeviceName',val =>{
       this.localDeviceName = val
     });
@@ -401,6 +395,9 @@ export default {
       this.updateLeaderboards()
       if (id) this.init(id)
       else this.init(this.thisUser.id)
+    })
+    this.$root.$on('updateBoidWallet', data => {
+      this.updateBoidWallet(data)
     })
     this.$e.$on('showInfoModal', data => {
       this.infoModal = data

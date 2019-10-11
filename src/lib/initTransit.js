@@ -7,10 +7,27 @@ import { Keycat } from 'keycatjs'
 function err(error){
   console.error(error)
 }
+function rand (min, max) {
+  min = Math.ceil(min)
+  max = Math.floor(max)
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
 
 import { Api, JsonRpc } from "eosjs"
 
-const rpc = new JsonRpc('https://eos.greymass.com:443');
+const endpoints = [
+  'https://api.eosnewyork.io',
+  'https://eos.greymass.com',
+  'https://api.eossweden.org',
+  'https://api.eosn.io',
+]
+
+function pickEndpoint () {
+    return endpoints[rand(0, endpoints.length - 1)]
+}
+const rpc = new JsonRpc(pickEndpoint())
+const boidjs = require('boidjs')({rpc})
+window.boidjs = boidjs
 window.transit = {}
 
 async function getTotalStake(account) {
@@ -40,9 +57,9 @@ async function getTotalDelegated(account) {
       limit: 10000
     })
     console.log(res)
-    const userTotalStaked = res.rows.reduce((acc,el) => parseFloat(el.quantity) + acc ,0)
-    console.log(userTotalStaked)
-    return userTotalStaked
+    const userTotalDelegated = res.rows.reduce((acc,el) => parseFloat(el.quantity) + acc ,0)
+    console.log(userTotalDelegated)
+    return userTotalDelegated
   } catch(error) {
     console.log(error)
     return undefined
@@ -57,41 +74,41 @@ async function init(){
   window.eosjs = {rpc,getTotalStake,getTotalDelegated}
 
 
-  // var accessContext
-  // try {
-  //   accessContext = initAccessContext({
-  //     appName: 'app.boid.com',
-  //     network: {
-  //       blockchain:'eos',
-  //       host:'eos.greymass.com',
-  //       port:443,
-  //       protocol:'https',
-  //       chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
-  //     },
-  //     walletProviders: [
-  //       scatter(),
-  //       keycat()      ]
-  //   })
-  // } catch (error) {
-  //   err(error)
-  // }
+  var accessContext
+  try {
+    accessContext = initAccessContext({
+      appName: 'app.boid.com',
+      network: {
+        blockchain:'eos',
+        host:'eos.greymass.com',
+        port:443,
+        protocol:'https',
+        chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+      },
+      walletProviders: [
+        scatter()]
+        // keycat()      ]
+    })
+  } catch (error) {
+    err(error)
+  }
 
-  // window.transit.initWallet = async (providerName) => {
-  //   try {
-  //     providerName = providerName.toLowerCase() 
-  //     const providers = accessContext.getWalletProviders()
-  //     console.log(providers)
-  //     const selected = providers.find(el => el.id.toLowerCase() === providerName)
-  //     if (!selected) throw('Invalid Wallet Provider')
-  //     const wallet = accessContext.initWallet(selected)
-
-  //     await wallet.connect()
-  //     await wallet.login()
-  //   } catch (error) {
-  //     if (!error.message) error = {message:error}
-  //     alert(error.message)
-  //   }
-  // }
+  window.transit.initWallet = async (providerName) => {
+    try {
+      providerName = providerName.toLowerCase() 
+      const providers = accessContext.getWalletProviders()
+      console.log(providers)
+      const selected = providers.find(el => el.id.toLowerCase() === providerName)
+      if (!selected) throw('Invalid Wallet Provider')
+      const wallet = accessContext.initWallet(selected)
+      await wallet.connect()
+      await wallet.login()
+      return wallet
+    } catch (error) {
+      if (!error.message) error = {message:error}
+      alert(error.message)
+    }
+  }
 
   // window.transit.initWallet('keycat') 
 
@@ -106,5 +123,5 @@ async function init(){
   // return wallet
 }
 
-// init().catch(err)
+init().catch(err)
 module.exports = init
