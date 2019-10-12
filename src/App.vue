@@ -230,6 +230,7 @@ export default {
     openURL,
     async initTransitWallet(walletType){
       this.transitWallet = await initWallet('scatter')
+      this.$root.$data.transitWallet = this.transitWallet
       if (!this.transitWallet) return
       this.transitWallet.subscribe(state => {
         console.log('Transit Wallet State:',state)

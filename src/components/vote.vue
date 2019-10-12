@@ -10,6 +10,8 @@ div(style="padding:20px; max-width: 1200px;")
     @click="proxyVote()"
     style="margin-bottom:10px; font-size:25px; padding:15px;") Vote Boidcomproxy
     q-btn(v-if="userLoggedIn" style="margin-bottom:10px;padding:15px;" @click="walletLogout()") Logout
+    q-btn(v-else style="margin-bottom:10px;padding:15px;" color="green" @click="$root.$emit('initTransitWallet')") Scatter
+
   .row.justify-center
     p.justify-center.text-amber-10.bg-grey-7(v-if="errormsg" style="padding:10px;") {{errormsg}}
     p.justify-center.text-blue-6(v-if="statusmsg") {{statusmsg}}
@@ -81,28 +83,6 @@ div(style="padding:20px; max-width: 1200px;")
 
 <script>
 import { openURL } from 'quasar'
-import { initAccessContext } from 'eos-transit'
-import scatter from 'eos-transit-scatter-provider'
-// import ledger from 'eos-transit-ledger-provider'
-var accessContext
-try {
-  accessContext = initAccessContext({
-    appName: 'app.boid.com',
-    network: {
-      blockchain:'eos',
-      host:'eos.greymass.com',
-      port:443,
-      protocol:'https',
-      chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
-    },
-    walletProviders: [
-      scatter(),
-      // ledger()
-    ]
-  })
-} catch (error) {
-  console.log('error here')
-}
 
 
 export default {
@@ -110,16 +90,17 @@ export default {
     return {
       proxies:null,
       weightedList:null,
-      wallet:null,
       errormsg:null,
-      statusmsg:'Connecting to Scatter (Desktop Only)...'
+      statusmsg:''
     }
   },
   mounted(){
     this.getData()
-    this.scatterSetup()
   },
   computed:{
+    wallet(){
+      return this.$parent.$parent.transitWallet
+    },
     userLoggedIn(){
       if (!this.wallet) return false
       if (this.wallet && this.wallet.active) return true
@@ -129,8 +110,11 @@ export default {
   methods:{
     openURL,
     async walletLogout(){
-      this.wallet.logout()
-      this.wallet = null
+      this.wallet.terminate()
+      setTimeout(el => {
+        this.$root.$emit('initTransitWallet')
+      },500)
+
     },
     async getData(){
       this.proxyInfo = (await this.$api.proxyInfo())[0]

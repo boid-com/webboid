@@ -15,23 +15,23 @@ div(style="padding:20px; max-width: 1600px;")
           .light-paragraph.text-center Stake Actions
           .row.relative-position
             .col-7
-              q-input(v-model="formattedStake" :disabled="!account" placeholder="BOID to stake")
+              q-input(v-model="formattedStake" :disabled="!wallet" placeholder="BOID to stake")
             .col
               q-btn.absolute-bottom-right(
                 @click="formattedStake = liquidBalance"
-                style="margin-bottom:10px;" flat color="blue" :disabled="!account") 100%
-          q-btn.full-width(color="green" :disabled="!account" @click="stake()") Stake
+                style="margin-bottom:10px;" flat color="blue" :disabled="!wallet") 100%
+          q-btn.full-width(color="green" :disabled="!wallet" @click="stake()") Stake
           div(style="height:1 0px;")
           .row.relative-position
             .col-7
-              q-input(v-model="formattedUnstake" :disabled="!account" placeholder="BOID to unstake")
+              q-input(v-model="formattedUnstake" :disabled="!wallet" placeholder="BOID to unstake")
             .col
               q-btn.absolute-bottom-right(
                 @click="formattedUnstake = userStake"
-                style="margin-bottom:10px;" flat color="blue" :disabled="!account") 100%
-          q-btn.full-width(:disabled="!account" flat @click="unstake()") Unstake
+                style="margin-bottom:10px;" flat color="blue" :disabled="!wallet") 100%
+          q-btn.full-width(:disabled="!wallet" flat @click="unstake()") Unstake
           div(style="padding-top:20px;")
-            q-btn.full-width(v-if="account" flat small @click='reset()').full-width.text-blue-9 change account
+            q-btn.full-width(v-if="wallet" flat small @click='reset()').full-width.text-blue-9 change account
             div(v-if="!authenticated" )
               p.strong You need to register/login to a Boid account to proceed.
               .row.justify-center
@@ -47,18 +47,18 @@ div(style="padding:20px; max-width: 1600px;")
                     p You can only earn staking rewards if your EOS account is linked to your Boid account.
                 .row.justify-center
                   q-btn(color="green" @click="$root.$emit('modal','updatePayoutModal')") Link EOS Account
-            div(v-else-if="!account" )
+            div(v-else-if="!wallet" )
               .row.justify-center 
                 .col
                   p.strong.text-center You need to login to Scatter to proceed.
               .row.justify-center 
                 .col
                   q-btn.full-width(@click='login()' color="green") Scatter Login
-            div(v-else-if="account.name != thisUser.payoutAccount")
+            div(v-else-if="wallet.auth.accountName != thisUser.payoutAccount")
               .row.justify-center
                 .col
                   h6 You are logged into Scatter using 
-                  h5 {{account.name}}
+                  h5 {{wallet.auth.accountName}}
                   h6 But your Boid account is linked to 
                   h5 {{thisUser.payoutAccount}}
               .row.justify-center
@@ -67,7 +67,7 @@ div(style="padding:20px; max-width: 1600px;")
                 // q-btn.full-width(@click='reset()' color="green") Change Scatter Login
         q-card.relative-position(v-if="account" style="user-select:text;")
           .light-paragraph.text-center EOS Wallet
-          p.text-center {{account.name}}
+          p.text-center {{wallet.auth.accountName}}
           div Total Balance
           .row(style="padding:10px;")
             strong {{userBalance}}
@@ -107,7 +107,7 @@ div(style="padding:20px; max-width: 1600px;")
 
         interactivePanel(:thisUser="thisUser" :userStake="userStake")
       .col-4
-  // interactivePanel(v-if="!account | !authenticated" :thisUser="thisUser" userStake="0.00" style="margin-top:40px;")
+  // interactivePanel(v-if="!wallet | !authenticated" :thisUser="thisUser" userStake="0.00" style="margin-top:40px;")
 
 
 
@@ -123,46 +123,20 @@ div(style="padding:20px; max-width: 1600px;")
 
 
 <script>
-import ScatterJS, { Network } from "scatterjs-core"
-import ScatterEOS from "scatterjs-plugin-eosjs2"
-import { Api, JsonRpc } from "eosjs"
-ScatterJS.plugins(new ScatterEOS())
 import {stakeTx,taposData,unstakeTx} from "../lib/tx.js"
 var format=require('format-number')()
 import interactivePanel from "components/interactivePanel.vue"
-// MAINNET
-const network = Network.fromJson({
-   blockchain:'eos',
-   host:'api.eosdetroit.io',
-   port:443,
-   protocol:'https',
-   chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
-})
-
-// JUNGLE
-// const network = Network.fromJson({
-//   blockchain: "eos",
-//   protocol: "https",
-//   host: "jungle2.cryptolions.io",
-//   port: 443,
-//   chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473"
-// });
-window.network = network
-
-let eos;
-const rpc = new JsonRpc(network.fullhost())
-
 
 async function fillBalances(v){
   try {
-    if (!v.account) return
+    if (!v.wallet) return
     v.walletLoading = true
     v.userBalance = '0.00'
     v.userStake = '0.00'
     v.disableStake = false
-    v.userBalance = (await rpc.get_currency_balance('boidcomtoken',v.account.name,'BOID'))[0]
-    v.totalDelegated = await window.eosjs.getTotalDelegated(v.account.name)
-    var selfStaked = ((await window.eosjs.getTotalStake(v.account.name)))
+    v.userBalance = (await v.rpc.get_currency_balance('boidcomtoken',v.wallet.auth.accountName,'BOID'))[0]
+    v.totalDelegated = await window.eosjs.getTotalDelegated(v.wallet.auth.accountName)
+    var selfStaked = ((await window.eosjs.getTotalStake(v.wallet.auth.accountName)))
     console.log('SELFSTAKE',selfStaked)
     if (selfStaked){
       console.log('selfStaked',selfStaked)
@@ -198,16 +172,20 @@ export default {
       userStake:'0.00',
       error:null,
       walletLoading:true,
-      totalDelegated:0
+      totalDelegated:0,
+      rpc:window.eosjs.rpc
     }
   },
   components:{interactivePanel},
   props:['thisUser','authenticated'],
   mounted() {
     // this.setEosInstance()
-    // this.init()
+    this.init()
   },
   computed: {
+    wallet(){
+      return this.$parent.$parent.transitWallet
+    },
     liquidBalance(){
       try {
       return parseFloat(this.userBalance) - this.totalDelegated
@@ -217,13 +195,13 @@ export default {
       }
     },
     account() {
-      if (!this.scatter || !this.scatter.identity) return null
-      return this.scatter.identity.accounts[0]
+      if (!this.wallet) return null
+      return this.wallet.auth
     },
     formattedStake: {
       set(newData){
         if (!newData) return this.stakeAmount = null
-        this.stakeAmount = parseFloat(newData.replace(/[^0-9.]/g, ""))
+        this.stakeAmount = parseFloat(newData).toFixed(4)
       },
       get(data){
         if (!this.stakeAmount) return null
@@ -249,50 +227,24 @@ export default {
     },
     fillBalances,
     async init(){
-      try {
-        const connected = await ScatterJS.scatter.connect("boid")
-        if (!connected) {
-          this.error = "Scatter not detected, make sure scatter is started and refresh."
-          console.error("Could not connect to Scatter.")
-          return false
-        }
-        this.scatter = ScatterJS.scatter
-        // window.scatter = ScatterJS.scatter
-        this.$root.$emit('scatter',this.scatter)
-        return true
-        console.log("SCATTER ID", this.scatter.identity)
-      } catch (error) {
-        console.log(error)
-      }
-
+      console.log('init')
+      fillBalances(this)
     },
     async login() {
-      console.log('got login')
-      if (!this.scatter) { 
-        const result = await this.init()
-        if (!result) alert('could not connect to Scatter, make sure Scatter is running and refresh the page.')
-      }
-      try {
-        const result = await this.scatter.getIdentity({ accounts: [network] })
-        console.log(result)
-      } catch (error) {
-        console.log(error)
-      }
+     console.log('login')
+     this.$root.$emit('initTransitWallet')
     },
     reset(){
       this.logout()
       setTimeout(()=>{this.login()},1000)
     },
     logout() {
-      if (!this.scatter) return
-      this.scatter.forgetIdentity()
-      this.scatterId = null
-      this.scatterAuth = null
+      this.wallet.terminate()
     },
     async stake() {
       this.walletLoading = true
       try {
-        const result = await eos.transact(stakeTx(this),taposData())
+        const result = await this.wallet.eosApi.transact(boidjs.tx.selfStake(this.wallet.auth,parseFloat(this.stakeAmount)),boidjs.tx.tapos)
         console.log(result)
         this.formattedStake = null
         Toast.create.positive('Transaction successful')
@@ -314,7 +266,7 @@ export default {
     async unstake() {
       this.walletLoading = true
       try {
-        const result = await eos.transact(unstakeTx(this),taposData())
+        const result = await this.wallet.eosApi.transact(boidjs.tx.selfUnstake(this.wallet.auth,parseFloat(this.unStakeAmount)),boidjs.tx.tapos)
         console.log(result)
         Toast.create.positive("Transaction successful")
       } catch (error) {
@@ -329,38 +281,9 @@ export default {
       }
       setTimeout(()=>{fillBalances(this)},2000)
       
-    },
-    setEosInstance() {
-      if (this.account) {
-        eos = this.scatter.eos(network, Api, { rpc,beta3:true })
-      } else {
-        eos = new Api({ rpc })
-      }
-    },
-    async authenticate(nonce,msg,key){
-      try {
-        if (!this.scatter) return null
-        const sig = await this.scatter.authenticate(nonce,msg,key)
-        if(!sig) return null
-        this.scatterAuth = sig
-        return sig
-      } catch (error) {
-        console.error(error)
-        return null
-      }
     }
   },
   watch: {
-    ["account"]() {
-      fillBalances(this)
-      this.setEosInstance()
-      this.error = null
-      this.$root.$emit('scatterId',this.account)
-
-    },
-    scatterAuth(){
-      this.$root.$emit('scatterAuth',this.scatterAuth)
-    },
     userStake(data){
       this.userStake = format(parseFloat(data.replace(/[^0-9.]/g, "")))
     },
