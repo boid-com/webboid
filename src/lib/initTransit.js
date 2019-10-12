@@ -93,7 +93,7 @@ async function init(){
     err(error)
   }
 
-  window.transit.initWallet = async (providerName) => {
+  window.transit.initWallet = async (providerName,alert) => {
     try {
       providerName = providerName.toLowerCase() 
       const providers = accessContext.getWalletProviders()
@@ -106,7 +106,8 @@ async function init(){
       return wallet
     } catch (error) {
       if (!error.message) error = {message:error}
-      alert(error.message)
+      console.error(error)
+      if (alert) alert(error.message)
     }
   }
 
