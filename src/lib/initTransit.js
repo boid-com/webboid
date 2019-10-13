@@ -23,7 +23,9 @@ const endpoints = [
 ]
 
 function pickEndpoint () {
-    return endpoints[rand(0, endpoints.length - 1)]
+    const endpoint = endpoints[rand(0, endpoints.length - 1)]
+    console.log(endpoint)
+    return endpoint
 }
 const rpc = new JsonRpc(pickEndpoint())
 const boidjs = require('boidjs')({rpc})

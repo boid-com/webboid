@@ -18,7 +18,7 @@ div(style="padding:20px; max-width: 1600px;")
               q-input(v-model="formattedStake" :disabled="!wallet" placeholder="BOID to stake")
             .col
               q-btn.absolute-bottom-right(
-                @click="formattedStake = liquidBalance"
+                @click="formattedStake = liquidBalance.toFixed(4)"
                 style="margin-bottom:10px;" flat color="blue" :disabled="!wallet") 100%
           q-btn.full-width(color="green" :disabled="!wallet" @click="stake()") Stake
           div(style="height:1 0px;")
@@ -173,7 +173,8 @@ export default {
       error:null,
       walletLoading:true,
       totalDelegated:0,
-      rpc:window.eosjs.rpc
+      rpc:window.eosjs.rpc,
+      stakeAmount:null
     }
   },
   components:{interactivePanel},
@@ -183,6 +184,7 @@ export default {
     this.init()
   },
   computed: {
+    format,
     wallet(){
       return this.$parent.$parent.transitWallet
     },
@@ -201,7 +203,7 @@ export default {
     formattedStake: {
       set(newData){
         if (!newData) return this.stakeAmount = null
-        this.stakeAmount = parseFloat(newData).toFixed(4)
+        this.stakeAmount = parseFloat(newData.replace(/[^0-9.]/g, ""))
       },
       get(data){
         if (!this.stakeAmount) return null
@@ -223,7 +225,7 @@ export default {
     formatStakeAmount(){
       // console.log('hello')
       // console.log(this.stakeAmount.toLocaleString())
-      // this.stakeAmount = this.stakeAmount.toLocaleString()
+      this.stakeAmount = this.stakeAmount.toLocaleString()
     },
     fillBalances,
     async init(){

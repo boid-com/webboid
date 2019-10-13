@@ -166,11 +166,7 @@ export default {
               }
             }
           ]
-        },{
-          broadcast: true,
-          blocksBehind: 3,
-          expireSeconds: 60
-        })
+        },{ broadcast: true, blocksBehind: 3, expireSeconds: 60 })
         console.log(result)
         this.errormsg = null
         this.statusmsg = 'Success'
