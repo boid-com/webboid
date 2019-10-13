@@ -286,6 +286,9 @@ export default {
     }
   },
   watch: {
+    wallet(){
+      fillBalances(this)
+    },
     userStake(data){
       this.userStake = format(parseFloat(data.replace(/[^0-9.]/g, "")))
     },
