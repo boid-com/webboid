@@ -24,6 +24,7 @@
           .row
             .col-8
               div Pending Payout
+              small approximation 
               .row(style="padding:10px;")
                 .col
                   strong {{pendingClaimPrint}}
@@ -91,7 +92,7 @@ export default {
   computed:{
     highlightClaim(){
       if (!this.pendingClaim) return "grey"
-      if (this.pendingClaim.power > 1000 || this.pendingClaim.stake > 1000) return "Blue"
+      if (this.pendingClaim.power > 1000 || this.pendingClaim.stake > 1000) return "blue"
       else return "grey"
     },
     disableActions(){
@@ -104,10 +105,10 @@ export default {
     },
     pendingClaimPrint(){
       if (!this.pendingClaim) return 0
-      var total = this.pendingClaim.power + this.pendingClaim.stake - 400
+      var total = this.pendingClaim.power + this.pendingClaim.stake - 300
       if (total < 0) total = 0
 
-      return '~ '+ total.toLocaleString('en').split('.')[0] + ' BOID'
+      return '≈	'+ total.toLocaleString('en').split('.')[0] + ' BOID'
     }
   },
   methods:{
