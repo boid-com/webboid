@@ -19,16 +19,16 @@
             .col
               small(style="padding:10px;").block Removes all Boid GPU files and restarts Boid. Files will be reinstalled on startup.
       q-field(icon="battery_alert"  helper="Extend battery life by pausing Boid when disconnected from a power source. Boid will resume when power is restored.")
-        q-checkbox(v-model="config.pauseOnBattery" label="Pause on Battery Power")
+        q-checkbox(v-model="config.run_on_batteries" label="Pause on Battery Power")
       q-field(icon="mouse"
       helper="If enabled, Boid will pause computing while mouse/keyboard is being used. Will resume after a set number of minutes of inactivity.") 
-        q-checkbox(v-model="config.pauseOnActivity" label="Pause on user activity ")
+        q-checkbox(v-model="config.run_if_user_active" label="Pause on user activity ")
         div(style="height:30px;")
           .row.items-center
             .col-auto.item-start
               small.text-grey-8 Resume after
             .col-2
-              q-input(:disable="!config.pauseOnActivity" type="number" :min="1" :decimals="0" style="height:25px; padding-top:0px; margin-bottom:0px; margin-top:0px; padding-bottom:10px; padding-left:10px;" v-model="config.idle_time_to_run")
+              q-input(:disable="!config.run_if_user_active" type="number" :min="1" :decimals="0" style="height:25px; padding-top:0px; margin-bottom:0px; margin-top:0px; padding-bottom:10px; padding-left:10px;" v-model="config.idle_time_to_run")
             .col
               small.text-grey-8 minutes of inactivity
       .row.gutter.justify-center.absolute-bottom(style="bottom:20px;")
@@ -51,6 +51,10 @@ export default {
     updateGpuConfig(){
       try {
       console.log('update GPU settings here')
+
+      this.config.run_if_user_active=!this.config.run_if_user_active;
+      this.config.run_on_batteries=!this.config.run_on_batteries;
+
       this.$root.$emit('updateGPUConfig',this.config)
       this.$parent.close()
       } catch (error) {
@@ -63,6 +67,9 @@ export default {
   mounted(){
     this.config = Object.assign({},this.data.config)
     this.directories = Object.assign({},this.data.directories)
+
+    this.config.run_if_user_active=!this.config.run_if_user_active;
+    this.config.run_on_batteries=!this.config.run_on_batteries;
   },
   watch:{
     // data(val){this.config = val}
