@@ -2,7 +2,7 @@
 div
   .row.justify-center
     .col-xs-12
-      q-card(v-if="globalStats") 
+      q-card(v-if="globalStats")
         p.light-paragraph.text-center Network Stats
         .row.justify-center
           .col-auto
@@ -19,7 +19,7 @@ div
             div(style="width:200px;")
               .row.justify-center
                 h5 {{parseInt(globalStats.averagePower).toLocaleString()}}
-              p.light-paragraph.text-center Average Power 
+              p.light-paragraph.text-center Average Power
   .row
     .col-md-12.col-lg-6(style="padding-bottom:15px; max-height:520px;")
       q-card(style="height:100%; overflow:auto;")
@@ -27,8 +27,8 @@ div
         table.q-table.horizontal-separator(style="width:100%")
           thead
             tr
-              th 
-              th.relative-position(style="width:50px;") 
+              th
+              th.relative-position(style="width:50px;")
                 q-tooltip Boid Power change Percentage
                 q-icon.absolute-center(name="fa-percent" color="grey-7" size="25px" style="padding-top:15px;")
                 img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px; padding-right:45px;")
@@ -56,7 +56,7 @@ div
         p.light-paragraph.text-center Recently Added Team Promotions
         div(style="height:430px; overflow:auto;")
           promoCard.cursor-pointer.clickable(
-          v-for="promo of recentPromotions" 
+          v-for="promo of recentPromotions"
           :key="promo.id" :promo="promo"
           :basic="true"
           @click.native="$router.push({name:'Team',params:{teamname:promo.team.name},query:{promo:promo.id}})"
@@ -73,9 +73,9 @@ div
               small Power Tier
             div(style="padding:4px;")
             .row
-              q-btn(big :class="{tierBtn:index === selectedTier}" 
-              v-for="(tier,index) of tiersLeaderboard.length" 
-              :key="index" 
+              q-btn(big :class="{tierBtn:index === selectedTier}"
+              v-for="(tier,index) of tiersLeaderboard.length"
+              :key="index"
               @click="selectedTier = index") {{index}}
           .col-auto
             .row.justify-center
@@ -86,8 +86,8 @@ div
         table.q-table.horizontal-separator(v-if="!showSocial" style="width:100%")
           thead
             tr
-              th 
-              th.relative-position(style="width:50px;") 
+              th
+              th.relative-position(style="width:50px;")
                 q-tooltip Boid Power change Percentage
                 img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px; padding-right:15px;")
           tbody( v-for="(user,index) in selectedLeaderboard" :key="user.id").full-width
@@ -114,10 +114,10 @@ div
             tr
               th.relative-position
                 small.light-paragraph.absolute-left Does not include team leaders.
-              th.relative-position(style="width:30px;") 
+              th.relative-position(style="width:30px;")
                 q-tooltip Active users invited(tier 1+)
                 q-icon.absolute-center(name="fa-users" style="top:15px;" color="grey-8")
-              th.relative-position(style="width:30px;") 
+              th.relative-position(style="width:30px;")
                 q-tooltip Boid Power from social invites only
                 p.absolute-left(style="height:30px; top:5px; padding-left:10px;") S
                 img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px; padding-right:5px;")
@@ -147,7 +147,7 @@ div
           thead
             tr
               th(style="width:0px;")
-              th.relative-position(style="width:50px;") 
+              th.relative-position(style="width:50px;")
                 q-tooltip Team Boid Power
                 img.absolute-center(src="/statics/images/BoidPower.svg" style="height:30px; top:15px;")
           tbody(v-for="(team,index) in teamLeaderboard" :key="team.id")
@@ -167,7 +167,7 @@ div
 import promoCard from '@/promoCard.vue'
 
 export default {
-  
+
   name: 'index',
   data() {
     return {
@@ -185,7 +185,7 @@ export default {
   components:{promoCard},
   computed: {
     recentPromotions(){
-      if (!this.promotions) return 
+      if (!this.promotions) return
       const now = Date.now()
       return this.promotions.map((el,i,arr)=>{
         if (Date.parse(el.startDate) > now ){el.active = false}else{el.active = true}
@@ -208,7 +208,7 @@ export default {
   },
   watch: {
     team(val) {
-      console.log('gotTeam', val)
+      // console.log('gotTeam', val)
     },
     selectedTier(val){
       if (val != null) {
@@ -219,18 +219,18 @@ export default {
       else return this.showSocial = true, this.selectedLeaderboard = null
     },
     thisUser(val){
-      console.log(val)
+      // console.log("leader1>>>>",val)
       if (!val.tier) this.selectedTier = 0
       if (!this.selectedTier && this.showSocial != true ) this.selectedTier = val.tier
     },
     tiersLeaderboard(val){
-      console.log(val)
+      // console.log("leader2>>>",val)
       if(!val) return
       if (this.showSocial === false) this.selectedLeaderboard = val[this.selectedTier]
     }
   },
   async mounted() {
-    console.log('MOUNTED LEADERBOARDS')
+    // console.log('MOUNTED LEADERBOARDS')
     this.refreshLeaderboard()
 
     // console.log(this.socialLeaderboard)
