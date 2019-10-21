@@ -16,11 +16,11 @@ div
               p.text-center Season 2
               p.text-center 7/21 - 9/21
           .col.scheduleCard.text-grey
-            q-card.bg-white.scheduleCard(color="green")
+            q-card.bg-white.scheduleCard
               p.text-center Break
               p.text-center 9/21 - 10/21
-          .col.scheduleCard.text-grey
-            q-card.bg-white.scheduleCard
+          .col.scheduleCard
+            q-card.bg-white.scheduleCard(color="green")
               p.text-center Season 3
               p.text-center 10/21 - 12/21
   .row
