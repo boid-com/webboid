@@ -18,7 +18,7 @@
               div Total Stake
               .row(style="padding:10px;")
                 .col
-                  strong {{printNum(wallet.totalStake)}}
+                  strong {{printNum(wallet.allStake)}}
             .col.relative-position
               q-btn.full-width.absolute-center(color="blue" flat @click="$router.push({name:'Stake'})" :disable="disableActions") Stake  
           .row
@@ -105,7 +105,7 @@ export default {
     },
     pendingClaimPrint(){
       if (!this.pendingClaim) return 0
-      var total = this.pendingClaim.power + this.pendingClaim.stake - 300
+      var total = this.pendingClaim.power + this.pendingClaim.stake - 100
       if (total < 0) total = 0
 
       return '≈	'+ total.toLocaleString('en').split('.')[0] + ' BOID'
@@ -129,7 +129,7 @@ export default {
     async updateBoidWallet(){
       this.loading = true
       this.wallet = await boidjs.get.wallet(this.eosAccount)
-      this.pendingClaim = await boidjs.get.pendingClaim(this.eosAccount)
+      this.pendingClaim = await boidjs.get.pendingClaim(this.wallet)
       this.loading = false
     },
     printNum
