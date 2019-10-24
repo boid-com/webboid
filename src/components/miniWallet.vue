@@ -18,7 +18,7 @@
               div Total Stake
               .row(style="padding:10px;")
                 .col
-                  strong {{printNum(wallet.allStake)}}
+                  strong {{printNum(wallet.allStaked)}}
             .col.relative-position
               q-btn.full-width.absolute-center(color="blue" flat @click="$router.push({name:'Stake'})" :disable="disableActions") Stake  
           .row
@@ -27,10 +27,10 @@
               small approximation 
               .row(style="padding:10px;")
                 .col
-                  strong {{pendingClaimPrint}}
+                  strong {{printNum(pendingClaimPrint)}}
             .col.relative-position
               q-btn.full-width.absolute-center(:color="highlightClaim" flat @click="claim()" :disable="disableActions" ) Claim  
-            small The pending payout accumulates until it is claimed. Claiming more/less often does not impact your profitability. Soon we will offer an automatic claim service.
+            small The pending payout accumulates until it is claimed. You can manually claim at any time. Pending stake is automatically claimed daily.
           .row
             .col-8
               div Linked EOS Account
