@@ -17,9 +17,9 @@ import { Api, JsonRpc } from "eosjs"
 
 const endpoints = [
   'https://api.eosnewyork.io',
-  'https://eos.greymass.com',
-  'https://api.eossweden.org',
-  'https://api.eosn.io',
+  // 'https://eos.greymass.com',
+  // 'https://api.eossweden.org',
+  // 'https://api.eosn.io',
 ]
 
 function pickEndpoint () {
