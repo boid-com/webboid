@@ -17,12 +17,10 @@ import { Api, JsonRpc } from "eosjs"
 
 const endpoints = [
   'https://eos.greymass.com',
-  'https://api.eosnewyork.io',
   'https://eos.greymass.com:443',
   'https://api.eossweden.org',
   'https://api.eosn.io',
   'https://eosapi.blockmatrix.network',
-  'https://api.cypherglass.com',
   'http://bp.cryptolions.io:8888',
   'https://eu1.eosdac.io:443',
   'https://api.main.alohaeos.com:443',
