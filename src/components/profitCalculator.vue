@@ -104,7 +104,7 @@
       .row.justify-end
         .col.bg-green-6.text-white(style="padding:15px; padding-bottom:15px;")
           div(style="height:0px;")
-          h6.text-center {{printNum(results.stake + prediction.power,0)}}
+          h6.text-center {{printNum(results.stake + results.power,0)}}
           .row.justify-center
             small Total Payout
           .row.justify-center
