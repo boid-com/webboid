@@ -3,7 +3,7 @@
     .relative-position
       h4 Add Device
       p Devices generate ⚡️Boid Power.
-      a(href="https://github.com/Boid-John") Boid is open source #[q-icon(name="fa-heart")]
+      a(href="https://github.com/boid-com") Boid is open source #[q-icon(name="fa-heart")]
         q-btn.absolute-right(big flat round color="red-5" style="top:-10px;" @click="modal.close()" v-if="!explainWebDevice")
           q-icon(name="close")
       div(style="padding-top:20px;")
@@ -157,19 +157,19 @@ export default {
         return {
           label:"Download for Windows",
           icon:'fa-windows',
-          url:'https://github.com/Boid-John/BoidDesktop/releases/download/v0.0.6/Boid-0.0.6.Setup.exe'
+          url:'https://github.com/boid-com/BoidDesktop/releases/download/v0.0.6/Boid-0.0.6.Setup.exe'
         }
       }else if (this.$q.platform.is.mac){
         return {
           label:"Download for Mac",
           icon:'fa-apple',
-          url:'https://github.com/Boid-John/BoidDesktop/releases/download/v0.0.6/Boid-0.0.6.dmg'
+          url:'https://github.com/boid-com/BoidDesktop/releases/download/v0.0.6/Boid-0.0.6.dmg'
         }
       }else if (this.$q.platform.is.linux){
         return {
           label:"Install the Linux CLI Tool",
           icon:'fa-linux',
-          url:'https://github.com/Boid-John/boidcmd'
+          url:'https://github.com/boid-com/boidcmd'
         }
       }else{
         this.phone = true

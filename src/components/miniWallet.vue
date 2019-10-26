@@ -119,7 +119,8 @@ export default {
       },1000)
     },
     async claim(){
-      const result = await this.$parent.transitWallet.eosApi.transact(boidjs.tx.claim(this.$parent.transitWallet.auth),boidjs.tx.tapos)
+      const result = await this.$parent.transitWallet.eosApi.transact(boidjs.tx.claim(this.$parent.transitWallet.auth),boidjs.tx.tapos).catch(err => alert(err.message))
+      if (!result) return
       console.log(result)
       window.alert('Claim was successful.')
       setTimeout(() => {

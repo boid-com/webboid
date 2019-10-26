@@ -564,6 +564,6 @@ textarea {
   resize: none;
 }
 body {
-  user-select: none;
+  /* user-select: none; */
 }
 </style>

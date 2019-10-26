@@ -3,8 +3,8 @@ div
   .row.justify-center
     .col-xs-12
       q-card(v-if="globalStats") 
-        p.light-paragraph.text-center Network Stats
-        .row.justify-center
+        p.light-paragraph.text-center Network Statistics
+        .row.justify-center.items-center
           .col-auto
             div(style="width:200px;")
               .row.justify-center
@@ -20,6 +20,8 @@ div
               .row.justify-center
                 h5 {{parseInt(globalStats.averagePower).toLocaleString()}}
               p.light-paragraph.text-center Average Power 
+          .col-auto
+            q-btn(color="blue" big @click="openURL('https://stats.boid.com')") More Stats
   .row
     .col-md-12.col-lg-6(style="padding-bottom:15px; max-height:520px;")
       q-card(style="height:100%; overflow:auto;")
@@ -165,6 +167,7 @@ div
 
 <script>
 import promoCard from '@/promoCard.vue'
+import { openURL } from 'quasar'
 
 export default {
   
@@ -194,6 +197,7 @@ export default {
     }
   },
   methods: {
+    openURL,
     async refreshLeaderboard(){
       // console.log('refresh')
       this.$api.tiersLeaderboard().then(el =>{

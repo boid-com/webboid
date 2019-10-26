@@ -19,10 +19,10 @@
               q-card.relative-position.animate-scale
                 .absolute-top-left(style="left:25px;")
                   q-btn.infobtn(round small flat)
-                    q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.powerTier)")
+                    q-icon(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.powerTier)")
                 .absolute-top-right
                   q-btn.infobtn(round small flat)
-                    q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.power)")
+                    q-icon(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.power)")
                 p.light-paragraph.text-center My Boid Power
                 .row.justify-center
                   .col-7(style="padding-top:10px;")
@@ -56,7 +56,7 @@
               q-card.animate-scale.relative-position
                 .absolute-top-right
                   q-btn.infobtn(round small flat)
-                    q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.social)")
+                    q-icon(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.social)")
                 p.light-paragraph.text-center Social
                 div.relative-position(style="margin:auto; margin-top:30px")
                   q-tooltip The number of users that have signed up for Boid using your referral link.
@@ -95,7 +95,7 @@
               q-card.animate-scale.relative-position(v-if='thisUser.team' )
                 .absolute-top-right
                   q-btn.absolute.infobtn(round small flat)
-                    q-icon(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.team)")
+                    q-icon(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.team)")
                 div.light-paragraph.text-center Team
                 table.q-table.reactive( style="width:100%; margin-top:10px")
                   tbody()
@@ -109,7 +109,7 @@
               q-card.animate-scale.relative-position(v-if="thisUser.tokens")
                 .absolute-top-right
                   //- q-btn.absolute.infobtn(round small flat)
-                    q-icon.infobtn(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
+                    q-icon.infobtn(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
                 .absolute(style="left:60px; top:0px;").bg-red
                   q-btn.absolute.infobtn(round small flat)
                     q-icon.infobtn(name="refresh" size="30px" @click="$emit('refreshWallet')")
@@ -131,7 +131,7 @@
                 q-card.animate-scale.relative-position(v-if="false")
                   .absolute-top-right
                     q-btn.absolute.infobtn(round small flat)
-                      q-icon.infobtn(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
+                      q-icon.infobtn(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.wallet)")
                   p.light-paragraph.text-center Inventory
                   table.q-table.reactive(style="width:100%")
                     tbody
@@ -148,7 +148,7 @@
             p.light-paragraph.text-center My Devices
               .absolute-top-right  
                 q-btn.absolute.infobtn(round small flat)
-                  q-icon.infobtn(name="info_outline" size="30px" @click="$e.$emit('showInfoModal',info.devices)")
+                  q-icon.infobtn(name="help_outline" size="30px" @click="$e.$emit('showInfoModal',info.devices)")
             q-list( v-for="(device,index) in devices" :key="device.id")
               q-item.relative-position(v-if="!adBlock" style="padding-bottom:30px;")
                 q-item-side()
@@ -191,7 +191,15 @@
                 q-item-side.relative-position(right)
                   q-btn.absolute-center(
                     flat color="red-5" 
-                    style="right:-17px; padding:5px; margin-left:20px;"
+                    style="right:0px; padding:5px; margin-left:0px;"
+                    @click="displayDeviceDetails(device)"
+                    )
+                    q-tooltip Device Info
+                    q-icon(name="info_outline" color="blue-5")
+                q-item-side.relative-position(right)
+                  q-btn.absolute-center(
+                    flat color="red-5" 
+                    style="right:-17px; padding:5px; margin-left:10px;"
                     @click="$root.$emit('modal.removeDevice',true,device)"
                     )
                     q-tooltip Remove Device
@@ -265,6 +273,9 @@ export default {
     }
   },
   methods: {
+    displayDeviceDetails(device){
+      alert(JSON.stringify(device,null,2))
+    },
     displayPending(device){
       if (device.pending) return `(${device.pending})`
       else return ""
