@@ -145,6 +145,8 @@ export default {
 
     this.ipcRenderer = window.local.ipcRenderer
     this.$root.$on('updateCPUConfig', el => {
+      // Removed because not needed any more...
+      /*
       if(this.isPaused){
         if (el.prefs.run_if_user_active && el.prefs.run_on_batteries) this.isPaused = false
         else if (el.prefs.run_on_batteries && this.isPaused.search('Batteries') > -1) this.isPaused = false
@@ -157,6 +159,8 @@ export default {
         ipc.send('cmd','read_global_prefs_override')
         ipc.send('prefs.read')
       }, 1000)
+      */
+      ipc.send('config.write', el.config)   //<--- BOID config.json file
       setTimeout(() => {
         ipc.send('state.getUI')
       }, 2000)
