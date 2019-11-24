@@ -3,7 +3,7 @@ var boinc = {
     for (var key in prefs) {
       if (prefs.hasOwnProperty(key)) {
         prefs[key] = parseFloat(prefs[key])
-        if (key === 'run_on_batteries' || key === 'run_if_user_active'){
+        if (key === 'runOnBatteries' || key === 'runIfUserActive'){
           if (prefs[key] === 1) prefs[key] = true
           else prefs[key] = false
         }
@@ -14,7 +14,7 @@ var boinc = {
   convertForPrefs(prefs){
     for (var key in prefs) {
       if (prefs.hasOwnProperty(key)) {
-        if (key === 'run_on_batteries' || key === 'run_if_user_active'){
+        if (key === 'runOnBatteries' || key === 'runIfUserActive'){
           if (prefs[key] === true) prefs[key] = 1
           else prefs[key] = 0
         }
@@ -53,7 +53,7 @@ var boinc = {
     if (val.search('CPU benchmarks in progress') > -1 ) return true
     return false
   },
-  config:{defaultConfig:{autoStart:true, suspend_on_activity:false, suspend_on_battery:false, idle_time_to_run:3}}
+  config:{defaultConfig:{autoStart:true, suspendOnActivity:false, suspendOnBattery:false, idleTimeToRun:3}}
 }
 module.exports = boinc
 // export boinc
