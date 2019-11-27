@@ -5,8 +5,8 @@
         q-btn.relative-position( flat small :class="{selected: page === nav.name}" @click="page = nav.name" :disable="nav.disabled")
           div(v-if="nav.name === 'Active'").on-left {{activeWorkUnits.length}}
           div(v-if="nav.name === 'Completed'").on-left {{completed.length}}
-          div(v-if="nav.name === 'Pending'").on-left {{pendingWU.length}}
-          div(v-if="nav.name === 'Validated'").on-left {{validWU.length}}
+          //- div(v-if="nav.name === 'Pending'").on-left {{pendingWU.length}}
+          //- div(v-if="nav.name === 'Validated'").on-left {{validWU.length}}
           | {{nav.name}}
           q-progress.absolute-bottom(style="height:10%;" v-if="loadingPendingWU && nav.name === 'Pending' || nav.name === 'Validated' && loadingValidWU " indeterminate color="grey-5")
     q-card-separator
