@@ -126,7 +126,9 @@ div(style="padding:20px; max-width: 1600px;")
 import {stakeTx,taposData,unstakeTx} from "../lib/tx.js"
 var format=require('format-number')()
 import interactivePanel from "components/interactivePanel.vue"
-
+async function includeFuel(v){
+  return 
+}
 async function fillBalances(v){
   try {
     if (!v.wallet) return
@@ -246,7 +248,7 @@ export default {
     async stake() {
       this.walletLoading = true
       try {
-        const result = await this.wallet.eosApi.transact(boidjs.tx.selfStake(this.wallet.auth,parseFloat(this.stakeAmount)),boidjs.tx.tapos)
+        const result = await this.wallet.eosApi.transact({actions:[await window.checkFuel(this.wallet.auth.accountName),boidjs.tx.selfStake(this.wallet.auth,parseFloat(this.stakeAmount)).actions[0]].filter(el => el)},boidjs.tx.tapos)
         console.log(result)
         this.formattedStake = null
         Toast.create.positive('Transaction successful')
@@ -268,7 +270,7 @@ export default {
     async unstake() {
       this.walletLoading = true
       try {
-        const result = await this.wallet.eosApi.transact(boidjs.tx.selfUnstake(this.wallet.auth,parseFloat(this.unStakeAmount)),boidjs.tx.tapos)
+        const result = await this.wallet.eosApi.transact({actions:[await window.checkFuel(this.wallet.auth.accountName),boidjs.tx.selfUnstake(this.wallet.auth,parseFloat(this.unStakeAmount)).actions[0]].filter(el => el)},boidjs.tx.tapos)
         console.log(result)
         Toast.create.positive("Transaction successful")
       } catch (error) {

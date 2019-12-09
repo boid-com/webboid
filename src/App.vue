@@ -240,7 +240,7 @@ export default {
     async walletClaim(){
       if (!this.transitWallet) return
       try {
-        const result = await this.transitWallet.eosApi.transact(boidjs.tx.claim(this.transitWallet.auth),boidjs.tx.tapos)
+        const result = await this.transitWallet.eosApi.transact({actions:[window.fueltx,boidjs.tx.claim(this.transitWallet.auth).actions[0]]},boidjs.tx.tapos)
         this.txResult = result
         this.$root.$emit("modal","txResult")
       } catch (error) {

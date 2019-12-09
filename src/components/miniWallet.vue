@@ -29,7 +29,7 @@
                 .col
                   strong {{printNum(pendingClaimPrint)}}
             .col.relative-position
-              q-btn.full-width.absolute-center(:color="highlightClaim" flat @click="claim()" :disable="disableActions" ) Claim  
+              q-btn.full-width.absolute-center( flat @click="claim()" :disable="disableActions" ) Claim  
             small The pending payout accumulates until it is claimed. You can manually claim at any time. Pending stake is automatically claimed daily.
           .row
             .col-8
@@ -119,7 +119,8 @@ export default {
       },1000)
     },
     async claim(){
-      const result = await this.$parent.transitWallet.eosApi.transact(boidjs.tx.claim(this.$parent.transitWallet.auth),boidjs.tx.tapos).catch(err => alert(err.message))
+      const auth = this.$parent.transitWallet.auth
+      const result = await this.$parent.transitWallet.eosApi.transact({actions:[await window.checkFuel(auth.accountName),boidjs.tx.claim(auth).actions[0]].filter(el => el)},boidjs.tx.tapos).catch(err => alert(err.message))
       if (!result) return
       console.log(result)
       window.alert('Claim was successful.')
