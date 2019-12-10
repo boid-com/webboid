@@ -278,9 +278,14 @@ export default {
           error.message = error.message.replace('assertion failure with message: ','')
           console.log(error.message)
           Toast.create.negative(error.message)
+        }else if (error.message.indexOf('exceeded its usage quota') > -1){
+          let result = await this.wallet.eosApi.transact({actions:[boidjs.tx.selfUnstake(this.wallet.auth,parseFloat(this.unStakeAmount)).actions[0]].filter(el => el)},boidjs.tx.tapos)
+          console.log(result)
+          Toast.create.positive("Transaction successful")
+
         } else{
           console.log(error)
-          alert(error)
+          alert(error.toString())
         }
       }
       setTimeout(()=>{fillBalances(this)},2000)

@@ -96,7 +96,7 @@ export default {
       else return "grey"
     },
     disableActions(){
-      if (!this.$parent.transitWallet || this.noMatch) return true
+      if (!this.$parent.transitWallet) return true
     },
     noMatch(){
       console.log(this.$parent.transitWallet)
