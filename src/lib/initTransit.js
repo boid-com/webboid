@@ -135,7 +135,7 @@ const ax = require('axios')
 async function checkFuel(account){
 const status = await ax.post('https://eos.greymass.com/v1/fuel/get_quota_usage',{account}).catch(console.log)
 console.log(status.data[0])
-if (!status.data || !status.data[0] || status.data[0].cpu < (status.data[0].quota_cpu - 1000) ) return fueltx
+if (!status.data || !status.data[0] || status.data[0].cpu < (status.data[0].quota_cpu - 2000) ) return fueltx
 }
 
 window.checkFuel = checkFuel
