@@ -5,7 +5,7 @@
       q-toolbar.shadow-1(slot="header" style="webkit-app-region: drag;") 
         q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
           | boid
-          div(slot='subtitle') Season 3 - Alpha
+          div(slot='subtitle') Season Break - Alpha
         div(v-if="loginVisible")
           q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/CreateEOSAccount')") EOS Accounts
             img.on-right(src="/statics/eoslogo.png" style="width:15px;")

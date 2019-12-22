@@ -19,8 +19,8 @@ div
             q-card.bg-white.scheduleCard
               p.text-center Break
               p.text-center 9/21 - 10/21
-          .col.scheduleCard
-            q-card.bg-white.scheduleCard(color="green")
+          .col.scheduleCard.text-grey
+            q-card.bg-white.scheduleCard
               p.text-center Season 3
               p.text-center 10/21 - 12/21
   .row
