@@ -36,6 +36,10 @@ div
               :class="{selectedTab:page==='calc'}"
               @click="page='calc'"
             ) Profit Calculator
+            q-btn( flat
+              :class="{selectedTab:page==='sim'}"
+              @click="page='sim'"
+            ) Global Sim
             //- q-btn( flat
             //-   :class="{selectedTab:page==='exchange'}"
             //-   @click="page='exchange'"
@@ -50,6 +54,10 @@ div
           div(v-else-if="page==='exchange'")
             .row.justify-center.relative-position
               exchanges(:showHeading="false")
+          div(v-else-if="page==='sim'")
+            .row.justify-center.relative-position
+              networkSim
+
  
 </template>
 <style lang="stylus" scoped>
@@ -72,8 +80,9 @@ import { Toast } from 'quasar'
 import { openURL } from 'quasar'
 import exchanges from '@/exchange.vue'
 import profitCalculator from '@/profitCalculator.vue'
+import networkSim from '@/networkSim.vue'
 export default {
-  components:{exchanges, profitCalculator},
+  components:{exchanges, profitCalculator,networkSim},
   data() {
     return {
       stakeFAQ,
