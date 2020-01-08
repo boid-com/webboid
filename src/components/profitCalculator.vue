@@ -5,7 +5,7 @@
         .row.justify-center
           q-btn(small flat color="blue" @click="openURL('https://stats.boid.com/d/YrQi9xhZk/boidcomtoken-blockchain-tracking?orgId=1')") stats
           div(style="margin-bottom:5px; margin-top:4px;").light-paragraph Global Parameters 
-          q-btn(small flat color="green" @click="openURL('https://docs.boid.com/docs/boidpower')") info
+          q-btn(small flat color="green" @click="openURL('https://drive.google.com/file/d/1sl3hWUsZQ52-eb4F_TYW6LPhkD5cLCX2/view')") info
         .row.justify-center
           small Global Parameters change during each season break to fit network inflation targets.
         .row.justify-center(style="padding-top:10px;")
