@@ -31,7 +31,7 @@ var gpu = {
     defaultConfig:{
       rememberLast:true,
       autoStart:false,
-      pauseOnUserActive:false,
+      pauseOnActivity:false,
       resumeTimeout:120000
     }
   },

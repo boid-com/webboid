@@ -22,7 +22,7 @@
             .col-auto.item-start
               small.text-grey-8 Resume after
             .col-2
-              q-input(:disable="!pauseOnActivity" type="number" :min="1" :decimals="0" style="height:25px; padding-top:0px; margin-bottom:0px; margin-top:0px; padding-bottom:10px; padding-left:10px;" v-model="prefs.idle_time_to_run")
+              q-input(:disable="!pauseOnActivity" type="number" :min="1" :decimals="0" style="height:25px; padding-top:0px; margin-bottom:0px; margin-top:0px; padding-bottom:10px; padding-left:10px;" v-model="config.idleTimeToRun")
             .col
               small.text-grey-8 minutes of inactivity
       .flex.flex-center(style="padding-top:20px;")
@@ -65,7 +65,7 @@ export default {
     updateCpuConfig(){
       try {
       console.log('update CPU settings here')
-      if (this.prefs.idle_time_to_run < 1) this.prefs.idle_time_to_run = 3
+      if (this.prefs.idleTimeToRun < 1) this.prefs.idleTimeToRun = 3
       this.$root.$emit('updateCPUConfig',{prefs:this.prefs,config:this.config})
       this.$parent.close()
       } catch (error) {
@@ -80,12 +80,16 @@ export default {
   },
   computed:{
     pauseOnBattery:{
-      set(val){return this.prefs.run_on_batteries = !val},
-      get(val){return !this.prefs.run_on_batteries}
+      // set(val){return this.prefs.run_on_batteries = !val},
+      // get(val){return !this.prefs.run_on_batteries}
+      set(val){return this.config.runOnBatteries = !val},
+      get(val){return !this.config.runOnBatteries}
     },
     pauseOnActivity:{
-      set(val){return this.prefs.run_if_user_active = !val},
-      get(val){return !this.prefs.run_if_user_active}
+      // set(val){return this.prefs.run_if_user_active = !val},
+      // get(val){return !this.prefs.run_if_user_active}
+      set(val){return this.config.runIfUserActive = !val},
+      get(val){return !this.config.runIfUserActive}
     }
   },
   mounted(){
