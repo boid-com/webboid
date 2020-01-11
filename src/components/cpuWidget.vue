@@ -160,8 +160,12 @@ export default {
         ipc.send('prefs.read')
       }, 1000)
       */
+      const prefs = boinc.convertForPrefs(el.prefs)      
+      ipc.send('prefs.write', prefs)        //<--- BOINC client override.xml file
       ipc.send('config.write', el.config)   //<--- BOID config.json file
       setTimeout(() => {
+        ipc.send('cmd','read_global_prefs_override')
+        ipc.send('prefs.read')
         ipc.send('state.getUI')
       }, 2000)
     })
