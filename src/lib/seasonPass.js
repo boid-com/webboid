@@ -121,6 +121,7 @@ module.exports = {
     },
     getPage(){
       console.log(this.page)
+      
     },
     async getLeaderboard(){
       console.log('Get Leaderboard')
