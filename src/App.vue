@@ -161,6 +161,7 @@ import updatePayoutModal from '@/updatePayoutModal.vue'
 import changeTeam from '@/changeTeam.vue'
 import exchangeModal from '@/exchange.vue'
 import eosAuth from '@/eosAuth.vue'
+
 require('./lib/initTransit')()
 const initWallet = window.transit.initWallet 
 var hashInterval = null
@@ -172,6 +173,7 @@ var defaultConfig = null
 var miner = null
 
 var CPUCores = navigator.hardwareConcurrency
+import state from './lib/state'
 
 window.showOlark = function(val) {
   try {
@@ -187,6 +189,7 @@ window.showOlark = function(val) {
 export default {
   data() {
     return {
+      global:state.global,
       show:true,
       boidWallet:"Hello Dawg",
       showSideMenu:true,
@@ -229,8 +232,8 @@ export default {
   methods: {
     openURL,
     async initTransitWallet(walletType){
-      this.transitWallet = await initWallet('scatter')
-      this.$root.$data.transitWallet = this.transitWallet
+      this.global.transitWallet = await initWallet('scatter')
+      this.transitWallet = this.global.transitWallet
       if (!this.transitWallet) return
       this.transitWallet.subscribe(state => {
         console.log('Transit Wallet State:',state)
@@ -358,7 +361,6 @@ export default {
     if (window.local) {
       this.local = true;
       console.log('FOUND LOCAL IN APP',window.local.ipcRenderer)
-      
       }
     if (!this.local) {
         this.updateLeaderboards().catch(console.error)
@@ -468,6 +470,11 @@ export default {
     exchangeModal
   },
   watch: {
+    'global.errorMsg'(message) {
+      if (!message) return
+      Toast.create.negative(message)
+      this.global.errorMsg = null
+    },
     '$route.name'(name){
       if (name === "ChangeAccount") this.hideAllMenus(true)
       else this.hideAllMenus(false)

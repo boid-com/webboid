@@ -136,7 +136,7 @@ async function fillBalances(v){
     v.userBalance = '0.00'
     v.userStake = '0.00'
     v.disableStake = false
-    v.userBalance = (await v.rpc.get_currency_balance('boidcomtoken',v.wallet.auth.accountName,'BOID'))[0]
+    v.userBalance = (await v.rpc.get_currency_balance(global.boidtokencontract,v.wallet.auth.accountName,'BOID'))[0]
     v.totalDelegated = await window.eosjs.getTotalDelegated(v.wallet.auth.accountName)
     var selfStaked = ((await window.eosjs.getTotalStake(v.wallet.auth.accountName)))
     console.log('SELFSTAKE',selfStaked)
@@ -248,7 +248,7 @@ export default {
     async stake() {
       this.walletLoading = true
       try {
-        const result = await this.wallet.eosApi.transact({actions:[await window.checkFuel(this.wallet.auth.accountName),boidjs.tx.selfStake(this.wallet.auth,parseFloat(this.stakeAmount)).actions[0]].filter(el => el)},boidjs.tx.tapos)
+        const result = await this.wallet.eosApi.transact(boidjs.tx.selfStake(this.wallet.auth,parseFloat(this.stakeAmount)),boidjs.tx.tapos)
         console.log(result)
         this.formattedStake = null
         Toast.create.positive('Transaction successful')

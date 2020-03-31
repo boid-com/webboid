@@ -9,7 +9,7 @@ function stakeTx(data){
   return {
     actions: [
       {
-        account: "boidcomtoken",
+        account: global.boidtokencontract,
         name: "stake",
         authorization: [
           {
@@ -33,7 +33,7 @@ function unstakeTx(data){
   return {
     actions: [
       {
-        account: "boidcomtoken",
+        account: global.boidtokencontract,
         name: "unstake",
         authorization: [
           {

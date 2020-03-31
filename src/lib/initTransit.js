@@ -17,14 +17,15 @@ function rand (min, max) {
 import { Api, JsonRpc } from "eosjs"
 
 const endpoints = [
-  'https://eos.greymass.com',
-  'https://eos.greymass.com:443',
-  'https://api.eossweden.org',
-  'https://api.eosn.io',
-  'https://eu1.eosdac.io:443',
-  'https://api.main.alohaeos.com:443',
-  'https://node1.eosphere.io',
-  'https://node2.eosphere.io',
+  'https://kylin.api.boid.com'
+  // 'https://eos.greymass.com',
+  // 'https://eos.greymass.com:443',
+  // 'https://api.eossweden.org',
+  // 'https://api.eosn.io',
+  // 'https://eu1.eosdac.io:443',
+  // 'https://api.main.alohaeos.com:443',
+  // 'https://node1.eosphere.io',
+  // 'https://node2.eosphere.io',
 ]
 
 function pickEndpoint () {
@@ -32,6 +33,7 @@ function pickEndpoint () {
   console.log(endpoint)
   return endpoint
 }
+global.boidtokencontract = 'token.boid'
 const rpc = new JsonRpc(pickEndpoint())
 const boidjs = require('boidjs')({ rpc })
 window.boidjs = boidjs
@@ -41,7 +43,7 @@ async function getTotalStake (account) {
   try {
     let res = await rpc.get_table_rows({
       json: true,
-      code: 'boidcomtoken',
+      code: global.boidtokencontract,
       scope: account,
       table: "staked",
       limit: 10000
@@ -58,7 +60,7 @@ async function getTotalDelegated (account) {
   try {
     let res = await rpc.get_table_rows({
       json: true,
-      code: 'boidcomtoken',
+      code: global.boidtokencontract,
       scope: account,
       table: "delegation",
       limit: 10000
@@ -81,12 +83,19 @@ async function init () {
   try {
     accessContext = initAccessContext({
       appName: 'app.boid.com',
+      // network: {
+      //   blockchain: 'eos',
+      //   host: 'eos.greymass.com',
+      //   port: 443,
+      //   protocol: 'https',
+      //   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+      // },
       network: {
         blockchain: 'eos',
-        host: 'eos.greymass.com',
+        host: 'kylin.api.boid.com',
         port: 443,
         protocol: 'https',
-        chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+        chainId: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191'
       },
       walletProviders: [
         scatter()]
