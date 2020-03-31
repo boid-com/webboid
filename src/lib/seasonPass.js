@@ -121,7 +121,7 @@ module.exports = {
     },
     getPage(){
       console.log(this.page)
-      
+
     },
     async getLeaderboard(){
       console.log('Get Leaderboard')
@@ -139,7 +139,7 @@ module.exports = {
         //   leaderboard.push(user)
         // }
         // this.leaderboard = leaderboard.sort()
-
+        this.leaderboard = contributors
 
       } catch (error) {
         this.leaderboard = null
