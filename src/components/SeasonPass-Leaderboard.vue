@@ -8,7 +8,6 @@ div
         small Rank
       .col.on-right 
         small Account
-      .col-2
       .col
         small Donations
       .col
@@ -19,15 +18,13 @@ div
           .col-2
             h6.light-pragraph {{user.level}}
           .col-5
-            h6 {{user.account}}
-          .col-2.on-left
-            h6 {{user.donations}}       
+            h6 {{user.account}}     
           .col-2.on-right
-            h6 ${{user.donations}}    
+            h6 ${{user.usdValue.toFixed(2)}}    
 
         .row
           .col-auto(v-for="coin of user.coins").on-left
-            small {{parseFloat(coin.split(' ')[0]).toLocaleString(undefined,{ maximumFractionDigits: 0})}} {{coin.split(' ')[1]}}
+            //- small {{parseFloat(coin.split(' ')[0]).toLocaleString(undefined,{ maximumFractionDigits: 0})}} {{coin.split(' ')[1]}}
     q-inner-loading(:visible="loading.leaderboard")
       q-spinner-ball(size="60px" color="blue")
 </template>

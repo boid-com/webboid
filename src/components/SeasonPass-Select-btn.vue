@@ -13,13 +13,9 @@ q-card.cursor-pointer.relative-position(v-ripple="{ color: 'green' }" style="mar
 
       //- small.text-black.light-paragraph Multiplier
   .row.justify-center(style="padding-top:10px").items-center
-    .col-auto
-      .row.no-wrap.justify-center
-        .col-auto.on-left.text-amber-7.round-borders(style="border-radius:39px; padding:5px;")
-          h6.no-margin {{coin.power_reward_multiplier}}x
-    .col-auto.center-items(style="margin-right:10px;")
+    .col-auto.center-items(style="margin-right:5px;")
       img(src="/statics/images/BoidPower.svg" style="width:15px; margin:0px;")
-    .col-auto
+    .col-auto.text-green.strong
       p.no-margin + {{calcPowerBonus(parseFloat(coin.availablePower),coin.power_reward_multiplier)}}
 </template>
 <style lang="stylus" scoped>

@@ -1,9 +1,11 @@
+const ax = require('axios')
 const state = {
   global:{
     transitWallet:null,
     boidWallet:null,
     stakeConfig:null,
     pendingClaim:null,
+    maxPendingClaim:null,
     errorMsg:null,
     successMsg:null,
     get poweredStake(){
@@ -23,6 +25,15 @@ const state = {
         state.global.pendingClaim.total = state.global.pendingClaim.power + state.global.pendingClaim.stake
         console.log('PENDING CLAIM:',state.global.pendingClaim )
       },
+      async updateMaxPendingClaim(){
+        if (!state.global.boidWallet || !state.global.pendingClaim) return 
+        var thisWallet = JSON.parse(JSON.stringify(state.global.boidWallet))
+        thisWallet.allStaked = state.global.pendingClaim.maxPoweredStake
+        state.global.maxPendingClaim = await boidjs.get.pendingClaim(thisWallet,state.global.stakeConfig)
+        state.global.maxPendingClaim.total = state.global.maxPendingClaim.power + state.global.maxPendingClaim.stake
+
+        console.log('MAX PENDING CLAIM:',state.global.pendingClaim )
+      },
       async updateTokenConfig(){
         state.global.stakeConfig = await boidjs.get.stakeConfig()
       },
@@ -31,6 +42,7 @@ const state = {
           await this.updateTokenConfig()
           if (state.global.transitWallet) await this.updateBoidWallet() 
           await this.updatePendingClaim()
+          await this.updateMaxPendingClaim()
         } catch (error) {
           console.error(error.toString())
         }
@@ -66,13 +78,19 @@ const state = {
         }
       },
       async getNewdexPrice(token,contract) {
-        var symbol = contract+'-'+ token +'-eos'
-        var timestamp = Date.now()
-        var queryString = `symbol=${symbol}&timestamp=${timestamp}`
-        var queryString = "symbol="+symbol
-        tokenData = (await ax.get('https://api.newdex.io/v1/ticker/?' + queryString,null)).data.data
-        console.log(tokenData)
-        return tokenData
+        try {
+          var symbol = contract + '-' + token.toLowerCase() + '-eos'
+          var timestamp = Date.now()
+          var queryString = `symbol=${symbol}&timestamp=${timestamp}`
+          var queryString = "symbol="+symbol
+          var tokenData = (await ax.get('https://api.newdex.io/v1/ticker/?' + queryString,null))
+          console.log(tokenData)
+          return tokenData
+        } catch (error) {
+          console.error(error)
+          return
+        }
+
       }
     }
   }

@@ -76,6 +76,7 @@ export default {
   },
   watch:{
     async 'global.transitWallet'(){
+      if(!this.global.transitWallet) return
       this.loading.selectPanel = true
       console.log('Detected transitwallet update in SeasonPass')
       await this.getContributor(this.global.transitWallet.auth.accountName)

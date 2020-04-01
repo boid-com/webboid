@@ -1,20 +1,19 @@
 <template lang="pug">
 div
-  q-card.relative-position
+  q-card.relative-position(v-if="global.transitWallet && global.boidWallet")
     q-btn(round small flat @click="updateAccountPanel()" color="black").absolute-top-right
       q-icon(name="refresh" )
-    div(v-if="global.transitWallet && global.boidWallet")
+    .row.justify-center
+      h6 {{global.transitWallet.auth.accountName}}
+    div
       .row.justify-center
-        .col-auto
+        .col-auto.on-left
           .row
             .col-auto(style="margin-right:10px; padding-top:0px;")
               img(src="/statics/tokenicons/BOID.png" style="width:55px; margin:0px;")
             .col-auto
               h6 BOID Balance
               p {{global.boidWallet.balance.toLocaleString()}}
-        .col.on-left.on-right
-          .row.justify-center
-            h5 {{global.transitWallet.auth.accountName}}
         .col
           .row
             .col-auto(style="margin-right:10px; padding-top:6px;")
@@ -50,11 +49,21 @@ div
             //-   small.text-grey-8 Max Powered Stake
             //-   p.no-margin.text-grey-8(v-if="global.pendingClaim") {{global.pendingClaim.maxPoweredStake}}
         .col
-          q-card(style="padding:0px; margin:10px;").shadow-1.bg-grey-2
+          q-card(style="padding:0px; margin:10px;" v-if="true").shadow-1.bg-grey-2
             .row.justify-center
               .col-auto(style="margin-left:0px;")
                 h6 Pending Claim
-                p.no-margin(v-if="global.pendingClaim") {{global.pendingClaim.total.toLocaleString()}} BOID
+            .row
+              .col
+                .row.justify-center
+                  small with powered stake
+                .row.justify-center
+                  p.no-margin(v-if="global.pendingClaim") {{global.pendingClaim.total.toLocaleString()}} BOID
+              .col
+                .row.justify-center
+                  small with max powered stake
+                .row.justify-center
+                  p.no-margin(v-if="global.maxPendingClaim") {{global.maxPendingClaim.total.toLocaleString()}} BOID
             .row(style="margin:10px;").justify-center
               .col
                 q-btn.full-width(color="green" flat @click="$router.push({name:'Stake'})") stake

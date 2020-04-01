@@ -52,7 +52,7 @@ module.exports = {
       const selectedCoin = this.coins.find(el => el.symbol === this.selectedPay)
       if (!selectedCoin) return false 
       console.log(this.payAmount,selectedCoin.min_contribution)
-      if (this.payAmount < selectedCoin.min_contribution) return true
+      if (this.payAmount < parseFloat(selectedCoin.min_contribution.toFixed(4))) return true
       else return false
     },
     powerBonus(){
@@ -66,7 +66,7 @@ module.exports = {
       if (!this.selectedPay || !this.coins) return 
       const selectedCoin = this.coins.find(el => el.symbol === this.selectedPay)
       if (!selectedCoin) return 
-      if (this.payAmount < selectedCoin.minContribution) this.payAmount = selectedCoin.minContribution
+      if (this.payAmount < selectedCoin.min_contribution) this.payAmount = selectedCoin.minContribution
     },
     async donate(){
       this.loading.selectPanel = true
@@ -127,22 +127,10 @@ module.exports = {
       console.log('Get Leaderboard')
       this.loading.leaderboard = true
       try {
-        const contributors = (await rpc.get_table_rows({
-          code: "boiddonation",
-          scope: "boiddonation",
-          table: "contributors",
-          limit:-1
-        })).rows
-        var leaderboard = []
-        // for (user of contributors) {
-        //   const 
-        //   leaderboard.push(user)
-        // }
-        // this.leaderboard = leaderboard.sort()
-        this.leaderboard = contributors
+        const leaderboard = await ax.get('https://api.boid.com/donationsLeaderboard?chain=kylin')
+        this.leaderboard = leaderboard.data
 
       } catch (error) {
-        this.leaderboard = null
         this.global.errorMsg = error.toString()
         console.error(error.toString())
       }
@@ -157,7 +145,8 @@ module.exports = {
           table: "tokens"
         })).rows.map(coin => {
           coin.symbol = coin.token_sym.sym.split(',')[1]
-          coin.contract = coin.token_sym.sym.contract
+          coin.contract = coin.token_sym.contract
+          coin.precision = coin.token_sym.sym.split(',')[0]
           coin.img = icons + coin.symbol +'.png'
           coin.min_contribution = parseFloat(parseFloat(coin.min_contribution).toFixed(coin.token_sym.sym.split(',')[0]))+ 0.0001
           coin.minContribution = coin.min_contribution.toLocaleString(undefined,{ minimumFractionDigits: 4 })
@@ -165,6 +154,7 @@ module.exports = {
           // coin.lastUpdated = coin.
           return coin
         })
+        // this.updateTokenPrices()
         console.log(this.coins)
         if (!disableLoading) this.loading.selectPanel = false
 
@@ -172,7 +162,13 @@ module.exports = {
         this.coins = []
         console.error(error.toString())
         this.loading.selectPanel = false
-
+      }
+    },
+    async updateTokenPrices(){
+      for (var coin of this.coins) {
+        console.log('coincontract',coin)
+        const price = await this.global.do.getNewdexPrice(coin.symbol,coin.contract)
+        console.log(price)
       }
     },
     async getContributor(accountName){
