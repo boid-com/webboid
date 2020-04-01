@@ -49,21 +49,21 @@ div
             //-   small.text-grey-8 Max Powered Stake
             //-   p.no-margin.text-grey-8(v-if="global.pendingClaim") {{global.pendingClaim.maxPoweredStake}}
         .col
-          q-card(style="padding:0px; margin:10px;" v-if="true").shadow-1.bg-grey-2
+          div(style="padding:0px; margin:10px;" v-if="true")
             .row.justify-center
               .col-auto(style="margin-left:0px;")
                 h6 Pending Claim
             .row
               .col
                 .row.justify-center
-                  small with powered stake
-                .row.justify-center
-                  p.no-margin(v-if="global.pendingClaim") {{global.pendingClaim.total.toLocaleString()}} BOID
-              .col
-                .row.justify-center
                   small with max powered stake
                 .row.justify-center
                   p.no-margin(v-if="global.maxPendingClaim") {{global.maxPendingClaim.total.toLocaleString()}} BOID
+              .col
+                .row.justify-center
+                  small with powered stake
+                .row.justify-center
+                  p.no-margin(v-if="global.pendingClaim") {{global.pendingClaim.total.toLocaleString()}} BOID
             .row(style="margin:10px;").justify-center
               .col
                 q-btn.full-width(color="green" flat @click="$router.push({name:'Stake'})") stake

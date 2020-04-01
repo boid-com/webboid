@@ -21,20 +21,21 @@ div(style="padding:20px; max-width: 1600px;")
               .row.items-center(style="padding-bottom:35px;")
                 .col
                   p {{instruction.text}}
-  .row
+  .row.justify-center
     .col.col-xs-12.col-md-12.col-lg-5(style="max-width:550px;")
       selector
-    .col.col-xs-12.col-md-12.col-lg-4
+    .col.col-xs-12.col-md-12.col-lg-4(style="max-width:400px;")
       .row.justify-center
         h5.no-margin Track your progress
-      .row.justify-center
-        p Level up and earn NFT rewards based on your progression.
+      .row.justify-center(style="margin:10px; min-height:30px;")
+        .col
+          p.text-center Level up and earn NFT rewards.
       progresspanel
       accountpanel(style="margin-top:20px;")
     .col.col-xs-12.col-md-12.col-lg-3
       .row.justify-center
         h5.no-margin Contributors
-      .row.justify-center
+      .row.justify-center(style="margin:10px; min-height:30px;")
         p The top 20% will receive the Boid Season Pass.
       leaderboard
 </template>

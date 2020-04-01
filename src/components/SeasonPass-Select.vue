@@ -1,11 +1,11 @@
 <template lang="pug">
 div.relative-position
-  .row.justify-center(v-if="!global.transitWallet" style="padding:20px;")
+  .row.justify-center(v-if="!global.transitWallet" style="padding:0px;")
     q-btn(color="green" @click="$root.$emit('initTransitWallet')") Scatter Login
   .row.justify-center
     h5.no-margin Pick a coin to donate
-  .row.justify-center
-    p The Boid Power bonus for each coin changes based on recent contributions.
+  .row.justify-center(style="margin-top:5px; min-height:30px;")
+    p(style="padding-top:5px;") The Boid Power bonus changes based on popularity.
   .row.justify-center
     .col(v-for="(coin,index) of coins" :key="index" style="padding:0px; width:190px; ")
       selectbtn(:coin="coin")
