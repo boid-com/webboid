@@ -73,7 +73,7 @@ module.exports = {
       await this.getCoins(true)
       this.checkAmount()
       const coin = this.coins.find(el => el.symbol === this.selectedPay)
-      await this.global.do.transfer(this.global.transitWallet.auth.accountName,'boiddonation',coin.token_sym,this.payAmount)
+      await this.global.do.transfer(this.global.transitWallet.auth.accountName,'boiddonation',coin.token,this.payAmount)
       await sleep(1000)
       await this.getAll()
       this.loading.selectPanel = false
@@ -142,13 +142,14 @@ module.exports = {
         this.coins = (await rpc.get_table_rows({
           code: "boiddonation",
           scope: "boiddonation",
-          table: "tokens"
+          table: "tokens",
+          limit:-1
         })).rows.map(coin => {
-          coin.symbol = coin.token_sym.sym.split(',')[1]
-          coin.contract = coin.token_sym.contract
-          coin.precision = coin.token_sym.sym.split(',')[0]
+          coin.symbol = coin.token.sym.split(',')[1]
+          coin.contract = coin.token.contract
+          coin.precision = coin.token.sym.split(',')[0]
           coin.img = icons + coin.symbol +'.png'
-          coin.min_contribution = parseFloat(parseFloat(coin.min_contribution).toFixed(coin.token_sym.sym.split(',')[0]))+ 0.0001
+          coin.min_contribution = parseFloat(parseFloat(coin.min_contribution).toFixed(coin.token.sym.split(',')[0]))+ 0.0001
           coin.minContribution = coin.min_contribution.toLocaleString(undefined,{ minimumFractionDigits: 4 })
           coin.availablePower = parseFloat(coin.current_power_available)
           // coin.lastUpdated = coin.
