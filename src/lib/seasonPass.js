@@ -129,6 +129,7 @@ module.exports = {
       try {
         const leaderboard = await ax.get('https://api.boid.com/donationsLeaderboard?chain=kylin')
         this.leaderboard = leaderboard.data
+        console.log('LEADERBOARD',this.leaderboard)
 
       } catch (error) {
         this.global.errorMsg = error.toString()
@@ -177,14 +178,22 @@ module.exports = {
       console.log('Get Contributor',accountName)
       this.loading.progressPanel = true
       try {
-        this.contributor = (await rpc.get_table_rows({
+        const contributor = (await rpc.get_table_rows({
           code: "boiddonation",
           scope: "boiddonation",
           table: "contributors",
           lower_bound:accountName,
           limit:1
         })).rows[0]
-        console.log(this.contributor)
+        if (contributor.account === accountName) this.contributor = contributor
+        else this.contributor = {
+          account:accountName,
+          coins:[],
+          donations:0,
+          level:0,
+          total_power_granted:0
+        }
+        console.log('getContributor',this.contributor)
         this.loading.progressPanel = false
       } catch (error) {
         this.coins = []
