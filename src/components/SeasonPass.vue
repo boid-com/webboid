@@ -10,15 +10,15 @@ div(style="padding:20px; max-width: 1600px;")
         //- .row
           //- p(style="margin:30px;") You can help launch Boid Season 4 by donating towards Boid development.
       .row.justify-center
-        .col-12
-          h5.no-margin(style="padding-bottom:15px;") Donate to win a Boid Season Pass
+        .col
+          h5.no-margin.text-center(style="padding-bottom:15px;") Donate to win a Boid Season Pass
       .row.justify-center.relative-position.gt-md
         div(style="height:5px; width:800px; top:95px;").absolute-center.bg-blue-2.gt-sm
         .col.infobox(v-for="(instruction,index) of instructions" :key="instruction.text")
           .row
             .col
               .row
-                .col.on-left
+                .col-auto.on-left
                   h5.text-blue {{index+1}}
                 .col
                   .row.justify-center(style="padding-top:20px; padding-bottom:25px;").relative-position
