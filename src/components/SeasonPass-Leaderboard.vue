@@ -13,13 +13,13 @@ div
       .col
         small USD Total
     .row(style="max-height:800px; overflow:auto; padding:10px;").full-width
-      .col-12(v-for="user of leaderboard" style="padding:10px;")
+      .col-12(v-for="(user,index) of leaderboard" style="padding:10px;")
         .row.no-wrap
-          .col-2
-            h6.light-pragraph {{user.level}}
-          .col-5
+          .col-auto.on-left
+            h6.light-pragraph {{index+1}}
+          .col-4.on-left
             h6 {{user.account}}     
-          .col-2.on-right
+          .col-auto.on-right.self-end
             h6 ${{user.usdValue.toFixed(2)}}    
 
         .row

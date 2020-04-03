@@ -26,14 +26,14 @@ div(style="padding:20px; max-width: 1600px;")
                   .row.items-center(style="padding-bottom:35px;")
                     .col
                       p {{instruction.text}}
-      .row.lt-lg
-        .col.col-12(v-for="(instruction,index) of instructions" :key="instruction.text")
-          .row(style="padding:10px; padding-left:10px;")
-            .col-1.on-left
+      .row.lt-lg.justify-center(style="margin-bottom:40px; margin-top:40px;")
+        .col.col-auto(v-for="(instruction,index) of instructions" :key="instruction.text")
+          .row.justify-center(style="padding:10px; padding-left:10px;")
+            .col-auto.on-left
               h3.text-blue {{index+1}}
-            .col-2.on-left
+            .col-auto.on-left
               img(:src="instruction.img" style="height:100px; padding:5px; filter: drop-shadow(2px 2px 2px #9999)")
-            .col
+            .col-auto
               p(style="width:300px;") {{instruction.text}}
   .row.justify-center
     .col.col-xs-12.col-md-12.col-lg-5(style="max-width:550px;")

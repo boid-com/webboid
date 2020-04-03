@@ -1,5 +1,7 @@
 <template lang="pug">
 div.relative-position
+  q-btn(round small flat @click="getCoins()" color="black").absolute-top-right
+    q-icon(name="refresh" )
   .row.justify-center(v-if="!global.transitWallet" style="padding:0px;")
     q-btn(color="green" @click="$root.$emit('initTransitWallet')") Scatter Login
   .row.justify-center
