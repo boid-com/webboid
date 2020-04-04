@@ -11,7 +11,7 @@ div
         .row
           .col-auto.on-left
             h6.no-margin 1
-            small.text-amber-10 +10
+            small.text-grey +10
           .col
             .row
               .col(v-for="box of 10")
@@ -20,8 +20,8 @@ div
             q-progress(:percentage="contributor.donations" height="25px" style="height:10px; margin-top:10px; padding-right:40px;" color="teal-3")
           .col-auto.on-right
            h6.no-margin(style="padding-bottom:0px;") 10
-           small.text-amber-10 +100
-        .row.justify-center
+           small.text-grey +100
+        .row.justify-center(style="padding-bottom:10px;")
           .col
             .row.justify-center(v-if="config")
               h6.no-margin.text-green(v-if="contributor.level > 0") + {{config.user_power_reward_increment * contributor.level}}
@@ -30,12 +30,12 @@ div
             .row.justify-center
               small power bonus
           .col(v-if="contributor.level < 10")
-            h6.no-margin {{10 - (contributor.donations - contributor.level*10)}} more donations until level {{contributor.level + 1}}
-          .col(v-if="contributor.level < 10")
             .row.justify-center(v-if="config")
-              h6.no-margin + {{config.user_power_reward_increment * (contributor.level+1)}}
+              h6.no-margin.text-grey-8 + {{config.user_power_reward_increment * (contributor.level+1)}}
             .row.justify-center
               small level {{contributor.level + 1}} power bonus
+        .row(style="padding-top:10px;")
+          h6.no-margin {{10 - (contributor.donations - contributor.level*10)}} more donations until level {{contributor.level + 1}}
 
     q-inner-loading(:visible="loading.progressPanel")
       q-spinner-ball(size="60px" color="blue")
