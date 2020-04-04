@@ -35,7 +35,7 @@ div
             .row.justify-center
               small level {{contributor.level + 1}} power bonus
         .row(style="padding-top:10px;")
-          h6.no-margin {{10 - (contributor.donations - contributor.level*10)}} more donations until level {{contributor.level + 1}}
+          h6.no-margin {{remainingDonations}} more {{donationText}} until level {{contributor.level + 1}}
 
     q-inner-loading(:visible="loading.progressPanel")
       q-spinner-ball(size="60px" color="blue")

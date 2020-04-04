@@ -475,6 +475,11 @@ export default {
       Toast.create.negative(message)
       this.global.errorMsg = null
     },
+    'global.successMsg'(message) {
+      if (!message) return
+      Toast.create.positive(message)
+      this.global.successMsg = null
+    },
     '$route.name'(name){
       if (name === "ChangeAccount") this.hideAllMenus(true)
       else this.hideAllMenus(false)

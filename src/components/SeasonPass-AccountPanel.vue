@@ -20,7 +20,7 @@ div
               img(src="/statics/images/BoidPower.svg" style="width:20px; margin:0px;")
             .col-auto
               h6 Boid Power
-              p {{global.boidWallet.totalPower.toFixed(0)}}
+              p {{parseFloat(global.boidWallet.totalPower.toFixed(0)).toLocaleString()}}
       .row
         .col-auto.on-left
           .row
@@ -38,7 +38,7 @@ div
                   small powered
                   p.no-margin {{global.poweredStake.toLocaleString()}}
                   small max powered
-                  p.no-margin(v-if="global.pendingClaim") {{global.pendingClaim.maxPoweredStake}}
+                  p.no-margin(v-if="global.pendingClaim") {{global.pendingClaim.maxPoweredStake.toLocaleString()}}
         //- .col
           .row
             //- .col-auto(style="margin-right:10px; padding-top:0px;")

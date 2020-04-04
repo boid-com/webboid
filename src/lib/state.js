@@ -70,7 +70,8 @@ const state = {
           }
           console.log('Transfer Action',coin)
           const result = await state.global.transitWallet.eosApi.transact({actions:[action]},boidjs.tx.tapos)
-          if (!result) return
+          if (!result) throw("There was an error")
+          state.global.successMsg = "Transaction successful"
           console.log(result)
         } catch (error) {
           console.error(error.toString())

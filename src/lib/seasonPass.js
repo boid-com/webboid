@@ -1,4 +1,4 @@
-import { openURL } from 'quasar'
+import { openURL, Toast } from 'quasar'
 const rpc = window.eosjs.rpc
 const ax = require('axios')
 const state = require('../lib/state')
@@ -43,6 +43,14 @@ module.exports = {
     }
   },
   computed:{
+    donationText(){
+      if (this.remainingDonations < 2 ) return "donation"
+      else return "donations"
+    },
+    remainingDonations(){
+      if (!this.contributor) return 0
+      return 10 - (this.contributor.donations - this.contributor.level*10)
+    },
     selectedCoin(){
       if (!this.selectedPay || !this.coins) return false 
       const selectedCoin = this.coins.find(el => el.symbol === this.selectedPay)
@@ -58,7 +66,7 @@ module.exports = {
     },
     powerBonus(){
       if (!this.config || !this.contributor || !this.contributor) return 0
-      console.log('PowerBonus:',this.config.user_power_reward_increment)
+      // console.log('PowerBonus:',this.config.user_power_reward_increment)
       if (this.contributor.level < 1) return 5
       else return this.contributor.level * this.config.user_power_reward_increment  
     }
@@ -74,23 +82,35 @@ module.exports = {
       if (this.payAmount < selectedCoin.min_contribution) this.payAmount = parseFloat(selectedCoin.min_contribution)
     },
     async donate(){
-      this.loading.selectPanel = true
-      await this.getCoins(true)
-      this.checkAmount()
-      const coin = this.coins.find(el => el.symbol === this.selectedPay)
-      await this.global.do.transfer(this.global.transitWallet.auth.accountName,'boiddonation',coin.token,this.payAmount)
-      await sleep(1000)
-      await this.getAll()
-      this.updatePayAmount()
-      this.updateSelectedPay(this.selectedPay)
-      this.loading.selectPanel = false
-      console.log('Donate')
+      try {
+        this.loading.selectPanel = true
+        await this.getCoins(true)
+        this.checkAmount()
+        const coin = this.coins.find(el => el.symbol === this.selectedPay)
+        await this.global.do.transfer(this.global.transitWallet.auth.accountName,'boiddonation',coin.token,this.payAmount)
+        await sleep(1000)
+        await this.getAll()
+        this.updatePayAmount()
+        this.updateSelectedPay(this.selectedPay)
+        this.loading.selectPanel = false
+        console.log('Donate')
+      } catch (error) {
+        console.log(error.toString())
+        this.global.errorMsg = error.toString()
+      }
     },
     async claim(){
-      this.loading.accountPanel = true
-      await this.global.do.claim()
-      await this.global.do.refreshAccountData()
-      this.loading.accountPanel = false
+      try {
+        this.loading.accountPanel = true
+        await this.global.do.claim()
+        await this.global.do.refreshAccountData()
+        this.loading.accountPanel = false
+        Toast.create.positive("Transaction successful")
+
+      } catch (error) {
+        console.log(error.toString())
+        this.global.errorMsg = error.toString()
+      }
     },
     async updateAccountPanel(){
       this.loading.accountPanel = true
