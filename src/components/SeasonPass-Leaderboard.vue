@@ -51,7 +51,7 @@ export default {
   methods:seasonPass.methods,
   computed:seasonPass.computed,
   async mounted (){
-    this.getLeaderboard()
+    // this.getLeaderboard()
   },
   watch:{
 

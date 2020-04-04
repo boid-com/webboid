@@ -15,7 +15,7 @@ div
           .col
             .row
               .col(v-for="box of 10")
-                div(style="height:0px; font-size:25px;").relative-position.text-grey
+                div(style="height:0px; font-size:25px;").relative-position.text-grey-4
                   .absolute-right.strong(style="right:-2px;") |
             q-progress(:percentage="contributor.donations" height="25px" style="height:10px; margin-top:10px; padding-right:40px;" color="teal-3")
           .col-auto.on-right
@@ -24,9 +24,11 @@ div
         .row.justify-center
           .col
             .row.justify-center(v-if="config")
-              h6.no-margin.text-amber-10 + {{config.user_power_reward_increment * contributor.level}}
+              h6.no-margin.text-green(v-if="contributor.level > 0") + {{config.user_power_reward_increment * contributor.level}}
+              h6.no-margin.text-green(v-else) + 5
+
             .row.justify-center
-              small current power bonus
+              small power bonus
           .col(v-if="contributor.level < 10")
             h6.no-margin {{10 - (contributor.donations - contributor.level*10)}} more donations until level {{contributor.level + 1}}
           .col(v-if="contributor.level < 10")

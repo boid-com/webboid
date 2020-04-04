@@ -14,7 +14,7 @@ div.relative-position
   .row.justify-center(v-if="!global.transitWallet" style="padding:20px;")
     q-btn(color="green" @click="$root.$emit('initTransitWallet')") Scatter Login
   .row.justify-center(style="padding:10px;")
-    q-btn(size="large" color="blue" style="font-size:25px; padding:10px;" :disable="!global.transitWallet || amountLow" @click="donate()") Donate {{parseFloat(payAmount).toFixed(4)}} {{selectedPay}}
+    q-btn(size="large" color="blue" style="font-size:25px; padding:10px;" :disable="!global.transitWallet || amountLow" @click="donate()") Donate {{payAmount.toLocaleString(undefined,{ minimumFractionDigits: 4,maximumFractionDigits:4 })}} {{selectedPay}}
   .row.justify-center(style="height:30px;" v-if="amountLow")  
     p.no-margin.text-red minimum donation for {{selectedPay}} is {{selectedCoin.minContribution}}
 
@@ -42,11 +42,6 @@ div.relative-position
   .selectedTab
     background-color $blue-6
     color: white
-  .selectedpay
-    // background-color $-4
-    // color white
-    outline 1px solid $green-3
-    box-shadow: 0 4px 10px 2px $green-8
 </style>
 
 <script>

@@ -58,15 +58,19 @@ module.exports = {
     powerBonus(){
       if (!this.config || !this.contributor || !this.contributor) return 0
       console.log('PowerBonus:',this.config.user_power_reward_increment)
-      return this.contributor.level * this.config.user_power_reward_increment + this.config.user_power_reward_increment
+      if (this.contributor.level < 1) return 5
+      else return this.contributor.level * this.config.user_power_reward_increment + this.config.user_power_reward_increment
     }
   },
   methods:{
+    updateSelectedPay(symbol){
+      this.selectedPay = symbol
+    },
     checkAmount(){
       if (!this.selectedPay || !this.coins) return 
       const selectedCoin = this.coins.find(el => el.symbol === this.selectedPay)
       if (!selectedCoin) return 
-      if (this.payAmount < selectedCoin.min_contribution) this.payAmount = selectedCoin.minContribution
+      if (this.payAmount < selectedCoin.min_contribution) this.payAmount = parseFloat(selectedCoin.min_contribution)
     },
     async donate(){
       this.loading.selectPanel = true
@@ -76,6 +80,8 @@ module.exports = {
       await this.global.do.transfer(this.global.transitWallet.auth.accountName,'boiddonation',coin.token,this.payAmount)
       await sleep(1000)
       await this.getAll()
+      this.updatePayAmount()
+      this.updateSelectedPay(this.selectedPay)
       this.loading.selectPanel = false
       console.log('Donate')
     },
@@ -118,6 +124,7 @@ module.exports = {
       this.getConfig()
       this.global.do.updateBoidWallet()
       this.getLeaderboard()
+      this.updateSelectedPay(this.selectedPay)
     },
     getPage(){
       console.log(this.page)
@@ -185,7 +192,7 @@ module.exports = {
           lower_bound:accountName,
           limit:1
         })).rows[0]
-        if (contributor.account === accountName) this.contributor = contributor
+        if (contributor && contributor.account === accountName) this.contributor = contributor
         else this.contributor = {
           account:accountName,
           coins:[],
@@ -196,7 +203,6 @@ module.exports = {
         console.log('getContributor',this.contributor)
         this.loading.progressPanel = false
       } catch (error) {
-        this.coins = []
         console.error(error.toString())
         this.loading.progressPanel = false
       }
