@@ -56,6 +56,11 @@ export default {
   methods:seasonPass.methods,
   computed:seasonPass.computed,
   mounted(){
+    this.getCoinsInterval = setInterval(()=>this.getCoins(true),20000)
+  },
+  destroyed(){
+    console.log('destroyed')
+    clearInterval(this.getCoinsInterval)
   },
   watch:{
 

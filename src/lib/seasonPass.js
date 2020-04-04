@@ -25,6 +25,7 @@ const icons = '/statics/tokenicons/'
 
 module.exports = {
   state:{
+    getCoinsInterval:null,
     global:state.global,
     page:'rules',
     instructions,
@@ -51,7 +52,7 @@ module.exports = {
       if (!this.selectedPay || !this.coins) return false 
       const selectedCoin = this.coins.find(el => el.symbol === this.selectedPay)
       if (!selectedCoin) return false 
-      console.log(this.payAmount,selectedCoin.min_contribution)
+      // console.log(this.payAmount,selectedCoin.min_contribution)
       if (this.payAmount < parseFloat(selectedCoin.min_contribution.toFixed(4))) return true
       else return false
     },
@@ -59,7 +60,7 @@ module.exports = {
       if (!this.config || !this.contributor || !this.contributor) return 0
       console.log('PowerBonus:',this.config.user_power_reward_increment)
       if (this.contributor.level < 1) return 5
-      else return this.contributor.level * this.config.user_power_reward_increment + this.config.user_power_reward_increment
+      else return this.contributor.level * this.config.user_power_reward_increment  
     }
   },
   methods:{
@@ -100,7 +101,7 @@ module.exports = {
       if (!this.selectedPay || !this.coins) return 0
       const selectedCoin = this.coins.find(el => el.symbol === this.selectedPay)
       if (!selectedCoin) return ""
-      console.log('SELECTEDCOIN',selectedCoin)
+      // console.log('SELECTEDCOIN',selectedCoin)
       this.payAmount = parseFloat(selectedCoin.min_contribution)
     },
     adjustPay(percent) {
@@ -110,6 +111,7 @@ module.exports = {
     calcPowerBonus(available,multiplier){
       const power = (this.powerBonus * multiplier)
       const result = available - power
+      // console.log(result)
       if (result > 0) return power
       else return this.powerBonus + result
     },
@@ -136,7 +138,7 @@ module.exports = {
       try {
         const leaderboard = await ax.get('https://api.boid.com/donationsLeaderboard?chain=kylin')
         this.leaderboard = leaderboard.data
-        console.log('LEADERBOARD',this.leaderboard)
+        // console.log('LEADERBOARD',this.leaderboard)
 
       } catch (error) {
         this.global.errorMsg = error.toString()
@@ -164,7 +166,7 @@ module.exports = {
           return coin
         })
         // this.updateTokenPrices()
-        console.log(this.coins)
+        // console.log(this.coins)
         if (!disableLoading) this.loading.selectPanel = false
 
       } catch (error) {
@@ -175,14 +177,14 @@ module.exports = {
     },
     async updateTokenPrices(){
       for (var coin of this.coins) {
-        console.log('coincontract',coin)
+        // console.log('coincontract',coin)
         const price = await this.global.do.getNewdexPrice(coin.symbol,coin.contract)
-        console.log(price)
+        // console.log(price)
       }
     },
     async getContributor(accountName){
       if (!accountName) return null
-      console.log('Get Contributor',accountName)
+      // console.log('Get Contributor',accountName)
       this.loading.progressPanel = true
       try {
         const contributor = (await rpc.get_table_rows({
@@ -200,7 +202,6 @@ module.exports = {
           level:0,
           total_power_granted:0
         }
-        console.log('getContributor',this.contributor)
         this.loading.progressPanel = false
       } catch (error) {
         console.error(error.toString())
@@ -214,7 +215,6 @@ module.exports = {
           scope: "boiddonation",
           table: "config"
         })).rows[0]
-        console.log(this.config)
       } catch (error) {
         this.coins = []
         console.error(error.toString())
