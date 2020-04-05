@@ -211,7 +211,7 @@ module.exports = {
       }
     },
     async getContributor(accountName){
-      if (!accountName) return null
+      if (!accountName) accountName = this.contributor.account
       // console.log('Get Contributor',accountName)
       this.loading.progressPanel = true
       try {

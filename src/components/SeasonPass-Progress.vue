@@ -34,7 +34,7 @@ div
               h6.no-margin.text-grey-8 + {{config.user_power_reward_increment * (contributor.level+1)}}
             .row.justify-center
               small level {{contributor.level + 1}} power bonus
-        .row(style="padding-top:10px;")
+        .row(style="padding-top:10px;" v-if="contributor.level < 10")
           h6.no-margin {{remainingDonations}} more {{donationText}} until level {{contributor.level + 1}}
 
     q-inner-loading(:visible="loading.progressPanel")

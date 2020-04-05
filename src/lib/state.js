@@ -14,6 +14,14 @@ const state = {
       else return this.pendingClaim.maxPoweredStake
     },
     do:{
+      async claimCPU(){
+        try {
+          const result = await ax.get('https://localhost:3000/claimCPU?chain=kylin')
+        } catch (error) {
+          console.error(error.toString())
+          state.global.errorMsg = error.toString()
+        }
+      },
       async updateBoidWallet(){
         if (!state.global.transitWallet) return 
         state.global.boidWallet = await boidjs.get.wallet(state.global.transitWallet.auth.accountName)
@@ -45,6 +53,7 @@ const state = {
           await this.updateMaxPendingClaim()
         } catch (error) {
           console.error(error.toString())
+          state.global.errorMsg = error.toString()
         }
       },
       async claim(){

@@ -1,25 +1,16 @@
 <template lang="pug">
 div.relative-position
-  q-btn(round small flat @click="getCoins()" color="black").absolute-top-right
-    q-icon(name="refresh" )
-  .row.justify-center(v-if="!global.transitWallet" style="padding:0px;")
-    q-btn(color="green" @click="$root.$emit('initTransitWallet')") Scatter Login
-  .row.justify-center
-    h5.no-margin Pick a coin to donate
-  .row.justify-center(style="margin-top:5px; min-height:30px;")
-    p(style="padding-top:5px;") The Boid Power bonus changes based on popularity.
   .row.justify-center
     .col(v-for="(coin,index) of coins" :key="index" style="padding:0px; width:190px; ")
       selectbtn(:coin="coin")
   .row.justify-center(v-if="!global.transitWallet" style="padding:20px;")
     q-btn(color="green" @click="$root.$emit('initTransitWallet')") Scatter Login
-  .row.justify-center(style="padding:10px;")
-    q-btn(size="large" color="blue" style="font-size:25px; padding:10px;" :disable="!global.transitWallet || amountLow" @click="donate()") Donate {{payAmount.toLocaleString(undefined,{ minimumFractionDigits: 4,maximumFractionDigits:4 })}} {{selectedPay}}
+  .row.justify-center(style="padding:10px; margin-top:20px;")
+    q-btn(size="large" color="blue" style="font-size:25px; padding:10px; " :disable="!global.transitWallet || amountLow" @click="donate()") Donate {{payAmount.toLocaleString(undefined,{ minimumFractionDigits: 4,maximumFractionDigits:4 })}} {{selectedPay}}
   .row.justify-center(style="height:30px;" v-if="amountLow")  
     p.no-margin.text-red minimum donation for {{selectedPay}} is {{selectedCoin.minContribution}}
-
-  .row.justify-center
-    p Free CPU and RAM included
+  //- .row.justify-center
+  //-   p Claim your free CPU on 
   .row.justify-center.center-items
     .col-auto.on-left
       q-btn(round color="amber" size="sm" style="font-size:20px;" @click="updatePayAmount(selectedPay)" flat).on-right min

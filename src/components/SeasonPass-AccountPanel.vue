@@ -37,15 +37,7 @@ div
                   p.no-margin {{global.poweredStake.toLocaleString()}}
                   small max powered
                   p.no-margin(v-if="global.pendingClaim") {{global.pendingClaim.maxPoweredStake.toLocaleString()}}
-        //- .col
-          .row
-            //- .col-auto(style="margin-right:10px; padding-top:0px;")
-            //-   img(src="/statics/BoidPoweredStake.png" style="width:55px; margin:0px;")
-            //- .col-auto
-            //-   h6.no-margin Powered Stake
-            //-   p.no-margin {{global.poweredStake.toLocaleString()}}
-            //-   small.text-grey-8 Max Powered Stake
-            //-   p.no-margin.text-grey-8(v-if="global.pendingClaim") {{global.pendingClaim.maxPoweredStake}}
+
         .col
           div(style="padding:0px; margin:10px;" v-if="true")
             .row.justify-center
@@ -67,6 +59,19 @@ div
                 q-btn.full-width(color="green" flat @click="$router.push({name:'Stake'})") stake
               .col
                 q-btn.full-width(color="blue" flat @click="claim()") claim
+      q-inner-loading(:visible="loading.accountPanel")
+        q-spinner-ball(size="60px" color="blue")
+  q-card
+    p Claim Free CPU
+    .row
+      .col(style="padding:0px;").on-left
+        .row.justify-center 
+          q-btn(style="margin:10px;" color="green" @click="global.do.claimCPU()") Claim CPU
+        small If you are an active Boid User you can get free CPU on your EOS account.
+      .col(style="padding:0px;").on-right
+        .row.justify-center 
+          q-btn(style="margin:10px;" color="blue") Join Telegram
+        small If you are a new user you can join the Telegram and ask an admin for some free CPU.
 </template>
 <style lang="stylus" scoped>
   @import '~variables'
