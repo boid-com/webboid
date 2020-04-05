@@ -12,7 +12,7 @@ div(style="padding:20px; max-width: 1600px;")
       .row.justify-center
         .col
           h5.no-margin.text-center(style="padding-bottom:15px;") Donate to win a Boid Season Pass
-      .row.justify-center.relative-position.gt-md
+      .row.justify-center.relative-position.gt-md(style="margin-top:40px; margin-bottom:40px;")
         div(style="height:5px; width:800px; top:95px;").absolute-center.bg-blue-2.gt-sm
         .col.infobox(v-for="(instruction,index) of instructions" :key="instruction.text")
           .row
@@ -36,20 +36,26 @@ div(style="padding:20px; max-width: 1600px;")
             .col-auto
               p(style="width:300px;") {{instruction.text}}
   .row.justify-center
-    .col.col-xs-12.col-md-12.col-lg-5(style="max-width:550px;")
-      selector
-    .col.col-xs-12.col-sm-5.col-md-12.col-lg-4(style="max-width:400px;")
+    .col.col-xs-12.col-sm-5.col-md-12.col-lg-4(style="max-width:400px;").relative-position
+      q-btn(round small flat @click="updateAccountPanel()" color="black").absolute-top-right
+        q-icon(name="refresh" )
       .row.justify-center
         h5.no-margin Track your progress
-      .row.justify-center(style="margin:10px; min-height:30px;")
+      .row.justify-center(style="margin:10px; min-height:40px;")
         .col
           p.text-center Level up and earn NFT rewards.
       progresspanel
       accountpanel(style="margin-top:20px;")
-    .col.col-xs-12.col-sm-5.col-md-12.col-lg-3
+      q-inner-loading(:visible="loading.accountPanel")
+        q-spinner-ball(size="60px" color="blue")
+    .col.col-xs-12.col-md-12.col-lg-5(style="max-width:550px;")
+      selector
+    .col.col-xs-12.col-sm-5.col-md-12.col-lg-3.relative-position
+      q-btn(round small flat @click="getLeaderboard()" color="black").absolute-top-right
+        q-icon(name="refresh" )
       .row.justify-center
         h5.no-margin Contributors
-      .row.justify-center(style="margin:10px; min-height:30px;")
+      .row.justify-center(style="margin:10px; min-height:40px;")
         p The top 20% will receive the Boid Season Pass.
       leaderboard
 </template>

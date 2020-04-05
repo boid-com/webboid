@@ -1,32 +1,64 @@
 <template lang="pug">
-div
-  q-card.relative-position
+div.relative-position
+  q-card(v-if="leaderboard")
+    div(style="padding:20px; padding-bottom:0px;")
+      .row
+        .col
+          p.no-margin Global Statistics
+    .row
+      .col(style="padding:10px;")
+        .row.justify-center
+          h6 ${{totalEOSContributed}}
+        .row.justify-center
+          small total contributed 
+      .col(style="padding:10px;")
+        .row.justify-center
+          h6 {{leaderboard.length}}
+        .row.justify-center
+          .col-auto
+            small unique contributors
+      .col(style="padding:10px;")
+        .row.justify-center
+          h6 {{totalPowerGranted}}
+        .row.justify-center
+          .col-auto
+            small power granted
+    .row
+      q-btn.full-width(small @click="openURL('https://stats.boid.com/d/hGvA6yrZz/kylin-boid-donations?orgId=1&refresh=15m')") advanced statistics
+
+  q-card
     div(style="padding:20px; padding-bottom:0px;")
       p.no-margin leaderboard
     .row(style="padding-left:20px;")
       .col-1.on-left
         small Rank
-      .col.on-right 
+      .col 
         small Account
-      .col
+      .col-auto
+        small level
+      .col-auto.on-right.on-left
         small Donations
-      .col
+      .col.on-left
         small USD Total
-    .row(style="max-height:800px; overflow:auto; padding:10px;").full-width
+    .row.full-width(style="max-height:800px; overflow:auto; padding:10px;")
       .col-12(v-for="(user,index) of leaderboard" style="padding:10px;")
         .row.no-wrap
           .col-auto.on-left
             h6.light-pragraph {{index+1}}
           .col-4.on-left
-            h6 {{user.account}}     
+            h6 {{user.account}}  
+          .col-1.on-right.self-end
+            h6 {{user.level}}   
+          .col-1.on-right.self-end
+            h6 {{user.donations}}   
           .col-auto.on-right.self-end
             h6 ${{user.usdValue.toFixed(2)}}    
 
         .row
           .col-auto(v-for="coin of user.coins").on-left
             //- small {{parseFloat(coin.split(' ')[0]).toLocaleString(undefined,{ maximumFractionDigits: 0})}} {{coin.split(' ')[1]}}
-    q-inner-loading(:visible="loading.leaderboard")
-      q-spinner-ball(size="60px" color="blue")
+  q-inner-loading(:visible="loading.leaderboard")
+    q-spinner-ball(size="60px" color="blue")
 </template>
 <style lang="stylus" scoped>
   @import '~variables'

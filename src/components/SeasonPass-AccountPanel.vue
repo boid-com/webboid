@@ -1,8 +1,6 @@
 <template lang="pug">
 div
   q-card.relative-position(v-if="global.transitWallet && global.boidWallet")
-    q-btn(round small flat @click="updateAccountPanel()" color="black").absolute-top-right
-      q-icon(name="refresh" )
     .row.justify-center
       h6 {{global.transitWallet.auth.accountName}}
     div
@@ -69,8 +67,6 @@ div
                 q-btn.full-width(color="green" flat @click="$router.push({name:'Stake'})") stake
               .col
                 q-btn.full-width(color="blue" flat @click="claim()") claim
-    q-inner-loading(:visible="loading.accountPanel")
-      q-spinner-ball(size="60px" color="blue")
 </template>
 <style lang="stylus" scoped>
   @import '~variables'

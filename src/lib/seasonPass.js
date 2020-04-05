@@ -43,6 +43,14 @@ module.exports = {
     }
   },
   computed:{
+    totalPowerGranted(){
+      if (!this.leaderboard) return
+      return this.leaderboard.reduce((prev,el) => prev += el.total_power_granted,0).toFixed(0)
+    },
+    totalEOSContributed(){
+      if (!this.leaderboard) return
+      return this.leaderboard.reduce((prev,el) => prev += el.usdValue,0).toFixed(0)
+    },
     donationText(){
       if (this.remainingDonations < 2 ) return "donation"
       else return "donations"
@@ -87,7 +95,7 @@ module.exports = {
         await this.getCoins(true)
         this.checkAmount()
         const coin = this.coins.find(el => el.symbol === this.selectedPay)
-        await this.global.do.transfer(this.global.transitWallet.auth.accountName,'boiddonation',coin.token,this.payAmount)
+        await this.global.do.transfer(this.global.transitWallet.auth.accountName,'boiddonation',coin.token,parseFloat(this.payAmount.toFixed(4)))
         await sleep(1000)
         await this.getAll()
         this.updatePayAmount()
