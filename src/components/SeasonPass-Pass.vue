@@ -64,7 +64,7 @@ div
   ul
     list-style-position outside
     margin 0px
-    margin-left 30px
+    margin-left 20px
     padding 0px
   li
     padding 5px
