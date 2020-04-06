@@ -17,7 +17,7 @@ const instructions = [
     img:"/statics/seasonpass/boid-power-increase.svg"
   },
   {
-    text:"The top 20% of contributors will receive a rare NFT season pass and exclusive physical merchandise.",
+    text:"The top contributors will receive a rare NFT season pass and exclusive physical merchandise.",
     img:"/statics/seasonpass/top-contributors.svg"
   }
 ]
@@ -39,7 +39,8 @@ module.exports = {
       accountPanel:true,
       progressPanel:true,
       selectPanel:true,
-      leaderboard:true
+      leaderboard:true,
+      cpuClaim:true
     }
   },
   computed:{
@@ -80,6 +81,27 @@ module.exports = {
     }
   },
   methods:{
+    async claimCPU(){
+      try {
+        this.loading.cpuClaim = true
+        await this.global.do.claimCPU()
+        await this.global.do.checkCPUClaim()
+        this.loading.cpuClaim = false
+      } catch (error) {
+        this.loading.cpuClaim = false
+        console.error(error.toString())
+      }
+    },
+    async checkFreeCPU(){
+      try {
+        this.loading.cpuClaim = true
+        await this.global.do.checkCPUClaim()
+        this.loading.cpuClaim = false
+      } catch (error) {
+        this.loading.cpuClaim = false
+        console.error(error.toString())
+      }
+    },
     updateSelectedPay(symbol){
       this.selectedPay = symbol
     },

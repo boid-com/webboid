@@ -61,17 +61,21 @@ div
                 q-btn.full-width(color="blue" flat @click="claim()") claim
       q-inner-loading(:visible="loading.accountPanel")
         q-spinner-ball(size="60px" color="blue")
-  q-card
+  q-card.relative-position(style="margin-top:20px;")
     p Claim Free CPU
+    div(style="padding:10px;" v-if="global.cpuClaimStatus").bg-grey-3
+      p.no-margin.text-grey-9 {{global.cpuClaimStatus}}
     .row
       .col(style="padding:0px;").on-left
         .row.justify-center 
-          q-btn(style="margin:10px;" color="green" @click="global.do.claimCPU()") Claim CPU
+          q-btn(style="margin:10px;" color="green" @click="claimCPU()" :disable="Boolean(global.cpuClaimStatus)") Claim CPU
         small If you are an active Boid User you can get free CPU on your EOS account.
       .col(style="padding:0px;").on-right
         .row.justify-center 
           q-btn(style="margin:10px;" color="blue") Join Telegram
         small If you are a new user you can join the Telegram and ask an admin for some free CPU.
+    q-inner-loading(:visible="loading.cpuClaim")
+      q-spinner-ball(size="60px" color="blue")
 </template>
 <style lang="stylus" scoped>
   @import '~variables'

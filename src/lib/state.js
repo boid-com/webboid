@@ -8,15 +8,33 @@ const state = {
     maxPendingClaim:null,
     errorMsg:null,
     successMsg:null,
+    cpuClaimResult:null,
+    cpuClaimStatus:null,
     get poweredStake(){
       if (!this.pendingClaim || !this.boidWallet) return 0
       if (this.boidWallet.allStaked < this.pendingClaim.maxPoweredStake) return this.boidWallet.allStaked
       else return this.pendingClaim.maxPoweredStake
     },
     do:{
+      async checkCPUClaim(){
+        try {
+          if(!state.global.transitWallet) return
+          if(!state.global.transitWallet.auth) return
+          const result = (await ax.get('https://api.boid.com/claimCPU/'+state.global.transitWallet.auth.accountName)).data
+          console.log(result)
+          if (result.error) state.global.cpuClaimStatus = result.error
+        } catch (error) {
+          console.error(error.toString())
+          // state.global.errorMsg = error.toString()
+        }
+      },
       async claimCPU(){
         try {
-          const result = await ax.get('https://localhost:3000/claimCPU?chain=kylin')
+          if(!state.global.transitWallet) return
+          if(!state.global.transitWallet.auth) return
+          const result = (await ax.get('https://api.boid.com/claimCPU/'+state.global.transitWallet.auth.accountName+'?claim=true')).data
+          if (result.error) throw(result.error)
+          else state.global.successMsg = "CPU claimed! You can claim again in one week."
         } catch (error) {
           console.error(error.toString())
           state.global.errorMsg = error.toString()

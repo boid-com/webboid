@@ -24,23 +24,23 @@ div.relative-position
           .col-auto
             small power granted
     .row
-      q-btn.full-width(small @click="openURL('https://stats.boid.com/d/hGvA6yrZz/kylin-boid-donations?orgId=1&refresh=15m')") advanced statistics
+      q-btn.full-width( color="teal" small @click="openURL('https://stats.boid.com/d/hGvA6yrZz/kylin-boid-donations?orgId=1&refresh=15m')") advanced statistics
 
   q-card
     div(style="padding:20px; padding-bottom:0px;")
-      p.no-margin leaderboard
+      p.no-margin Leaderboard
     .row(style="padding-left:20px;")
       .col-1.on-left
         small Rank
       .col 
         small Account
-      .col-auto
+      .col-auto(style="padding-left:30px;")
         small level
       .col-auto.on-right.on-left
         small Donations
       .col.on-left
         small USD Total
-    .row.full-width(style="max-height:800px; overflow:auto; padding:10px;")
+    .row.full-width.content-start(style="height:596px; overflow:auto; padding:10px;")
       .col-12(v-for="(user,index) of leaderboard" style="padding:10px;")
         .row.no-wrap
           .col-auto.on-left
@@ -51,7 +51,7 @@ div.relative-position
             h6 {{user.level}}   
           .col-1.on-right.self-end
             h6 {{user.donations}}   
-          .col-auto.on-right.self-end
+          .col-auto.on-right.self-end(style="padding-left:30px;")
             h6 ${{user.usdValue.toFixed(2)}}    
 
         .row
