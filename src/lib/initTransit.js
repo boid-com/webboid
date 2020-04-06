@@ -35,7 +35,7 @@ function pickEndpoint () {
 }
 global.boidtokencontract = 'token.boid'
 const rpc = new JsonRpc(pickEndpoint())
-const boidjs = require('boidjs')({ rpc })
+const boidjs = require('boidjs')({ rpc,config:{tokenContract:'token.boid'} })
 window.boidjs = boidjs
 window.transit = {}
 
