@@ -12,7 +12,7 @@ div
               .row.justify-center(style="padding-top:20px; padding-bottom:25px;").relative-position
                 img(:src="instruction.img" style="height:150px; padding:15px; filter: drop-shadow(2px 2px 2px #9999)")
               .row.items-center(style="padding-bottom:35px;")
-                .col
+                .col(style="padding-top:20px;")
                   p {{instruction.text}}
   .row.lt-lg.justify-center(style="margin-bottom:40px; margin-top:40px;")
     .col.col-auto(v-for="(instruction,index) of instructions" :key="instruction.text")
@@ -20,7 +20,7 @@ div
         .col-auto.on-left
           h3.text-blue {{index+1}}
         .col-auto.on-left
-          img(:src="instruction.img" style="height:100px; padding:5px; filter: drop-shadow(2px 2px 2px #9999)")
+          img(:src="instruction.img" style="height:100px; padding:5px; margin filter: drop-shadow(2px 2px 2px #9999)")
         .col-auto
           p(style="width:300px;") {{instruction.text}}
 </template>
