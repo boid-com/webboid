@@ -35,7 +35,7 @@ div(style="padding:20px; max-width: 1900px;")
       .row.justify-center(style="margin:10px; min-height:40px;")
         p The top 20% will receive the Boid Season Pass.
       leaderboard
-    .col(style="max-width:1200px; margin-top:60px;")
+    .col.col-lg-8(style="max-width:1200px; margin-top:60px;")
       .row.justify-center
         h5.no-margin Details
       .row.justify-center(style="margin:10px; min-height:40px;")

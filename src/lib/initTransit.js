@@ -18,13 +18,13 @@ import { Api, JsonRpc } from "eosjs"
 
 const endpoints = [
   // 'https://kylin.api.boid.com'
-  // 'https://eos.greymass.com',
+  'https://eos.greymass.com',
   // // 'https://eos.greymass.com:443',
   // // 'https://api.eossweden.org',
   // 'https://api.eosn.io',
   // // 'https://eu1.eosdac.io:443',
   // 'https://api.main.alohaeos.com:443',
-  // 'https://node1.eosphere.io',
+  'https://node1.eosphere.io',
   'https://node2.eosphere.io',
   // 'https://eos.api.boid.com'
 ]
