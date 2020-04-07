@@ -10,10 +10,10 @@ div
               .col
                 .infobox
                   ul
-                    li Dedicated to COVID-19 research
+                    li Focused on COVID-19 research
                     li Introducing new Boid teams and prizes
                     li The first multi-chain Boid Season
-                    li Starting on Earth Day (April 22nd)
+                    li Dedicated to Earth Day
             h6 What is Boid Season Pass
             .row
               .col
