@@ -43,15 +43,15 @@
                   .col-5(v-if="thisUser")
                     div.relative-position(style="padding-top: 10px;")
                       small.block.light-paragraph.small Total: 
-                      h5(v-if="thisUser.tPower") {{thisUser.tPower.toFixed(4)}}
+                      h5(v-if="thisUser.tPower") {{totalPower}}
                         //- p.text-center(v-if="!ch.toggle") Enable a device to generate Power
                         // q-icon.text-center( v-if="ch.toggle" color="yellow" name='flash_on' style="font-size:50px;")
                         // q-icon.text-center( v-else color="grey-4" name='flash_on' style="font-size:50px;")
                       div
-                        small.block.light-paragraph.small From Devices: 
-                        p.light-paragraph {{thisUser.dPower.toFixed(4)}}
+                        //- small.block.light-paragraph.small From Devices: 
+                        //- p.light-paragraph {{thisUser.dPower.toFixed(4)}}
                         small.block.light-paragraph From Social: 
-                        p.light-paragraph {{thisUser.sPower.toFixed(4)}}
+                        p.light-paragraph {{thisUser.sPower.toFixed(0)}}
             .col-xs-12.col-sm-6.col-md-12
               q-card.animate-scale.relative-position
                 .absolute-top-right
@@ -235,6 +235,7 @@ import leaderboard from '@/Leaderboards'
 import bHeader from '@/Header'
 import exchangeModal from '@/exchange'
 import miniWallet from '@/miniWallet'
+import state from '../lib/state'
 
 var info = require('src/lib/infoText.json')
 
@@ -242,6 +243,7 @@ export default {
   name: 'index',
   data() {
     return {
+      global:state.global,
       tierBonus:[],
       globalVars:null,
       browserDeviceId:null,
@@ -256,6 +258,11 @@ export default {
     }
   },
   computed: {
+    totalPower(){
+      if (!this.thisUser) return 0
+      if (this.global.boidWallet) return parseFloat(this.thisUser.sPower + this.global.boidWallet.totalPower).toFixed(0)
+      else return parseFloat(this.thisUser.tPower).toFixed(0)
+    },
     userPower() {
       // return 0
       try {
@@ -296,6 +303,7 @@ export default {
         }
       })
       this.globalVars = await this.$api.globalVars()
+      this.global.do.updateBoidWallet()
       // this.devices = this.thisUser.devices.map((el,i)=>{
       //   if (el.type === "BROWSER"){
       //     if (this.devices[i]){
@@ -318,6 +326,10 @@ export default {
     // alert(process.env.NODE_ENV)
   },
   watch: {
+    'global.transitWallet'(data){
+      if(!data) return
+      this.global.do.updateBoidWallet()
+    },
     async globalVars(data){
       this.tierBonus = JSON.parse(data.tierBonus)
       // -nsole.log('TIER BONUS',this.tierBonus)
@@ -348,7 +360,7 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 @import '~variables'
 // @import url('/statics/Comfortaa-Regular.ttf')
 p

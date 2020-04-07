@@ -59,7 +59,7 @@
       p.light-paragraph.text-center You have not linked an EOS account yet
       q-btn.full-width(color="green" @click="$root.$emit('modal','updatePayoutModal')") Link EOS Account  
     br
-    q-btn.full-width(color="blue" flat disabled) Advanced Wallet
+    q-btn.full-width(color="blue" flat @click="global.do.claimCPU()") Claim Free CPU
     q-inner-loading(:visible="loading" style="min-height:200px;")
       q-spinner-ball(size="60px" color="blue")
 </template>
@@ -68,6 +68,7 @@
 </style>
 <script>
 const boidjs = window.boidjs
+import state from '../lib/state'
 function printNum(num){
   if (!num) return 0
   return num.toLocaleString('en',{maximumFractionDigits: 0})
@@ -76,6 +77,7 @@ export default {
 
   data(){
     return {
+      global:state.global,
       wallet:null,
       eosAccount:this.$parent.thisUser.payoutAccount,
       pendingClaim:null,
@@ -120,7 +122,7 @@ export default {
     },
     async claim(){
       const auth = this.$parent.transitWallet.auth
-      const result = await this.$parent.transitWallet.eosApi.transact({actions:[await window.checkFuel(auth.accountName),boidjs.tx.claim(auth).actions[0]].filter(el => el)},boidjs.tx.tapos).catch(err => alert(err.message))
+      const result = await this.$parent.transitWallet.eosApi.transact({actions:[boidjs.tx.claim(auth).actions[0]].filter(el => el)},boidjs.tx.tapos).catch(err => alert(err.message))
       if (!result) return
       console.log(result)
       window.alert('Claim was successful.')

@@ -3,14 +3,15 @@
  #q-app
     q-layout(color="" ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
       q-toolbar.shadow-1(slot="header" style="webkit-app-region: drag;") 
-        q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
+        q-toolbar-title(style="font-family: 'Comfortaa';")
           | boid
           div(slot='subtitle') Season Break - Alpha
         div(v-if="loginVisible")
-          q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/CreateEOSAccount')") EOS Accounts
+          //- q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/CreateEOSAccount')") EOS Accounts
             img.on-right(src="/statics/eoslogo.png" style="width:15px;")
-          q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
-            q-icon.on-right(name="create")
+          //- q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
+          q-btn.gt-xs(v-if="!local" style="margin-right:10px;" @click="$router.push('/SeasonPass')" color="cyan") Season Launch
+            //- q-icon.on-right(name="create")
           q-btn.gt-xs( v-if="!local" style="margin-right:10px;" @click="$router.push('/staking')" color="green") stake
             q-icon.on-right(name="show_chart")
           q-btn( v-if="local" flat style="margin-right:10px;" @click="ipcRenderer.send('openURL','https://app.boid.com')")
@@ -161,6 +162,7 @@ import updatePayoutModal from '@/updatePayoutModal.vue'
 import changeTeam from '@/changeTeam.vue'
 import exchangeModal from '@/exchange.vue'
 import eosAuth from '@/eosAuth.vue'
+
 require('./lib/initTransit')()
 const initWallet = window.transit.initWallet 
 var hashInterval = null
@@ -172,6 +174,7 @@ var defaultConfig = null
 var miner = null
 
 var CPUCores = navigator.hardwareConcurrency
+import state from './lib/state'
 
 window.showOlark = function(val) {
   try {
@@ -187,6 +190,7 @@ window.showOlark = function(val) {
 export default {
   data() {
     return {
+      global:state.global,
       show:true,
       boidWallet:"Hello Dawg",
       showSideMenu:true,
@@ -229,8 +233,8 @@ export default {
   methods: {
     openURL,
     async initTransitWallet(walletType){
-      this.transitWallet = await initWallet('scatter')
-      this.$root.$data.transitWallet = this.transitWallet
+      this.global.transitWallet = await initWallet('scatter')
+      this.transitWallet = this.global.transitWallet
       if (!this.transitWallet) return
       this.transitWallet.subscribe(state => {
         console.log('Transit Wallet State:',state)
@@ -240,7 +244,7 @@ export default {
     async walletClaim(){
       if (!this.transitWallet) return
       try {
-        const result = await this.transitWallet.eosApi.transact({actions:[window.fueltx,boidjs.tx.claim(this.transitWallet.auth).actions[0]]},boidjs.tx.tapos)
+        const result = await this.transitWallet.eosApi.transact({actions:[boidjs.tx.claim(this.transitWallet.auth).actions[0]]},boidjs.tx.tapos)
         this.txResult = result
         this.$root.$emit("modal","txResult")
       } catch (error) {
@@ -358,7 +362,6 @@ export default {
     if (window.local) {
       this.local = true;
       console.log('FOUND LOCAL IN APP',window.local.ipcRenderer)
-      
       }
     if (!this.local) {
         this.updateLeaderboards().catch(console.error)
@@ -468,6 +471,16 @@ export default {
     exchangeModal
   },
   watch: {
+    'global.errorMsg'(message) {
+      if (!message) return
+      Toast.create.negative(message)
+      this.global.errorMsg = null
+    },
+    'global.successMsg'(message) {
+      if (!message) return
+      Toast.create.positive(message)
+      this.global.successMsg = null
+    },
     '$route.name'(name){
       if (name === "ChangeAccount") this.hideAllMenus(true)
       else this.hideAllMenus(false)

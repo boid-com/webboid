@@ -85,6 +85,8 @@ div(style="padding:20px; max-width: 1600px;")
             style="margin:10px;"
             @click="fillBalances(_self)")
             q-icon(name="refresh")
+          q-btn.full-width(color="blue" flat @click="global.do.claimCPU()") Claim Free CPU
+
           q-inner-loading(:visible="walletLoading")
             q-spinner-ball(size="60px" color="blue")
         //- q-card(color="amber-6")
@@ -124,11 +126,10 @@ div(style="padding:20px; max-width: 1600px;")
 
 <script>
 import {stakeTx,taposData,unstakeTx} from "../lib/tx.js"
+import state from "../lib/state"
 var format=require('format-number')()
 import interactivePanel from "components/interactivePanel.vue"
-async function includeFuel(v){
-  return 
-}
+
 async function fillBalances(v){
   try {
     if (!v.wallet) return
@@ -136,7 +137,7 @@ async function fillBalances(v){
     v.userBalance = '0.00'
     v.userStake = '0.00'
     v.disableStake = false
-    v.userBalance = (await v.rpc.get_currency_balance('boidcomtoken',v.wallet.auth.accountName,'BOID'))[0]
+    v.userBalance = (await v.rpc.get_currency_balance(global.boidtokencontract,v.wallet.auth.accountName,'BOID'))[0]
     v.totalDelegated = await window.eosjs.getTotalDelegated(v.wallet.auth.accountName)
     var selfStaked = ((await window.eosjs.getTotalStake(v.wallet.auth.accountName)))
     console.log('SELFSTAKE',selfStaked)
@@ -161,6 +162,7 @@ import { Toast } from 'quasar'
 export default {
   data() {
     return {
+      global:state.global,
       mintD:0,
       stakeD:0,
       disableStake:true,
@@ -248,7 +250,7 @@ export default {
     async stake() {
       this.walletLoading = true
       try {
-        const result = await this.wallet.eosApi.transact({actions:[await window.checkFuel(this.wallet.auth.accountName),boidjs.tx.selfStake(this.wallet.auth,parseFloat(this.stakeAmount)).actions[0]].filter(el => el)},boidjs.tx.tapos)
+        const result = await this.wallet.eosApi.transact(boidjs.tx.selfStake(this.wallet.auth,parseFloat(this.stakeAmount)),boidjs.tx.tapos)
         console.log(result)
         this.formattedStake = null
         Toast.create.positive('Transaction successful')
@@ -270,7 +272,7 @@ export default {
     async unstake() {
       this.walletLoading = true
       try {
-        const result = await this.wallet.eosApi.transact({actions:[await window.checkFuel(this.wallet.auth.accountName),boidjs.tx.selfUnstake(this.wallet.auth,parseFloat(this.unStakeAmount)).actions[0]].filter(el => el)},boidjs.tx.tapos)
+        const result = await this.wallet.eosApi.transact({actions:[boidjs.tx.selfUnstake(this.wallet.auth,parseFloat(this.unStakeAmount)).actions[0]].filter(el => el)},boidjs.tx.tapos)
         console.log(result)
         Toast.create.positive("Transaction successful")
       } catch (error) {

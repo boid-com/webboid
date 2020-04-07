@@ -1,28 +1,28 @@
 <template lang="pug">
 div
-  .row
-    .col
-      q-card
-        p.light-paragraph.text-center 2019 Q3 - Q4 Season Schedule
-        .row.relative-position
-          .col-11
-            div.absolute-center.gt-sm(style="height:5px; width:80%; background-color:grey; z-index:-1;")
-          .col.scheduleCard.text-grey
-            q-card.bg-white.text-grey
-              p.text-center Break
-              p.text-center 6/21 - 7/21
-          .col.scheduleCard
-            q-card.bg-white.scheduleCard.text-grey
-              p.text-center Season 2
-              p.text-center 7/21 - 9/21
-          .col.scheduleCard.text-grey
-            q-card.bg-white.scheduleCard
-              p.text-center Break
-              p.text-center 9/21 - 10/21
-          .col.scheduleCard.text-grey
-            q-card.bg-white.scheduleCard
-              p.text-center Season 3
-              p.text-center 10/21 - 12/21
+  //- .row
+  //-   .col
+  //-     q-card
+  //-       p.light-paragraph.text-center 2019 Q3 - Q4 Season Schedule
+  //-       .row.relative-position
+  //-         .col-11
+  //-           div.absolute-center.gt-sm(style="height:5px; width:80%; background-color:grey; z-index:-1;")
+  //-         .col.scheduleCard.text-grey
+  //-           q-card.bg-white.text-grey
+  //-             p.text-center Break
+  //-             p.text-center 6/21 - 7/21
+  //-         .col.scheduleCard
+  //-           q-card.bg-white.scheduleCard.text-grey
+  //-             p.text-center Season 2
+  //-             p.text-center 7/21 - 9/21
+  //-         .col.scheduleCard.text-grey
+  //-           q-card.bg-white.scheduleCard
+  //-             p.text-center Break
+  //-             p.text-center 9/21 - 10/21
+  //-         .col.scheduleCard.text-grey
+  //-           q-card.bg-white.scheduleCard
+  //-             p.text-center Season 3
+  //-             p.text-center 10/21 - 12/21
   .row
     .col
       q-card
