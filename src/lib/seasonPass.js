@@ -22,7 +22,11 @@ const instructions = [
   }
 ]
 const icons = '/statics/tokenicons/'
-
+const range = function(OldValue,OldMin,NewMax,NewMin,OldMax){return (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin}
+const second = 1000,
+minute = second * 60,
+hour = minute * 60,
+day = hour * 24;
 module.exports = {
   state:{
     getCoinsInterval:null,
@@ -30,20 +34,60 @@ module.exports = {
     page:'rules',
     instructions,
     coins:[],
-    contributor:null,
+    contributor:{level:0,donations:0},
     config:null,
     selectedPay:"EOS",
     payAmount:0,
     leaderboard:null,
     loading:{
       accountPanel:true,
-      progressPanel:true,
+      progressPanel:false,
       selectPanel:true,
       leaderboard:true,
       cpuClaim:true
     }
   },
   computed:{
+    promoStarted(){
+      return parseInt(this.config.promotion_start_utc_ms) < Date.now()
+    },
+    countdownStart(){
+      let countDown = new Date(parseInt(this.config.promotion_start_utc_ms)).getTime()
+
+      let now = new Date().getTime(),
+      distance = countDown - now;
+
+      return {
+        days: Math.floor(distance/day),
+        hours:Math.floor((distance % (day)) / (hour))
+      }
+
+    },
+    countdown(){
+      let countDown = new Date(parseInt(this.config.promotion_end_utc_ms)).getTime()
+      
+      let now = new Date().getTime(),
+      distance = countDown - now;
+
+      return {
+        days: Math.floor(distance/day)
+      }
+
+    },
+    dateProgress(){
+      const result = range(Date.now(),parseInt(this.config.promotion_start_utc_ms),100,0,parseInt(this.config.promotion_end_utc_ms))
+      console.log('progress',result)
+      return result
+    },
+    startDate(){
+      if (!this.config) return ""
+      return new Date(parseInt(this.config.promotion_start_utc_ms)).toLocaleString()
+
+    },
+    endDate(){
+      if (!this.config) return ""
+      return new Date(parseInt(this.config.promotion_end_utc_ms)).toLocaleString()
+    },
     totalPowerGranted(){
       if (!this.leaderboard) return
       return this.leaderboard.reduce((prev,el) => prev += el.total_power_granted,0).toFixed(0)
@@ -186,7 +230,7 @@ module.exports = {
       console.log('Get Leaderboard')
       this.loading.leaderboard = true
       try {
-        const leaderboard = await ax.get('https://api.boid.com/donationsLeaderboard?chain=kylin')
+        const leaderboard = await ax.get('https://api.boid.com/donationsLeaderboard')
         this.leaderboard = leaderboard.data
         // console.log('LEADERBOARD',this.leaderboard)
 

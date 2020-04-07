@@ -20,7 +20,7 @@ div
                 .infobox
                   ul
                     li A rare on-chain NFT paired with unique physical merchandise
-                    li Show your support for Boid and help to fund Boid development
+                    li Show your support and help to fund Boid development
                     li The NFT provides a cosmetic upgrade to your Boid account 
                     li The NFT upgrades based on your season performance
                     li Season Pass NFTs are collectable and transferable
@@ -35,7 +35,7 @@ div
             .row
               .col.infobox
                 p Funds will be used to develop and maintain the Boid platform including but not limited to infrastructure, legal, and marketing tasks.
-            h6 How else can I help support Boid?
+            h6 How else can I support Boid?
             .row
               .col.infobox
                 ul

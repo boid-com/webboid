@@ -1,10 +1,13 @@
 <template lang="pug">
-div(style="padding:20px; max-width: 1600px;")
+div(style="padding:20px; max-width: 1900px;")
   .row.justify-center
     .col-12(style="max-width: 1000px;")
       div(style="margin:20px;")
         h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px; padding:10px;") Boid Season Pass
     heropanel(style="max-width: 1200px;")
+  .row.justify-center
+    .col(style="max-width:1480px;")
+      trackerpanel
   .row.justify-center
     .col.col-xs-12.col-sm-5.col-md-12.col-lg-3(style="max-width:400px; min-width:400px; margin-top:60px;").relative-position
       q-btn(round small flat @click="updateAccountPanel(),getContributor(),checkFreeCPU()" color="black").absolute-top-right
@@ -19,8 +22,6 @@ div(style="padding:20px; max-width: 1600px;")
     .col.col-xs-12.col-md-12.col-lg-5(style="max-width:550px; margin-right:40px; margin-left:40px; margin-top:60px;").relative-position
       q-btn(round small flat @click="getCoins()" color="black").absolute-top-right
         q-icon(name="refresh" )
-      .row.justify-center(v-if="!global.transitWallet" style="padding:0px;")
-        q-btn(color="green" @click="$root.$emit('initTransitWallet')") Scatter Login
       .row.justify-center
         h5.no-margin Pick a coin to donate
       .row.justify-center(style="margin-top:5px; min-height:30px;")
@@ -39,7 +40,7 @@ div(style="padding:20px; max-width: 1600px;")
         h5.no-margin Details
       .row.justify-center(style="margin:10px; min-height:40px;")
         p Learn about Boid and the Season Pass
-      passpanel
+      passpanel(style="min-width:300px;")
 </template>
 <style lang="stylus" scoped>
   @import '~variables'
@@ -64,9 +65,10 @@ import progresspanel from './SeasonPass-Progress.vue'
 import leaderboard from './SeasonPass-Leaderboard.vue'
 import heropanel from './SeasonPass-Hero.vue'
 import passpanel from './SeasonPass-Pass.vue'
+import trackerpanel from './SeasonPass-Tracker.vue'
 
 export default {
-  components:{selector,accountpanel,progresspanel,leaderboard,heropanel,passpanel},
+  components:{selector,accountpanel,progresspanel,leaderboard,heropanel,passpanel,trackerpanel},
   data(){
     return seasonPass.state
   },

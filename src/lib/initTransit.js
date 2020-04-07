@@ -17,15 +17,16 @@ function rand (min, max) {
 import { Api, JsonRpc } from "eosjs"
 
 const endpoints = [
-  'https://kylin.api.boid.com'
+  // 'https://kylin.api.boid.com'
   // 'https://eos.greymass.com',
-  // 'https://eos.greymass.com:443',
-  // 'https://api.eossweden.org',
+  // // 'https://eos.greymass.com:443',
+  // // 'https://api.eossweden.org',
   // 'https://api.eosn.io',
-  // 'https://eu1.eosdac.io:443',
+  // // 'https://eu1.eosdac.io:443',
   // 'https://api.main.alohaeos.com:443',
   // 'https://node1.eosphere.io',
-  // 'https://node2.eosphere.io',
+  'https://node2.eosphere.io',
+  // 'https://eos.api.boid.com'
 ]
 
 function pickEndpoint () {
@@ -33,9 +34,9 @@ function pickEndpoint () {
   console.log(endpoint)
   return endpoint
 }
-global.boidtokencontract = 'token.boid'
+global.boidtokencontract = 'boidcomtoken'
 const rpc = new JsonRpc(pickEndpoint())
-const boidjs = require('boidjs')({ rpc,config:{tokenContract:'token.boid'}})
+const boidjs = require('boidjs')({ rpc,config:{tokenContract:'boidcomtoken'}})
 window.boidjs = boidjs
 window.transit = {}
 
@@ -83,20 +84,20 @@ async function init () {
   try {
     accessContext = initAccessContext({
       appName: 'app.boid.com',
-      // network: {
-      //   blockchain: 'eos',
-      //   host: 'eos.greymass.com',
-      //   port: 443,
-      //   protocol: 'https',
-      //   chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
-      // },
       network: {
         blockchain: 'eos',
-        host: 'kylin.api.boid.com',
+        host: 'eos.greymass.com',
         port: 443,
         protocol: 'https',
-        chainId: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191'
+        chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
       },
+      // network: {
+      //   blockchain: 'eos',
+      //   host: 'kylin.api.boid.com',
+      //   port: 443,
+      //   protocol: 'https',
+      //   chainId: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191'
+      // },
       walletProviders: [
         scatter()]
       // keycat()      ]
@@ -116,7 +117,6 @@ async function init () {
       await wallet.connect()
       await wallet.login()
       console.log(wallet)
-      wallet.eosAPI = setupFuel(wallet.eosApi)
       return wallet
     } catch (error) {
       if(!error.message) error = { message: error }
@@ -125,56 +125,7 @@ async function init () {
     }
   }
 }
-
-const fuelAuth = {
-  actor: 'greymassfuel',
-  permission: 'cosign',
-}
-
-const fueltx = {
-  account: 'greymassnoop',
-  name: 'noop',
-  authorization: [fuelAuth],
-  data: {},
-}
-
-window.fuelAuth = fuelAuth
-window.fueltx = fueltx
 const ax = require('axios')
-async function checkFuel(account){
-const status = await ax.post('https://eos.greymass.com/v1/fuel/get_quota_usage',{account}).catch(console.log)
-console.log(status.data[0])
-if (!status.data || !status.data[0] || status.data[0].cpu < (status.data[0].quota_cpu - 2000) ) return fueltx
-}
-
-window.checkFuel = checkFuel
-
-
-function setupFuel (api) {
-  console.log(api.authorityProvider)
-  const getRequiredKeys = api.authorityProvider.getRequiredKeys.bind(api.authorityProvider)
-  api.authorityProvider.getRequiredKeys = async (args) => {
-    const actions = args.transaction.actions.map((action) => {
-      const authorization = action.authorization.filter(
-        ({ actor, permission }) =>
-        !(actor === fuelAuth.actor && permission === fuelAuth.permission),
-      )
-      return {
-        ...action,
-        authorization,
-      }
-    })
-    const transaction = {
-      ...args.transaction,
-      actions,
-    }
-    return getRequiredKeys({
-      ...args,
-      transaction,
-    })
-  }
-  return api
-}
 
 // window.transit.initWallet('keycat') 
 

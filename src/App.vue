@@ -3,14 +3,15 @@
  #q-app
     q-layout(color="" ref='layout', view='hHR Lpr lFf', :left-breakpoint='menuBreakpoint', @left-breakpoint='setMenu', :left-style='menuStyle')
       q-toolbar.shadow-1(slot="header" style="webkit-app-region: drag;") 
-        q-toolbar-title(style="font-family: 'Comfortaa', cursive;")
+        q-toolbar-title(style="font-family: 'Comfortaa';")
           | boid
           div(slot='subtitle') Season Break - Alpha
         div(v-if="loginVisible")
-          q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/CreateEOSAccount')") EOS Accounts
+          //- q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/CreateEOSAccount')") EOS Accounts
             img.on-right(src="/statics/eoslogo.png" style="width:15px;")
-          q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
-            q-icon.on-right(name="create")
+          //- q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
+          q-btn.gt-xs(v-if="!local" style="margin-right:10px;" @click="$router.push('/SeasonPass')" color="cyan") Season Launch
+            //- q-icon.on-right(name="create")
           q-btn.gt-xs( v-if="!local" style="margin-right:10px;" @click="$router.push('/staking')" color="green") stake
             q-icon.on-right(name="show_chart")
           q-btn( v-if="local" flat style="margin-right:10px;" @click="ipcRenderer.send('openURL','https://app.boid.com')")
@@ -243,7 +244,7 @@ export default {
     async walletClaim(){
       if (!this.transitWallet) return
       try {
-        const result = await this.transitWallet.eosApi.transact({actions:[window.fueltx,boidjs.tx.claim(this.transitWallet.auth).actions[0]]},boidjs.tx.tapos)
+        const result = await this.transitWallet.eosApi.transact({actions:[boidjs.tx.claim(this.transitWallet.auth).actions[0]]},boidjs.tx.tapos)
         this.txResult = result
         this.$root.$emit("modal","txResult")
       } catch (error) {
