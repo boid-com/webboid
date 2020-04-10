@@ -42,7 +42,7 @@ div
                   li Join and follow the Boid social channels (Links in the footer)
                   li Share your Boid invite link (you get some bonus social power)
                   li Install the Brave Browser (It's great!). If you use the browser for one month then we get a reward #[a(href="https://brave.com/boi614" target="_blank") Download Brave]
-                  li Earn $50 when you sign-up for Crypto.com using #[a(href="https://platinum.crypto.com/r/yeqg9m54fp" target="_blank") This Link]
+                  li Earn $50 when you sign-up for Crypto.com using #[a(href="https://platinum.crypto.com/r/yeqg9m54fp" target="_blank") This Link] #[strong Ref Code: (yeqg9m54fp)]
                   li Earn up to $50 of EOS when you use this link to learn about EOS on #[a(href="https://coinbase.com/earn/eos/invite/yw0c3rb7" target="_blank") Coinbase Earn]
             h6 I'd like to donate privately or with a different currency.
             .row
