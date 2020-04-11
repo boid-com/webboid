@@ -40,7 +40,7 @@ div.relative-position
         small Donations
       .col.on-left
         small USD Total
-    .row.full-width.content-start(style="height:596px; overflow:auto; padding:10px;")
+    .row.full-width.content-start(style="height:634px; overflow:auto; padding:10px;")
       .col-12(v-for="(user,index) of leaderboard" style="padding:10px;")
         .row.no-wrap
           .col-auto.on-left

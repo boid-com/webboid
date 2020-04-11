@@ -84,7 +84,7 @@ export default {
   methods:seasonPass.methods,
   computed:seasonPass.computed,
   mounted(){
-
+    
   },
   watch:{
     
