@@ -67,7 +67,7 @@ div
     //-       @click.native="$router.push({name:'Team',params:{teamname:promo.team.name},query:{promo:promo.id}})"
     //-       )
   .row
-    .col-md-12.col-lg-12(style="padding-bottom:15px;")
+    .col-md-12.col-lg-6(style="padding-bottom:15px;")
       q-card(style="height:100%;" v-if="tiersLeaderboard").animate-scale.relative-position
         p.light-paragraph.text-center Users
         // q-btn.absolute-top-right(flat ground color="green" @click="refreshLeaderboard()")
@@ -145,7 +145,7 @@ div
                       ) {{user.tagline}}
               td() {{parseInt(user.invited).toLocaleString()}}
               td(data-th="Power") {{parseInt(user.sPower).toLocaleString()}}
-    //- .col-md-12.col-lg-6
+    .col-md-12.col-lg-6
       q-card.animate-scale
         p.light-paragraph.text-center Teams
         table.q-table.horizontal-separator(style="width:100%")
