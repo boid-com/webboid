@@ -23,10 +23,10 @@ div
           .col-auto
             q-btn(color="blue" big @click="openURL('https://stats.boid.com')") More Stats
   .row
-    .col-md-12.col-lg-12(style="padding-bottom:15px; max-height:520px; padding:10px;")
-      q-btn(style="padding:0px;" @click="$router.push('/SeasonPass')").no-margin.relative-position
-        img(src="/statics/seasonpass/tshirt.jpg" style="width:100%;").shadow-3
-        h2.no-margin.absolute-center.text-white(style="padding:10px; width:500px; opacity:1; background-color:rgba(10,30,40,.5); font-family: 'Comfortaa';").promotxt Season 4 Launch Event
+    //- .col-md-12.col-lg-12(style="padding-bottom:15px; max-height:520px; padding:10px;")
+    //-   q-btn(style="padding:0px;" @click="$router.push('/SeasonPass')").no-margin.relative-position
+    //-     img(src="/statics/seasonpass/tshirt.jpg" style="width:100%;").shadow-3
+    //-     h2.no-margin.absolute-center.text-white(style="padding:10px; width:500px; opacity:1; background-color:rgba(10,30,40,.5); font-family: 'Comfortaa';").promotxt Season 4 Launch Event
     //-   q-card(style="height:100%; overflow:auto;")
     //-     p.light-paragraph.text-center Top Movers (48hrs)
     //-     table.q-table.horizontal-separator(style="width:100%")
@@ -56,16 +56,17 @@ div
     //-                   ) {{user.tagline}}
     //-           td(data-th="Power" style="width:80px;").text-green-5.text-bold + {{parseInt(user.percentageChange).toLocaleString()}}%
     //-           //- td(data-th="Power") {{parseInt(user.tPower).toLocaleString()}}
-    //- .col(style="padding-bottom:15px; ")
-    //-   q-card(style="height:100%; max-height:520px;")
-    //-     p.light-paragraph.text-center Recently Added Team Promotions
-    //-     div(style="height:430px; overflow:auto;")
-    //-       promoCard.cursor-pointer.clickable(
-    //-       v-for="promo of recentPromotions" 
-    //-       :key="promo.id" :promo="promo"
-    //-       :basic="true"
-    //-       @click.native="$router.push({name:'Team',params:{teamname:promo.team.name},query:{promo:promo.id}})"
-    //-       )
+    .col(style="padding-bottom:15px; ")
+      q-card(style="height:100%; max-height:520px;")
+        p.light-paragraph.text-center Recently Added Team Promotions
+        div(style="height:430px; overflow:auto;")
+          .row
+            promoCard.cursor-pointer.clickable.col-6(
+            v-for="promo of recentPromotions" 
+            :key="promo.id" :promo="promo"
+            :basic="true"
+            @click.native="$router.push({name:'Team',params:{teamname:promo.team.name},query:{promo:promo.id}})"
+            )
   .row
     .col-md-12.col-lg-6(style="padding-bottom:15px;")
       q-card(style="height:100%;" v-if="tiersLeaderboard").animate-scale.relative-position

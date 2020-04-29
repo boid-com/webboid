@@ -10,14 +10,14 @@
           //- q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/CreateEOSAccount')") EOS Accounts
             img.on-right(src="/statics/eoslogo.png" style="width:15px;")
           //- q-btn.gt-xs(v-if="!local" flat style="margin-right:10px;" @click="$router.push('/vote')") vote
-          q-btn.gt-xs(v-if="!local" style="margin-right:10px;" @click="$router.push('/SeasonPass')" color="cyan") Season Launch
+          //- q-btn.gt-xs(v-if="!local" style="margin-right:10px;" @click="$router.push('/SeasonPass')" color="cyan") Season Launch
             //- q-icon.on-right(name="create")
           q-btn.gt-xs( v-if="!local" style="margin-right:10px;" @click="$router.push('/staking')" color="green") stake
             q-icon.on-right(name="show_chart")
           q-btn( v-if="local" flat style="margin-right:10px;" @click="ipcRenderer.send('openURL','https://app.boid.com')")
             q-icon(name="home")
-          //- q-btn( v-else flat style="margin-right:10px;" @click="$router.push('/')")
-          //-   q-icon(name="home")
+          q-btn( v-else flat style="margin-right:10px;" @click="$router.push('/')")
+            q-icon(name="home")
           q-btn.text-black(@click='' flat v-if="transitWallet && !local", color='light')
             .on-right
               | {{transitWallet.auth.accountName}}
