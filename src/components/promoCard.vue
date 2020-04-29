@@ -38,7 +38,7 @@
                   .col-3.on-right(v-else style="width:100px;")
                     div(v-if="basic")
                       .row
-                        img(:src="parsedPromo.team.image" style="height:40px; margin-top:0px;")
+                        img(:src="parsedPromo.team.image" style="max-height:40px; margin-top:0px; max-width:40px;")
           div(v-if="expand != 'grey-5'")   
             .row.justify-center(
               style="margin-top:0px; padding-top:25px; z-index:-1" ).bg-white
