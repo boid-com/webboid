@@ -60,8 +60,9 @@ div
       q-card(style="height:100%; max-height:520px;")
         p.light-paragraph.text-center Recently Added Team Promotions
         div(style="height:430px; overflow:auto;")
-          .row
-            promoCard.cursor-pointer.clickable.col-6(
+          .row.justify-center
+            promoCard.cursor-pointer.clickable.col-auto(
+            style="min-width:420px;"
             v-for="promo of recentPromotions" 
             :key="promo.id" :promo="promo"
             :basic="true"

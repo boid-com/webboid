@@ -6,7 +6,7 @@
           div.hover(style="height:50px; padding:5px;")
             .row
               .col-auto(v-if="!basic")
-                div(style="width:5px; height:100%; margin-right:15px;" :class="{highlight:selected === true,unselected:selected ===false}")
+                div(style="width:5px; height:100%; margin-right:15px;" :class="{highlight:selected === true,unselected:selected === false}")
               .col-2
                 img(:src="parsedPromo.reward.image" style="height:40px; margin-top:0px;")
               .col.relative-position(v-if="parsedPromo.reward.type === 'COIN' ")
