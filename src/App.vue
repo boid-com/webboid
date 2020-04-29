@@ -44,7 +44,7 @@
           q-btn.on-left(v-if="!authenticated" @click='$root.$emit("modal","auth")', color='green')
             | Boid Login
           //- q-btn(@click="$root.$emit('resetScatter')") externaltest
-        scatter
+        //- scatter
         //- q-btn( v-if="!local" @click='$router.push({name:"Stake"})'  color="green") BOID Staking
       div.shadow-0(slot='left' v-if="showSideMenu && !local")
         q-list(no-border='', link='', inset-delimiter='')
