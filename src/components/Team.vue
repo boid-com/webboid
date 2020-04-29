@@ -69,44 +69,35 @@
             q-btn(flat :class="{activeTab:ended === false}" @click="ended = false")
               | live & upcoming
             q-btn(flat :class="{activeTab:ended === true}" @click="ended = true") Ended
-          h6.light-paragraph Physical Rewards 
-          div(v-if="teamPromotions.physical.length > 0" style="max-height:600px; overflow:auto;")
-            promoCard.cursor-pointer.clickable(
-            v-for="promo of teamPromotions.physical" 
-            :key="promo.id" :promo="promo" :userid="thisUser.id"
-            @selected="showPromoLeaderboard(promo)" 
-            @deselected="setupLeaderboard()" 
-            :deselect="selectedPromo")
-          div(v-else)
-            q-card.relative-position(style="padding:20px;")
-              div.light-paragraph.text-center No physical rewards available...
-              q-tooltip You can ask the team leader to add some additional rewards.
-          h6.light-paragraph Coin Rewards 
-          div(v-if="teamPromotions.coin.length > 0" style="max-height:600px; overflow:auto;")
-            promoCard.cursor-pointer.clickable(
-            v-for="promo of teamPromotions.coin" 
-            :key="promo.id" :promo="promo" :userid="thisUser.id" 
-            @selected="showPromoLeaderboard(promo)" 
-            @deselected="setupLeaderboard()" 
-            :deselect="selectedPromo")
-          div(v-else)
-            q-card.relative-position(style="padding:20px;")
-              div.light-paragraph.text-center No coin rewards available...
-              q-tooltip You can ask the team leader to add some additional rewards.
-          h6.light-paragraph Boid NFT Collectibles 
-          div(v-if="teamPromotions.nft.length > 0" style="max-height:600px; overflow:auto;")
-            .row
-              .col
-                promoCard.cursor-pointer.clickable(
-                v-for="promo of teamPromotions.nft" 
-                :key="promo.id" :promo="promo" :userid="thisUser.id"
-                @selected="showPromoLeaderboard(promo)" 
-                @deselected="setupLeaderboard()" 
-                :deselect="selectedPromo")
-          div(v-else)
-            q-card.relative-position(style="padding:20px;")
-              div.light-paragraph.text-center No collectible rewards available...
-              q-tooltip You can ask the team leader to add some additional rewards.
+          div(v-if="teamPromotions.physical.length > 0")
+            h6.light-paragraph Physical Rewards 
+            div( style="max-height:600px; overflow:auto;")
+              promoCard.cursor-pointer.clickable(
+              v-for="promo of teamPromotions.physical" 
+              :key="promo.id" :promo="promo" :userid="thisUser.id"
+              @selected="showPromoLeaderboard(promo)" 
+              @deselected="setupLeaderboard()" 
+              :deselect="selectedPromo")
+          div(v-if="teamPromotions.coin.length > 0")
+            h6.light-paragraph Coin Rewards 
+            div(style="max-height:600px; overflow:auto;")
+              promoCard.cursor-pointer.clickable(
+              v-for="promo of teamPromotions.coin" 
+              :key="promo.id" :promo="promo" :userid="thisUser.id" 
+              @selected="showPromoLeaderboard(promo)" 
+              @deselected="setupLeaderboard()" 
+              :deselect="selectedPromo")
+          div(v-if="teamPromotions.nft.length > 0")
+            h6.light-paragraph Boid NFT Collectibles 
+            div( style="max-height:600px; overflow:auto;")
+              .row
+                .col
+                  promoCard.cursor-pointer.clickable(
+                  v-for="promo of teamPromotions.nft" 
+                  :key="promo.id" :promo="promo" :userid="thisUser.id"
+                  @selected="showPromoLeaderboard(promo)" 
+                  @deselected="setupLeaderboard()" 
+                  :deselect="selectedPromo")
       q-card(v-if="team.tWidget" style="padding:0px; height:510px; overflow:hidden;" )
         iframe(
           :src="team.tWidget"
