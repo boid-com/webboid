@@ -62,7 +62,7 @@ div
         div(style="height:430px; overflow:auto;")
           .row.justify-center
             promoCard.cursor-pointer.clickable.col-auto(
-            style="min-width:420px;"
+            style="min-width:400px;"
             v-for="promo of recentPromotions" 
             :key="promo.id" :promo="promo"
             :basic="true"
