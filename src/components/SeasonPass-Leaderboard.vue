@@ -24,7 +24,7 @@ div.relative-position
           .col-auto
             small power granted
     .row
-      q-btn.full-width( color="teal" small @click="openURL('https://stats.boid.com/d/hGvA6yrZz/donations?orgId=1&from=now-30d&to=now&refresh=15m')") advanced statistics
+      //- q-btn.full-width( color="teal" small @click="openURL('https://stats.boid.com/d/hGvA6yrZz/donations?orgId=1&from=now-30d&to=now&refresh=15m')") advanced statistics
 
   q-card
     div(style="padding:20px; padding-bottom:0px;")

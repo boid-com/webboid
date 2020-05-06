@@ -70,7 +70,8 @@ module.exports = {
       distance = countDown - now;
 
       return {
-        days: Math.floor(distance/day)
+        days: Math.floor(distance/day),
+        hours:Math.floor((distance % (day)) / (hour))
       }
 
     },
@@ -214,10 +215,10 @@ module.exports = {
       return this.config.level
     },
     async getAll(){
+      await this.getConfig()
       this.getCoins()
       if (this.global.transitWallet) this.getContributor(this.global.transitWallet.auth.accountName)
       this.updateAccountPanel()
-      this.getConfig()
       this.global.do.updateBoidWallet()
       this.getLeaderboard()
       this.updateSelectedPay(this.selectedPay)
@@ -230,7 +231,7 @@ module.exports = {
       console.log('Get Leaderboard')
       this.loading.leaderboard = true
       try {
-        const leaderboard = await ax.get('https://api.boid.com/donationsLeaderboard')
+        const leaderboard = await ax.get('https://api.boid.com/donationsLeaderboard' +'?scope='+this.config.current_promotion_scope)
         this.leaderboard = leaderboard.data
         // console.log('LEADERBOARD',this.leaderboard)
 
@@ -245,7 +246,7 @@ module.exports = {
       try {
         this.coins = (await rpc.get_table_rows({
           code: "boiddonation",
-          scope: "boiddonation",
+          scope: this.config.current_promotion_scope,
           table: "tokens",
           limit:-1
         })).rows.map(coin => {
@@ -280,10 +281,11 @@ module.exports = {
       if (!accountName) accountName = this.contributor.account
       // console.log('Get Contributor',accountName)
       this.loading.progressPanel = true
+      // await this.getConfig()
       try {
         const contributor = (await rpc.get_table_rows({
           code: "boiddonation",
-          scope: "boiddonation",
+          scope: this.config.current_promotion_scope,
           table: "contributors",
           lower_bound:accountName,
           limit:1

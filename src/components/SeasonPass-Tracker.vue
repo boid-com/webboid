@@ -4,8 +4,8 @@ div.full-width(style="padding:20px;")
 
     q-card.col.no-margin.full-width(style="margin-bottom:5px;" v-if="config")
       .row.justify-center(style="margin-bottom:20px;")
-        h5(v-if="promoStarted") Promotion starts in {{countdown.days}} days
-        h5(v-else) Promotion starts in {{countdownStart.hours}} hours
+        h5(v-if="promoStarted") Promotion ends in {{countdown.days}} days {{coundown.hours}} hours
+        h5(v-else) Promotion starts in {{countdownStart.days}} days and {{countdownStart.hours}} hours 
       .row
         .col.full-width
           q-progress(:percentage="dateProgress" style="height:20px;")
