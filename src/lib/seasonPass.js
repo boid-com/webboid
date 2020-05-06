@@ -18,7 +18,7 @@ const instructions = [
   },
   {
     text:"Random drawing at the end of the promotion will reward three lucky winners.",
-    img:"/statics/seasonpass/top-contributors.svg"
+    img:"/statics/ticketprize.png"
   }
 ]
 const icons = '/statics/tokenicons/'
