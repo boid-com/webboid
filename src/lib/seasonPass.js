@@ -5,19 +5,19 @@ const state = require('../lib/state')
 const sleep = async(ms) => new Promise((resolve) => setTimeout(resolve, ms))
 const instructions = [
   { 
-    text:"Pick a coin to make a donation with. Each donation causes the minimum for that coin to increase. ",
+    text:"Pick a coin to make a donation with. Each donation causes the minimum for that coin to increase.",
     img:"/statics/seasonpass/pick-a-coin.svg"
   },
   {
-    text:"Send the donation! Each donation provides a Boid Power bonus as a thank-you.",
+    text:"Send the donation! Each donation provides a Boid Power bonus as a thank-you",
     img:"/statics/seasonpass/send-the-donation.svg"
   },
   {
-    text:"Level up to increase the Boid Power reward you receive for your donation. You level up every 10 donations made.",
+    text:"Level up to increase the Boid Power reward you receive for your donation. Each time you level up you receive a Drawing entry that increases your chances to win.",
     img:"/statics/seasonpass/boid-power-increase.svg"
   },
   {
-    text:"The top contributors will receive a rare NFT season pass and exclusive physical merchandise.",
+    text:"Random drawing at the end of the promotion will reward three lucky winners.",
     img:"/statics/seasonpass/top-contributors.svg"
   }
 ]

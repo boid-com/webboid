@@ -3,7 +3,11 @@ div(style="padding:20px; max-width: 1900px;")
   .row.justify-center
     .col-12(style="max-width: 1000px;")
       div(style="margin:20px;")
-        h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px; padding:10px;") Boid Season Pass
+        h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px; padding:10px;") KROWN IBC Birthday Contest
+        .row.justify-center
+          p We need your help. Support BOID Teams with a contribution towards COVID-19 Research while helping test out the new EOSIO Superhighway IBC.  The more donations you contribute the higher and faster you can Level Up. This will give you more entries into the Event Drawing!
+          p Contribute from any EOS wallet, simply send any of the whitelisted tokens to "boiddonation"
+          p This is brought to you in part by the KROWN DAC Community in celebration of their 1st Birthday!
     heropanel(style="max-width: 1200px;")
   .row.justify-center
     .col(style="max-width:1480px;")
@@ -16,7 +20,7 @@ div(style="padding:20px; max-width: 1900px;")
         h5.no-margin Track your progress
       .row.justify-center(style="margin:10px; min-height:40px;")
         .col
-          p.text-center Level up and earn NFT rewards.
+          p.text-center Level up for more chances to win.
       progresspanel
       accountpanel(style="margin-top:20px;")
     .col.col-xs-12.col-md-12.col-lg-5(style="max-width:550px; margin-right:40px; margin-left:40px; margin-top:60px;").relative-position
@@ -39,7 +43,6 @@ div(style="padding:20px; max-width: 1900px;")
       .row.justify-center
         h5.no-margin Details
       .row.justify-center(style="margin:10px; min-height:40px;")
-        p Learn about Boid and the Season Pass
       passpanel(style="min-width:300px;")
 </template>
 <style lang="stylus" scoped>

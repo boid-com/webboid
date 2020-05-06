@@ -4,7 +4,7 @@ div.full-width(style="padding:20px;")
 
     q-card.col.no-margin.full-width(style="margin-bottom:5px;" v-if="config")
       .row.justify-center(style="margin-bottom:20px;")
-        h5(v-if="promoStarted") Season 4 starts in {{countdown.days}} days
+        h5(v-if="promoStarted") Promotion starts in {{countdown.days}} days
         h5(v-else) Promotion starts in {{countdownStart.hours}} hours
       .row
         .col.full-width
@@ -17,9 +17,9 @@ div.full-width(style="padding:20px;")
           h6 {{endDate}}
           small Season 4 Start
       .row(style="margin-top:10px;")
-        p.no-margin When season 4 starts the donations contract will pause and season 4 NFTs will be issued. 
+        p.no-margin Contest Starts 5/10/20 Contest Ends 5/23/20 12PM PST
       .row
-        p.no-margin Season Pass NFTs for Season 4 can not be created after the start of season 4.
+        p.no-margin Drawing will be Live! Need not be present to win.
 </template>
 <style lang="stylus" scoped>
   @import '~variables'

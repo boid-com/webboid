@@ -30,6 +30,8 @@ export default new VueRouter({
     { path: '/changeaccount/:requestId', component: load('ChangeAccount'), name: 'ChangeAccount' },
     { path: '/cloudBoid', component: load('CloudBoid'), name: 'CloudBoid' },
     { path: '/seasonpass', component: load('SeasonPass'), name: 'SeasonPass' },
+    { path: '/drawing', component: load('SeasonPass'), name: 'SeasonPass' },
+
     // { path: '/tx/:requestId', component: load('ChangeAccount'), name: 'ChangeAccount' },
     { path: '/vote/', component: load('vote'), name: 'Vote' },
     { path: '*', component: load('Index') }
