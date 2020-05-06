@@ -20,7 +20,7 @@ div(style="padding:20px; max-width: 1900px;")
         h5.no-margin Track your progress
       .row.justify-center(style="margin:10px; min-height:40px;")
         .col
-          p.text-center Level up for more chances to win.
+          p.text-center Donations of any size help level up your account equally.
       progresspanel
       accountpanel(style="margin-top:20px;")
     .col.col-xs-12.col-md-12.col-lg-5(style="max-width:550px; margin-right:40px; margin-left:40px; margin-top:60px;").relative-position
@@ -37,7 +37,7 @@ div(style="padding:20px; max-width: 1900px;")
       .row.justify-center
         h5.no-margin Contributors
       .row.justify-center(style="margin:10px; min-height:40px;")
-        p The top 20% will receive the Boid Season Pass.
+        p Increases your level to increase your chance to win.
       leaderboard
     .col.col-lg-8(style="max-width:1200px; margin-top:60px;")
       .row.justify-center
