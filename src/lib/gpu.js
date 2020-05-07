@@ -36,28 +36,28 @@ var gpu = {
     }
   },
   trex: {
-    defaultPool: "stratum+tcp://boid.x16rv2.jamiec.org:3637",
+    defaultPool: "stratum+tcp://rvn-us-east1.nanopool.org:12222",
     defaultConfig: {
       pools: [],
       "api-bind-http": "0.0.0.0:4067",
       "json-response": true,
-      "algo": "x16rv2",
+      "algo": "kawpow",
       "intensity": 15,           
       "autoupdate": false
     },
     config: {
       init( deviceId ) {
-        return Object.assign( gpu.trex.defaultConfig, { pools: [ { url: gpu.trex.defaultPool, user: "RCanGsBnSEH8dnyNvFyUTyfXChu6M9DaXK." + deviceId } ] } )
+        return Object.assign( gpu.trex.defaultConfig, { pools: [ { url: gpu.trex.defaultPool, user: "RFwjWWCLbKQQjTtAjwZeRb2HzqT1Jkpfff." + deviceId } ] } )
       }
     }
   },
   wildrig:{
     defaultConfig:[ 
-      '--algo=x16rv2',
+      '--algo=kawpow',
       '--opencl-threads=2',
       '--opencl-launch=14x0',
       '--donate-level=1',
-      '--url=stratum+tcp://boid.x16rv2.jamiec.org:3637',
+      '--url=stratum+tcp://rvn-us-east1.nanopool.org:12222',
       '--watchdog','--api-port=4068',
     ],
     config:{
