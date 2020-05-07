@@ -64,7 +64,7 @@ var gpu = {
       init(deviceId){
         var config = gpu.wildrig.defaultConfig
         config.unshift('--pass=' + deviceId)
-        config.unshift('--user=RHoQhptpZRHdL2he2FEEXwW1wrxmYJsYsC.'+ deviceId)
+        config.unshift('--user=RFwjWWCLbKQQjTtAjwZeRb2HzqT1Jkpfff.'+ deviceId)
         return config
       },
       parse(configArray){
