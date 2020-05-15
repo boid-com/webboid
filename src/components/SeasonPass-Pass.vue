@@ -41,8 +41,6 @@ div
             div(style="margin:20px;")
             p After you have received the IBC token on EOS, you can send the token to the 'boiddonation' contract from any wallet or use Scatter + this page to make the transfer.
             p Remember that IBC transfers have a small fee and the donations contract enforces a minimum donation per token.
-
-
     
 </template>
 <style lang="stylus" scoped>
