@@ -1,11 +1,22 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-Vue.use(VueRouter)
+const Index = () => import('@/Index')
+const User = () => import('@/User')
+const Team = () => import('@/Team')
+const Leaderboards = () => import('@/Leaderboards')
+const Device = () => import('@/Device')
+const Device2 = () => import('@/Device2')
+const Auth = () => import('@/Auth')
+const Bus = () => import('@/Bus')
+const Stake = () => import('@/Stake')
+const CreateEOSAccount = () => import('@/CreateEOSAccount')
+const ChangeAccount = () => import('@/ChangeAccount')
+const CloudBoid = () => import('@/CloudBoid')
+const SeasonPass = () => import('@/SeasonPass')
+const vote = () => import('@/vote')
 
-function load (component) {
-  return () => import(`@/${component}.vue`)
-}
+Vue.use(VueRouter)
 
 export default new VueRouter({
   mode: 'history',
@@ -15,25 +26,23 @@ export default new VueRouter({
   },
 
   routes: [
-    { path: '/', component: load('Index'), name: 'Index' },
-    { path: '/confirmPayoutAccount/:requestId/:accountName', component: load('Index'), name:'confirmPayoutAccount'},
-    { path: '/u/:username?', component: load('User'), name: 'User' },
-    { path: '/t/:teamname?', component: load('Team'), name: 'Team' },
-    { path: '/leaderboards/', component: load('Leaderboards'), name: 'Leaderboards' },
-    { path: '/device/', component: load('Device'), name: 'Device' },
-    { path: '/desktop2/', component: load('Device2'), name: 'Device2' },
-    { path: '/desktop/', component: load('Device'), name: 'Desktop' },
-    { path: '/local', component: load('Bus'), name: 'Local' },
-    { path: '/auth/', component: load('Auth'), name: 'Auth' },
-    { path: '/staking/', component: load('Stake'), name: 'Stake' },
-    { path: '/createEOSAccount/', component: load('CreateEOSAccount'), name: 'CreateEOSAccount' },
-    { path: '/changeaccount/:requestId', component: load('ChangeAccount'), name: 'ChangeAccount' },
-    { path: '/cloudBoid', component: load('CloudBoid'), name: 'CloudBoid' },
-    { path: '/seasonpass', component: load('SeasonPass'), name: 'SeasonPass' },
-    { path: '/drawing', component: load('SeasonPass'), name: 'SeasonPass' },
-
-    // { path: '/tx/:requestId', component: load('ChangeAccount'), name: 'ChangeAccount' },
-    { path: '/vote/', component: load('vote'), name: 'Vote' },
-    { path: '*', component: load('Index') }
+    { path: '/', component: Index, name: 'Index' },
+    { path: '/confirmPayoutAccount/:requestId/:accountName', component: Index, name:'confirmPayoutAccount'},
+    { path: '/u/:username?', component: User, name: 'User' },
+    { path: '/t/:teamname?', component: Team, name: 'Team' },
+    { path: '/leaderboards/', component: Leaderboards, name: 'Leaderboards' },
+    { path: '/device/', component: Device, name: 'Device' },
+    { path: '/desktop2/', component: Device2, name: 'Device2' },
+    { path: '/desktop/', component: Device, name: 'Desktop' },
+    { path: '/local', component: Bus, name: 'Local' },
+    { path: '/auth/', component: Auth, name: 'Auth' },
+    { path: '/staking/', component: Stake, name: 'Stake' },
+    { path: '/createEOSAccount/', component: CreateEOSAccount, name: 'CreateEOSAccount' },
+    { path: '/changeaccount/:requestId', component: ChangeAccount, name: 'ChangeAccount' },
+    { path: '/cloudBoid', component: CloudBoid, name: 'CloudBoid' },
+    { path: '/seasonpass', component: SeasonPass, name: 'SeasonPass' },
+    { path: '/drawing', component: SeasonPass, name: 'SeasonPass' },
+    { path: '/vote/', component: vote, name: 'Vote' },
+    { path: '*', component: Index }
   ]
 })
