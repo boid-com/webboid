@@ -1,5 +1,5 @@
 <template lang="pug">
-q-card.cursor-pointer.relative-position.shadow-4(v-ripple="{ color: 'green' }" style="margin:10px; padding:0px; min-width:100px; zoom: 1; border-radius: 20px; user-select:none;" :class="{selectedpay:selectedPay === coin.symbol}" @click="updateSelectedPay(coin.symbol)")
+q-card.cursor-pointer.relative-position.shadow-4(v-ripple="{ color: 'green' }" style="margin:10px; padding:0px; min-width:100px; max-width:200px; zoom: 1; border-radius: 20px; user-select:none;" :class="{selectedpay:selectedPay === coin.symbol}" @click="updateSelectedPay(coin.symbol)")
   .row.justify-center.center-items(style="width:100%; padding-top:8px;")
     .col-auto(style="height:50px;")
       img(:src="coin.img" style="height:100%; padding:10px;")
