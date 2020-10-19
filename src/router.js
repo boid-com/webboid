@@ -40,7 +40,7 @@ export default new VueRouter({
     { path: '/createEOSAccount/', component: CreateEOSAccount, name: 'CreateEOSAccount' },
     { path: '/changeaccount/:requestId', component: ChangeAccount, name: 'ChangeAccount' },
     { path: '/cloudBoid', component: CloudBoid, name: 'CloudBoid' },
-    { path: '/seasonpass', component: SeasonPass, name: 'SeasonPass' },
+    { path: '/donate', component: SeasonPass, name: 'SeasonPass' },
     { path: '/drawing', component: SeasonPass, name: 'SeasonPass' },
     { path: '/vote/', component: vote, name: 'Vote' },
     { path: '*', component: Index }

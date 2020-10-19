@@ -10,16 +10,16 @@ const instructions = [
     img:"/statics/seasonpass/pick-a-coin.svg"
   },
   {
-    text:"Send the donation! Each donation provides a Boid Power bonus as a thank-you",
+    text:"Send the donation! Each donation provides some Boid Power.",
     img:"/statics/seasonpass/send-the-donation.svg"
   },
   {
-    text:"Level up to increase the Boid Power reward you receive for your donation. Each time you level up you receive a Drawing entry that increases your chances to win.",
+    text:"Level up to increase the Boid Power reward you receive for your donation. Each time you level up you a higher tier of NFT.",
     img:"/statics/seasonpass/boid-power-increase.svg"
   },
   {
-    text:"Random drawing at the end of the promotion will reward three lucky winners.",
-    img:"/statics/ticketprize.png"
+    text:"Step 4, get NFTs",
+    img:"/statics/seasonpass/top-contributors.svg"
   }
 ]
 const icons = '/statics/tokenicons/'

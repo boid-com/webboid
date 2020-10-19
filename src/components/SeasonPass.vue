@@ -3,11 +3,11 @@ div(style="padding:20px; max-width: 1900px;")
   .row.justify-center
     .col-12(style="max-width: 1000px;")
       div(style="margin:20px;")
-        h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px; padding:10px;") KROWN IBC Birthday Contest
+        h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px; padding:10px;") Boid NFT Donation
         .row.justify-center
-          p We need your help. Support BOID Teams with a contribution towards COVID-19 Research while helping test out the new EOSIO Superhighway IBC.  The more donations you contribute the higher and faster you can Level Up. This will give you more entries into the Event Drawing!
-          p Contribute from any EOS wallet, simply send any of the whitelisted tokens to "boiddonation"
-          p This is brought to you in part by the KROWN DAC Community in celebration of their 1st Birthday!
+          p words  
+          p words
+          p words
     heropanel(style="max-width: 1200px;")
   .row.justify-center
     .col(style="max-width:1480px;")
