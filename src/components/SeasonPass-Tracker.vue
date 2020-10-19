@@ -17,9 +17,9 @@ div.full-width(style="padding:20px;")
           h6 {{endDate}}
           small Season 4 Start
       .row(style="margin-top:10px;")
-        p.no-margin Contest Starts 5/10/20 Contest Ends 5/23/20 12PM PST
+        p.no-margin Text can go here
       .row
-        p.no-margin Drawing will be Live! Need not be present to win.
+        p.no-margin Text can go here too!
 </template>
 <style lang="stylus" scoped>
   @import '~variables'
