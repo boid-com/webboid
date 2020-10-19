@@ -3,6 +3,7 @@ const rpc = window.eosjs.rpc
 const ax = require('axios')
 const state = require('../lib/state')
 const sleep = async(ms) => new Promise((resolve) => setTimeout(resolve, ms))
+const api = require('../api')
 const instructions = [
   { 
     text:"Pick a coin to make a donation with. Each donation causes the minimum for that coin to increase.",
@@ -231,7 +232,7 @@ module.exports = {
       console.log('Get Leaderboard')
       this.loading.leaderboard = true
       try {
-        const leaderboard = await ax.get('https://api.boid.com/donationsLeaderboard' +'?scope='+this.config.current_promotion_scope)
+        const leaderboard = await api.axios.get('donationsLeaderboard' +'?scope='+this.config.current_promotion_scope)
         this.leaderboard = leaderboard.data
         // console.log('LEADERBOARD',this.leaderboard)
 
