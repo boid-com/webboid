@@ -93,7 +93,6 @@ div(style="padding:20px; max-width: 1200px;")
   .selectedpay
     // background-color $green-4
     // color white
-    outline 2px solid $green-4
     box-shadow: 0 2px 10px 2px $green-4
   .costrow
     outline 2px solid $blue-6

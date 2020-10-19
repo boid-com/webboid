@@ -53,11 +53,7 @@ div(style="padding:20px; max-width: 1900px;")
   .selectedTab
     background-color $blue-6
     color: white
-  .selectedpay
-    // background-color $-4
-    // color white
-    outline 1px solid $green-3
-    box-shadow: 0 4px 10px 2px $green-8
+
 </style>
 
 <script>
