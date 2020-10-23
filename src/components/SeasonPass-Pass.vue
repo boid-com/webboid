@@ -21,8 +21,6 @@ div
                     li Each token pool has a power multiplier which increases as the power resevior reaches capacity (1x - 5x).
                     li Power granted is your account base power x the coin power multiplier, with a minimum of 10 power and max of 500.
                     li You can only make a donation in between start/end of the event.
-
-
         .col
           div(style="margin-left:20px;")
             h6 NFT Distribution rules

@@ -19,7 +19,7 @@ const instructions = [
   },
   {
     text:"Step 4, NFTs will be distributed at the end.",
-    img:"/statics/seasonpass/top-contributors.svg"
+    img:"/statics/seasonpass/boid-cards.png"
   }
 ]
 const icons = '/statics/tokenicons/'

@@ -1,7 +1,7 @@
 <template lang="pug">
 div.relative-position
   .row.justify-center
-    .col(v-for="(coin,index) of coins" :key="index" style="padding:0px;")
+    .col-auto(v-for="(coin,index) of coins" :key="index" style="padding:0px;")
       selectbtn(:coin="coin")
   .row.justify-center(v-if="!global.transitWallet" style="padding:20px;")
     q-btn(color="green" @click="$root.$emit('initTransitWallet')") Scatter Login
