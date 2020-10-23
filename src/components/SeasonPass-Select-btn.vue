@@ -1,6 +1,6 @@
 <template lang="pug">
-q-card.cursor-pointer.relative-position.shadow-4(v-ripple="{ color: 'green' }" style="margin:10px; padding:0px; width:140px; zoom: 1; border-radius: 20px; user-select:none;" :class="{selectedpay:selectedPay === coin.symbol}" @click="updateSelectedPay(coin.symbol)")
-  .row.justify-center.center-items(style="width:100%; padding-top:8px;").no-wrap
+q-card.cursor-pointer.relative-position.shadow-2(v-ripple style="margin:10px; padding:0px; width:130px; height:140px; zoom: 1; border-radius:30px; user-select:none;" :class="{selectedpay:selectedPay === coin.symbol}" @click="updateSelectedPay(coin.symbol)")
+  .row.justify-center.center-items(style="width:100%; padding-top:3px;").no-wrap
     .col-auto(style="height:50px;")
       img(:src="coin.img" style="height:100%; padding:10px;")
     .col-auto.on-left
@@ -27,10 +27,10 @@ q-card.cursor-pointer.relative-position.shadow-4(v-ripple="{ color: 'green' }" s
     background-color $blue-6
     color: white
   .selectedpay
-    // background-color $-4
+    // background-color $blue-1
     // color white
-    // outline 1px solid $green-3
-    box-shadow: 0 4px 10px 2px $green-8
+    // outline 1px solid $green-1
+    box-shadow: 0 4px 10px 2px $green-5
 </style>
 
 <script>

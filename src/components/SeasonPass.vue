@@ -44,7 +44,7 @@ div(style="padding:20px; max-width: 1900px;")
       .row.justify-center
         h5.no-margin Contributors
       .row.justify-center(style="margin:10px; min-height:40px;")
-        p Increases your level to increase your chance to win.
+        p Higher USD Contributions = lower NFT mint #
       leaderboard
     .col.col-lg-8(style="max-width:1200px; margin-top:60px;")
       .row.justify-center
