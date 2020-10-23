@@ -1,8 +1,8 @@
 <template lang="pug">
-div.full-width(style="padding:20px;")
+div.full-width(style="padding:0px;")
   .row.justify-center.relative-position.full-width(style="margin-top:0px;")
 
-    q-card.col.no-margin.full-width(style="margin-bottom:5px;" v-if="config")
+    div.col.no-margin.full-width(style="margin-bottom:5px;" v-if="config")
       .row.justify-center(style="margin-bottom:20px;")
         h5(v-if="promoStarted") Promotion ends in {{countdown.days}} days {{countdown.hours}} hours
         h5(v-else) Promotion starts in {{countdownStart.days}} days and {{countdownStart.hours}} hours 
