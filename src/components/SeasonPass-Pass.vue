@@ -44,9 +44,8 @@ div
             .row
               .col.infobox
                 ul
-                  li To activate bonus, the card must be activated during a Boid Season with an active Season Pass.
+                  li To activate bonus, the card must be activated during a Boid Season.
                   li Tesla NFTs can't be stacked, you can only activate one card of this type in your account.
-                  li Tesla NFTs are reusable for multiple seasons as long as you have a season pass for that Boid Season.
                   li All contributors will receive one season pass for Boid Season 5.
                   li
                     a(href="https://eos.atomichub.io/explorer/asset/2199023257635") Nikola Tesla - GOLD
