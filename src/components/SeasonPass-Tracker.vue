@@ -33,9 +33,7 @@ div.full-width(style="padding:20px;")
   li
     padding 5px
     font-size 16px
-  .q-card
-    padding 20px !important
-    margin 10px
+
 </style>
 
 <script>
