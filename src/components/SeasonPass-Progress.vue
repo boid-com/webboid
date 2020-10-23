@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  q-card.relative-position
+  q-card.relative-position(style="padding:20px;")
     .row(v-if="contributor && config")
       .col-auto.on-left
         .row.justify-center
@@ -42,8 +42,6 @@ div
 </template>
 <style lang="stylus" scoped>
   @import '~variables'
-  .q-card
-    padding 20px
   .selectedTab
     background-color $blue-6
     color: white
