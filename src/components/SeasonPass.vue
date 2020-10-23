@@ -5,9 +5,16 @@ div(style="padding:20px; max-width: 1900px;")
       div(style="margin:20px;")
         h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px; padding:10px;") Boid NFT Donation
         .row.justify-center
-          p words  
-          p words
-          p words
+          .col-auto
+
+            .row
+              div Boid would like YOU to support its development! 
+            .row
+              div We would like to make a lot of improvements to our app and go multi-chain!
+            .row
+              div There are also advanced talks about a Boid Game!
+            .row
+              div Help us with your donations and you have a chance to be rewarded a special edition Boid Tesla NFT!
     heropanel(style="max-width: 1200px;")
   .row.justify-center
     .col(style="max-width:1480px;")

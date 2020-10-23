@@ -15,11 +15,11 @@ div.full-width(style="padding:20px;")
           small Promotion Start
         .col-auto
           h6 {{endDate}}
-          small Season 4 Start
-      .row(style="margin-top:10px;")
-        p.no-margin Text can go here
-      .row
-        p.no-margin Text can go here too!
+          small Promotion End
+      //- .row(style="margin-top:10px;")
+      //-   p.no-margin Text can go here
+      //- .row
+      //-   p.no-margin Text can go here too!
 </template>
 <style lang="stylus" scoped>
   @import '~variables'
