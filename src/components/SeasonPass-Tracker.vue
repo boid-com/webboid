@@ -2,7 +2,7 @@
 div.full-width(style="padding:0px;")
   .row.justify-center.relative-position.full-width(style="margin-top:0px;")
 
-    div.col.no-margin.full-width(style="margin-bottom:5px; padding-left:210px; padding-right:210px;" v-if="config")
+    div.col.no-margin.full-width(style="margin-bottom:5px; padding-left:150px; padding-right:150px;" v-if="config")
       .row.justify-center(style="margin-bottom:20px;")
         h5(v-if="promoStarted") {{promoEndingMsg}}
         h5(v-else) {{promoStartingMsg}} 

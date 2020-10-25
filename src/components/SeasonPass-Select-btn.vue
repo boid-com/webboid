@@ -19,7 +19,10 @@ div.cursor-pointer.relative-position.shadow-2(v-ripple style="margin:10px; paddi
     div(style="width:80px;")
       div(style="padding:1px;")
       q-progress(:percentage="reservior" style="height:5px;" color="amber-6") 
-      q-tooltip Charge: {{reservior}}%
+      q-tooltip 
+        div Charge: {{reservior}}%
+        div Power Available: {{coin.availablePower.toFixed(0)}}
+        div Max Capacity: {{coin.powerCap.toFixed(0)}}
 
 </template>
 <style lang="stylus" scoped>
