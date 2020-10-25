@@ -4,8 +4,8 @@ div.full-width(style="padding:0px;")
 
     div.col.no-margin.full-width(style="margin-bottom:5px; padding-left:210px; padding-right:210px;" v-if="config")
       .row.justify-center(style="margin-bottom:20px;")
-        h5(v-if="promoStarted") Promotion ends in {{countdown.days}} days {{countdown.hours}} hours
-        h5(v-else) Promotion starts in {{countdownStart.days}} days and {{countdownStart.hours}} hours 
+        h5(v-if="promoStarted") {{promoEndingMsg}}
+        h5(v-else) {{promoStartingMsg}} 
       .row
         .col.full-width
           q-progress(:percentage="dateProgress" style="height:20px;")
@@ -46,7 +46,30 @@ export default {
     return seasonPass.state
   },
   methods:seasonPass.methods,
-  computed:seasonPass.computed,
+  computed:{
+    promoStartingMsg(){
+      if (!this.countdownStart) return
+      else if (this.countdownStart.hours < 1 && this.countdownStart.days < 1) return `Promotion Starting ${this.startDate}`
+      else if (this.countdownStart.days < 1) return `Promotion starts in ${this.countdownStart.hours} hours`
+      else return `Promotion starts in ${this.countdownStart.days} ${this.days} and ${this.countdownStart.hours} hours`
+    },
+    promoEndingMsg(){
+      if (!this.countdown) return
+      else if (this.countdown.hours < 1 && this.countdown.days < 1) return `Promotion Ending ${this.startDate}`
+      else if (this.countdown.days < 1) return `Promotion ends in ${this.countdown.hours} hours`
+      else return `Promotion ends in ${this.countdown.days} ${this.endingDays} and ${this.countdown.hours} hours`
+    },
+    days(){
+      if (!this.countdownStart.days) return 'days'
+      if (this.countdownStart.days >=2) return 'days'
+      else return 'day'
+    },
+    endingDays(){
+      if (!this.countdown.days) return 'days'
+      if (this.countdown.days >=2) return 'days'
+      else return 'day'
+    },
+    ...seasonPass.computed},
   mounted(){
 
   },
