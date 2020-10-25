@@ -17,6 +17,10 @@ div.cursor-pointer.relative-position.shadow-2(v-ripple style="margin:10px; paddi
       img(src="/statics/images/BoidPower.svg" style="width:15px; margin:0px;")
     .col-auto.text-green.strong
       p.no-margin + {{calcPowerBonus(parseFloat(coin.availablePower),coin.power_reward_multiplier).toFixed(0)}}
+  .row.justify-center
+    div(style="width:80px;").bg-grey-4
+      q-progress(:percentage="reservior" style="height:5px;" color="green-6")
+
 </template>
 <style lang="stylus" scoped>
   @import '~variables'
@@ -30,12 +34,14 @@ div.cursor-pointer.relative-position.shadow-2(v-ripple style="margin:10px; paddi
     // background-color $blue-1
     // color white
     // outline 1px solid $green-1
-    box-shadow: 0 4px 10px 2px $green-5
+    box-shadow: 0 4px 10px 2px $blue-4
 </style>
 
 <script>
 import seasonPass from '../lib/seasonPass'
-
+function convertRange( value, r1, r2 ) { 
+    return ( value - r1[ 0 ] ) * ( r2[ 1 ] - r2[ 0 ] ) / ( r1[ 1 ] - r1[ 0 ] ) + r2[ 0 ];
+}
 
 export default {
   props:['coin'],
@@ -43,8 +49,15 @@ export default {
     return seasonPass.state
   },
   methods:seasonPass.methods,
-  computed:seasonPass.computed,
+  computed:{
+    reservior(){
+      if(!this.coin)return 0
+      return convertRange(this.coin.availablePower,[0,this.coin.powerCap],[0,100])
+    },
+    ...seasonPass.computed
+  },
   mounted(){
+
   },
   watch:{
   }

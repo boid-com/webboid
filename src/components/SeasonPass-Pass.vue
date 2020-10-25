@@ -10,8 +10,8 @@ div
               .col
                 .infobox
                   ul
-                    li Each whitelisted token has a minimum donation amount which increases slightly with each donation.
-                    li Each token has a Boid Power reservoir which charges over time.
+                    li Each token has a minimum donation amount which increases slightly after each donation.
+                    li Each token has a Boid Power reservoir which accumulates power over time.
                     li When users donate a specific token, they can receive some Boid Power from that Boid Power reservoir.
                     li The available power in a token pool could drain to 0 if the donation rate exceeds the recharge rate.
                     li Each user has a global metric which is the total number of donations made.
@@ -19,7 +19,7 @@ div
                     li Each time an account levels up, the base power reward they receive from a donation increases (5 - 100).
                     li Each token pool has a maximum power capacity and the available power will not increase past this capacity.
                     li Each token pool has a power multiplier which increases as the power reservoir reaches capacity (1x - 5x).
-                    li Power granted is your account base power x the coin power multiplier, with a minimum of 5 power and max of 500.
+                    li The Power granted per donation is (level base power) x (coin power multiplier).
                     li You can only make a donation in between start/end of the event.
                     li The contract is open source on #[a(href="https://github.com/boid-com/boiddonation" target="_blank") github].
 

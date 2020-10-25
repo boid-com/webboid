@@ -258,6 +258,7 @@ module.exports = {
           coin.min_contribution = parseFloat(parseFloat(coin.min_contribution).toFixed(coin.token.sym.split(',')[0]))+ 0.0001
           coin.minContribution = coin.min_contribution.toLocaleString(undefined,{ minimumFractionDigits: 4 })
           coin.availablePower = parseFloat(coin.current_power_available)
+          coin.powerCap = parseFloat(coin.power_available_cap)
           // coin.lastUpdated = coin.
           return coin
         })
