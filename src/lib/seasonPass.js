@@ -18,7 +18,7 @@ const instructions = [
     img:"/statics/seasonpass/boid-power-increase.svg"
   },
   {
-    text:"Step 4, NFTs will be distributed at the end.",
+    text:"NFTs will be distributed at the end.",
     img:"/statics/seasonpass/boid-cards.png"
   }
 ]

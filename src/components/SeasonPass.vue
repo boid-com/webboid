@@ -6,15 +6,8 @@ div(style="padding:20px; max-width: 1900px;")
         h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px; padding:10px;") Boid NFT Donation
         .row.justify-center
           .col-auto
-
             .row
-              div Boid would like YOU to support its development! 
-            .row
-              div We would like to make a lot of improvements to our app and go multi-chain!
-            .row
-              div There are also advanced talks about a Boid Game!
-            .row
-              div Help us with your donations and you have a chance to be rewarded a special edition Boid Tesla NFT!
+              div Donate to support Boid and you have a chance to be rewarded with a special edition Boid Tesla NFT!
     heropanel(style="max-width: 1200px;")
   .row.justify-center
     .col(style="max-width:1480px;")
@@ -27,7 +20,7 @@ div(style="padding:20px; max-width: 1900px;")
         h5.no-margin Track your progress
       .row.justify-center(style="margin:10px; min-height:40px;")
         .col
-          p.text-center Donations of any size help level up your account equally.
+          p.text-center Donations of #[strong any size] level up your account equally.
       progresspanel
       accountpanel(style="margin-top:20px;")
     .col.col-xs-12.col-md-12.col-lg-5(style="max-width:550px; margin-right:40px; margin-left:40px; margin-top:60px;").relative-position
