@@ -23,6 +23,8 @@
     }]
   ],
   "plugins": [
+    ["@babel/plugin-transform-spread"],
+    ["@babel/plugin-proposal-object-rest-spread"],
     ["add-module-exports"],
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     ["transform-es2015-modules-commonjs"],
@@ -39,7 +41,7 @@
       "corejs": 2,
       "helpers": true,
       "regenerator": true,
-      "useESModules": false
+      "useESModules": true
     }
     ]
   ],
