@@ -5,9 +5,7 @@ div(style="padding:20px; max-width: 1900px;")
       div(style="margin:20px;")
         h2.text-weight-light.text-center(style="font-family: 'Comfortaa', cursive; color:#089cfc; user-select: none; margin-bottom:5px; padding:10px;") Boid NFT Donation
         .row.justify-center
-          .col-auto
-            .row
-              div Donate to support Boid and you have a chance to be rewarded with a special edition Boid Tesla NFT!
+          div Donate to support Boid and you have a chance to be rewarded with a special edition Boid Tesla NFT!
     heropanel(style="max-width: 1200px;")
   .row.justify-center
     .col(style="max-width:1480px;")

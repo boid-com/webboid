@@ -3,8 +3,8 @@ div
   .row.justify-center.relative-position(style="margin-top:0px;")
     q-card.col.no-margin(style="margin-bottom:5px;")
       .row
-        .col(style="min-width:300px;")
-          div(style="margin-left:20px;")
+        .col(style="min-width:250px;")
+          div(style="margin-left:10px;")
             h6 Event Mechanics
             .row
               .col

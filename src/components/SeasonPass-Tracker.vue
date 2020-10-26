@@ -1,25 +1,25 @@
 <template lang="pug">
 div.full-width(style="padding:0px;")
   .row.justify-center.relative-position.full-width(style="margin-top:0px;")
-
-    div.col.no-margin.full-width(style="margin-bottom:5px; padding-left:150px; padding-right:150px;" v-if="config")
-      .row.justify-center(style="margin-bottom:20px;")
-        h5(v-if="promoStarted") {{promoEndingMsg}}
-        h5(v-else) {{promoStartingMsg}} 
-      .row
-        .col.full-width
-          q-progress(:percentage="dateProgress" style="height:20px;")
-      .row.justify-between(style="margin-bottom:20px;")
-        .col-auto
-          h6 {{startDate}}
-          small Promotion Start
-        .col-auto
-          h6 {{endDate}}
-          small Promotion End
-      //- .row(style="margin-top:10px;")
-      //-   p.no-margin Text can go here
-      //- .row
-      //-   p.no-margin Text can go here too!
+    .col-sm-12.col-md-9
+      div.col.no-margin.full-width(style="margin-bottom:5px; " v-if="config")
+        .row.justify-center(style="margin-bottom:20px;")
+          h5(v-if="promoStarted") {{promoEndingMsg}}
+          h5(v-else) {{promoStartingMsg}} 
+        .row
+          .col.full-width
+            q-progress(:percentage="dateProgress" style="height:20px;")
+        .row.justify-between(style="margin-bottom:20px;")
+          .col-auto
+            h6 {{startDate}}
+            small Promotion Start
+          .col-auto
+            h6 {{endDate}}
+            small Promotion End
+        //- .row(style="margin-top:10px;")
+        //-   p.no-margin Text can go here
+        //- .row
+        //-   p.no-margin Text can go here too!
 </template>
 <style lang="stylus" scoped>
   @import '~variables'
