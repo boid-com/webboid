@@ -2,7 +2,8 @@ import { initAccessContext } from 'eos-transit'
 import scatter from 'eos-transit-scatter-provider'
 import keycat from 'eos-transit-keycat-provider'
 import ledger from 'eos-transit-ledger-provider'
-import { Keycat } from 'keycatjs'
+// import anchor from 'eos-transit-anchorlink-provider'
+
 
 function err (error) {
   console.error(error)
@@ -21,7 +22,7 @@ const endpoints = [
   'https://eos.greymass.com',
   // // 'https://eos.greymass.com:443',
   // // 'https://api.eossweden.org',
-  // 'https://api.eosn.io',
+  'https://api.eosn.io',
   // // 'https://eu1.eosdac.io:443',
   // 'https://api.main.alohaeos.com:443',
   'https://node1.eosphere.io',
@@ -99,7 +100,9 @@ async function init () {
       //   chainId: '5fff1dae8dc8e2fc4d5b23b2c7665c97f9e9d8edf2b6485a86ba311c25639191'
       // },
       walletProviders: [
-        scatter()]
+        scatter(),
+        // anchor()
+      ]
       // keycat()      ]
     })
   } catch (error) {

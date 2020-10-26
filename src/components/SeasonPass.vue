@@ -41,8 +41,10 @@ div(style="padding:20px; max-width: 1900px;")
       leaderboard
     .col.col-lg-8(style="max-width:1200px; margin-top:60px;")
       .row.justify-center
-        h5.no-margin Details
-      .row.justify-center(style="margin:10px; min-height:40px;")
+        h5 Details
+      .row.justify-center
+        a(target="_blank" href="https://boidcom.medium.com/boid-breaches-barriers-offering-the-first-nft-on-eos-with-real-utility-8cf5d7620570") Read the announcement
+      .row.justify-center(style="margin:10px; min-height:20px;")
       passpanel(style="min-width:300px;")
 </template>
 <style lang="stylus" scoped>

@@ -1,5 +1,5 @@
 <template lang="pug">
-div.cursor-pointer.relative-position.shadow-2(v-ripple style="margin:10px; padding:0px; width:130px; height:150px; zoom: 1; border-radius:30px; user-select:none;" :class="{selectedpay:selectedPay === coin.symbol}" @click="updateSelectedPay(coin.symbol)")
+div.cursor-pointer.relative-position.shadow-2( style="margin:10px; padding:0px; width:130px; height:150px; zoom: 1; border-radius:30px; user-select:none;" :class="{selectedpay:selectedPay === coin.symbol}" @click="updateSelectedPay(coin.symbol)")
   .row.justify-center.center-items(style="width:100%; padding-top:3px;").no-wrap
     .col-auto(style="height:50px;")
       img(:src="coin.img" style="height:100%; padding:10px;")
@@ -55,7 +55,7 @@ export default {
   computed:{
     reservior(){
       if(!this.coin)return 0
-      return convertRange(this.coin.availablePower,[0,this.coin.powerCap],[0,100]).toFixed(0)
+      return parseFloat(convertRange(this.coin.availablePower,[0,this.coin.powerCap],[0,100]).toFixed(0))
     },
     ...seasonPass.computed
   },

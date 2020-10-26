@@ -3,7 +3,7 @@ div
   .row.justify-center.relative-position(style="margin-top:0px;")
     q-card.col.no-margin(style="margin-bottom:5px;")
       .row
-        .col
+        .col(style="min-width:300px;")
           div(style="margin-left:20px;")
             h6 Event Mechanics
             .row
@@ -18,6 +18,8 @@ div
                     li Each token pool has a power multiplier which increases as the power reservoir reaches max (1x - 5x).
                     li The Power granted per donation is (user level base power) x (coin power multiplier).
                     li You can only make a donation in between start/end of the event.
+                    li You can't level up past level 10, but you can continue to make donations to earn Boid Power and rank up on the leaderboard. 
+                    li Leaderboard rank at the end of the promotion determines the NFT mint # when NFTs are distributed.
                     li The contract is open source on #[a(href="https://github.com/boid-com/boiddonation" target="_blank") github].
 
         .col
