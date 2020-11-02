@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-  q-card.relative-position(style="padding:20px;")
+  q-card.relative-position(style="padding:10px;")
     .row(v-if="contributor && config")
       .col-auto.on-left
         .row.justify-center

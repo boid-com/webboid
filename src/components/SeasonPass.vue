@@ -11,7 +11,7 @@ div(style="padding:20px; max-width: 1900px;")
     .col(style="max-width:1480px;")
       trackerpanel
   .row.justify-center
-    .col.col-xs-12.col-sm-5.col-md-12.col-lg-3(style="max-width:400px; min-width:400px; margin-top:60px;").relative-position
+    .col.col-xs-12.col-sm-5.col-md-12.col-lg-3(style="max-width:400px; min-width:350px; margin-top:60px;").relative-position
       q-btn(round small flat @click="updateAccountPanel(),getContributor(),checkFreeCPU()" color="black").absolute-top-right
         q-icon(name="refresh" )
       .row.justify-center
@@ -20,7 +20,7 @@ div(style="padding:20px; max-width: 1900px;")
         .col
           p.text-center Donations of #[strong any size] level up your account equally.
       progresspanel
-      accountpanel(style="margin-top:20px;")
+      accountpanel(style="margin-top:10px;")
     .col.col-xs-12.col-md-12.col-lg-5(style="max-width:550px; margin-right:40px; margin-left:40px; margin-top:60px;").relative-position
       q-btn(round small flat @click="getCoins()" color="black").absolute-top-right
         q-icon(name="refresh" )
@@ -29,7 +29,7 @@ div(style="padding:20px; max-width: 1900px;")
       .row.justify-center(style="margin-top:5px; min-height:30px;")
         p(style="padding-top:5px;") The Boid Power bonus changes based on popularity.
       selector
-    .col.col-xs-12.col-sm-12.col-md-12.col-lg-3.relative-position(style="min-width:400px; margin-top:60px;")
+    .col.col-xs-12.col-sm-12.col-md-12.col-lg-3.relative-position(style="min-width:350px; margin-top:60px;")
       q-btn(round small flat @click="getLeaderboard()" color="black").absolute-top-right
         q-icon(name="refresh" )
       .row.justify-center
@@ -37,12 +37,12 @@ div(style="padding:20px; max-width: 1900px;")
       .row.justify-center(style="margin:10px; min-height:40px;")
         p Higher USD Contributions = lower NFT mint #
       leaderboard
-    .col.col-lg-8(style="max-width:1200px; margin-top:60px;")
+    .col.col-lg-8(style="max-width:1200px; margin-top:45px;")
       .row.justify-center
         h5 Details
       .row.justify-center
         a(target="_blank" href="https://boidcom.medium.com/boid-breaches-barriers-offering-the-first-nft-on-eos-with-real-utility-8cf5d7620570") Read the announcement
-      .row.justify-center(style="margin:10px; min-height:20px;")
+      .row.justify-center(style="margin:6px; min-height:20px;")
       passpanel(style="min-width:300px;")
 </template>
 <style lang="stylus" scoped>

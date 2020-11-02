@@ -1,7 +1,7 @@
 <template lang="pug">
 div
   .row.justify-center.relative-position(style="margin-top:0px;")
-    q-card.col.no-margin(style="margin-bottom:5px;")
+    q-card(style="margin-bottom:5px;")
       .row
         .col(style="min-width:250px;")
           div(style="margin-left:10px;")
@@ -60,7 +60,7 @@ div
 <style lang="stylus" scoped>
   @import '~variables'
   .infobox
-    padding 10px
+    padding 0px
   ul
     list-style-position outside
     margin 0px
@@ -70,8 +70,8 @@ div
     padding 5px
     font-size 16px
   .q-card
-    padding 20px !important
-    margin 10px
+    padding 10px !important
+    margin 0px
 </style>
 
 <script>

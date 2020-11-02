@@ -2,7 +2,7 @@ import { initAccessContext } from 'eos-transit'
 import scatter from 'eos-transit-scatter-provider'
 import keycat from 'eos-transit-keycat-provider'
 import ledger from 'eos-transit-ledger-provider'
-import anchor from 'eos-transit-anchorlink-provider'
+// import anchor from 'eos-transit-anchorlink-provider'
 
 
 function err (error) {
