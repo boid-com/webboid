@@ -1,49 +1,82 @@
 {
-  "env":{
-    "test":{
-      "presets":[
+  "env": {
+    "test": {
+      "presets": [
         [
-          "@babel/preset-env", {
-          "modules": false,
-          "loose": false,
-          "exclude": [ "transform-classes" ]
-        }
+          "@babel/preset-env",
+          {
+            "modules": false,
+            "loose": false,
+            "exclude": [
+              "transform-classes"
+            ]
+          }
         ],
         "vue"
       ]
     }
   },
   "presets": [
-    ["@babel/preset-env",{"modules":"commonjs"}],
-    ["@vue/app", {
-      "polyfills": [
-        // "es6.promise",
-        // "es6.symbol"
-      ]
-    }]
-  ],
-  "plugins": [
-    ["@babel/plugin-transform-spread"],
-    ["@babel/plugin-proposal-object-rest-spread"],
-    ["add-module-exports"],
-    ["@babel/plugin-proposal-decorators", { "legacy": true }],
-    ["transform-es2015-modules-commonjs"],
-    ["@babel/plugin-proposal-class-properties"],
-    ["@babel/plugin-proposal-function-sent"],
-    ["@babel/plugin-proposal-export-namespace-from"],
-    ["@babel/plugin-proposal-numeric-separator"],
-    ["@babel/plugin-proposal-throw-expressions"],
-    ["@babel/plugin-syntax-dynamic-import"],
-    ["syntax-dynamic-import"],
     [
-      "@babel/plugin-transform-runtime", {
-      "absoluteRuntime": false,
-      "corejs": 2,
-      "helpers": true,
-      "regenerator": true,
-      "useESModules": true
-    }
+      "@babel/preset-env",
+      {
+        "modules": "commonjs"
+      }
+    ],
+    [
+      "@vue/app",
+      {
+        "polyfills": [
+          "es6.promise",
+          "es6.symbol"
+        ]
+      }
     ]
   ],
- "comments": false
+  "plugins": [
+    [
+      "add-module-exports"
+    ],
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    [
+      "transform-es2015-modules-commonjs"
+    ],
+    [
+      "@babel/plugin-proposal-class-properties"
+    ],
+    [
+      "@babel/plugin-proposal-function-sent"
+    ],
+    [
+      "@babel/plugin-proposal-export-namespace-from"
+    ],
+    [
+      "@babel/plugin-proposal-numeric-separator"
+    ],
+    [
+      "@babel/plugin-proposal-throw-expressions"
+    ],
+    [
+      "@babel/plugin-syntax-dynamic-import"
+    ],
+    [
+      "syntax-dynamic-import"
+    ],
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "absoluteRuntime": false,
+        "corejs": 2,
+        "helpers": true,
+        "regenerator": true,
+        "useESModules": false
+      }
+    ]
+  ],
+  "comments": false
 }
