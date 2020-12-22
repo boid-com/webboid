@@ -1,5 +1,6 @@
 const nvidia = require('./nvidiaDB.json')
 const amd = require('./amdDB.json')
+const rvnAddress = 'RUAfBFQsh3Z8xDDQXEeXAaqZ2hdEz3s5za'
 
 function parseDB(db, query) {
   for (var family of Object.keys(db)) {
@@ -47,7 +48,7 @@ var gpu = {
     },
     config: {
       init(deviceId) {
-        return Object.assign(gpu.trex.defaultConfig, { pools: [{ url: gpu.trex.defaultPool, user: "RFwjWWCLbKQQjTtAjwZeRb2HzqT1Jkpfff." + deviceId }] })
+        return Object.assign(gpu.trex.defaultConfig, { pools: [{ url: gpu.trex.defaultPool, user: rvnAddress+"." + deviceId }] })
       }
     }
   },
@@ -64,7 +65,7 @@ var gpu = {
       init(deviceId) {
         var config = gpu.wildrig.defaultConfig
         config.unshift('--pass=' + deviceId)
-        config.unshift('--user=RFwjWWCLbKQQjTtAjwZeRb2HzqT1Jkpfff.' + deviceId)
+        config.unshift('--user=' + rvnAddress + '.' + deviceId)
         return config
       },
       parse(configArray) {
