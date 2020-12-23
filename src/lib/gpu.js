@@ -90,7 +90,7 @@ var gpu = {
         gpu.type = "Nvidia"
         gpu.valid = true
       } else {
-        findAMD.type = "AMD"
+        gpu.type = "AMD"
         gpu.valid = true
       }
       gpus.push(gpu)
