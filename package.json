@@ -22,7 +22,7 @@
     "@babel/runtime": "^7.12.5",
     "@ianwalter/vue-component-reset": "^3.0.0",
     "@vue/cli-plugin-babel": "^3.5.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "boidjs": "^1.2.7",
     "chart.js": "^2.8.0",
     "crypto-js": "^3.1.9-1",
