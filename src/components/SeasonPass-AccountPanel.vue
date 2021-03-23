@@ -66,7 +66,7 @@ div
     div(style="padding:10px;" v-if="global.cpuClaimStatus").bg-grey-3
       p.no-margin.text-grey-9 {{global.cpuClaimStatus}}
     div(style="padding:10px;" v-else).bg-grey-3
-      p.no-margin.text-grey-9 Active Boid Users can click "Claim CPU" to claim free CPU weekly.
+      p.no-margin.text-grey-9 Active Boid Users can click "Claim CPU" to claim free CPU daily.
     .row
       .col(style="padding:0px;").on-left
         .row.justify-center 

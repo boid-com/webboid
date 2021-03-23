@@ -32,9 +32,9 @@ const state = {
         try {
           if(!state.global.transitWallet) return
           if(!state.global.transitWallet.auth) return
-          const result = (await ax.get('https://api.boid.com/claimCPU/'+state.global.transitWallet.auth.accountName+'?claim=true')).data
+          const result = (await ax.get('https://api.eospowerup.io/freePowerup/'+state.global.transitWallet.auth.accountName)).data
           if (result.error) throw(result.error)
-          else state.global.successMsg = "CPU claimed! You can claim again in one week."
+          else state.global.successMsg = "CPU claimed! You can claim again in 12 hours."
         } catch (error) {
           console.error(error.toString())
           state.global.errorMsg = error.toString()
