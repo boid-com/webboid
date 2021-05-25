@@ -136,6 +136,7 @@ import { stakeTx, taposData, unstakeTx } from "../lib/tx.js"
 import state from "../lib/state"
 var format = require("format-number")()
 import interactivePanel from "components/interactivePanel.vue"
+import { Loading, openURL } from "quasar"
 
 async function fillBalances(v) {
   try {
@@ -168,6 +169,7 @@ import { Toast } from "quasar"
 export default {
   data() {
     return {
+      openURL,
       global: state.global,
       mintD: 0,
       stakeD: 0,
