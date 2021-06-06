@@ -318,7 +318,7 @@ export default {
   mounted: async function() {
     // if (this.local && !this.authenticated) this.handleLogin()
     if (this.local) this.ipcRenderer = window.local.ipcRenderer
-    if (this.local) window.olark("api.box.hide")
+    // if (this.local) window.olark("api.box.hide")
     if (!this.local) this.initTransitWallet()
     setTimeout(() => {
       this.pending = false

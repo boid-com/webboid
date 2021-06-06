@@ -355,22 +355,18 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.layout-padding {
-  max-width: 700px;
-}
+.layout-padding
+  max-width 700px
 
-.infobtn {
-  color: $grey-6;
-  font-size: 15px;
-  right: 5px;
-  top: 5px;
-}
+.infobtn
+  color $grey-6
+  font-size 15px
+  right 5px
+  top 5px
 
-.taller {
-  height: 60px;
-}
+.taller
+  height 60px
 
-body {
-  user-select: none;
-}
+body
+  user-select none
 </style>
