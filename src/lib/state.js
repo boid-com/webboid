@@ -25,7 +25,7 @@ const state = {
         try {
           if (!state.global.transitWallet) return
           if (!state.global.transitWallet.auth) return
-          const result = (await ax.get('https://api.boid.com/claimCPU/' + state.global.transitWallet.auth.accountName)).data
+          const result = (await ax.get('https://api.boid.io/claimCPU/' + state.global.transitWallet.auth.accountName)).data
           console.log(result)
           if (result.error) state.global.cpuClaimStatus = result.error
         } catch (error) {

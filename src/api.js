@@ -62,7 +62,7 @@ var api = {
 function getEndpoint () {
   // return 'https://api.boid.com'
   if(process.env.NODE_ENV === 'development') return 'http://localhost:3000'
-  else return 'https://api.boid.com'
+  else return 'https://api.boid.io'
 }
 
 function setupAxios (token) {
