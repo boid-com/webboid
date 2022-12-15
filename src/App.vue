@@ -26,8 +26,8 @@
               | Scatter Logout
             q-item(@click="openURL('https://bloks.io/account/' + transitWallet.auth.accountName), $refs.profileMenu.close()" link v-if="!local")
               | My EOS Account
-        q-btn.on-left(@click="initTransitWallet('scatter')" color="green" v-if="!transitWallet && !local")
-          | Scatter
+        //- q-btn.on-left(@click="initTransitWallet('scatter')" color="green" v-if="!transitWallet && !local")
+        //-   | Scatter
         q-btn.text-black(@click="" color="light" flat v-if="authenticated")
           .on-right
             | {{ thisUser.username }}
