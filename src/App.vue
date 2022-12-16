@@ -26,8 +26,8 @@
               | Scatter Logout
             q-item(@click="openURL('https://bloks.io/account/' + transitWallet.auth.accountName), $refs.profileMenu.close()" link v-if="!local")
               | My EOS Account
-        //- q-btn.on-left(@click="initTransitWallet('scatter')" color="green" v-if="!transitWallet && !local")
-        //-   | Scatter
+        q-btn.on-left(@click="initTransitWallet('scatter')" color="green" v-if="!transitWallet && !local")
+          | Scatter
         q-btn.text-black(@click="" color="light" flat v-if="authenticated")
           .on-right
             | {{ thisUser.username }}
@@ -131,7 +131,7 @@
 <script>
 // window.olark.identify('3844-769-10-6059')
 import "quasar-extras/animate"
-import { Loading, Toast, openURL } from "quasar"
+import { Loading, Toast, openURL,Dialog } from "quasar"
 import auth from "@/Auth.vue"
 import profileEdit from "@/ProfileEdit.vue"
 import scatter from "@/Scatter.vue"
@@ -315,7 +315,22 @@ export default {
       }
     }
   },
-  mounted: async function() {
+  mounted: async function () {
+    Dialog.create({
+      message: `
+        <h2>Join us on a new Frontier </h2>
+        <h4>The Boid EOS app is being retired.</h4>
+        <h4 >Learn about Boid 2.0 and Join us on testnet to earn rewards in the new Boid Frontier Rewards program!</h4>
+        <a href="https://frontier.boid.com">
+        <h3 class="text-center">
+          <img  width="70%" style=" display:block;
+    margin:auto; padding-bottom:20px; padding-top:20px;" src="/statics/frontier.jpeg"></img>
+
+          <a href="https://frontier.boid.com">frontier.boid.com</a>
+          </h3>
+          </a>
+      `, html: true,buttons:[]
+    })
     // if (this.local && !this.authenticated) this.handleLogin()
     if (this.local) this.ipcRenderer = window.local.ipcRenderer
     // if (this.local) window.olark("api.box.hide")
@@ -512,6 +527,12 @@ export default {
 </script>
 
 <style>
+.modal-scroll {
+    max-height: 100%;
+}
+.modal.minimized .modal-content {
+  height: 100%;
+}
 @media (min-width: 768px) {
   .modal:not(.maximized) {
     background: white !important;
