@@ -323,7 +323,7 @@ export default {
         <h4 >Learn about Boid 2.0 and Join us on testnet to earn rewards in the new Boid Frontier Rewards program!</h4>
         <a href="https://frontier.boid.com">
         <h3 class="text-center">
-          <img  width="70%" style=" display:block;
+          <img  width="300px" style=" display:block;
     margin:auto; padding-bottom:20px; padding-top:20px;" src="/statics/frontier.jpeg"></img>
 
           <a href="https://frontier.boid.com">frontier.boid.com</a>
